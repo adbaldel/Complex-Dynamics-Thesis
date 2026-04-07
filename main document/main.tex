@@ -3,18 +3,19 @@
 % --- Packages -----------------------------------------------------------------
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
-\usepackage[english, spanish]{babel}
-\usepackage{amsfonts, amssymb, amsmath}
+\usepackage[english, spanish, es-tabla, es-noindentfirst]{babel}
+\usepackage[autostyle=true]{csquotes}
+\usepackage{amsfonts, amsthm, amssymb, amsmath}
 \usepackage[hidelinks]{hyperref}
 \usepackage{graphicx}
 \graphicspath{ {../images} }
 \usepackage{pdfpages}
-\usepackage{csquotes}
 \usepackage{biblatex}
 \addbibresource{refs.bib}
 
-% --- Defined Commands ---------------------------------------------------------
+% --- Defined Commands and Theorem Like Environments ---------------------------
 \input{commands}
+\input{theormen_like-environments}
 
 % --- Includes to Reproccess ---------------------------------------------------
 \includeonly{front,chap1-examples}
@@ -32,7 +33,7 @@
 % --- Main Matter --------------------------------------------------------------
 \mainmatter
 \include{chap1-examples}
-% --- Appendix --------------------------------------------------------------
+% --- Appendix -----------------------------------------------------------------
 %\appendix
 %\include{append}
 

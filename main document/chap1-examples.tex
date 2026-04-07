@@ -1,2 +1,85 @@
 \chapter{Ejemplos}
-Aquí voy a tener ejemplos del libro~\cite{AFB91}.
+En este capítulo veremos algunos ejemplos de iteraciones de funciones racionales
+para introducirnos en la rama de la Dinámica Compleja.
+
+\section{Transformaciones de Möbius}
+Empecemos con el ejemplo más sencillo, funciones racionales de grado 1. Este
+tipo de funciones se conocen como transformaciones de Möbius.
+
+\begin{definicion}[Transformación de Möbius]
+    Una transformación de Möbius es una función racional de la forma
+    \[
+        R(z) = \frac{az+b}{cz+d}, \quad ad-bc \ne 0
+    \] 
+    donde $z$, $a$, $b$, $c$, $d$ son números complejos. Además, seguiremos los
+    siguientes convenios con el punto del infinito: $R(\infty)=a/c$ y
+    $R(-c/d)= \infty$.
+\end{definicion}
+
+Por ejemplo, analicemos la siguiente transformación de Möbius,
+\[
+    R(z) = \frac{3z+2}{2z+-1}.
+\]
+
+Esta función tiene un único punto fijo, $\zeta = 1$, y este es indiferente
+porque $R'(1) = 1$. La pregunta que nos hacemos es: si iteramos en un punto
+arbitrario del plano complejo, $z$, ¿cómo se comportará la secuencia $R^n(z)$?
+
+Gracias a la simplicidad de las transformaciones de Möbius, es fácil encontrar
+la expresión
+\[
+    R^n(z) = \frac{(2n+1) -2n}{2nz-(2n-1)} =  1 + \frac{z-1}{2nz-(2n-1)}.
+\]
+Por tanto, para todo $z \in \ExtC$, se cumple
+\[
+    R^n(z) \to \zeta,
+\]
+cuando $n \to \infty$.
+
+Veamos otro ejemplo con un comportamiento diferente, pero igualmente sencillo:
+\[
+    R(z) = \frac{(1+i)z + (1-i)}{(1-i)z + (1+i)}.
+\]
+
+En este caso tenemos dos puntos fijos, $\zeta_1 = 1$ y $\zeta_2 = -1$, ambos
+indiferentes (aunque en ambos ejemplos han salido puntos fijos indiferentes, no
+siempre los puntos fijos de transformaciones de Möbius son indiferentes). Se
+puede comprobar que
+\begin{equation}\label{eq:mobiusEj2Conj}
+    R(z) = g^{-1}Sg(z),
+\end{equation}
+con
+\begin{align*}
+    S(z) &= -iz, \\
+    g(z) &= \frac{1+z}{1-z}.
+\end{align*}
+Analizando $S^n(z)$ podemos entender cómo se comporta $R^n(z)$ gracias a la
+ecuación~\ref{eq:mobiusEj2Conj}. Ahora, $S^n(z)$ es muy sencilla, $S^4(z) = I(z)
+= z$. Por tanto, para todo $z \in \ExtC$, se cumple
+\[
+    R^4(z)=z,
+\]
+es decir, todos los puntos forman parte de un 4-ciclo y nunca convergen a un
+punto fijo (porque el 4-ciclo de estos está formado únicamente por ellos
+mismos).
+
+En general, las iteraciones de transformaciones de Möbius son muy sencillas y su
+comportamiento se puede clasificar según tengan un único punto fijo o dos.
+
+\begin{teorema}
+Sea $R$ una transformación de Möbius, si $R$ tiene
+\begin{enumerate}
+    \item un punto fijo, $\zeta$, entonces para todo $z \in \ExtC$,
+        $R^n(z) \to \zeta$ cuando $n~\to~\infty$;
+    \item dos puntos fijos, entonces se tiene que
+    \begin{enumerate}
+        \item $R^n(z)$ converge a uno de los puntos fijos,
+        \item $R^n(z)$ se mueve cíclicamente en un conjunto finito de puntos,
+        \item o $R^n(z)$ forma un subconjunto denso de un círculo (o línea).
+    \end{enumerate}
+\end{enumerate}
+\end{teorema}
+
+\begin{proof}
+    \cite[Ver][4-5]{Beardon1991}
+\end{proof}
