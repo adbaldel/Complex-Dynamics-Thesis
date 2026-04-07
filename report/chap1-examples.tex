@@ -1,0 +1,90 @@
+\chapter{Ejemplos}
+En este capítulo veremos algunos ejemplos de iteraciones de funciones racionales
+para introducirnos en la rama de la Dinámica Compleja.
+
+\section{Transformaciones de Möbius}
+Comencemos con el caso más sencillo: las funciones racionales de grado $1$.
+Estas funciones se conocen como transformaciones de Möbius y su dinámica puede
+describirse de forma bastante explícita.
+
+\begin{definicion}[Transformación de Möbius]
+    Una transformación de Möbius es una función racional de la forma
+    \[
+        R(z) = \frac{az+b}{cz+d}, \quad ad-bc \ne 0
+    \] 
+    donde $z$, $a$, $b$, $c$, $d$ son números complejos. Además, seguiremos los
+    siguientes convenios con el punto del infinito: $R(\infty)=a/c$ y
+    $R(-c/d)= \infty$.
+\end{definicion}
+
+Veamos primero la transformación de Möbius
+\[
+    R(z) = \frac{3z-2}{2z-1}.
+\]
+
+Esta función tiene un único punto fijo, $\zeta = 1$, y este es indiferente
+porque $R'(1) = 1$. La pregunta que nos hacemos es: si iteramos en un punto
+arbitrario del plano complejo, $z$, ¿cómo se comportará la secuencia $R^n(z)$?
+
+Debido a que las transformaciones de Möbius son sencillas, se pueden encontrar
+expresiones para $R^n(z)$ de manera sistemática. En este caso, se puede
+comprobar que
+\[
+    R^n(z) = \frac{(2n+1)z-2n}{2nz-(2n-1)} =  1 + \frac{z-1}{2nz-(2n-1)}.
+\]
+Esta expresión permite ver con claridad qué ocurre: para $z \neq 1$, el
+denominador crece linealmente con $n$, mientras que el numerador permanece
+constante. Por ello,
+\[
+    R^n(z) \to \zeta,
+\]
+cuando $n \to \infty$. Es decir, en este ejemplo todas las órbitas convergen al
+único punto fijo.
+
+Consideremos ahora un ejemplo con un comportamiento distinto:
+\[
+    R(z) = \frac{(1+i)z + (1-i)}{(1-i)z + (1+i)}.
+\]
+
+En este caso tenemos dos puntos fijos, $\zeta_1 = 1$ y $\zeta_2 = -1$, ambos
+indiferentes. Se puede comprobar que
+\begin{equation}\label{eq:mobiusEj2Conj}
+    R(z) = g^{-1}Sg(z),
+\end{equation}
+con
+\begin{align*}
+    S(z) &= -iz, \\
+    g(z) &= \frac{1+z}{1-z}.
+\end{align*}
+La ecuación~\ref{eq:mobiusEj2Conj} muestra que $R$ es conjugada a la rotación
+$S(z)=-iz$. Por tanto, la dinámica de $R$ se reduce a estudiar el comportamiento
+de $S$, que es sencillo: como $(-i)^4=1$, se tiene $S^4(z)=z$ para todo $z$.
+En consecuencia,
+\[
+    R^4(z)=\I(z)=z,
+\]
+para todo $z \in \ExtC$. Así, todas las órbitas son periódicas de período que
+divide a $4$; en particular, salvo los puntos fijos, no convergen.
+
+Estos dos ejemplos ilustran bien la variedad de comportamientos que ya aparecen
+en grado $1$: convergencia hacia un punto fijo en el primer caso y dinámica
+periódica en el segundo. En general, las transformaciones de Möbius pueden
+clasificarse según tengan uno o dos puntos fijos.
+
+\begin{teorema}
+Sea $R$ una transformación de Möbius, si $R$ tiene
+\begin{enumerate}
+    \item un punto fijo, $\zeta$, entonces para todo $z \in \ExtC$,
+        $R^n(z) \to \zeta$ cuando $n~\to~\infty$;
+    \item dos puntos fijos, entonces se tiene que
+    \begin{enumerate}
+        \item $R^n(z)$ converge a uno de los puntos fijos,
+        \item $R^n(z)$ se mueve cíclicamente en un conjunto finito de puntos,
+        \item o $R^n(z)$ forma un subconjunto denso de un círculo o recta.
+    \end{enumerate}
+\end{enumerate}
+\end{teorema}
+
+\begin{proof}
+    Véase \cite[4--5]{Beardon1991}.
+\end{proof}
