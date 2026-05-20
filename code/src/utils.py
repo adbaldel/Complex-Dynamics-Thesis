@@ -87,28 +87,51 @@ class DynamicsPlotter:
             ax.axis('off')
             
         return fig, ax
-
-    def add_points(self, ax, points, label=None, marker='x', color='black', s=100, zorder=10, **kwargs):
+    
+    def add_points(self, ax, points, label=None, marker='.', color='black', s=50, zorder=10, annotate_label=True, text_offset=(0, -10), fontsize=16, **kwargs):
         """
-        Auxiliary method to overlay complex points on an existing axis.
+        Auxiliary method to overlay complex points on an existing axis, 
+        with options for standard legends or direct plot annotation.
         
         Args:
             ax (matplotlib.axes.Axes): The axis to plot on.
             points (list or np.ndarray): Complex numbers to plot.
-            label (str, optional): Legend label for the points.
+            label (str, optional): The text label for the points.
             marker (str): Matplotlib marker style.
             color (str): Matplotlib color.
             s (int): Marker size.
             zorder (int): Drawing order (higher is on top).
+            annotate_label (bool): If True, places the label text directly next to the point on the plot.
+                                   If False, adds the label to a standard legend box.
+            text_offset (tuple): The (x, y) offset in points (pixels) for the annotation. 
+                                 Default (0, -12) places it directly below.
+            fontsize (int): Font size for the annotated text.
             **kwargs: Additional arguments passed to ax.scatter.
         """
         r_real = [np.real(p) for p in points]
         r_imag = [np.imag(p) for p in points]
         
-        ax.scatter(r_real, r_imag, color=color, marker=marker, s=s, label=label, zorder=zorder, **kwargs)
+        # Plot the marker
+        ax.scatter(r_real, r_imag, color=color, marker=marker, s=s, label=label if not annotate_label else None, zorder=zorder, **kwargs)
         
         if label:
-            ax.legend()
+            if annotate_label:
+                # Place the text directly on the plot for each point
+                for x, y in zip(r_real, r_imag):
+                    ax.annotate(
+                        label, 
+                        (x, y), 
+                        xytext=text_offset, 
+                        textcoords='offset points', 
+                        ha='center',     # Horizontally center the text under the point
+                        va='top',        # Vertically align the top of the text with the offset
+                        color=color, 
+                        fontsize=fontsize, 
+                        zorder=zorder + 1
+                    )
+            else:
+                # Fallback to standard matplotlib legend behavior
+                ax.legend()
         
         return ax
 
@@ -323,6 +346,169 @@ class DynamicsPlotter:
         
         ax.imshow(img, extent=self.extent, origin='lower')
         
+        plt.tight_layout()
+        return fig, ax
+    
+    def plot_combined_fatou_basins_and_julia_set(self, basin_data, cmap='Set1', julia_color='black', julia_thickness=1, title="Fatou Basins and Julia Set", show_axis=True, show_axis_labels=True):
+        """
+        Plots the Fatou basins and overlays the Julia set (basin boundaries) on a single image.
+
+        Args:
+            basin_data (np.ndarray): 2D integer array containing basin indices.
+            cmap (str or Colormap): Matplotlib colormap string. Defaults to 'Set1'.
+            julia_color (str): Matplotlib color string for the Julia set. Defaults to 'black'.
+            julia_thickness (int): Pixel thickness of the Julia Set. Defaults to 1.
+            title (str, optional): Title of the plot.
+            show_axis (bool): If True, shows axes and tick marks.
+            show_axis_labels (bool): If True, shows "Re(z)" and "Im(z)" labels.
+
+        Returns:
+            fig, ax: The matplotlib figure and axes objects.
+        """
+        # 1. Setup the single figure and axis
+        fig, ax = self._setup_figure(title, show_axis, show_axis_labels, show_grid=False)
+        
+        # --- Plot Fatou Basins (Background) ---
+        min_val = int(np.min(basin_data))
+        max_val = int(np.max(basin_data))
+        
+        if isinstance(cmap, str):
+            try:
+                base_cmap = plt.get_cmap(cmap)
+                if hasattr(base_cmap, 'colors'):
+                    color_list = []
+                    if min_val < 0:
+                        color_list.append((1.0, 1.0, 1.0, 1.0)) 
+                        start_idx = 0
+                    else:
+                        start_idx = min_val
+                        
+                    for i in range(start_idx, max_val + 1):
+                        color_list.append(base_cmap.colors[i % len(base_cmap.colors)])
+                        
+                    cmap = mcolors.ListedColormap(color_list)
+            except Exception:
+                pass 
+        
+        bounds = np.arange(min_val, max_val + 2) - 0.5
+        norm = mcolors.BoundaryNorm(bounds, cmap.N if hasattr(cmap, 'N') else len(bounds)-1)
+        
+        # Plot the basins
+        ax.imshow(basin_data, extent=self.extent, origin='lower', cmap=cmap, norm=norm)
+
+        # --- Plot Julia Set (Foreground Overlay) ---
+        up = np.roll(basin_data, shift=-1, axis=0)
+        down = np.roll(basin_data, shift=1, axis=0)
+        left = np.roll(basin_data, shift=-1, axis=1)
+        right = np.roll(basin_data, shift=1, axis=1)
+        
+        boundary_mask = (basin_data != up) | (basin_data != down) | \
+                        (basin_data != left) | (basin_data != right)
+
+        # THICKEN THE BOUNDARY (Dilation)
+        # We iteratively expand the mask in all 4 directions based on the thickness parameter
+        if julia_thickness > 1:
+            for _ in range(julia_thickness - 1):
+                boundary_mask = boundary_mask | np.roll(boundary_mask, 1, axis=0) | np.roll(boundary_mask, -1, axis=0) | \
+                                np.roll(boundary_mask, 1, axis=1) | np.roll(boundary_mask, -1, axis=1)
+        
+        # Remove edge artifacts
+        boundary_mask[0, :] = False
+        boundary_mask[-1, :] = False
+        boundary_mask[:, 0] = False
+        boundary_mask[:, -1] = False
+        
+        rgba_color = mcolors.to_rgba(julia_color)
+        img_julia = np.zeros((*basin_data.shape, 4))
+        img_julia[boundary_mask] = rgba_color
+        
+        # Plot the Julia set on top (the transparency of the 0 array handles the overlay)
+        ax.imshow(img_julia, extent=self.extent, origin='lower')
+            
+        plt.tight_layout()
+        return fig, ax
+
+    def plot_fatou_basins_shaded(self, basin_data, times_data, cmap='Set1', shading_power=0.6, dark_start=0.5, color_peak=0.5, title="Shaded Fatou Basins", show_axis=True, show_axis_labels=True):
+        """
+        Plots Fatou basins shaded dynamically by their rate of convergence.
+        Uses a two-phase gradient: Dark -> Pure Color -> White.
+
+        Args:
+            basin_data (np.ndarray): 2D integer array containing basin indices.
+            times_data (np.ndarray): 2D integer array containing convergence iteration counts.
+            cmap (str): Matplotlib colormap string. Defaults to 'Set1'.
+            shading_power (float): Curves the overall distribution of the gradient.
+            dark_start (float): Brightness multiplier for the fastest converging points (0.0 to 1.0).
+            color_peak (float): The normalized time [0.0 to 1.0] where the color reaches 100% purity.
+                                e.g., 0.5 means the pure color hits halfway through the gradient.
+            title (str, optional): Title of the plot.
+            show_axis (bool): If True, shows axes and tick marks.
+            show_axis_labels (bool): If True, shows "Re(z)" and "Im(z)" labels.
+
+        Returns:
+            fig, ax: The matplotlib figure and axes objects.
+        """
+        fig, ax = self._setup_figure(title, show_axis, show_axis_labels, show_grid=False)
+        
+        min_val = int(np.min(basin_data))
+        max_val = int(np.max(basin_data))
+        
+        # 1. Extract base colors for each basin
+        base_cmap = plt.get_cmap(cmap)
+        color_list = []
+        
+        if min_val < 0:
+            color_list.append(np.array([0.0, 0.0, 0.0]))  # Solid black for non-converging points
+            start_idx = 0
+        else:
+            start_idx = min_val
+            
+        for i in range(start_idx, max_val + 1):
+            color_list.append(np.array(base_cmap.colors[i % len(base_cmap.colors)][:3]))
+            
+        # 2. Compute the normalized time 't'
+        max_time = np.max(times_data)
+        if max_time == 0: 
+            max_time = 1  
+            
+        # t scales from 0.0 (fastest) to 1.0 (slowest)
+        t = (times_data / max_time) ** shading_power
+        
+        # 3. Apply colors and shading vectorially (Two-Phase Interpolation)
+        img = np.zeros((*basin_data.shape, 3))
+        
+        for val, color in zip(range(min_val, max_val + 1), color_list):
+            basin_mask = (basin_data == val)
+            
+            if val < 0:
+                for channel in range(3):
+                    img[basin_mask, channel] = color[channel]
+                continue
+            
+            # Split the basin into two masks based on the color_peak
+            phase1_mask = basin_mask & (t <= color_peak)
+            phase2_mask = basin_mask & (t > color_peak)
+            
+            # Local interpolation factors for each phase
+            # t1 goes from 0.0 to 1.0 during Phase 1
+            t1 = t[phase1_mask] / color_peak if color_peak > 0 else np.zeros_like(t[phase1_mask])
+            # t2 goes from 0.0 to 1.0 during Phase 2
+            t2 = (t[phase2_mask] - color_peak) / (1.0 - color_peak) if color_peak < 1 else np.zeros_like(t[phase2_mask])
+            
+            darkened_color = color * dark_start
+            
+            for channel in range(3):
+                # Phase 1: Interpolate from darkened_color to pure color
+                img[phase1_mask, channel] = darkened_color[channel] + t1 * (color[channel] - darkened_color[channel])
+                
+                # Phase 2: Interpolate from pure color to pure white (1.0)
+                img[phase2_mask, channel] = color[channel] + t2 * (1.0 - color[channel])
+                
+        # Clip just to be safe with matplotlib's RGB expectations
+        img = np.clip(img, 0, 1)
+        
+        ax.imshow(img, extent=self.extent, origin='lower')
+            
         plt.tight_layout()
         return fig, ax
 
