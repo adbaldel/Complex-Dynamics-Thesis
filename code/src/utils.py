@@ -195,7 +195,7 @@ class DynamicsPlotter:
         plt.tight_layout()
         return fig, ax
 
-    def plot_julia_set_from_escape_times(self, escape_data, max_iter, color='black', title="Julia Set (Escape Boundary)", show_axis=True, show_axis_labels=False):
+    def plot_julia_set_from_escape_times(self, escape_data, max_iter, color='black', thickness=1, title="Julia Set (Escape Boundary)", show_axis=True, show_axis_labels=False):
         """
         Extracts and plots the Julia set from escape time data (typically for polynomials).
         
@@ -207,6 +207,7 @@ class DynamicsPlotter:
             escape_data (np.ndarray): 2D integer array containing escape times.
             max_iter (int): The maximum iterations used when generating the escape data.
             color (str): Matplotlib color string for the Julia set.
+            thickness (int): Pixel thickness of the Julia Set. Defaults to 1.
             title (str, optional): Title of the plot.
             show_axis (bool): If True, shows axes and tick marks.
             show_axis_labels (bool): If True, shows "Re(z)" and "Im(z)" labels.
@@ -228,6 +229,13 @@ class DynamicsPlotter:
         # A point is on the boundary if its inside/outside status differs from any neighbor
         boundary_mask = (is_inside != up) | (is_inside != down) | \
                         (is_inside != left) | (is_inside != right)
+        
+        # THICKEN THE BOUNDARY (Dilation)
+        # We iteratively expand the mask in all 4 directions based on the thickness parameter
+        if thickness > 1:
+            for _ in range(thickness - 1):
+                boundary_mask = boundary_mask | np.roll(boundary_mask, 1, axis=0) | np.roll(boundary_mask, -1, axis=0) | \
+                                np.roll(boundary_mask, 1, axis=1) | np.roll(boundary_mask, -1, axis=1)
         
         # Remove edge artifacts
         boundary_mask[0, :] = False
@@ -298,7 +306,7 @@ class DynamicsPlotter:
         plt.tight_layout()
         return fig, ax
 
-    def plot_julia_set_from_basins(self, basin_data, color='black', title="Julia Set (Basin Boundaries)", show_axis=True, show_axis_labels=False):
+    def plot_julia_set_from_basins(self, basin_data, color='black', thickness=1, title="Julia Set (Basin Boundaries)", show_axis=True, show_axis_labels=False):
         """
         Extracts and plots the Julia set as the boundary of the Fatou basins.
         
@@ -309,6 +317,7 @@ class DynamicsPlotter:
         Args:
             basin_data (np.ndarray): 2D integer array containing basin indices.
             color (str): Matplotlib color string for the Julia set.
+            thickness (int): Pixel thickness of the Julia Set. Defaults to 1.
             title (str, optional): Title of the plot.
             show_axis (bool): If True, shows axes and tick marks.
             show_axis_labels (bool): If True, shows "Re(z)" and "Im(z)" labels.
@@ -328,6 +337,13 @@ class DynamicsPlotter:
         # A point is on the boundary if its basin index differs from any neighbor
         boundary_mask = (basin_data != up) | (basin_data != down) | \
                         (basin_data != left) | (basin_data != right)
+        
+        # THICKEN THE BOUNDARY (Dilation)
+        # We iteratively expand the mask in all 4 directions based on the thickness parameter
+        if thickness > 1:
+            for _ in range(thickness - 1):
+                boundary_mask = boundary_mask | np.roll(boundary_mask, 1, axis=0) | np.roll(boundary_mask, -1, axis=0) | \
+                                np.roll(boundary_mask, 1, axis=1) | np.roll(boundary_mask, -1, axis=1)
         
         # Remove edge artifacts caused by the wrap-around behavior of np.roll
         boundary_mask[0, :] = False
@@ -428,7 +444,7 @@ class DynamicsPlotter:
         plt.tight_layout()
         return fig, ax
 
-    def plot_fatou_basins_shaded(self, basin_data, times_data, cmap='Set1', shading_power=0.6, dark_start=0.5, color_peak=0.5, title="Shaded Fatou Basins", show_axis=True, show_axis_labels=True):
+    def plot_fatou_basins_shaded(self, basin_data, times_data, cmap='Set1', shading_power=0.5, dark_start=0.5, color_peak=0.5, title="Shaded Fatou Basins", show_axis=True, show_axis_labels=True):
         """
         Plots Fatou basins shaded dynamically by their rate of convergence.
         Uses a two-phase gradient: Dark -> Pure Color -> White.
