@@ -36,7 +36,7 @@ def generate_orbit(z0, func, max_iter=100):
     return orbit
 
 
-def generate_escape_time_fractal(x_min, x_max, y_min, y_max, width, height, func, max_iter=100, escape_radius=2.0):
+def generate_escape_time_fractal(x_min, x_max, y_min, y_max, width, height, func, max_iter=100, infinity_threshold=1e10):
     """
     Generates a matrix representing the escape times for a region in the complex plane.
     
@@ -53,7 +53,7 @@ def generate_escape_time_fractal(x_min, x_max, y_min, y_max, width, height, func
         height (int): The number of pixels/grid points in the imaginary direction.
         func (callable): A Python function representing the rational function R(z).
         max_iter (int): The maximum number of iterations.
-        escape_radius (float): The radius threshold for escaping to infinity.
+        infinity_threshold (float): The magnitude threshold above which z is considered to have escaped to infinity.
 
     Returns:
         np.ndarray: A 2D integer array of shape (height, width) containing escape times.
@@ -65,15 +65,20 @@ def generate_escape_time_fractal(x_min, x_max, y_min, y_max, width, height, func
     for i in range(height):
         for j in range(width):
             z = complex(x_coords[j], y_coords[i])
-            iters = 0
-            while abs(z) <= escape_radius and iters < max_iter:
+            step = 0
+
+            while step < max_iter:
                 try:
                     z = func(z)
-                    iters += 1
+                    step += 1
+                    # Check threshold explicitly to prevent math overflow in later iterations
+                    if abs(z) > infinity_threshold:
+                        break
                 except (OverflowError, ZeroDivisionError):
-                    iters = max_iter
+                    step += 1
                     break
-            escape_times[i, j] = iters
+
+            escape_times[i, j] = step
 
     return escape_times
 
@@ -265,7 +270,7 @@ def make_generate_escape_time_fractal_jitted(jitted_func):
                   that returns a 2D integer array.
     """
     @njit(parallel=True)
-    def generate_escape_time_fractal_jitted(x_min, x_max, y_min, y_max, width, height, max_iter=100, escape_radius=2.0):
+    def generate_escape_time_fractal_jitted(x_min, x_max, y_min, y_max, width, height, max_iter=100, infinity_threshold=1e10):
         escape_times = np.zeros((height, width), dtype=np.int64)
         x_coords = np.linspace(x_min, x_max, width)
         y_coords = np.linspace(y_min, y_max, height)
@@ -273,11 +278,16 @@ def make_generate_escape_time_fractal_jitted(jitted_func):
         for i in prange(height):
             for j in range(width):
                 z = complex(x_coords[j], y_coords[i])
-                iters = 0
-                while abs(z) <= escape_radius and iters < max_iter:
+                step = 0
+
+                while step < max_iter:
                     z = jitted_func(z)
-                    iters += 1
-                escape_times[i, j] = iters
+                    step += 1
+
+                    if np.isinf(z.real) or np.isinf(z.imag) or np.isnan(z.real) or np.isnan(z.imag) or abs(z) > infinity_threshold:
+                        break
+
+                escape_times[i, j] = step
 
         return escape_times
 
