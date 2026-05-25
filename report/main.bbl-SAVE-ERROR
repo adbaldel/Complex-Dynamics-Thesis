@@ -1,0 +1,54 @@
+% $ biblatex auxiliary file $
+% $ biblatex bbl format version 3.3 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated by
+% biber as required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+
+\refsection{0}
+  \datalist[entry]{nty/global//global/global/global}
+    \entry{Beardon1991}{book}{}{}
+      \name{author}{1}{}{%
+        {{hash=0a8327e84842cfcb53b5bce02f150c4a}{%
+           family={Beardon},
+           familyi={B\bibinitperiod},
+           given={Alan\bibnamedelima F.},
+           giveni={A\bibinitperiod\bibinitdelim F\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Springer}%
+      }
+      \strng{namehash}{0a8327e84842cfcb53b5bce02f150c4a}
+      \strng{fullhash}{0a8327e84842cfcb53b5bce02f150c4a}
+      \strng{fullhashraw}{0a8327e84842cfcb53b5bce02f150c4a}
+      \strng{bibnamehash}{0a8327e84842cfcb53b5bce02f150c4a}
+      \strng{authorbibnamehash}{0a8327e84842cfcb53b5bce02f150c4a}
+      \strng{authornamehash}{0a8327e84842cfcb53b5bce02f150c4a}
+      \strng{authorfullhash}{0a8327e84842cfcb53b5bce02f150c4a}
+      \strng{authorfullhashraw}{0a8327e84842cfcb53b5bce02f150c4a}
+      \field{sortinit}{B}
+      \field{sortinithash}{d7095fff47cda75ca2589920aae98399}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{edition}{First Paperback Edition}
+      \field{isbn}{0387951512; 9780387951515}
+      \field{series}{Graduate Texts in Mathematics}
+      \field{title}{Iteration of rational functions}
+      \field{year}{2000}
+    \endentry
+  \enddatalist
+\endrefsection
+\endinput
+

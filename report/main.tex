@@ -5,10 +5,17 @@
 \usepackage[utf8]{inputenc}
 \usepackage[english, spanish, es-tabla, es-noindentfirst]{babel}
 \usepackage[autostyle=true]{csquotes}
-\usepackage{amsfonts, amsthm, amssymb, amsmath}
+% Tipografía:
+% Tipografíca de Visual Complex Analysis (más o menos)
+% \usepackage{amsmath, amsthm, amssymb}
+% \usepackage{mathpazo}
+% \usepackage{eulerpx}
+% Tipografía estándar:
+\usepackage{amsmath, amsthm, amssymb, amsfonts}
 \usepackage[hidelinks]{hyperref}
 \usepackage{graphicx}
-\graphicspath{ {../images} }
+\usepackage{subcaption}
+\graphicspath{ {../figures} }
 \usepackage{pdfpages}
 \usepackage{biblatex}
 \addbibresource{refs.bib}
@@ -27,8 +34,8 @@
 % --- Document -----------------------------------------------------------------
 \begin{document}
 % --- Front Matter -------------------------------------------------------------
-%\frontmatter
-%\include{front}
+% \frontmatter
+% \include{front}
 
 % --- Main Matter --------------------------------------------------------------
 \mainmatter
