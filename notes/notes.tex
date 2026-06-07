@@ -1,0 +1,54 @@
+\documentclass[12pt, a4paper, oneside]{book}
+
+% --- Packages -----------------------------------------------------------------
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+% \usepackage[english, spanish, es-tabla, es-noindentfirst]{babel}
+\usepackage{csquotes}
+% Tipografía:
+% Tipografíca de Visual Complex Analysis (más o menos)
+\usepackage{amsmath, amsthm, amssymb}
+\usepackage{mathpazo}
+\usepackage{eulerpx}
+% Tipografía estándar:
+% \usepackage{amsmath, amsthm, amssymb, amsfonts}
+\usepackage[hidelinks]{hyperref}
+\usepackage{tikz}
+\usetikzlibrary{decorations.pathmorphing, shapes.geometric, arrows.meta}
+\usepackage{graphicx}
+\usepackage{subcaption}
+\graphicspath{ {../figures} }
+\usepackage{pdfpages}
+\usepackage{biblatex}
+\addbibresource{../report/refs.bib}
+
+% --- Defined Commands and Theorem Like Environments ---------------------------
+\input{../report/commands}
+\input{../report/theormen_like-environments}
+
+% --- Includes to Reproccess ---------------------------------------------------
+\includeonly{front,chap1-examples, chap2-rational_maps, chap3-the_fatou_and_julia_sets}
+
+% --- Document Information -----------------------------------------------------
+\title{Rational Dynamics Notes}
+\author{Adrián Baldellou Aguirre}
+
+% --- Document -----------------------------------------------------------------
+\begin{document}
+    % --- Front Matter ---------------------------------------------------------
+    \frontmatter
+    \include{front}
+
+    % --- Main Matter ----------------------------------------------------------
+    \mainmatter
+    \include{chap1-examples}
+    \include{chap2-rational_maps}
+    \include{chap3-the_fatou_and_julia_sets}
+    % --- Appendix -------------------------------------------------------------
+    %\appendix
+    %\include{appendix}
+
+    % --- Back Matter ----------------------------------------------------------
+    \backmatter
+    \printbibliography[heading=bibintoc]
+\end{document}

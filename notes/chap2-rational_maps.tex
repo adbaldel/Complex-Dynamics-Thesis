@@ -1,0 +1,1080 @@
+\chapter{Rational Maps}
+
+% --- SECTION ------------------------------------------------------------------
+% --- THE EXTENDED COMPLEX PLANE -----------------------------------------------
+\section{The Extended Complex Plane}
+
+\begin{definition}[Extended Complex Plane]
+    The \emph{extended complex} plane is the union
+    \[
+        \ExtC = \C \cup \{\infty\},
+    \]
+    where $\infty$ is an \enquote{abstract} point outside $\C$.
+\end{definition}
+
+Now let's define a metric in $\ExtC$ that handles all points with equal ease and
+makes $\infty$ lose any special significance: \emph{the chordal metric}.
+
+Let's start by defining the \emph{Riemann Sphere}. For that, we identify $\C$
+with the horizontal plane
+\[
+    \{ (x_1, x_2, x_3) \in \R^3 \mid x_3 = 0 \}
+\]
+in $\R^3$. Let $S$ be the unit sphere in $\R^3$ centered at the origin, and $N =
+(0,0,1)$ be the north pole.
+
+We now project each point in $\C$ to a point in $S$ by taking the intersection
+between the line that crosses the point $(x_1, x_2, 0)$ and $N$ with $S$. An
+illustration of this projection is given in
+Figure~\ref{fig:stereographic_projection}.
+
+We identify this projection as:
+\[
+    \pi : \ExtC \longrightarrow S,
+\]
+where for $z = x + \I y \in \C$:
+\[
+    \pi(z) = \left( \frac{2x}{1+|z|^2}, \frac{2y}{1+|z|^2}, \frac{|z|^2-1}{1+|z|^2} \right),
+\]
+and $\pi(\infty) = (0,0,1)$.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=\textwidth]{beardons_book/stereographic_projection.png}
+    \caption{Stereographic projection.}
+    \label{fig:stereographic_projection}
+\end{figure}
+
+\begin{definition}[Chordal Metric]
+    Given the projection $\pi$ from $\ExtC$ to $S$, we define the \emph{chordal
+    metric}, $\sigma : \ExtC \times \ExtC \rightarrow \R^+ \cup \{0\}$, as the
+    Euclidean distance from $\pi(z)$ to $\pi(w)$:
+    \[
+        (z,w) \mapsto \sigma(z,w) = |\pi(z) - \pi(w)|.
+    \]
+    Explicitly, when $z, w \in \C$:
+    \[
+        \sigma(z,w) = \frac{2|z-w|}{(1+|z|^2)^{1/2}(1+|w|^2)^{1/2}}.
+    \]
+    For the point at infinity, we have:
+    \[
+        \sigma(z,\infty) = \lim_{w \rightarrow \infty} \sigma(z,w) = \frac{2}{(1+|z|^2)^{1/2}}.
+    \]
+\end{definition}
+
+\begin{remark}[$z \mapsto 1/z$ is an isometry]
+    $\sigma(z,w) = \sigma(z^{-1}, w^{-1})$, i.e., the map $z \mapsto
+    \frac{1}{z}$ is an isometry.
+\end{remark}
+
+\begin{remark}[Rotation in $S$ $\mapsto$ isometry in $\ExtC$]
+    Any rotation $\varphi: S \rightarrow S$ of the sphere induces a map
+    $\pi^{-1} \varphi \pi : \ExtC \rightarrow \ExtC$ which is an isometry. These
+    isometries are Möbius transformations of the form:
+    \[
+        z \mapsto \frac{a z - \bar{c}}{c z + \bar{a}},
+    \]
+    where $|a|^2 + |c|^2 = 1$.
+\end{remark}
+
+The chordal metric handles the point at infinity with ease, but it measures
+distance through the three-dimensional space containing the Riemann sphere. If
+we restrict our measurements strictly to the two-dimensional curved surface of
+the sphere, we obtain the spherical metric.
+
+\begin{definition}[Spherical Metric]
+    Given the stereographic projection $\pi: \ExtC \to S$, the \emph{spherical
+    distance} $\sigma_0(z,w)$ between two points in $\ExtC$ is defined as the
+    Euclidean length of the shortest path (an arc of a great circle) connecting
+    their projections $\pi(z)$ and $\pi(w)$ on the surface of $S$.
+\end{definition}
+
+If the chord joining the projected points subtends an angle $\theta$ at the
+origin of the sphere, then by definition the spherical distance is exactly
+$\sigma_0(z,w) = \theta$. By using the trigonometric connection to the chordal
+metric, we can derive explicit formulas directly in terms of the complex
+coordinates for $z, w \in \C$:
+\[
+    \sigma(z,w) = 2 \sin\left( \frac{\theta}{2} \right) = 2 \sin\left( \frac{\sigma_0(z,w)}{2} \right).
+\]
+Thus,
+\begin{align*}
+    \sigma_0(z,w) &= 2 \arcsin\left( \frac{\sigma(z,w)}{2} \right) \\
+                  &= 2 \arcsin\left( \frac{|z-w|}{(1+|z|^2)^{1/2}(1+|w|^2)^{1/2}} \right).
+\end{align*}
+For the point at infinity, taking the limit as $w \to \infty$ yields:
+\[
+    \sigma_0(z,\infty) = 2 \arcsin\left( \frac{1}{(1+|z|^2)^{1/2}} \right).
+\]
+
+\begin{remark}[$\sigma \sim \sigma_0$]
+    The chordal and spherical metrics are topologically equivalent ($\sigma(z,w)
+    = 2 \sin(\theta/2)$). Furthermore, they satisfy the following inequalities:
+    \[
+        \frac{2}{\pi} \sigma_0(z,w) \le \sigma(z,w) \le \sigma_0(z,w)
+    \]
+\end{remark}
+\begin{proof}
+    The inequalities follow directly from applying the elementary real-variable
+    inequality $\frac{2\theta}{\pi} \le \sin\theta \le \theta$ on the interval
+    $0 \le \theta \le \frac{\pi}{2}$ to the angle $\theta =
+    \frac{\sigma_0(z,w)}{2}$.
+\end{proof}
+
+Because these metrics differ by at most a bounded scale factor of
+$\frac{2}{\pi}$, we can use $\sigma$ and $\sigma_0$ interchangeably throughout
+our study of rational dynamics whenever global constants are allowed to change.
+
+\begin{remark}[Spherical length]
+    Given a continuously differentiable curve $\gamma : I \rightarrow \ExtC$,
+    its \emph{spherical length} is given by:
+    \[
+        \int_{\gamma} \frac{2|\D z|}{1+|z|^2}.
+    \]
+\end{remark}
+
+% --- SECTION ------------------------------------------------------------------
+% --- RATIONAL MAPS ------------------------------------------------------------
+\section{Rational Maps}
+
+\begin{definition}[Rational Map]
+    A \emph{rational map} is a function of the form
+    \[
+        R(z) = \frac{P(z)}{Q(z)},
+    \]
+    where $P(z)$ and $Q(z)$ are polynomials, not both being the zero polynomial.
+\end{definition}
+
+\begin{itemize}
+    \item If $P = 0 \Rightarrow R = 0$.
+    \item If $Q = 0 \Rightarrow R = \infty$.
+    \item If $P(z_0) \neq 0$ and $Q(z_0) = 0$ for some $z_0 \in \C$, then
+    $R(z_0) = \infty$.
+    \item We define $R(\infty) = \lim_{z \rightarrow \infty} R(z)$.
+    \item If $P(z_0) = 0$ and $Q(z_0) = 0$, strictly speaking $R(z_0)$ is not
+    defined, but in this case we may cancel the common factors:
+    \begin{align*}
+        P(z) &= (z-z_0)^m P_1(z) \\
+        Q(z) &= (z-z_0)^n Q_1(z)
+    \end{align*}
+    where $P_1(z_0) \neq 0$ and $Q_1(z_0) \neq 0$. Then:
+    \[
+        R(z) = \frac{P_1(z)}{Q_1(z)} (z-z_0)^{m-n}.
+    \]
+\end{itemize}
+
+From now on, we will consider that this has been done, i.e., $P$ and $Q$ are
+coprime. Thus, given $R$, the polynomials $P$ and $Q$ are uniquely determined up
+to scalar multiplication. This allows us to define the degree of a rational map.
+
+\begin{definition}[Degree of a Rational Map, $\deg(R)$]
+    Given a rational map $R = P/Q$ where $P$ and $Q$ are coprime polynomials,
+    the \emph{degree of $R$} is defined as:
+    \[
+        \deg(R) = \max \{ \deg(P), \deg(Q) \}
+    \]
+    where $\deg(\cdot)$ is the usual degree of a polynomial. We will consider
+    that if $R = \alpha \in \ExtC$, then $\deg(R) = 0$.
+\end{definition}
+
+\begin{proposition}[{$\deg(RS) = \deg(R)\deg(S)$}]
+    Given two rational function $R$, $S$, the degree of $RS$ is $\deg(R)$ times
+    $\deg(S)$. That is,
+    \[
+        \deg(RS) = \deg(R)\deg(S).
+    \]
+    Remember that by writing $RS$ we mean composition ($R \circ S$) not
+    multiplication. However, $\deg(R)\deg(S)$ is a multiplication.
+\end{proposition}
+\begin{proof}
+    See \cite[32]{Beardon1991}.
+\end{proof}
+
+\begin{corollary}[{$\deg(R^n) = [\deg(R)]^n$}] Given a rational function $R$,
+    the degree of $R^n$ is the $n$-th power of $\deg(R)$. That is,
+    \[
+        \deg(R^n) = [\deg(R)]^n.
+    \]
+\end{corollary}
+
+Now, let's remember the definitions of \emph{holomorphic}, \emph{meromorphic}
+and \emph{analytic} functions in $\C$ and see how they translate to $\ExtC$ with
+the chordal metric.
+
+\begin{definition}[Holomorphic]
+    Given $D \subseteq \C$, a function $f : D \rightarrow \C$ is
+    \emph{holomorphic} in $D$ if the derivative of $f$ exists at each point in
+    $D$.
+\end{definition}
+
+\begin{definition}[Meromorphic]
+    Given $D \subseteq \C$, a function $f : D \rightarrow \ExtC$ is
+    \emph{meromorphic} in $D$ if each point in $D$ has a neighborhood on which
+    either $f$ or $1/f$ is holomorphic.
+\end{definition}
+
+\begin{definition}[Pole of $f$]
+    Given a meromorphic function $f$ in $D \subseteq \C$, the \emph{poles of
+    $f$} are the points $w \in D$ where $f(w) = \infty$ ($\lim_{z \to w} f(z) =
+    \infty$).
+\end{definition}
+
+\begin{remark}[$f$ meromorphic $\implies$ $1/f$ holomorphic at $f$'s poles]
+    Given a meromorphic function $f$ in $D \subseteq \C$ with a pole at $w$,
+    then $1/f$ is holomorphic near $w$ and $\frac{1}{f(w)} = 0$.
+\end{remark}
+
+\begin{definition}[$f$ is defined near $\infty$]
+    A function $f$ is said to be \emph{defined near $\infty$} (or \emph{in a
+    neighborhood of $\infty$}) if it is defined on some set $\{ z \in \C \mid
+    |z| > r \} \cup \{\infty\}$.
+\end{definition}
+
+\begin{definition}[Holomorphic or Meromorphic at $\infty$]
+    Given a function $f$ defined near $\infty$, $f$ is \emph{holomorphic} (or
+    \emph{meromorphic}) \emph{at $\infty$} if $f(1/z)$ is holomorphic (or
+    meromorphic) near $0$.
+\end{definition}
+
+\begin{definition}[Analytic in $D \subseteq \ExtC$]
+    Given a map $f : D_1 \rightarrow D_2$ between any two subdomains of $\ExtC$,
+    we say $f$ is \emph{analytic} if it is holomorphic or meromorphic at each
+    point in $D_1$.
+\end{definition}
+
+\begin{remark}[$f$ meromorphic $\implies$ $f$ continuous at its poles]
+    Given a meromorphic function $f$ in $D \subseteq \C$ with a pole at $w$,
+    then (using the chordal metric and its topology), $f$ is continuous at the
+    pole. This is because $z \mapsto 1/z$ is a $\sigma$-isometry:
+    \[
+        \sigma(f(z), f(w)) = \sigma\left(\frac{1}{f(z)}, \frac{1}{f(w)}\right) = \sigma\left(\frac{1}{f(z)}, 0\right) = \frac{2|1/f(z)|}{(1+|1/f(z)|^2)^{1/2}} \xrightarrow{z \rightarrow w} 0
+    \]
+\end{remark}
+
+Summing up, we have that the concepts of \emph{holomorphic}, \emph{meromorphic}
+and \emph{analytic} functions translate well from $\C$ with the Euclidean
+metric, to $\ExtC$ with the chordal or spheric metric. Hence, making $\infty$
+lose any special significance it may have had in $\C$.
+
+\begin{proposition}[$\infty$ is a fixed point for all polynomials in $\ExtC$]
+    Given a polynomial $P(z) = a_0 + a_1 z + \cdots + a_n z^n$ where $n > 0$ and
+    $a_n \neq 0$. Then, $P$ is analytic in $\ExtC$.
+\end{proposition}
+\begin{proof}
+    This proof serves to illustrate what holomorphic and meromorphic mean. We
+    have to show that $P$ is holomorphic or meromorphic at each point in
+    $\ExtC$. We have that $P$ is analytic in $\C$ because it's a polynomial,
+    thus, we only have to show that $P$ is holomorphic or meromorphic at
+    $\infty$. We'll see that it's meromorphic at $\infty$, i.e., $P(1/z)$ is
+    meromorphic at $0$, i.e., $1/P(1/z)$ is holomorphic at $0$. And we can see
+    that
+    \[
+        \frac{1}{P(1/z)} = \frac{z^n}{a_0 z^n + \cdots + a_n}
+    \]
+    is differentiable at $0$, therefore, $P$ is meromorphic at $\infty$.
+\end{proof}
+
+\begin{theorem}[Analytic in $\ExtC$ $\iff$ rational map]
+    The rational maps are precisely the analytic maps of $\ExtC$ into itself.
+\end{theorem}
+
+\begin{theorem}[Rational maps are $d$-fold maps in $\ExtC$]
+    \label{thm:rational_map_are_dfold_maps}
+    Given $R$ a rational function of positive degree $d$. Then $R$ is a $d$-fold
+    map of $\ExtC$ \emph{onto} itself: that is, for any $w$ in $\ExtC$, the
+    equation $R(z) = w$ has \emph{precisely} $d$ solutions in $z$ (counting
+    multiplicities).
+\end{theorem}
+\begin{proof}
+    See \cite[31-32]{Beardon1991}.
+\end{proof}
+
+\begin{remark}[Zeros and poles of rational maps]
+    Given $R=P/Q$ a rational function of positive degree $d$, where $P$ and $Q$
+    are coprime polynomials with $\deg(P) = n$ and $\deg(Q) = m$. Then, the
+    zeros of $R$ are the zeros of $P$, and the poles of $R$ are the zeros of
+    $Q$. Moreover, the number of zeros and poles of $R$ at $\infty$ (counting
+    multiplicities) are given by the following cases:
+    \begin{enumerate}
+        \item if $n = m$, then all the zeros and poles of $R$ are in $\C$;
+        \item if $n > m$, then the number of poles at $\infty$ is $n-m$;
+        \item and if $n < m$, then the number of zeros at $\infty$ is $m-n$.
+    \end{enumerate}
+\end{remark}
+
+% --- SECTION ------------------------------------------------------------------
+% --- THE LIPSCHITZ CONDITION --------------------------------------------------
+\section{The Lipschitz Condition}
+
+\begin{theorem}[Rational maps satisfy the Lipschitz condition]
+    A rational map $R$ satisfies some \emph{Lipschitz condition}
+    \[
+        \sigma_0(R(z), R(w)) \leq M\sigma_0(z,w)
+    \]
+    on the complex sphere.
+\end{theorem}
+\begin{proof}
+    See \cite[33]{Beardon1991}.
+\end{proof}
+
+\begin{theorem}[Möbius transformations explicit Lipschitz condition]
+    The Möbius map
+    \[
+        g(z) = \frac{az + b}{cz+d},\quad ad-bc = 1,
+    \]
+    satisfies the \emph{Lipschitz condition}
+    \[
+        \sigma_0(g(z), g(w)) \leq ||g||^2 \sigma_0(z, w).
+    \]
+\end{theorem}
+\begin{proof}
+    See \cite[33-34]{Beardon1991}.
+\end{proof}
+
+\begin{theorem}[Möbius transformations \emph{family} explicit uniform Lipschitz condition]
+    Let m be any positive number. Then the Möbius transformations $g$ which
+    satisfy
+    \begin{alignat*}{3}
+        &\sigma(g(0),      &&g(1))      &&\geq m, \\
+        &\sigma(g(1),      &&g(\infty)) &&\geq m, \\
+        &\sigma(g(\infty), &&g(0))      &&\geq m
+    \end{alignat*}
+    also satisfy the \emph{uniform Lipschitz condition}
+    \[
+        \sigma(g(z), g(w)) \leq \frac{\pi}{m^3} \sigma(z, w).
+    \]
+\end{theorem}
+\begin{proof}
+    See \cite[34-35]{Beardon1991}.
+\end{proof}
+
+\begin{definition}[Complementary components of a closed curve $\gamma$]
+    Let $\gamma$ be a \emph{closed curve} on the sphere. The complement of
+    $\gamma$ is a union of mutually disjoint domains, which we call the
+    \emph{complementary components} of $\gamma$.
+\end{definition}
+
+\begin{definition}[Exterior and interior of a closed curve $\gamma$ contained in a open hemisphere]
+    Let $\gamma$ be a \emph{closed curve} that lies in some \emph{open
+    hemisphere}. Then exactly one of the complementary components contains a
+    hemisphere; we denote this by $E(\gamma)$ and call it the \emph{exterior} of
+    $\gamma$. The other complementary components of $\gamma$ are said to be the
+    \emph{interior components} of $\gamma$.
+\end{definition}
+
+\begin{theorem}[Interior components mapping theorem for rational maps]
+    Let $R$ be a rational function. Then there is a positive number $\delta$
+    such that if $\gamma$ is any closed curve of $\sigma_0$-diameter less than
+    $\delta$, then the image $R(\Omega)$ of an interior component $\Omega$ of
+    $\gamma$ does not meet the exterior $E(R(\gamma))$ of $R(\gamma)$.
+\end{theorem}
+\begin{proof}
+    See \cite[35-36]{Beardon1991}.
+\end{proof}
+
+This result almost says that if the curve $\gamma$ is sufficiently small, then
+the interior components of $\gamma$ map to the interior components of the image
+curve $R(\gamma)$: however, the images of the interior components may also
+contain points of $R(\gamma)$, so it is necessary to express this a little more
+carefully in terms of the exterior of the image curve
+(Figure~\ref{fig:interior_of_curve_mobius_transformed}).
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=\textwidth]{ai_generated/interior_of_curve_mobius_transformed-visualization.png}
+    \caption{If the curve $\gamma$ is sufficiently small ($\mathrm{diam}(\gamma)
+    < \delta$), the image of its interior component $\Omega$ under a rational
+    function $R$ is entirely contained within the bounded regions defined by the
+    image curve $R(\gamma)$, never entering the exterior $E(R(\gamma))$.}
+    \label{fig:interior_of_curve_mobius_transformed}
+\end{figure}
+
+% --- SECTION ------------------------------------------------------------------
+% --- CONJUGACY ----------------------------------------------------------------
+\section{Conjugacy}
+
+\begin{definition}[Conjugate rational maps]
+    Given two rational maps $R$ and $S$, we say $R$ and $S$ are \emph{conjugate}
+    if there is some Möbius map g with
+    \[
+        S = g R g^{-1}.
+    \]
+\end{definition}
+
+\begin{remark}[Conjugacy is an equivalence relation]
+    Conjugacy is an equivalence relation, and the equivalence classes are
+    \emph{conjugacy classes} of rational maps.
+\end{remark}
+
+\begin{remark}[Invariant properties of conjugacy]
+    Given two conjugate rational maps $R$ and $S$, where $S = g R g^{-1}$. Then,
+    the following are true:
+    \begin{enumerate}
+        \item $\deg(R) = \deg(S)$;
+        \item $S^n = g R^n g^{-1}$ (this means that we can transfer a problem
+        concerning $R$ to a (possibly simpler) problem concerning a conjugate
+        $S$);
+        \item and $S$ fixes $g(z)$ if and only if $R$ fixes $z$ (conjugacy
+        respects fixed points).
+    \end{enumerate}
+\end{remark}
+
+All of these observations are elementary; nevertheless, they are important
+because, in general, we shall not bother to distinguish between conjugate
+rational functions.
+
+As a simple illustration of the use of conjugacy, let us characterize the
+polynomials within the class of rational maps.
+
+\begin{remark}[Polynomials have one pole and it's $\infty$]
+    A rational map $R$ is a polynomial if and only if $R$ has a pole at $\infty$
+    and no poles in $\C$; more succinctly, if and only if $R^{-1}\{\infty\} =
+    \{\infty\}$.
+\end{remark}
+
+\begin{theorem}[Characterization of the conjugacy class of the polynomials]
+    A non-constant rational map $R$ is conjugate to a polynomial if and only if
+    there is some $w$ in $\ExtC$ with $R^{-1}\{w\} = \{w\}$.
+\end{theorem}
+
+% --- SECTION ------------------------------------------------------------------
+% --- VALENCY ------------------------------------------------------------------
+\section{Valency}
+
+\begin{definition}[Valency of $f$ at $z_0 \in \C$]
+    \label{def:valency_in_C}
+    Given any function $f$ that is non-constant and holomorphic near the point
+    $z_0$ in $\C$. Then $f$ has a Taylor expansion at $z_0$, say
+    \[
+        f(z) = a_0 + a_k(z-z_0)^k + a_{k+1}(z-z_0)^{k+1} + \dots
+    \]
+    where $a_k \neq 0$ and the positive integer $k$ is uniquely determined by
+    the condition that the limit
+    \[
+        \lim_{z \to z_0} \frac{f(z)-f(z_0)}{(z-z_0)^k}
+    \]
+    exists, is finite, and is non-zero. 
+    
+    We denote this integer $k$ by $v_f(z_0)$ and call it the \emph{valency}, or
+    \emph{order}, of $f$ at $z_0$: of course, it is the number of solutions of
+    $f(z) = f(z_0)$ at $z_0$.
+\end{definition}
+
+\begin{proposition}[Chain Rule for Valency]
+    The valency function $v$ satisfies the important \emph{Chain Rule}:
+    \[
+        v_{fg}(z_0) = v_f(g(z_0))v_g(z_0),
+    \]
+    where $f$ and $g$ are non-constant holomorphic functions near $g(z_0)$ and
+    $z_0$ respectively; and $z_0$, $g(z_0)$, and $fg(z_0)$ are all in $\C$.
+\end{proposition}
+\begin{proof}
+    See \cite[37-38]{Beardon1991}.
+\end{proof}
+
+\begin{remark}[Injectivity in terms of valency]
+    \label{rmk:injectivity_in_terms_of_valency}
+    Given any function $f$ that is non-constant and holomorphic near the point
+    $z_0$ in $\C$. Observe that $f$ is injective in some neighborhood of $z_0$
+    if and only if $v_f(z_0) = 1$.
+\end{remark}
+
+\begin{remark}[Composing with injective functions preserves valency]
+    Because of the previous remark (\ref{rmk:injectivity_in_terms_of_valency}),
+    the Chain Rule shows that the valency is preserved under a pre-application,
+    and a post-application, of an injective function.
+
+    Explicitly, if $fg$ is defined near $z$ with $g$ injective near $z$, and if
+    $hf$ is defined near $z$ with $h$ injective near $f(z)$, then:
+    \begin{align*}
+        v_{fg}(z) &= v_f(g(z)), \\
+        v_{hf}(z) &= v_f(z).
+    \end{align*}
+\end{remark}
+
+The properties of valency under injective functions enable us to extend our
+definition of $v_f(z_0)$ to the case where $z_0 = \infty$, or $f(z_0) = \infty$
+(or both).
+
+\begin{definition}[Valency at $\infty$]
+    \label{def:valency_in_ExtC}
+    Given any function $f$ that is non-constant and holomorphic near the point
+    $\infty$ in $\ExtC$ or $z_0$ in $\ExtC$ such that $f(z_0) = \infty$ (or
+    both). Then, we can select any Möbius maps $g$ and $h$ which map $z_0$ and
+    $f(z_0)$ respectively to points in $\C$ and then define $v_f(z_0)$ by
+    \[
+        v_f(z_0) = v_F(g(z_0)),
+    \]
+    where $F = hfg^{-1}$.
+\end{definition}
+
+The essential observation is that if we repeat this procedure using different
+maps $g$ and $h$, then the resulting answer will be the same; thus $v_f(z_0)$ is
+defined independently of the choice of $g$ and $h$.
+
+\begin{definition}[Univalent map]
+    An analytic map $f : D \to \ExtC$ is said to be \emph{univalent} in $D$ if
+    it is injective there.
+\end{definition}
+
+\begin{remark}[$f$ univalent $\implies v_f(z) = 1 \forall z \in D$]
+    If $f$ is univalent in $D$, then $v_f(z) = 1$ for every $z$ in $D$.
+\end{remark}
+
+The converse \emph{need not hold}, being univalent is a global property (the
+whole domain), but valency is a local property (a neighborhood of $z_0$).
+
+\begin{example}
+    The map $z \mapsto z^2$ of $\C - \{0\}$ onto itself has valency $1$
+    everywhere, but it is not injective in $\C - \{0\}$.
+\end{example}
+
+\begin{remark}[Rational maps are $d$-fold maps via valency]
+    We've seen that rational maps are $d$-fold maps
+    (Theorem~\ref{thm:rational_map_are_dfold_maps}), now we can write this in
+    terms of valency. Given a non-constant rational map $R$ of degree $d$, then
+    for any $z_0$ in $R^{-1}\{w\}$, $v_R(z_0)$ is the number of solutions of
+    $R(z) = w$ at $z_0$, and so for each $w$ in the complex sphere,
+    \[
+        \sum_{z \in R^{-1}\{w\}} v_R(z) = \deg(R).
+    \]
+\end{remark}
+
+% --- SECTION ------------------------------------------------------------------
+% --- THE INVERSE FUNCTION THEOREM ---------------------------------------------
+\section{The Inverse Function Theorem}
+
+Now that we have established the local behavior of analytic maps via valency, we
+can formalize when these maps can be locally inverted. In the classical complex
+plane, this is governed by the derivative.
+
+\begin{theorem}[Inverse Function Theorem in $\C$]
+    \label{thm:inverse_function_theorem_in_C}
+    Let $f: U \to \C$ be a holomorphic function on an open set $U \subseteq \C$,
+    and let $z_0 \in U$. If $f'(z_0) \neq 0$, then there exist open
+    neighborhoods $V \subseteq U$ of $z_0$ and $W$ of $f(z_0)$ such that the
+    restriction $f: V \to W$ is a bijection.
+    
+    Furthermore, the local inverse function $f^{-1}: W \to V$ is holomorphic,
+    and its derivative satisfies:
+    \[
+        (f^{-1})'(f(z_0)) = \frac{1}{f'(z_0)}.
+    \]
+\end{theorem}
+
+Let us now bridge this classical theorem with our structural definition of
+valency at a point.
+
+\begin{remark}[Local injectivity in terms of derivative and valency in $\C$]
+    By examining the Taylor expansion of a non-constant holomorphic function $f$
+    near $z_0 \in \C$:
+    \[
+        f(z) = f(z_0) + f'(z_0)(z-z_0) + \frac{f''(z_0)}{2!}(z-z_0)^2 + \cdots
+    \]
+    we see that $f'(z_0) \neq 0$ if and only if the first non-zero coefficient
+    appears at index $k=1$. By Definition~\ref{def:valency_in_C}, this means
+    $v_f(z_0) = 1$.
+    
+    Thus, the Inverse Function Theorem in $\C$
+    (Theorem~\ref{thm:inverse_function_theorem_in_C}) states that $f$ possesses
+    a local holomorphic inverse near $z_0 \in \C$ if and only if $v_f(z_0) = 1$.
+\end{remark}
+
+Just as we did with valency, we can exploit the fact that composing with
+injective functions preserves local bijectivity to extend this theorem to cases
+where $z_0 = \infty$, $f(z_0) = \infty$, or both.
+
+\begin{theorem}[Inverse Function Theorem in $\ExtC$]
+    \label{thm:inverse_function_theorem_in_ExtC}
+    Let $f : D_1 \to D_2$ be a non-constant analytic map between two subdomains
+    of $\ExtC$, and let $z_0 \in D_1$. Then, we can select any two Möbius
+    transformations $g$ and $h$ which map $z_0$ and $f(z_0)$ respectively to
+    points in $\C$. Let $F = hfg^{-1}$ be the localized map defined near $g(z_0)
+    \in \C$. If $F'(g(z_0)) \neq 0$, then $f$ is a local bijection from a
+    $\sigma$-neighborhood of $z_0$ onto a $\sigma$-neighborhood of $f(z_0)$.
+    Consequently, it possesses a local analytic inverse $f^{-1}$ near $f(z_0)$.
+\end{theorem}
+
+The essential observation is that if we repeat this procedure using different
+maps $g$ and $h$, then the resulting answer will be the same; thus the theorem
+can be generalized to $\ExtC$ from $\C$ independently of the choice of $g$ and
+$h$.
+
+\begin{remark}[Local injectivity in terms of localized derivative and valency in $\ExtC$]
+    Let $f$, $g$, $h$, and $F$ be defined as in
+    Theorem~\ref{thm:inverse_function_theorem_in_ExtC}. By expanding the
+    non-constant holomorphic map $F$ into a Taylor series near the point $w_0 =
+    g(z_0) \in \C$:
+    \[
+        F(w) = F(w_0) + F'(w_0)(w-w_0) + \frac{F''(w_0)}{2!}(w-w_0)^2 + \cdots
+    \]
+    we observe that $F'(g(z_0)) \neq 0$ if and only if the first non-zero
+    coefficient after the constant term appears at index $k=1$. 
+    
+    By your definition of extended valency, this means $v_F(g(z_0)) = v_f(z_0) =
+    1$. Thus, the Inverse Function Theorem in $\ExtC$
+    (Theorem~\ref{thm:inverse_function_theorem_in_ExtC}) establishes a universal
+    rule across the entire Riemann sphere: an analytic map $f$ admits a local
+    analytic inverse near a point $z_0 \in \ExtC$ if and only if $v_f(z_0) = 1$.
+\end{remark}
+
+% --- SECTION ------------------------------------------------------------------
+% --- FIXED POINTS -------------------------------------------------------------
+\section{Fixed Points}
+
+\begin{definition}[Fixed point of $f$]
+    Given any function $f : D \to \ExtC$ defined on some domain $D \subseteq
+    \ExtC$. A point $z_0$ in $D$ is a \emph{fixed point} of $f$ if $f(z_0) =
+    z_0$.
+\end{definition}
+
+\begin{proposition}[Fixed points of rational maps]
+    Given by two coprime polynomials $P$ and $Q$ and the rational map $R = P/Q$.
+    Then,
+    \begin{enumerate}
+        \item $R$ fixes $\infty$ if and only if $\deg(P) > \deg(Q)$;
+        \item and $R$ fixes $\zeta \in \C$ if and only if$P(\zeta) = \zeta
+        Q(\zeta)$; that is, the \emph{fixed points of $R$ in $\C$} are the
+        solutions of 
+        \[
+            P(z) - z Q(z) = 0.
+        \]
+    \end{enumerate}
+\end{proposition}
+\begin{proof}
+    See \cite[39]{Beardon1991}.
+\end{proof}
+
+We count fixed points the same way we count zeros, that is, counting
+multiplicities.
+
+\begin{definition}[Number of fixed points at $z_0 \in \C$]
+    Given any function $f : D \to \ExtC$ defined on some domain $D \subseteq
+    \ExtC$. The number of fixed points of $f$ at a point $z_0$ in $\C$ is given
+    by the valency of the function $f(z) - z$ at $z_0$, i.e., $v_{f(z)-z}(z_0)$.
+\end{definition}
+
+\begin{example}
+    The map $f(z) = z + z^3$ has three fixed points at $0$. This is because the
+    fixed points of $f$ are the zeros of $f(z) - z$, and
+    \[
+        f(z) - z = z^3,
+    \]
+    which has valency $3$ at $0$ ($z^3 = f(0) - 0 = 0$ has three solutions).
+    This is not to be confused with the valency of $f$ at $0$, which is $1$. In
+    fact, $f(z) = f(0)$ has only one solution at $0$ ($f(z) = z(1 + z^2)$).
+\end{example}
+
+To count the number of fixed points at $\infty$, we need the following lemma.
+
+\begin{lemma}
+    Let $\zeta$ in $\C$ be a fixed point of an analytic map $f$, and let
+    $\varphi$ be any map that is analytic, injective and finite in some
+    neighborhood of $\zeta$. Then, $\varphi f \varphi^{-1}$ has the same number
+    of fixed points at $\varphi(\zeta)$ as $f$ has at $\zeta$.
+\end{lemma}
+\begin{proof}
+    See \cite[39-40]{Beardon1991}.
+\end{proof}
+
+\begin{definition}[Number of fixed points at $\infty$]
+    Given any function $f : D \to \ExtC$ defined on some domain $D \subseteq
+    \ExtC$, $\infty \in D$. Then we can select an analytic map $\varphi$, that
+    is injective and finite in some neighborhood of $\infty$, and then define
+    the number of fixed points of $f$ at $\infty$ by the number of fixed points
+    of $\varphi f \varphi^{-1}$ at $\varphi(\infty)$.
+\end{definition}
+
+The essential observation is that if we repeat this procedure using different
+maps $\varphi$, then the resulting answer will be the same; thus, the number of
+fixed points of $f$ at $\infty$ is defined independently of the choice of
+$\varphi$.
+
+Moreover, as a direct consequence of the previous lemma, we have the following
+theorem.
+
+\begin{theorem}[Number of fixed points is invariant under conjugacy]
+    Given two conjugate rational maps $R$ and $S$, where $S = g R g^{-1}$, $g$
+    is a Möbius transformation. Then, the number of fixed points of $R$ at
+    $\zeta$ is the same as the number of fixed points of $S$ at $g(\zeta)$.
+\end{theorem}
+
+\begin{theorem}[Number of fixed points of a rational map]
+    Given a rational map $R$ of degree $d \geq 1$. Then, the number of fixed
+    points of $R$ in $\ExtC$ is exactly $d + 1$ (counting multiplicities).
+\end{theorem}
+\begin{proof}
+    See \cite[40]{Beardon1991}.
+\end{proof}
+
+\begin{definition}[Multiplier of a fixed point in $\C$]
+    Given a rational map $R$ and a fixed point $\zeta$ in $\C$ of $R$. We define
+    \emph{multiplier} of $R$ at $\zeta$, denoted by $m(R, \zeta)$, as the
+    complex number given by the derivative:
+    \[
+        m(R, \zeta) = R'(\zeta).
+    \]
+\end{definition}
+
+\begin{definition}[Multiplier of the fixed point $\infty$]
+    Given a rational map $R$ with a fixed point at $\infty$. Then, we can select
+    a Möbius map $g$ that maps $\infty$ to some point in $\C$, and then define
+    the multiplier of $R$ at $\infty$ by the multiplier of $g R g^{-1}$ at
+    $g(\infty)$:
+    \[
+        m(R, \infty) = m(g R g^{-1}, g(\infty)).
+    \]
+\end{definition}
+
+Note that, by the preceding remarks, this definition is independent of the
+choice of $g$.
+
+\begin{example}[Multiplier at $\infty$ for a rational map]
+    Let $R$ be a rational map of the form
+    \[
+        R(z) = \frac{a_0 + a_1 z + \cdots + a_n z^n}{b_0 + b_1 z + \cdots + b_m z^m},
+    \]
+    where $a_n b_m \neq 0$ and $n > m$, so $R$ fixes $\infty$. By definition,
+    $m(R, \infty)$ is the derivative of the conjugate map $S(z) = 1/R(1/z)$ at
+    the origin. A direct computation shows:
+    \[
+        S'(0) =
+        \begin{cases}
+            b_m/a_n & \text{if } n = m + 1, \\
+            0 & \text{if } n > m + 1.
+        \end{cases}
+    \]
+    On the other hand, computing the derivative $R'(z)$ and taking the limit
+    gives:
+    \[
+        R'(\infty) = \lim_{z \to \infty} R'(z) =
+        \begin{cases}
+            a_n/b_m & \text{if } n = m + 1, \\
+            \infty & \text{if } n > m + 1.
+        \end{cases}
+    \]
+\end{example}
+
+\begin{remark}[Formula for the multiplier of a rational map at a fixed point in $\ExtC$]
+    These results show that the multiplier $m(R, \zeta)$ of a rational map $R$
+    at fixed point $\zeta$ is given by
+    \[
+        m(R, \zeta) =
+        \begin{cases}
+            R'(\zeta) & \text{if } \zeta \neq \infty; \\
+            \frac{1}{R'(\infty)} & \text{if } \zeta = \infty.
+        \end{cases}
+    \]
+\end{remark}
+
+\begin{example}
+    For example, if $R(z) = 3z$, then $\infty$ is an attracting fixed point of
+    $R$ (this is geometrically clear) and in this case, $m(R, \infty) = 1/3$.
+\end{example}
+
+We conclude this section by analyzing the behavior of the number of fixed points
+under iteration near a fixed point of $f$.
+
+\begin{theorem}[Iterates near the fixed point $0$]
+    Given an analytic function $f$ that in a neighborhood of the origin has the
+    expansion
+    \[
+        f(z) = a z + b_1 z^{r+1} + \cdots,
+    \]
+    where $a \neq 0$, $b_1 \neq 0$, and $r \geq 1$. Then its $n$-th iterate, in
+    that neighborhood, has the form
+    \[
+        f^n(z) = a^n z + b_n z^{r+1} + \cdots,
+    \]
+    where
+    \[
+        b_n = a^{n-1} b_1 \left( 1 + a^r + a^{2r} + \cdots + a^{(n-1)r} \right).
+    \]
+\end{theorem}
+\begin{proof}
+    See \cite[42]{Beardon1991}.
+\end{proof}
+
+From this theorem, we immediately obtain several important corollaries regarding
+the behavior of coefficients and the multiplicity of fixed points under
+iteration.
+
+\begin{corollary}[$a = 1 \implies b_n = n b_1$]
+    \label{cor:a_equals_1_implies_bn_equals_nb1}
+    If $a = 1$, then $b_n = n b_1$.
+\end{corollary}
+\begin{proof}
+    This is a direct consequence of the formula for $b_n$:
+    \[
+        b_n = a^{n-1} b_1 \left( 1 + a^r + a^{2r} + \cdots + a^{(n-1)r} \right) = b_1 (1 + 1 + \cdots + 1) = n b_1.
+    \]
+\end{proof}
+
+\begin{corollary}[$b_n = 0 \iff a^r \neq 1$ and $a^{nr} = 1$]
+    $b_n = 0$ if and only if $a^r \neq 1$ and $a^{nr} = 1$.
+\end{corollary}
+\begin{proof}
+    The terms inside the parentheses in the formula for $b_n$ form a geometric
+    series. Thus, we can write:
+    \[
+        b_n = a^{n-1} b_1 \frac{1 - a^{nr}}{1 - a^r}.
+    \]
+    For $b_n$ to be zero, the numerator of that fraction must be zero, but the
+    denominator must not be zero (to avoid a $0/0$ situation, which we already
+    showed in the previous corollary
+    (Corollary~\ref{cor:a_equals_1_implies_bn_equals_nb1}) that it evaluates to
+    $n$).
+    \begin{alignat*}{4}
+        &1 - a^{nr} &&= 0    &&\implies a^{nr} &&= 1, \\
+        &1 - a^r    &&\neq 0 &&\implies a^r    &&\neq 1.
+    \end{alignat*}
+    Thus, $b_n = 0$ if and only if $a^r \neq 1$ and $a^{nr} = 1$.
+\end{proof}
+
+\begin{remark}[$f^n$ has a single fixed point at the origin $\implies f$ has a single fixed point at the origin]
+    If $a^n \neq 1$, then $a \neq 1$. Thus, if $f^n$ has a single fixed point at
+    the origin, then so does $f$.
+\end{remark}
+\begin{proof}
+    If $a = 1$, then $a^n = 1$ for all $n$. Thus, if $a^n \neq 1$, then $a \neq
+    1$. Hence, if $a^n \neq 1$, then $a \neq 1$.
+
+    If $a \neq 1$, the function $f(z) - z$ looks like $(a-1)z + b_1 z^{r+1} +
+    \cdots = z((a-1) + b_1 z^r + \cdots)$, where $a-1 \neq 0$. Thus, $f(z)$ has
+    a single fixed point at the origin.
+
+    If $f^n$ has a single fixed point at the origin, then we can only factor out
+    one $z$ from $f^n(z) - z$, giving us $f^n(z) - z = (a^n - 1)z + b_n z^{r+1}
+    + \cdots = z((a^n - 1) + b_n z^r + \cdots)$, where $a^n - 1 \neq 0$.
+
+    Combining these three results, we have that if $f^n$ has a single fixed
+    point at the origin, then $a^n \neq 1$, which implies $a \neq 1$, thus $f$
+    has a single fixed point at the origin.
+\end{proof}
+
+\begin{corollary}[Number of fixed points at $0$ of the iterates]
+    The iterate $f^n$ has at least as many fixed points at the origin as $f$
+    has. Furthermore, if $f^n$ has strictly more fixed points at the origin than
+    $f$, then $a \neq 1$ but $a^n = 1$.
+\end{corollary}
+\begin{proof}
+    Let's begin by showing that $f^n$ has at least as many fixed points at the
+    origin as $f$ has. We have two cases:
+    \begin{itemize}
+        \item If $a \neq 1$: $f(z) - z$ has a single fixed point at the origin.
+        Since $f^n(0) = 0$, $0$ must be a fixed point of $f^n$ of multiplicity
+        at least $1$.
+        \item If $a = 1$: then $f(z) - z = b_1 z^{r+1} + \cdots$, so $0$ is a
+        fixed point of $f$ of multiplicity $r + 1$ ($b_1 \neq 0$). On the other
+        hand, by Corollary~\ref{cor:a_equals_1_implies_bn_equals_nb1}, $f^n(z) -
+        z = n b_1 z^{r+1} + \cdots$, so $0$ is a fixed point of $f^n$ of
+        multiplicity $r + 1$ (the same as for $f$). Thus, if $a = 1$, then $f^n$
+        has as many fixed points at the origin as $f$ has.
+    \end{itemize}
+
+    Now, let's show that if $f^n$ has strictly more fixed points at the origin
+    than $f$, then $a \neq 1$ but $a^n = 1$. From our analysis above, if $a =
+    1$, the multiplicities are exactly equal, so for $f^n$ to have strictly more
+    fixed points at the origin than $f$, we cannot have $a = 1$. Thus $a \neq
+    1$.
+
+    If $a \neq 1$, then $f$ has a single fixed point at the origin. For $f^n$ to
+    have strictly more fixed points at the origin than $f$, the term $(a^n - 1)$
+    from $f^n(z) - z = (a^n - 1)z + b_n z^{r+1} + \cdots = z((a^n - 1) + b_n z^r
+    + \cdots)$ must vanish so that a higher power of $z$ takes over. Thus, we
+    must have $a^n = 1$.
+\end{proof}
+
+% --- SECTION ------------------------------------------------------------------
+% --- CRITICAL POINTS ----------------------------------------------------------
+\section{Critical Points}
+
+\begin{definition}[Critical point of a rational map]
+    Given a rational map $R$. A point $z_0$ in $\ExtC$ is a \emph{critical
+    point} of $R$ if $R$ fails to be injective in any neighborhood of $z_0$, and
+    if $R$ is not constant. These points are precisely the points at which
+    $v_R(z_0) > 1$.
+\end{definition}
+
+\begin{definition}[Critical value of a rational map]
+    Given a rational map $R$. A point $w_0$ in $\ExtC$ is a \emph{critical
+    value} of $R$ if it is the image of some critical point; that is, if $w_0 =
+    R(z_0)$ for some critical point $z_0$ of $R$.
+\end{definition}
+
+\begin{remark}
+    Given a rational function $R$ of degree $d \geq 1$, and $w$ a non-critical
+    value of $R$. Then, $R^{-1}\{w\}$ consists of precisely $d$ distinct points,
+    say $z_1, z_2, \dots, z_d$. As none of the $z_j$ are critical points, there
+    are neighborhoods of $N$ of $w$, and $N_1, \ldots, N_d$ of $z_1, \ldots,
+    z_d$ respectively, with $R$ acting as a bijection from each $N_j$ onto $N$.
+    See Figure~\ref{fig:bijective_restrictions_of_R_for_non_critical_value}. It
+    follows that for each $j$, the restriction $R_j$ of $R$ to $N_j$ ($R: N_j
+    \to N$) has an inverse
+    \[
+        R_j^{-1} : N \to N_j.
+    \]
+\end{remark}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.6\textwidth]{ai_generated/bijective_restrictions_of_R_for_non_critical_value.png}
+    \caption{Bijective restrictions of $R$ for a non-critical value $w$.}
+    \label{fig:bijective_restrictions_of_R_for_non_critical_value}
+\end{figure}
+
+\begin{definition}[Branch of $R^{-1}$ at a non-critical value $w$]
+    Given a rational function $R$ of degree $d \geq 1$, and $w$ a non-critical
+    value of $R$. Then, we call each of the inverse maps $R_j^{-1} : N \to N_j$
+    a \emph{branch} of $R^{-1}$ at $w$.
+\end{definition}
+
+By applying the Inverse Function Theorem
+(Theorem~\ref{thm:inverse_function_theorem_in_C}), we know that $R$ is injective
+on some neighborhood of any point in $\C$ at which $R'$ has neither a zero nor a
+pole: thus for all but a finite set of $z$, $v_R(z) = 1$ (recall that locally
+injective is the same as having valency 1
+(Remark~\ref{rmk:injectivity_in_terms_of_valency})) and, consequently,
+\[
+    \sum_{z \in \ExtC} [v_R(z) - 1] < \infty.
+\]
+This sum gives us a measure of the number of multiple roots of $R$ (and the
+difficulties in defining $R^{-1}$), and its actual value is given by the
+\emph{Riemann-Hurwitz relation}.
+
+\begin{theorem}[Riemann-Hurwitz relation]
+    Given a non-constant rational map $R$. Then,
+    \[
+        \sum_{z \in \ExtC} [v_R(z) - 1] = 2d - 2.
+    \]
+\end{theorem}
+\begin{proof}
+    See \cite[44]{Beardon1991}.
+\end{proof}
+
+The general term in the sum is positive only when $z$ is a critical point of $R$
+so, as the valency is an integer, this provides us with an estimate of the
+number of critical points of $R$. For a non-constant polynomial $P$, we have
+$v_P(\infty) = \deg(P)$, so, in the same way, we obtain an estimate of the
+number of critical points of $P$ in $\C$. These two estimates are given in the
+following corollary.
+
+\begin{corollary}[Bound on amount of critical points of a rational]
+    A rational map of positive degree $d$ has at most $2d - 2$ critical points
+    in $\ExtC$. A polynomial of positive degree $d$ has at most $d - 1$ critical
+    points in $\C$.
+\end{corollary}
+\begin{proof}
+    Given a non-constant rational map $R$ of degree $d$, for a point to be
+    critical we must have $v_R(z) > 1$, so $v_R(z) - 1 \geq 1$. Thus, the number
+    of critical points of $R$ in $\ExtC$ is at most $2d - 2$.
+
+    In the case of polynomials, we have $v_P(\infty) = \deg(P) = d$, so the
+    contribution of $\infty$ to the sum in the Riemann-Hurwitz relation is $d -
+    1$. Thus, the number of critical points of $P$ in $\C$ is at most $(2d - 2)
+    - (d - 1) = d - 1$.
+\end{proof}
+
+We end this section with a simple result which locates the critical values of
+the iterate $R^n$ in terms of the critical points of $R$.
+
+\begin{theorem}[Critical values of $R^n$]
+    Given a rational map $R$ and its set of critical points $C$. Then, the set
+    of critical values of $R^n$ is
+    \[
+        R(C) \cup \cdots \cup R^n(C).
+    \]
+\end{theorem}
+\begin{proof}
+    See \cite[45]{Beardon1991}.
+\end{proof}
+
+% --- SECTION ------------------------------------------------------------------
+% --- A TOPOLOGY ON THE RATIONAL FUNCTIONS -------------------------------------
+\section{A Topology on the Rational Functions}
+
+To study the global dynamics and stability of families of rational maps, we must
+equip the set of rational functions with a robust topological structure.
+
+\begin{definition}[Spaces $\mathcal{C}$ and $\mathcal{R}$]
+    Let $\mathcal{C}$ denote the class of all continuous maps from the extended
+    complex plane into itself:
+    \[
+        \mathcal{C} = \{ f : \ExtC \longrightarrow \ExtC \mid f \text{ is continuous} \}.
+    \]
+    We denote by $\mathcal{R}$ the specific subclass consisting of all
+    non-constant and constant rational functions.
+\end{definition}
+
+\begin{definition}[Uniform Metric $\rho$]
+    The \emph{metric of uniform convergence} $\rho : \mathcal{C} \times
+    \mathcal{C} \longrightarrow \R^+ \cup \{0\}$ on the complex sphere is
+    defined by:
+    \[
+        \rho(f, g) = \sup_{z \in \ExtC} \sigma_0(f(z), g(z)),
+    \]
+    where $\sigma_0$ is the spherical metric.
+\end{definition}
+
+Since the chordal metric $\sigma$ and the spherical metric $\sigma_0$ only
+differ by a bounded factor, we could equally well use the chordal metric here
+(the metric would change, but the topology would not).
+
+Now $\mathcal{R}$ is a closed subset of $\mathcal{C}$ because if the rational
+functions $R_n$ converge uniformly to $R$ on the complex sphere, then $R$ is
+analytic on the sphere and so it too is rational. More generally (and again we
+could use either the chordal metric or the spherical metric), we have the
+following theorem.
+
+\begin{theorem}[Uniform Limits Preserve Analyticity]
+    Suppose that each function in a sequence $\{f_n\}$ is analytic in a domain
+    $D \subseteq \ExtC$, and that $f_n$ converges uniformly on $D$ to $f$ with
+    respect to the spherical metric $\sigma_0$. Then $f$ is also analytic in
+    $D$.
+\end{theorem}
+\begin{proof}
+    See \cite[46]{Beardon1991}.
+\end{proof}
+
+\begin{corollary}[$\mathcal{R}$ is Closed]
+    The space of rational functions $\mathcal{R}$ is a closed subset of the
+    continuous function space $\mathcal{C}$ under the topology induced by the
+    uniform metric $\rho$.
+\end{corollary}
+
+With the topology established, we now investigate the topological behavior of
+the degree function. Crucially, the degree of a rational map cannot change
+abruptly under small uniform perturbations.
+
+\begin{theorem}[Continuity of the Degree Function]
+    \label{thm:continuity_of_degree_function}
+    The degree map $\deg : \mathcal{R} \longrightarrow \{0, 1, 2, \dots\}$ is
+    continuous. In particualr, if a sequence of rational functions $R_n$
+    converges uniformly on the Riemann sphere to a function $R$, then $R$ is
+    rational and $\deg(R_n) = \deg(R)$ for all sufficiently large $n$.
+\end{theorem}
+\begin{proof}
+    See \cite[46]{Beardon1991}.
+\end{proof}
+
+\begin{definition}[Space of Degree $n$ Maps]
+    We denote by $\mathcal{R}_n$ the collection of all rational maps of degree
+    exactly equal to $n$:
+    \[
+        \mathcal{R}_n = \{ R \in \mathcal{R} \mid \deg(R) = n \}.
+    \]
+\end{definition}
+
+As a consequence of this theorem
+(Theorem~\ref{thm:continuity_of_degree_function}), the class $\mathcal{R}_n$ of
+rational maps of degree $n$ is an open subset of $\mathcal{R}$ for it is the
+inverse image of the open subset $\{n\}$ of $\Z$ under the continuous map $\deg$.
+It is easy to see that each $\mathcal{R}_n$ is connected (for it $R$ and $S$ lie
+in $\mathcal{R}_n$, we can simply \enquote{slide} the zeros and poles of $R$ to those of $S$ while maintaining the same degree) so we obtain the following result.
+
+\begin{corollary}[Connected Components of $\mathcal{R}$]
+    The subspaces $\mathcal{R}_n$ are the components of $\mathcal{R}$.
+\end{corollary}
+
+There are a few remarks that I've not included in the notes, because Beardon
+points out that they can be safely ignored, in \cite[47]{Beardon1991}.
