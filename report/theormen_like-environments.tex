@@ -6,6 +6,13 @@
 \newtheorem*{theorem*}{Theorem}
 \newtheorem*{teorema*}{Teorema} % In Spanish
 
+% Defines teh proposition environment for propositions
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{porposicion}[theorem]{Proposición}
+% For unnumbered propositions
+\newtheorem*{proposition*}{Proposition}
+\newtheorem*{proposicion*}{Proposición}
+
 % Defines the corollary environment for corollaries
 \newtheorem{corollary}{Corollary}[theorem]
 \newtheorem{corolario}{Corolario}[theorem] % In Spanish
@@ -35,3 +42,11 @@
 % For unnumbered remarks
 \newtheorem*{remark*}{Remark}
 \newtheorem*{observacion*}{Observación}
+
+% Defines the example environment for examples
+\theoremstyle{definition}
+\newtheorem{example}{Example}[chapter]
+\newtheorem{ejemplo}[example]{Ejemplo} % In Spanish
+% For unnumbered examples
+\newtheorem*{example*}{Example}
+\newtheorem*{ejemplo*}{Ejemplo} % In Spanish
