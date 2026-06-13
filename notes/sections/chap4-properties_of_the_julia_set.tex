@@ -1,0 +1,573 @@
+\chapter{Properties of the Julia Set}
+
+This chapter is devoted to developing the basic and most easily available
+properties of the Julia set of a rational map. Other properties of the Julia set
+occur throughout the text.
+
+% --- SECTION ------------------------------------------------------------------
+% --- EXCEPTIONAL POINTS -------------------------------------------------------
+\section{Exceptional Points}
+
+We begin now to exploit the fundamental
+Theorem~\ref{thm:analytic_maps_not_touching_zero_one_and_infty_form_a_normal_family}.
+Given a rational map $R$, we have the induced equivalence relation $\sim$
+discussed in section~\ref{sec:completely_invariant_sets}, and the equivalence
+class $[z]$ is the smallest completely invariant set which contains $z$. It is
+easy to see that $[z]$ can be finite only in rather special circumstances, so we
+enshrine this idea in a formal definition.
+
+\begin{definition}[Exceptional point]
+    A point $z$ is said to be \emph{exceptional} for $R$ when $[z]$ is finite,
+    and the set of such points is denoted by $E(R)$.
+\end{definition}
+
+First, we justify the terminology by showing that such points are indeed
+exceptional.
+
+\begin{theorem}[Rational maps have at most two exceptional points]
+    \label{thm:rational_maps_have_at_most_two_exceptional_points}
+    A rational map $R$ of degree at least two has at most two exceptional
+    points.
+    \begin{enumerate}
+        \item If $E(R) = \{\zeta\}$, then $R$ is conjugate to a polynomial with
+        $\zeta$ corresponding to $\infty$.
+        \item If $E(R) = \{\zeta_1, \zeta_2\}$, then $R$ is conjugate to some
+        map $z \mapsto z^d$, where $d$ is an integer ($d \in \Z$), and $\zeta_1$
+        and $\zeta_2$ correspond to $0$ and $\infty$.
+        \end{enumerate}
+\end{theorem}
+\begin{proof}
+    See \cite[66]{Beardon1991}.
+\end{proof}
+
+From this and Theorems~\ref{thm:F_and_J_are_preserved_under_iteration} and
+\ref{thm:F_infty_is_completely_invariant_for_polynomials}, we have immediately
+the following result.
+
+\begin{corollary}[Exceptional points of $R$ with $\deg(R) \geq 2$ lie in $F$]
+    If $\deg(R) \geq 2$, then the exceptional points of $R$ lie in $F(R)$.
+\end{corollary}
+
+We turn now to another characterization of exceptional points.
+
+\begin{definition}[Backward orbit and predecessors]
+    For any $z$, the \emph{backward orbit} of $z$ is the set
+    \begin{align*}
+        \orbit^-(z) &= \{w \mid \text{for some } n \geq 0, R^n(w) = z\} \\
+                    &= \bigcup_{n \geq 0} R^{-n}\{z\},
+    \end{align*}
+    and we call the points in $\orbit^-(z)$ the \emph{predecessors} of $z$.
+\end{definition}
+
+\begin{remark}[Exceptional $\implies$ finite backward orbit]
+    As $\orbit^-(z) \subset [z]$, any exceptional point $z$ has a finite
+    backward orbit.
+\end{remark}
+
+We show now that the converse is true.
+
+\begin{theorem}[Characterization of exceptional points]
+    \label{thm:characterization_of_exceptional_points}
+    The backward orbit $\orbit^-(z)$ is finite if and only if $z$ is
+    exceptional.
+\end{theorem}
+\begin{proof}
+    See \cite[66]{Beardon1991}.
+\end{proof}
+
+As an application of this result we can obtain the following theorem.
+
+\begin{theorem}[$R^k$ is conjugate to a polynomial $\implies R^2$ is conjugate to a polynomial]
+    If for some positive integer $k$, $R^k$ is conjugate to a polynomial, then
+    $R^2$ is also conjugate to a polynomial.
+\end{theorem}
+\begin{proof}
+    Suppose that some iterate $R^k$ of $R$ is conjugate to a polynomial. Then
+    there is some $w$ with $\left(R^k\right)^{-1}\{w\} = \{w\}$ (see
+    Theorem~\ref{thm:characterization_of_the_conjugacy_class_of_the_polynomials})
+    and using Theorem~\ref{thm:characterization_of_exceptional_points} this
+    implies that $w$ is exceptional for $R$. Now such map need not be conjugate
+    to a polynomial (consider, for example, $z \mapsto z^{-2}$) but from
+    Theorem~\ref{thm:rational_maps_have_at_most_two_exceptional_points}, $R^2$
+    must be. Thus, we have proved the theorem.
+\end{proof}
+
+% --- SECTION ------------------------------------------------------------------
+% --- PROPERTIES OF THE JULIA SET ----------------------------------------------
+\section{Properties of the Julia Set}
+
+We shall continue to exploit
+Theorem~\ref{thm:analytic_maps_not_touching_zero_one_and_infty_form_a_normal_family}
+as we explore the structure of the Julia set. We have not yet considered whether
+the Julia set can be non-0empty, and our first task will be to settle this
+issue. The case when the rational map $R$ has degree one is trivial and of
+little interest, but in all other cases, $J$ is not empty.
+
+\begin{theorem}[$\deg(R) \geq 2 \implies J$ is infinite]
+    \label{thm:J_is_infinite}
+    If $\deg(R) \geq 2$, then $J(R)$ is infinite.
+\end{theorem}
+\begin{proof}
+    See \cite[67]{Beardon1991}.
+\end{proof}
+
+It is clear from
+Theorem~\ref{thm:analytic_maps_not_touching_zero_one_and_infty_form_a_normal_family}
+that the integer three has a significant role to play, and it appears yet again
+in a decisive way in the next result.
+
+\begin{theorem}[$J$ is minimal]
+    \label{thm:J_is_minimal}
+    Let $R$ be a rational map with $\deg(R) \geq 2$, and suppose that $E$ is a
+    closed, completely invariant subset of the complex sphere. Then either:
+    \begin{enumerate}
+        \item $E$ has at most two elements and $E \subset E(R) \subset F(R)$; or
+        \item $E$ is infinite and $E \supset J(R)$.
+    \end{enumerate}
+\end{theorem}
+\begin{proof}
+    See \cite[68]{Beardon1991}.
+\end{proof}
+
+It is usual, and convenient, to express the conclusion of
+Theorem~\ref{thm:J_is_minimal} in the form: \emph{$J$ is the smallest, closed,
+completely invariant set with at least three points}, and we shall refer to this
+property as the \emph{minimality} of $J$. The proof of
+Theorem~\ref{thm:J_is_minimal} seems surprisingly short in view of the
+interesting corollaries which follow from it but, of course, this is merely a
+reflection of the potency of
+Theorem~\ref{thm:analytic_maps_not_touching_zero_one_and_infty_form_a_normal_family}.
+We now begin to develop these corollaries.
+
+\begin{remark}[$\ExtC = \interior{J} \cup \boundary{J} \cup F$]
+    First, the extended plane $\ExtC$ is the disjoint union of the interior
+    $\interior{J}$ of $J$, the boundary $\boundary{J}$ of $J$, and the Fatou set
+    $F$.
+\end{remark}
+
+\begin{theorem}[$J = \ExtC$ or $\interior{J} = \emptyset$]
+    Either $J = \ExtC$ or $J$ has empty interior.
+\end{theorem}
+\begin{proof}
+    We know that $F$ is completely invariant: likewise, $J$ is and hence so are
+    $\interior{J}$ and $\boundary{J}$
+    (Theorem~\ref{thm:complete_invarian_is_preserved_under_complement_interior_and_boundary}).
+    If $F$ is not empty then $F \cup \boundary{J}$ is an infinite, closed,
+    completely invariant set and so, by the minimality of $J$, it contains $J$.
+    In these circumstances, $J \subset \boundary{J}$ and this yields the result.
+\end{proof}
+
+We shall consider the case when $J = \ExtC$ in the next section.
+
+Before examining the structure of the Julia set $J$, let us recall a fundamental
+definition from topology. Intuitively, a perfect set is one that is solid,
+containing no gaps and no lonely, isolated points.
+
+\begin{definition}[Perfect set]
+    A set $S$ is called \textbf{perfect} if it is closed and contains no
+    isolated points. Equivalently, $S$ is perfect if it equals its own derived
+    set, meaning $S = S_0$ (where $S_0$ is the set of all accumulation points of
+    $S$).
+\end{definition}
+
+Next, we show that the Julia set fits this description perfectly by analyzing
+its behavior under the rational map $R$.
+
+\begin{proposition}[$J$ is a perfect set]
+    The derived set $J_0$ of $J$ is an infinite, closed, and completely
+    invariant subset of $J$. By the minimality of $J$, it follows that $J
+    \subset J_0$, which implies $J = J_0$. Consequently, \emph{$J$ is a perfect
+    set (and thus has no isolated points)}.
+\end{proposition}
+\begin{proof}
+    First, since $J$ is infinite (by Theorem~\ref{thm:J_is_infinite}), it must
+    contain accumulation points, so $J_0$ is non-empty. By definition, any
+    derived set is automatically closed. 
+    
+    Next, we check invariance under the rational map $R$ (which is continuous
+    and of finite degree):
+    \begin{itemize}
+        \item Since $R$ is continuous, it maps accumulation points to
+        accumulation points, so $R(J_0) \subset J_0$, which means $J_0 \subset
+        R^{-1}(J_0)$ (forward invariance).
+        \item Since $R$ is an open map, the preimage of an accumulation point is
+        also an accumulation point, giving us $R^{-1}(J_0) \subset J_0$
+        (backward invariance).
+    \end{itemize}
+    Combining these, we see that $J_0$ is completely invariant. Finally, by the
+    minimality of the Julia set (Theorem~\ref{thm:J_is_minimal}), any such set
+    within $J$ must be dense and infinite, verifying that $J = J_0$. By our
+    definition, $J$ is perfect.
+\end{proof}
+
+\begin{theorem}[$J$ is uncountable]
+    Let $R$ be a rational map with $\deg(R) \geq 2$. Then the Julia set $J$ is
+    uncountable.
+\end{theorem}
+\begin{proof}
+    By our previous proposition, the Julia set $J$ is a nonempty, closed, and
+    complete metric space that contains no isolated points. 
+    
+    To see why $J$ must be uncountable, suppose for contradiction that $J$ is
+    countable. This means we can list its points as a sequence:
+    \begin{equation*}
+    J = \{x_1, x_2, x_3, \dots\} = \bigcup_{i=1}^{\infty} \{x_i\}
+    \end{equation*}
+    Let $E_i = \{x_i\}$ be the singleton set containing only the point $x_i$. We
+    analyze its topological properties within $J$:
+    \begin{enumerate}
+        \item Each singleton $\{x_i\}$ is closed because finite points are
+        closed in metric spaces.
+        \item Because $J$ has no isolated points, no single point can form an
+        open neighborhood by itself. Therefore, the interior of each $\{x_i\}$
+        is completely empty.
+    \end{enumerate}
+    A closed set with an empty interior is, by definition, \emph{nowhere dense}. 
+    
+    Thus, we have written $J$ as a countable union of nowhere dense sets
+    $\bigcup_{i=1}^{\infty} E_i$. In topology, such a union is called a set of
+    the \emph{first category}. 
+    
+    However, Baire's Category Theorem states that no nonempty complete metric
+    space can be written as a countable union of nowhere dense sets. This
+    directly contradicts our setup. 
+    
+    Because this contradiction arises solely from assuming $J$ is countable, we
+    conclude that $J$ must be uncountable.
+\end{proof}
+
+We continue to explore the consequences of
+Theorem~\ref{thm:analytic_maps_not_touching_zero_one_and_infty_form_a_normal_family},
+and the next result says that the successive iterates of $R$ increasingly expand
+a neighborhood of any point $J$ (we have seen this phenomenon before in some of
+the examples studied in Chapter~\ref{chp:examples}). Given an open set $W$ which
+meets $J$, the result describes the extent to which the images $R^n(W)$ cover
+the sphere. We recall $E(R)$ has at most two elements.
+
+\begin{theorem}
+    Let $R$ be a rational map of degree at least two, and let $W$ be any
+    non-empty open set which meets $J$. Then:
+    \begin{enumerate}
+        \item $\cup_{n=0}^\infty R^n(W) \supset \ExtC - E(R)$; and
+        \item for all sufficiently large integers $n$, $R^n(W) \supset J$.
+    \end{enumerate}
+\end{theorem}
+\begin{proof}
+    See \cite[69]{Beardon1991}.
+\end{proof}
+
+The next three results show how the Julia set $J$ is realized as the limit, or
+the closure, of some countable set.
+
+\begin{definition}[Periodic point]
+    A point $\zeta$ is a \emph{periodic point} of $R$ if it is fixed by some
+    iterate $R^n$.
+\end{definition}
+
+\begin{remark}[The number of periodic points is countable]
+    There are only a countable number of periodic points.
+\end{remark}
+
+\begin{theorem}[$J \subset \closure{\{\text{periodic points}\}}$]
+    Suppose that $\deg(R) \geq 2$. Then $J$ is contained in the closure of the
+    set of periodic points of $R$.
+\end{theorem}
+\begin{proof}
+    See \cite[70-71]{Beardon1991}.
+\end{proof}
+
+\begin{remark}[$J \subset \closure{[z]}$] We now consider the relationship
+    between $J$ and an orbit $[z]$ of a non-exceptional point $z$. As the
+    closure $\closure{[z]}$ of $[z]$ is both closed and completely invariant,
+    the minimality of $J$ implies that \emph{if $z$ is not exceptional, then $J
+    \subset \closure{[z]}$}.
+\end{remark}
+
+\begin{remark}[$z \in J \implies J = \closure{[z]}$] If $z$ is in $J$, then it
+    is not exceptional, so $[z]$, and hence also $\closure{[z]}$, is contained
+    in $J$: thus \emph{if $z$ is in $J$, then $J = \closure{[z]}$}. 
+\end{remark}
+
+In fact, we can replace $[z]$ by the smaller set $\orbit^-(z)$ and still prove
+the following theorem.
+
+\begin{theorem}[$J \subset \closure{\orbit^-(z)}$ and if $z \in J$ they are equal]
+    \label{thm:J_contained_in_backwards_orbit_of_z_non_exceptional_and_equal_if_z_in_J}
+    Let $R$ be a rational map with $\deg(R) \geq 2$.
+    \begin{enumerate}
+        \item If $z$ is not exceptional, then $J$ is contained in the closure of
+        $\orbit^-(z)$.
+        \item If $z \in J$, then $J$ is the closure of $\orbit^-(z)$.
+    \end{enumerate}
+\end{theorem}
+\begin{proof}
+    See \cite[71]{Beardon1991}.
+\end{proof}
+
+\begin{remark}[Using a computer to illustrate $J$]
+    This shows that for any non-exceptional $z$ the backward orbit $\orbit^-(z)$
+    is a countable set which accumulates at every point of $J$, and this is
+    often used as the basis of a computer program to illustrate $J$. Roughly
+    speaking, one select a non-exceptional $z$ and then computes successive
+    inverse images of $z$ to plot the set $J$ where these accumulate. There are
+    difficulties, however; for example, if $\deg(R) = d$, then the number of
+    inverse images at the $n$-th stage is $d^n$ and this grows too rapidly for
+    convenient computations, so some choices need to be made (see
+    \cite{Peitgen1986} and \cite{Barnsley1988} for more details).
+\end{remark}
+
+If $z$ is in $F$ (and is non-exceptional), then the closure of $\orbit^-(z)$
+contains $J$ but, of course, is strictly larger than $J$. Instead of looking at
+the entire inverse orbit $\orbit^-(z)$ we can also look at the $n$-th inverse
+image $R^{-n}(z)$ (which contains at most $d^n$ points) and ask when (in some
+sense) do these points converge to $J$? The same question can be asked of a set
+$E$ instead of the singleton $\{z\}$, and this is a more useful result to have
+available.
+
+\begin{theorem}[$R^{-n}(E)$ converges to $J$ for $E$ compact and non-$F$-limit]
+    \label{thm:R_inverse_n_E_converges_to_J}
+    Let $R$ be a rational map of degree at least two, and let $E$ be a compact
+    subset of the complex sphere with the property that for all $z$ in $F(R)$,
+    the sequence $\{R^n(z) \mid n \geq 1\}$ does not accumulate at any point of
+    $E$. Then given any open set $U$ which contains $J(R)$, $R^{-n}(E) \subset
+    U$ for all sufficiently large $n$.
+\end{theorem}
+\begin{proof}
+    See \cite[72]{Beardon1991}.
+\end{proof}
+
+\begin{remark}
+    If the conclusion of the theorem holds we say that $R^{-n}(E)$ converges to
+    $J$ and write $R^{-n}(E) \to J$. Examples of such sets $E$ are easy to find:
+    for example, if $F_0$ is a component of the Fatou set that contains an
+    attracting fixed point $\zeta$, then any compact subset of $F_0 - \{\zeta\}$
+    has the required property.
+\end{remark}
+
+We end this section with the following generalization of
+Theorem~\ref{thm:F_and_J_are_preserved_under_iteration}.
+
+\begin{theorem}[$J$ is preserved between commuting functions]
+    Suppose that $R$ and $S$ are rational maps, each of degree at least two. If
+    $R$ and $S$ commute, then $J(R) = J(S)$.
+\end{theorem}
+\begin{proof}
+    See \cite[72-73]{Beardon1991}.
+\end{proof}
+
+% --- SECTION ------------------------------------------------------------------
+% --- RATIONAL MAPS WITH EMPTY FATOU SET ---------------------------------------
+\section{Rational Maps with Empty Fatou Set}
+
+\begin{example}
+    Our first objective is to show that for the rational map
+    \begin{equation}
+        \label{eq:lattes_function_1}
+        z \mapsto \frac{(z^2 + 1)^2}{4z(z^2 - 1)},
+    \end{equation}
+    \emph{the Julia set is the entire complex sphere}: this example (the first
+    of its kind was given by Lattès in 1918, \cite{Lattes1918}). After this, we
+    shall make some general observations about other rational functions with
+    this property.
+
+    We shall use the technique illustrated in
+    section~\ref{sec:tchebychev_polynomials}, although here, we use a group of
+    translations with two generator, and we require considerably more complex
+    analysis. Let $\lambda$ and $\mu$ be complex numbers that are not real
+    multiples of each other, and let $\Lambda$ be the corresponding lattice,
+    that is,
+    \begin{equation}
+        \label{eq:lamdba_mu_lattice}
+        \Lambda = \{m\lambda + n\mu \mid n, m \in \Z\}.
+    \end{equation}
+
+    A \emph{period parallelogram} for $\Lambda$ is any closed parallelogram of
+    the form
+    \begin{equation*}
+        \Omega = \{z + s\lambda + t\mu \mid 0 \leq s \leq 1, 0 \leq t \leq 1\}.
+    \end{equation*}
+
+    A non-constant function $f$ is an \emph{elliptic function} for $\Lambda$ if
+    it is meromorphic on $\C$, and if each $\omega$ in $\Lambda$ is a period of
+    $f$; that is, if for all $z$ in $\C$ and all $\omega$ in $\Lambda$, $f(z +
+    \omega) = f(z)$. Of course, any such function maps $\C$ into $\ExtC$ and,
+    because $f(\C) = f(\Omega)$, we see that $f(\C)$ is a compact subset of
+    $\ExtC$. However, by the Open Mapping Theorem, $f(\C)$ is also an open
+    subset of $\ExtC$: thus
+    \begin{equation*}
+        f(\Omega) = f(\C) = \ExtC.
+    \end{equation*}
+
+    Our argument is based on the properties of the Weierstrass elliptic function
+    \begin{equation*}
+        \wp(z) = \frac{1}{z^2} +  \sum{}^*\left[\frac{1}{(z + \omega)^2} - \frac{1}{\omega^2}\right]
+    \end{equation*}
+    where $\sum{}^*$ denotes summation over non-zero elements $\omega$ in
+    $\Lambda$ (see for example, \cite[272-276]{Ahlfors1979}, \cite{DuVal1973} or
+    \cite{Lang1987}). We shall only give the main steps in the argument but, for
+    the convenience of some readers, we give and expanded version in the
+    Appendix to this chapter. Now $\wp$ and its derivatives satisfy certain
+    algebraic identities, and among these there is the \emph{addition formula}
+    \begin{equation}
+        \label{eq:wp_addition_formula}
+        \wp(2z) = R(\wp(z)),
+    \end{equation}
+    where $r$ is the rational function given by
+    \begin{equation}
+        \label{eq:wp_addition_formula_function}
+        R(z) = \frac{z^4 + g_2 z^2/2 + 2g_3z + (g_2/4)^2}{4z^3 - g_2z - g_3},
+    \end{equation}
+    and where $g_2$ and $g_3$ are known quantities defined in terms of the
+    lattice $\Lambda$. Note that (\ref{eq:wp_addition_formula}) is analogous to
+    the double angle formulae in elementary trigonometry.
+
+    Now let $D$ be any disc in $\C$, let $U = \wp^{-1}(D)$, and define
+    $\varphi(z) = 2z$. As $U$ is open, and as $\varphi^n(U)$ is the set $U$
+    expanded by a factor $2^n$, it is clear that for sufficiently large $n$,
+    $\varphi^n(U)$ contains a period parallelogram $\Omega$ of $\wp$. Using this
+    with (\ref{eq:wp_addition_formula}), we deduce that for these $n$,
+    \begin{equation*}
+        R^n(D) = R^n(\wp(U)) = \wp(2^n U) = \ExtC:
+    \end{equation*}
+    roughly speaking, this implies that the functions $R^n$ explode any small
+    disc $D$ onto the whole sphere. Clearly, as $D$ is arbitrary,
+    (\ref{eq:wp_addition_formula_function}) implies that the family $\{R^n\}$ is
+    not equicontinuous on \emph{any} open subset of the complex sphere, and so
+    we deduce that $J(R) = \ExtC$.
+
+    This argument gives a family of rational maps whose Julia set is the sphere;
+    indeed, we always have
+    \begin{equation}
+        \label{eq:g2_cubed_minus_27_g3_squared}
+        g_2^3 - 27 g_3^2 \neq 0,
+    \end{equation}
+    and any pair ($g_2$, $g_3$) satisfying this is realized by some lattice (see
+    \cite[39]{Lang1987}). Using this, we can construct $\Lambda$ so that $g_2 =
+    4$ and $g_3 = 0$; then $R$ given by (\ref{eq:wp_addition_formula_function})
+    is the function (\ref{eq:lattes_function_1}). However, there is an easier
+    construction than this. First, we let $\tau$ be a positive number, and we
+    construct the square lattice $\Lambda$, and the corresponding function
+    $\wp$, by taking $\lambda = \tau$ and $\mu = i\tau$. This choice leads
+    easily to $g_3 = 0$ (see the Appendix in \cite[77-79]{Beardon1991}), and
+    hence to a simplification of (\ref{eq:wp_addition_formula_function}), namely
+    \begin{equation*}
+        R(z) = \frac{16z^4 + 8g_2z^2 + (g_2)^2}{16z(4z^2 - g_2)}.
+    \end{equation*}
+
+    Now from (\ref{eq:g2_cubed_minus_27_g3_squared}), as $g_3 = 0$, we have $g_2
+    \neq 0$, so by taking $h(z) = 2z/\sqrt{g_2}$, we find that $hRh^{-1}$ (which
+    also has $\ExtC$ as its Julia set) is the function given in
+    (\ref{eq:lattes_function_1}). For further information and related examples,
+    see references in \cite[75]{Beardon1991}.
+
+    There are other interesting dynamical aspects of this example and briefly,
+    we shall discuss some of these. For each positive integer $k$, we denote the
+    set of points $\omega/2^k$, $\omega \in \Lambda$, by $2^{-k}\Lambda$, and
+    observe that if $z$ is in $2^{-k}\Lambda$, then
+    \begin{equation*}
+        R^k(\wp(z)) = \wp(2^k z) = \infty.
+    \end{equation*}
+    This shows that the inverse orbit $\orbit^-(\infty)$ under $R$ is
+    $\wp(\cup_{k \in \N} 2^{-k}\Lambda)$. As $\cup_{k \in \N} 2^{-k}\Lambda$ is
+    dense in $\C$, its $\wp$-image is dense in $\ExtC$, and so by
+    Theorem~\ref{thm:J_contained_in_backwards_orbit_of_z_non_exceptional_and_equal_if_z_in_J},
+    we find again that $J(R) = \ExtC$.
+
+    Next, the formula (\ref{eq:wp_addition_formula}) shows that if $m = 2^k -
+    1$, then
+    \begin{equation*}
+        R^k(\wp(\omega/m)) = \wp(2^k \omega/m) = \wp(\omega + \omega/m) = \wp(\omega/m),
+    \end{equation*}
+    and so the points $\wp(\omega/m)$ are periodic points of $R$. By considering
+    all $\omega$ and all $k$, we now see that \emph{the periodic points of $R$
+    are dense in $\ExtC$}. Although we are not yet in a position to claim that
+    this shows that $J(R) = \ExtC$, it is intuitively clear that it must (and it
+    will follow from some of our later results).
+\end{example}
+
+\begin{definition}[Pre-periodic point]
+    A critical point of a rational map $R$ is said to be \emph{pre-periodic} if
+    it is not periodic, but a forward image of it is.
+\end{definition}
+
+\begin{theorem}[$\forall z \in C$, $z$ pre-periodic $\implies J = \ExtC$]
+    \label{thm:all_critical_points_preperiodic_implies_J_is_ExtC}
+    If every critical point of the rational map $R$ is pre-periodic, then $J =
+    \ExtC$.
+\end{theorem}
+\begin{proof}
+    See Chapter 9 of \cite{Beardon1991}.
+\end{proof}
+
+\begin{example*}[Continuation]
+    The rational map $R$ in (\ref{eq:wp_addition_formula_function}) is of degree
+    four, so it has six critical points, say $c_1, \dots, c_6$. We shall show
+    now that each $c_j$ is finite, and that each is mapped to $\infty$ (a fixed
+    point of $R$) by $R^2$: then each $c_j$ is pre-periodic and we have $J =
+    \ExtC$. Again, we only sketch the main ideas and refer the reader to the
+    Appendix for more details.
+
+    We shall now find the critical points of $R$ in
+    (\ref{eq:wp_addition_formula_function}). Let $\zeta_1, \dots, \zeta_6$ be
+    the six points
+    \begin{equation*}
+        \lambda/4, \quad \mu/4, \quad (\lambda + \mu)/4, \quad (3\lambda + \mu)/4, \quad (2\lambda + \mu)/4, \quad (3\lambda + 2\mu)/4,
+    \end{equation*}
+    and let $\eta_1, \dots, \eta_6$ be the six points
+    \begin{equation*}
+        3\lambda/4, \quad 3\mu/4, \quad (3\lambda + 3\mu)/4, \quad (\lambda + 3\mu)/4, \quad (2\lambda + 3\mu)/4, \quad (\lambda + 2\mu)/4:
+    \end{equation*}
+    note that these twelve points are distinct. As $\wp$ is an even function,
+    and as $\eta_j + \zeta_j \in \Lambda$, we find that
+    \begin{equation*}
+        \wp(\eta_j) = \wp(-\zeta_j) = \wp(\zeta_j),
+    \end{equation*}
+    and from this, and the fact that modulo $\Lambda$, each point of $\ExtC$ has
+    precisely two pre-images under $\wp$, we see that the six values
+    $\wp(\zeta_j)$ are distinct. Now $\wp'(z) = \infty$ if and only if $\wp(z) =
+    \infty$, that is, if and only if $z$ is in $\Lambda$, and it is also known
+    that $\wp'(z) = 0$ if and only if $z$ is in $2^{-1}\Lambda$ but not in
+    $\Lambda$. It follows that
+    \begin{equation*}
+        \wp'(\zeta_j) \neq 0, \infty, \quad \wp'(2\zeta_j) = 0,
+    \end{equation*}
+    and as
+    \begin{equation*}
+        R'(\wp(z))\wp'(z) = 2\wp'(2z),
+    \end{equation*}
+    we see that the six values $\wp(\zeta_j)$ are the six critical points of
+    $R$. Finally, it is immediate from (\ref{eq:wp_addition_formula}) that $R^2$
+    maps each of these to $\infty$.
+\end{example*}
+
+\begin{example}
+    Theorem~\ref{thm:all_critical_points_preperiodic_implies_J_is_ExtC} enables
+    us to produce other examples of maps whose Julia set is the sphere: for
+    example, the map
+    \begin{equation*}
+        R(z) = \frac{(z - 2)^2}{z^2}
+    \end{equation*}
+    has critical points at $0$ and $2$, and as $2 \to 0 \to \infty \to 1 \to 1$
+    under an application of $R$,
+    Theorem~\ref{thm:all_critical_points_preperiodic_implies_J_is_ExtC} implies
+    that for this function too, $J(R)$ is the complex sphere. It is easy to see
+    that this $R$ is conjugate to the map
+    \begin{equation*}
+        z \mapsto 1 - 2/z^2
+    \end{equation*}
+    and in fact, many functions in the family $1 + \omega/z^2$ have this same
+    property: see reference in \cite[76]{Beardon1991} for further details.
+\end{example}
+
+We end this section with a characterization of those rational maps whose Julia
+set is the entire sphere, reference [53] in \cite{Beardon1991}.
+
+\begin{theorem}[$J = \ExtC \iff \exists z$ with dense forward orbit]
+    \label{thm:J_equals_ExtC_iff_exists_z_with_dense_forward_orbit}
+    Let $R$ be a rational map. Then $J(R) = \ExtC$ if and only if there is some
+    $z$ whose forward orbit $\{R^n(z) \mid n \geq 1\}$ is dense in the complex
+    sphere.
+\end{theorem}
+\begin{proof}
+    See \cite[76-77]{Beardon1991}.
+\end{proof}

@@ -1,0 +1,481 @@
+\chapter{The Fatou and Julia Sets}
+
+The informal discussion in Chapter~\ref{chp:examples} suggested that the dynamics of a rational
+map $R$ induces a subdivision of the complex sphere into two sets, namely the
+Fatou set $F$ and the Julia set $J$ of $R$. Here, we introduce the notion of
+equicontinuity of a family of maps, and then formally define the Fatou and Julia
+sets in terms of the equicontinuity of the family $\{R^n\}$. In addition, we
+consider conditions which imply that a family of analytic maps is equicontinuous
+(or a normal family) in a domain.
+
+% --- SECTION ------------------------------------------------------------------
+% --- THE FATOU AND JULIA SETS -------------------------------------------------
+\section{The Fatou and Julia Sets}
+
+\begin{definition}[Continuous function]
+    Given two metric spaces $(X, d_X)$ and $(Y, d_Y)$. A map $f: X \to Y$ is
+    \emph{continuous at $x_0$} in $X$ if and only if, for every
+    positive $\varepsilon$ there exists a positive $\delta$ such that for all
+    $x$ in $X$,
+    \begin{equation*}
+        d_X(x_0, x) < \delta \quad \text{implies} \quad d_Y(f(x_0), f(x)) < \varepsilon.
+    \end{equation*}
+    The function $f$ is \emph{continuous on a subset $X_0$ of $X$} if it is
+    continuous at each point $x_0$ of $X_0$.
+\end{definition}
+
+Clearly, in this definition, $\delta$ depends on $f$, $x_0$ and $\varepsilon$.
+For equicontinuity we will look for a $\delta$ that works for all $f$ in a
+family of functions.
+
+\begin{definition}[Equicontinuous family]
+    Given two metric spaces $(X, d_X)$ and $(Y, d_Y)$. A family $\mathcal{F}$ of
+    maps of $(X, d_X)$ into $(Y, d_Y)$ is \emph{equicontinuous at $x_0$} in $X$
+    if and only if, for every positive $\varepsilon$ there exists a positive
+    $\delta$ such that for all $x$ in $X$, and for all $f$ in $\mathcal{F}$,
+    \begin{equation*}
+        d_X(x_0, x) < \delta \quad \text{implies} \quad d_Y(f(x_0), f(x)) < \varepsilon.
+    \end{equation*}
+    The family $\mathcal{F}$ is \emph{equicontinuous on a subset $X_0$ of $X$}
+    if it is equicontinuous at each point $x_0$ of $X_0$.
+\end{definition}
+
+It is important to realize that the equicontinuity of $\mathcal{F}$ at $x_0$ is
+the formal expression for the idea of preservation of proximity which was
+introduced informally in Chapter~\ref{chp:examples}: indeed, it implies that every function in
+$\mathcal{F}$ maps the open ball with center $x_0$ and radius $\delta$ into a
+ball of radius at most $\varepsilon$.
+
+\begin{remark}[Equicontinuity is preserved under union]
+    If the family $\mathcal{F}$ is equicontinuous on each of the subsets
+    $D_\alpha$ of $X$, then it is automatically equicontinuous on the union
+    $\cup D_\alpha$.
+\end{remark}
+
+Taking the collection $\{D_\alpha\}$ to be the class of all open subsets of $X$
+on which $\mathcal{F}$ is equicontinuous, this leads to the following general
+principle.
+
+\begin{theorem}[$\exists$ a maximal open subset where $\mathcal{F}$ is equicontinuous]
+    Let $\mathcal{F}$ be any family of maps, each mapping $(X, d_X)$ into $(Y,
+    d_Y)$. Then there is a maximal open subset of $X$ on which $\mathcal{F}$ is
+    equicontinuous.
+\end{theorem}
+
+\begin{corollary}[$\exists$ a maximal open subset where $\{f^n\}$ is equicontinuous]
+    If $f$ maps a metric space $(X, d_X)$ into itself, then there is a maximal
+    open subset of $X$ on which the family of iterates $\{f^n \mid n \in \N\}$ is
+    equicontinuous.
+\end{corollary}
+
+This (at last) provides us with a formal definition for the Fatou and Julia sets
+of a rational map $R$, and the following terminology is chosen to honor the
+creators of the theory.
+
+\begin{definition}[Fatou and Julia sets]
+    Let $R$ be a non-constant rational function. The \emph{Fatou set} of $R$ is
+    the maximal open subset of $\ExtC$ on which $\{R^n \mid n \in \N\}$ is
+    equicontinuous, and the \emph{Julia set} of $R$ is its complement in
+    $\ExtC$.
+
+    We denote the Fatou set of a rational map $R$ by $F$, and the Julia set by
+    $J$, although sometimes, when we need to mention $R$ explicitly, we use
+    $F(R)$ and $J(R)$ instead.
+\end{definition}
+
+\begin{remark}[$F$ is open and $J$ is compact]
+    Note that, by definition, $F(R)$ is \emph{open}, and $J(R)$ is
+    \emph{compact}.
+\end{remark}
+
+Although the term \enquote{Julia set} is standard, the use of \enquote{Fatou
+set} was suggested as late as 1984 (in \cite{Blanchard1984}). It seems
+appropriate, but the reader should be familiar with the common alternatives,
+namely \emph{the stable set}, and \emph{the set of normality}. This latter term
+is a reference to normal families of analytic functions, but we have preferred
+to base our definition on equicontinuity because of its more immediate geometric
+appeal.
+
+We end this section with two simple, but important, properties of $F$ and $J$. A
+rational map, and in particular, a Möbius map and its inverse, satisfy a
+Lipschitz condition with respect to the spherical (and chordal) metric on
+$\ExtC$ (\ref{thm:rational_maps_satify_a_lipschitz_condition}). Thus, if we
+conjugate $R$ with respect to a Möbius map, equicontinuity is transferred in the
+obvious way, and we have the following theorem.
+
+\begin{theorem}[Equicontinuity is transferred via conjugation]
+    Let $R$ be a non-constant rational map, let $g$ be a Möbius map, and let
+    $S = g R g^{-1}$. Then $F(S) = g(F(R))$ and $J(S) = g(J(R))$.
+\end{theorem}
+
+A similar argument leads to the following theorem.
+
+\begin{theorem}[$F$ and $J$ are preserved under iteration]
+    \label{thm:F_and_J_are_preserved_under_iteration}
+    For any non-constant rational map $R$, and any positive integer $p$, $F(R^p)
+    = F(R)$ and $J(R^p) = J(R)$.
+\end{theorem}
+\begin{proof}
+    See \cite[51]{Beardon1991}.
+\end{proof}
+
+% --- SECTION ------------------------------------------------------------------
+% --- COMPLETELY INVARIANT SETS -------------------------------------------------
+\section{Completely invariant sets}
+\label{sec:completely_invariant_sets}
+
+\begin{definition}[Invariant set under $g$]
+    Given a map $g$ of a set $X$ into itself, a subset $E$ of $X$ is:
+    \begin{enumerate}
+        \item \emph{forward invariant} if $g(E) = E$;
+        \item \emph{backward invariant} if $g^{-1}(E) = E$;
+        \item \emph{completely invariant} if $g(E) = E = g^{-1}(E)$.
+    \end{enumerate}
+\end{definition}
+
+\begin{remark}[$g$ surjective $\implies$ backward invariant $=$ completely invariant]
+    If $g$ is surjective (that is, if $g(X) = X$) then the concepts of backward
+    invariance and complete invariance coincide. Indeed, by surjectivity (but
+    not necessarily in the general case, because there may be some points in
+    $E$ where $g^{-1}(x) = \emptyset$),
+    \begin{equation*}
+        g(g^{-1}(E)) = E
+    \end{equation*}
+    which, with backward invariance, yields $g(E) = E$. The requirement of
+    surjectivity here is crucial and without it, there is a difference between
+    backward and complete invariance.
+\end{remark}
+
+\begin{example}
+    The map $z \mapsto \exp(z)$ shows how this concepts can be different. Under
+    this map $\C$ is backward invariant, but not completely invariant.
+\end{example}
+
+As our main concern is rational maps, we recall that these map $\ExtC$ onto
+itself: thus for rational maps, backward invariance coincides with complete
+invariance.
+
+We illustrate these ideas with the following result which will be of importance
+later.
+
+\begin{theorem}[Completely invariant $\implies$ non-empty, non-singleton set]
+    \label{thm:completely_invariant_implies_non_empty_non_singleton}
+    Let $R$ be a rational map of degree at least two and suppose that a finite
+    set $E$ is completely invariant under $R$. Then $E$ has at most two
+    elements.
+\end{theorem}
+\begin{proof}
+    See \cite[52]{Beardon1991}.
+\end{proof}
+
+It is convenient to collect together several general, but elementary, properties
+of completely invariant sets and throughout, \emph{we shall assume that $g: X
+\to X$ is surjective} so that we may use complete invariance and backward
+invariance interchangeably.
+
+\begin{proposition}[Complete invariance is preserved under conjugation]
+    Given a surjective map $g$ of a set $X$ into itself, and a completely
+    invariant subset $E$ of $X$ under $g$. Then, if $h$ is a bijection of $X$
+    onto itself, then $h(E)$ is completely invariant under $h g h^{-1}$.
+\end{proposition}
+
+\begin{proposition}[Complete invariance is preserved under intersection]
+    Given a surjective map $g$ of a set $X$ into itself, and a family of
+    completely invariant subsets $\{E_\alpha\}$ of $X$ under $g$. Then,
+    \begin{equation*}
+        E = \bigcap E_\alpha
+    \end{equation*}
+    is completely invariant.
+\end{proposition}
+\begin{proof}
+    The proof can be obtained by applying the standard construction which is
+    used to generate, for example, subgroups, subspaces and topologies. The
+    operator $g^{-1}$ commutes with the intersection operator, that is, for any
+    collection $\{E_\alpha\}$ of sets,
+    \begin{equation*}
+        g^{-1}\left(\bigcap E_\alpha \right) = \bigcap g^{-1}(E_\alpha)
+    \end{equation*}
+\end{proof}
+
+This means, that we can take any subset $E_0$ and form the intersection, say
+$E$, of all those completely invariant sets which contain $E_0$: obviously, $E$
+is then the \emph{smallest completely invariant set that contains $E_0$}, and we
+say that \customhighlight{lightPastelPurple}{$E_0$ \emph{generates} $E$}.
+
+We now introduce an equivalence relation which greatly facilitates the
+discussion of completely invariant sets.
+
+\begin{definition}[Relation $\sim$ (under $g$)]
+    Given a map $g$ of a set $X$ into itself, for any $x$ and $y$ in $X$, we
+    define the relation $\sim$ on $X$ by $x \sim y$ if and only if there exists
+    non-negative integers $n$ and $m$ with
+    \begin{equation}
+        \label{eq:equivalence_relation}
+        g^n(x) = g^m(y).
+    \end{equation}
+\end{definition}
+
+\begin{remark}[$\sim$ is an equivalence relation]
+    Obviously the relation $\sim$ is symmetric and reflexive, and it is also
+    transitive for (\ref{eq:equivalence_relation}) and $g^p(y) = g^q(z)$ imply
+    that
+    \begin{equation*}
+        g^{n+p}(x) = g^{m+q}(z);
+    \end{equation*}
+    thus $\sim$ is an equivalence relation on $X$.
+\end{remark}
+
+\begin{definition}[Orbit of $x$ (under $g$)]
+    We denote the equivalence class containing $x$ by $[x]$, and we call this the
+    \emph{orbit} of $x$ (some authors call this the \enquote{great orbit}).
+\end{definition}
+
+It is easy to identify the orbit $[x]$, and we have the following theorem.
+
+\begin{theorem}[{$[x]$ is the completely invariant set generated by $\{x\}$}]
+    Let $g: X \to X$ be any map of $X$ onto itself. Then $[x]$ is the completely
+    invariant set generated by the singleton $\{x\}$.
+\end{theorem}
+\begin{proof}
+    See \cite[53]{Beardon1991}.
+\end{proof}
+
+\begin{corollary}[Completely invariant $\iff$ union of orbits]
+    A set $E$ is completely invariant if and only if it is a union of
+    equivalence classes $[x]$.
+\end{corollary}
+
+This suggests we should also look at the interior, closure and boundary
+operators.
+
+\begin{theorem}[Completely invariance is preserved under the complement, interior and boundary operators]
+    \label{thm:complete_invarian_is_preserved_under_complement_interior_and_boundary}
+    Let $g$ be any continuous, open map of a topological space $X$ onto itself
+    and suppose that $E$ is completely invariant. Then so are the complement $X
+    - E$, the interior $\interior{E}$, the boundary $\boundary{E}$ and the closure
+    $\closure{E}$, of $E$.
+\end{theorem}
+\begin{proof}
+    See \cite[53]{Beardon1991}.
+\end{proof}
+
+We now prove that the division of the sphere into Fatou and Julia sets is
+completely invariant: this is fundamental.
+
+\begin{theorem}[$F$ and $J$ are completely invariant]
+    \label{thm:F_and_J_are_completely_invariant}
+    Let $R$ be any rational map. Then the Fatou set $F$ and the Julia set $J$
+    are completely invariant under $R$.
+\end{theorem}
+\begin{proof}
+    See \cite[54]{Beardon1991}.
+\end{proof}
+
+We can say more than Theorem~\ref{thm:F_and_J_are_completely_invariant} when $R$
+is a polynomial, and we have the following theorem.
+
+\begin{theorem}[$F_\infty$ is completely invariant for polynomials]
+    \label{thm:F_infty_is_completely_invariant_for_polynomials}
+    Let $P$ be a polynomial of degree at least two. Then $\infty$ is in $F(P)$,
+    and the component $F_\infty$ of $F$ containing $\infty$ is completely
+    invariant under $P$.
+\end{theorem}
+\begin{proof}
+    See \cite[54]{Beardon1991}.
+\end{proof}
+
+We end this section with a simple observation which will be used several times
+later.
+
+\begin{proposition}[Periodic invariance of components]
+    Let $f$ be a continuous map of a topological space $X$ onto itself, and
+    suppose that $X$ has only a finite number of components $X_j$. Then for some
+    integer $m$, each $X_j$ is completely invariant under $f^m$.
+\end{proposition}
+\begin{proof}
+    See \cite[55]{Beardon1991}.
+\end{proof}
+
+This, of course, was the essential idea in the proof of
+Theorem~\ref{thm:completely_invariant_implies_non_empty_non_singleton}.
+
+% --- SECTION ------------------------------------------------------------------
+% --- NORMAL FAMILIES AND EQUICONTINUITY ---------------------------------------
+\section{Normal families and equicontinuity}
+
+We have defined the Fatou and Julia sets in terms of the equicontinuity of the
+family $\{R^n\}$. However, equicontinuity is closely related to normal families
+of analytic functions, and once we have understood this connection (which is
+expressed in the Arzelà-Ascoli Theorem), we can exploit the more powerful
+results about normal families of analytic functions to derive further
+information about the Fatou and Julia sets. This is our program for this
+section.
+
+We begin with the definitions relevant to normal families.
+
+\begin{definition}[Pointwise convergence]
+    A sequence $(f_n)$ of maps from a metric space $(X, d_X)$ to a metric space
+    $(Y, d_Y)$ \emph{converges pointwise on $X$} to some map $f$ if for each $x$
+    in $X$: for every positive $\varepsilon$ there exists a natural number $N$
+    such that for all $n \geq N$,
+    \begin{equation*}
+        d_Y(f_n(x), f(x)) < \varepsilon.
+    \end{equation*} 
+\end{definition}
+
+\begin{definition}[Uniform convergence]
+    A sequence $(f_n)$ of maps from a metric space $(X, d_X)$ to a metric space
+    $(Y, d_Y)$ \emph{converges uniformly on $X$} to some map $f$ if for every
+    positive $\varepsilon$ there exists a natural number $N$ such that for all
+    $x$ in $X$, and for all $n \geq N$,
+    \begin{equation*}
+        d_Y(f_n(x), f(x)) < \varepsilon.
+    \end{equation*}
+\end{definition}
+
+\begin{remark}[Uniform convergence $\implies$ pointwise convergence]
+    Note that for a family to be uniformly convergent is a stronger statement
+    than for it to be pointwise convergent. Indeed, if we write the definitions
+    in terms of limits we have:
+    \begin{alignat*}{2}
+        &\lim_{n \to \infty} f_n = f \text{ pointwise} &&\iff \\
+        &&&\forall x \in X \lim_{n \to \infty} f_n(x) = f(x); \\
+        &\lim_{n \to \infty} f_n = f \text{ uniformly} &&\iff \\
+        &&&\lim_{n \to \infty} \sup\{d_Y(f_n(x), f(x)) \mid \forall x \in X\} = 0.
+    \end{alignat*}
+    This last expression may also clarify why at the section A Topology on the
+    Rational Functions (\ref{sec:a_topology_on_the_raional_functions}), we
+    called $\rho$ the \emph{metric of uniform convergence}. Since, using that
+    metric, convergence in $\mathcal{C}$ is the same as uniform convergence.
+\end{remark}
+
+\begin{definition}[Local uniform convergence]
+    A sequence $(f_n)$ of maps from a metric space $(X, d_X)$ to a metric space
+    $(Y, d_Y)$ \emph{converges locally uniformly on $X$} to some map $f$ if each
+    point $x$ of $X$, has a neighborhood on which $f_n$ converges uniformly to
+    $f$.
+\end{definition}
+
+\begin{remark}[Local uniform convergence $\implies$ uniform convergence in compacts]
+    Given a sequence $(f_n)$ of maps from a uniform metric space $(X, d_X)$ to a
+    metric space $(Y, d_Y)$ that converges locally uniformly on $X$. Then, it
+    converges uniformly on each compact subset of $X$.
+\end{remark}
+
+\begin{definition}[Normal family]
+    A family $\mathcal{F}$ of maps from a metric space $(X, d_X)$ to a metric
+    space $(Y, d_Y)$ is said to be \emph{normal}, or a \emph{normal family}, in
+    $X$ if every infinite sequence of functions from $\mathcal{F}$ contains a
+    subsequence which converges locally uniformly on $X_1$.
+\end{definition}
+
+We give the usual reminder that the limit of the convergent subsequence need not
+lie in $\mathcal{F}$. Although we have formulated these definitions for general
+metric spaces, we shall only be concerned with subdomains of the complex sphere
+with the chordal (or spherical) metric, and we come now to a statement of the
+Arzelà-Ascoli Theorem.
+
+\begin{theorem}[In $\ExtC$ with continuous functions: equicontinuous family $\iff$ normal family]
+    Let $D$ be a subdomain of the complex sphere, and let $\mathcal{F}$ be a
+    family of continuous maps of $D$ into the sphere. Then $\mathcal{F}$ is
+    equicontinuous in $D$ if and only if it is a normal family in $D$.
+\end{theorem}
+\begin{proof}
+    See \cite[222]{Ahlfors1979}.
+\end{proof}
+
+As an illustration of the direct use of normality rather than equicontinuity, we
+consider Vitali's Theorem: this exploits analytic continuation and so enables us
+to derive information about the limit $f$ of a sequence $(f_n)$ throughout a
+domain $D$ simply from a knowledge of $f$ on only a small part of $D$.
+
+\begin{theorem}[Vitali's Theorem]
+    Suppose that the family $\{f_1, f_2, \ldots\}$ of analytic maps is normal in
+    a domain $D$, and that $f_n$ converges pointwise to some function $f$ on
+    some non-empty open subset $W$ of $D$. Then $f$ extends to a function $F$
+    which is analytic on $D$, and $f_n \to F$ locally uniformly on $D$.
+\end{theorem}
+\begin{proof}
+    See \cite[56]{Beardon1991}.
+\end{proof}
+
+We turn now to obtain conditions which guarantee the normality of a family of
+analytic functions.
+
+\begin{proposition}[In $\ExtC$ with continuous functions: holomorphic and uniformly bounded $\iff$ equicontinuous family $\iff$ normal family]
+    Given a family of functions $\mathcal{F}$ which are holomorphic and
+    uniformly bounded in $D$. Then, $\mathcal{F}$ is equicontinuous, and hence
+    normal in $D$.
+\end{proposition}
+\begin{proof}
+    It is an elementary consequence of Cauchy's Integral Formula that if $f$ is
+    holomorphic and satisfied $|f| \leq M$ in a domain $D$ in $\C$, then $|f'|$
+    is bounded above on each compact subset $K$ of $D$, the upper bound
+    depending on $M$, $K$, and $D$ \emph{but not on $f$}.
+\end{proof}
+
+It is possible to obtain a variety of mild generalizations of this result
+without much effort, but all such results are hopelessly inadequate for our
+purposes. Instead, we pass these by and go straight to one of the most powerful
+results concerning normality: this result is absolutely essential for the study
+of iteration of rational maps, yet its substantial proof can safely be omitted
+without prejudicing an understanding of iteration theory.
+
+\begin{theorem}[The family of analytic maps $\{f: D \to \ExtC - \{0, 1, \infty\}\}$ is normal]
+    \label{thm:analytic_maps_not_touching_zero_one_and_infty_form_a_normal_family}
+    Let $D$ be a domain on the complex sphere $\ExtC$, and let $\Omega$ be the
+    domain $\ExtC - \{0, 1, \infty\}$. Then the family $\mathcal{F}$ of all
+    analytic maps $f: D \to \Omega$ is normal in $D$.
+\end{theorem}
+\begin{proof}
+    See \cite[59]{Beardon1991}.
+\end{proof}
+
+The hypothesis of
+Theorem~\ref{thm:analytic_maps_not_touching_zero_one_and_infty_form_a_normal_family}
+is that each function in $\mathcal{F}$ fails to take the values $0$, $1$ and
+$\infty$ at any point of $D$. Let's see how
+Theorem~\ref{thm:analytic_maps_not_touching_zero_one_and_infty_form_a_normal_family}
+can be used to produce two variations on the same theme. In the first one of
+these, we assume only that each function $f$ fails to take three values which no
+\emph{may depend on $f$}. It is too much to expect that three values can be
+completely arbitrary, and we must add the requirement that they are uniformly
+separated on the sphere.
+
+\begin{theorem}[The family of analytic maps $\{f: D \to \ExtC - \{a_f, b_f, c_f\}\}$ is normal]
+    \label{thm:analytic_maps_not_touching_af_bf_and_cf_form_a_normal_family}
+    Let $\mathcal{F}$ be a family of maps, each analytic in a domain $D$ on the
+    complex sphere. Suppose also that there is a positive constant $m$ and, for
+    each $f$ in $\mathcal{F}$, three distinct points $a_f$, $b_f$ and $c_f$ in
+    $\ExtC$ such that:
+    \begin{enumerate}
+        \item $f$ in $\mathcal{F}$ does not take the values $a_f$, $b_f$ and
+        $c_f$ in $D$; and
+        \item $\min\{\sigma(a_f, b_f), \sigma(b_f, c_f), \sigma(c_f, a_f)\} \geq m$.
+    \end{enumerate}
+    Then $\mathcal{F}$ is normal in $D$.
+\end{theorem}
+\begin{proof}
+    See \cite[58]{Beardon1991}.
+\end{proof}
+
+Of course,
+Theorem~\ref{thm:analytic_maps_not_touching_af_bf_and_cf_form_a_normal_family}
+contains
+Theorem~\ref{thm:analytic_maps_not_touching_zero_one_and_infty_form_a_normal_family}
+as a special case, for we can take $a_f = 0$, $b_f = 1$ and $c_f = \infty$ for
+every $f$. There is another variation of
+Theorem~\ref{thm:analytic_maps_not_touching_zero_one_and_infty_form_a_normal_family}
+that we shall need.
+
+\begin{theorem}[The family of analytic maps $\{f: D \to \ExtC\}$ such that $f(z) \neq \varphi_j(z)$ for $j=1$, $2$, $3$, is normal]
+    Let $D$ be a domain, and suppose that the functions $\varphi_1$, $\varphi_2$
+    and $\varphi_3$ are analytic in $D$, and are such that the closures of the
+    domains $\varphi_j(D)$ are mutually disjoint. Now let $\mathcal{F}$ be a
+    family of functions, each analytic in $D$, such that for every $z$ in $D$,
+    and every $f$ in $\mathcal{F}$, $f(z) \neq \varphi_j(z)$, $j = 1$, $2$, $3$.
+    Then $\mathcal{F}$ is normal in $D$.
+\end{theorem}
+\begin{proof}
+    See \cite[58]{Beardon1991}.
+\end{proof}
