@@ -1,0 +1,159 @@
+\documentclass[12pt, a4paper]{article}
+% --- Packages -----------------------------------------------------------------
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[french, main=english]{babel}
+\usepackage[autostyle=true]{csquotes}
+% Tipografía: Tipografíca de Visual Complex Analysis (más o menos)
+\usepackage{amsmath, amsthm, amssymb}
+\usepackage{mathpazo}
+\usepackage{eulerpx}
+% Tipografía estándar: \usepackage{amsmath, amsthm, amssymb, amsfonts}
+\usepackage[hidelinks]{hyperref}
+
+% --- Document Information -----------------------------------------------------
+\title{On the Iteration of Rational Substitutions and Poincaré Functions}
+\author{ Original Note by S. Lattès (1918) \thanks{ Originally published in
+    French as \emph{``Sur l'itération des substitutions rationnelles et les
+    fonctions de Poincaré''}, \emph{Comptes Rendus de l'Académie des Sciences},
+    Paris, Volume 166, Pages 26--28 (January 7, 1918). } }
+\date{January 7, 1918}
+
+% --- Document -----------------------------------------------------------------
+\begin{document}
+
+\subsection*{Mathematical Analysis. --- On the Iteration of Rational
+Substitutions and Poincaré Functions. Note by M. S. Lattés.}
+
+Let $z_1 = R(z)$ be a rational map with distinct fixed points; let $\alpha$ be a
+fixed point with multiplier S, where $|S| > 1$. There is always at least one
+such point\footnote{\foreignlanguage{french}{Cf. Fatou, \emph{Sur les
+substitutions rationnelles} (Comptes rendus, t. 165, 1917, p. 993).}}. There
+then exists a function $\theta(u)$ which is meromorphic [or entire if $R(z)$ is
+a polynomial] satisfying, for all $u$, the functional equation:
+\begin{equation}
+    \label{eq:1}
+    \theta(Su) = R[\theta(u)]
+\end{equation}
+and taking the value $\alpha$ at $u = 0$. The existence of $\theta(u)$, which we
+shall call the \emph{Poincaré function} relative to the invariant point
+$\alpha$, was established by
+Poincaré\footnote{\foreignlanguage{french}{Poincaré, \emph{Sur une classe
+nouvelle de transcendantes uniformes} (Journal de Mathématiques pures et
+appliquées, 1890).}}.
+
+\vspace{1em}
+{
+\small
+Poincaré, however, imposes on the desired function $\theta(u)$ the condition
+$\theta'(0) \neq 0$. If $\theta'(0)$ is zero and the first non-zero derivative
+for $u = 0$ is of order $p$, one still finds a meromorphic function $\theta(u)$
+satisfying equation (\ref{eq:1}), but the number $S$ appearing in this equation---which
+can still be called the multiplier---is related to $R'(\alpha)$ by the relation
+$S^p = R'(\alpha)$; the function $\theta(u)$ is then a meromorphic or entire
+function of $u^p$. For example, if the given substitution is $z_1 = 2z^2 - 1$,
+we can set $z = \cos u$, yielding $z_1 = \cos 2u$; here $\theta(u)$ is an entire
+function of $u^2$ [since $\cos u = 1 - \frac{u^2}{2} + \dots$] and we have
+$R'(\alpha) = 4 = S^2$ [where $\alpha = 1$, $R'(1) = 4$, and the multiplier is
+$S = 2$].
+}
+\vspace{1em}
+
+The Poincaré function $\theta(u)$ is nothing other than the inverse function of
+the Schröder function $\varphi(z)$, whose existence in the neighborhood of the
+point $\alpha$ was established by Mr. K\oe~nigs and which satisfies the
+equation:
+\[
+    \varphi[R(z)] = S\varphi(z).
+\]
+But, while the Poincaré function, when analytically continued from $u = 0$,
+gives rise to a single-valued (uniform) meromorphic or entire transcendental
+function, its inverse, the Schröder function, continued from $z = \alpha$, is by
+that very fact a multivalued (multiform) analytic function. Hence, there is an
+advantage to substituting the Poincaré function for the Schröder function if one
+wishes to study iteration starting from an arbitrary initial point $z$ in the
+plane.
+
+\newpage
+
+For each value of $z$, the relation $z = \theta(u)$ yields at least one value of
+$u$, except for at most two exceptional values of $z$, according to Picard's
+Theorem. We then obtain, in parametric form, the values for the point $z$ and
+its successive iterates [consequents] $z_n$:
+\begin{equation*}
+    z   = \theta(u), \quad z_1 = \theta(Su), \quad z_2 = \theta(S^2 u), \quad \ldots, \quad z_n = \theta(S^n u).
+\end{equation*}
+These same formulas, for negative integer $n$, provide a sequence of successive
+antecedents [preimages] $z_{-n}$ of the point $z$ which, as $n \to \infty$, have
+a limit equal to $\theta(0)$, which is $\alpha$. Thus, \emph{one can choose, from
+among the possible successive preimages of any given point, a sequence of
+successive preimages $z_{-n}$ tending, as $n \to \infty$, toward any of the
+invariant points $\alpha$ whose multiplier has a modulus greater than $1$}.
+
+The possible exceptional points $\alpha, \beta$ of the function $\theta(u)$ are
+either invariant points of the substitution\footnote{For example, for the
+substitution $z_1 = \frac{2z}{1-z^2}$, the Poincaré function is $z = \tan u$,
+with multiplier $2$; this function admits the exceptional values $i$ and $-i$,
+which are invariant points of the substitution.} or two points forming a
+periodic cycle of order 2.
+
+\emph{The problems relating to the iteration of a given substitution are thus
+transformed into problems concerning the growth of the function $\theta(u)$}. To
+obtain categories of rational substitutions whose iteration is easy to study, it
+is convenient to choose substitutions that admit a Poincaré function belonging
+to the most common meromorphic (or entire) functions. Thus, if we assume $S$ to
+be an integer, and $\theta(u)$ to be one of the functions $\tan u$, $\cos u$,
+$\wp(u)$ [the Weierstrass elliptic function], or a homographic transformation
+[Möbius transformation] of these functions, we obtain rational substitutions for
+which the method of parametric iteration allows us to completely resolve the
+fundamental problem of iteration. This problem, in its general form, can be
+stated as follows:
+
+\vspace{1em}
+\emph{Determine the limit set $E'$ (derived set) of the set $E$ of iterates
+$z_n$ of an arbitrarily given point $z$.}
+\vspace{1em}
+
+The set $E'$ contains the iterates of its various points; on the other hand, we
+know that $E'$, being a closed set, is the sum of a perfect set $E_1'$ and a
+countable set $E_2'$. The set $E_1'$ also contains the iterates of its various
+points, while for points in $E_2'$, their iterates may belong to $E_1'$. In the
+various examples listed above, we are able to completely determine $E_1'$ and
+$E_2'$, and determine what conditions $z$ must satisfy for either of the sets
+$E_1'$ or $E_2'$ to be empty, or for a given point in the plane to belong to
+$E'$. These various conditions depend on the arithmetic properties of the number
+$z$.
+
+\vspace{1em}
+{
+\small
+Consider, for example, the substitution:
+\begin{equation}
+    \label{eq:2}
+    z_1 = \frac{(z^2+1)^2}{4z(z^2-1)}
+\end{equation}
+which is obtained by setting:
+\[
+    z = \wp(u), \quad z_1 = \wp(2u) \quad \text{with} \quad g_2 = 4, \ g_3 = 0.
+\]
+If $2\omega$ denotes the real period, the other period is $2i\omega$. If we set:
+\[
+    z = \wp(u) = \wp(2\omega v + 2i\omega w),
+\]
+where $v$ and $w$ are real, then to determine $E'$, we must know the
+representations of $v$ and $w$ in the binary numeral system (base 2). The set
+$E_1'$ is formed by drawing the orthogonal grid of curves $v = \text{constant}$
+and $w = \text{constant}$ (Cartesian ovals) and excluding from the plane the
+interior points of a countable infinity of quadrilaterals---contiguous or
+not---bounded by the curves of this grid. The common boundary between two
+excluded contiguous quadrilaterals must generally also be excluded. It is for
+the determination of the arcs of the ovals that bound the excluded domains that
+we must know the binary representations of $v$ and $w$. We can thus completely
+solve the various iteration problems relating to (\ref{eq:2}).
+}
+\vspace{1em}
+
+The method of parametric iteration, using generalized Poincaré functions, can be
+applied in very broad cases to rational substitutions of two variables.
+
+\end{document}
