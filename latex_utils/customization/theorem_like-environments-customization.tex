@@ -1,0 +1,56 @@
+\usepackage{mdframed}
+
+% --- Define Base Frame Style --------------------------------------------------
+\mdfdefinestyle{theoremLineStyle}{
+    topline=false,
+    bottomline=false,
+    rightline=false,
+    linewidth=3pt,          % Width of the left line
+    innertopmargin=2pt,     % Padding inside the frame
+    innerbottommargin=4pt,
+    innerleftmargin=10pt,
+    innerrightmargin=0pt,
+    skipabove=10pt,         % Space above the environment
+    skipbelow=10pt          % Space below the environment
+}
+
+% --- Register Environments with mdframed to add the left lines ----------------
+
+% 1. Results (Cyan)
+\surroundwithmdframed[style=theoremLineStyle, linecolor=pastelCyan]{theorem}
+\surroundwithmdframed[style=theoremLineStyle, linecolor=pastelCyan]{teorema}
+\surroundwithmdframed[style=theoremLineStyle, linecolor=pastelCyan]{theorem*}
+\surroundwithmdframed[style=theoremLineStyle, linecolor=pastelCyan]{teorema*}
+\surroundwithmdframed[style=theoremLineStyle, linecolor=pastelCyan]{proposition}
+\surroundwithmdframed[style=theoremLineStyle, linecolor=pastelCyan]{porposicion}
+\surroundwithmdframed[style=theoremLineStyle, linecolor=pastelCyan]{proposition*}
+\surroundwithmdframed[style=theoremLineStyle, linecolor=pastelCyan]{proposicion*}
+\surroundwithmdframed[style=theoremLineStyle, linecolor=pastelCyan]{corollary}
+\surroundwithmdframed[style=theoremLineStyle, linecolor=pastelCyan]{corolario}
+\surroundwithmdframed[style=theoremLineStyle, linecolor=pastelCyan]{corollary*}
+\surroundwithmdframed[style=theoremLineStyle, linecolor=pastelCyan]{corolario*}
+\surroundwithmdframed[style=theoremLineStyle, linecolor=pastelCyan]{lemma}
+\surroundwithmdframed[style=theoremLineStyle, linecolor=pastelCyan]{lema}
+\surroundwithmdframed[style=theoremLineStyle, linecolor=pastelCyan]{lemma*}
+\surroundwithmdframed[style=theoremLineStyle, linecolor=pastelCyan]{lema*}
+
+% 2. Definitions (Purple)
+\surroundwithmdframed[style=theoremLineStyle, linecolor=lightPastelPurple]{definition}
+\surroundwithmdframed[style=theoremLineStyle, linecolor=lightPastelPurple]{definicion}
+\surroundwithmdframed[style=theoremLineStyle, linecolor=lightPastelPurple]{definition*}
+\surroundwithmdframed[style=theoremLineStyle, linecolor=lightPastelPurple]{definicion*}
+
+% 3. Remarks (Yellow)
+\surroundwithmdframed[style=theoremLineStyle, linecolor=pastelYellow]{remark}
+\surroundwithmdframed[style=theoremLineStyle, linecolor=pastelYellow]{observacion}
+\surroundwithmdframed[style=theoremLineStyle, linecolor=pastelYellow]{remark*}
+\surroundwithmdframed[style=theoremLineStyle, linecolor=pastelYellow]{observacion*}
+
+% 4. Examples (Orange)
+\surroundwithmdframed[style=theoremLineStyle, linecolor=pastelOrange]{example}
+\surroundwithmdframed[style=theoremLineStyle, linecolor=pastelOrange]{ejemplo}
+\surroundwithmdframed[style=theoremLineStyle, linecolor=pastelOrange]{example*}
+\surroundwithmdframed[style=theoremLineStyle, linecolor=pastelOrange]{ejemplo*}
+
+% 4. Proofs (Gray)
+\surroundwithmdframed[style=theoremLineStyle, linecolor=lightPastelRed]{proof}

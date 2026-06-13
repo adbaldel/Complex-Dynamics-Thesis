@@ -1,0 +1,24 @@
+\usepackage{titlesec}
+
+% Change the rule color specifically for sections
+\newcommand{\sectionprerule}{\color{pastelBlue}}
+\titleformat{\section}
+  {\normalfont\Large\bfseries}
+  {\thesection}{1em}{}
+  [\vspace{2pt}{\color{pastelBlue}\hrule height 2pt}]
+
+% --- Custom Section Underline -------------------------------------------------
+\titleformat{\section}
+  {\normalfont\Large\bfseries} % Text formatting
+  {\thesection}                % Label numbering
+  {1em}                        % Distance from number to title text
+  {}                           % Code executed before body text
+  [\titleline{\color{pastelBlue}\titlerule[2pt]}] % Native, safe underline rule
+
+% --- Custom Subsection Underline (Thinner line) -------------------------------
+\titleformat{\subsection}
+  {\normalfont\large\bfseries}
+  {\thesubsection}
+  {1em}
+  {}
+  [\titleline{\color{pastelBlue}\titlerule[1pt]}]

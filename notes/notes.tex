@@ -23,11 +23,26 @@
 \addbibresource{../report/refs.bib}
 
 % --- Defined Commands and Theorem Like Environments ---------------------------
-\input{../report/commands}
-\input{../report/theormen_like-environments}
+\input{../latex_utils/commands}
+\input{../latex_utils/theormen_like-environments-book}
+\input{../latex_utils/customization/colors_definitions}
+\input{../latex_utils/customization/customization_commands}
+% \input{../latex_utils/customization/title-customization}
+\input{../latex_utils/customization/theorem_like-environments-customization}
 
 % --- Includes to Reproccess ---------------------------------------------------
-\includeonly{front,chap1-examples, chap2-rational_maps, chap3-the_fatou_and_julia_sets}
+\includeonly{
+    sections/front,
+    sections/chap1-examples,
+    sections/chap2-rational_maps,
+    sections/chap3-the_fatou_and_julia_sets,
+    sections/chap4-properties_of_the_julia_set,
+    sections/chap5-the_structure_of_the_fatou_set,
+    sections/chap6-periodic_points,
+    sections/chap7-forward_invariant_components,
+    sections/chap8-the_no_wanderings_domain_theorem,
+    sections/back
+}
 
 % --- Document Information -----------------------------------------------------
 \title{Rational Dynamics Notes}
@@ -37,18 +52,20 @@
 \begin{document}
     % --- Front Matter ---------------------------------------------------------
     \frontmatter
-    \include{front}
+    \include{sections/front}
 
     % --- Main Matter ----------------------------------------------------------
     \mainmatter
-    \include{chap1-examples}
-    \include{chap2-rational_maps}
-    \include{chap3-the_fatou_and_julia_sets}
+    \include{sections/chap1-examples}
+    \include{sections/chap2-rational_maps}
+    \include{sections/chap3-the_fatou_and_julia_sets}
+    \include{sections/chap4-properties_of_the_julia_set}
+    \include{sections/chap5-the_structure_of_the_fatou_set}
     % --- Appendix -------------------------------------------------------------
     %\appendix
-    %\include{appendix}
+    %\include{sections/appendix}
 
     % --- Back Matter ----------------------------------------------------------
     \backmatter
-    \printbibliography[heading=bibintoc]
+    \include{sections/back}
 \end{document}

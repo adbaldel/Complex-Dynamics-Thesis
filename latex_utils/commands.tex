@@ -1,3 +1,5 @@
+% --- NUMBER SETS --------------------------------------------------------------
+
 % inserts the symbol for the naturals
 \newcommand{\N}{\mathbb{N}}
 
@@ -19,6 +21,9 @@
 % inserts the symbol for the extended complex set
 \newcommand{\ExtC}{\mathbb{C}_\infty}
 
+
+% --- NUMBER SETS --------------------------------------------------------------
+
 % inserts the symbol for the identity function
 \newcommand{\Id}{\mathrm{I}}
 
@@ -28,6 +33,9 @@
 % inserts the non italics imaginary number (roman i)
 \newcommand{\I}{\mathrm{i}}
 
+
+% --- ONE VARIABLE DIFFERENTIATION ---------------------------------------------
+
 % inserts the roman d for differentiation
 \newcommand{\D}{\mathrm{d}}
 
@@ -36,8 +44,26 @@
 % 2. the variable respect to which to differentiate (symbol in the denominator)
 \newcommand{\dbyd}[2]{\frac{\D#1}{\D#2}}
 
-% inserts the fraction n-th derivative symbolr, it needs two arguments:
+% inserts the fraction n-th derivative symbol, it needs two arguments:
 % 1. the function to differentiante (symbol in the numerator)
 % 2. the variable respect to which to differentiate (symbol in the denominator)
 % and can recieve an optional argument to indicate the order of the derivative
 \newcommand{\dnbyd}[3][]{\frac{\D^{#1}#2}{\D #3^{#1}}}
+
+
+% --- TOPOLOGY -----------------------------------------------------------------
+
+% applies the interior operator
+\newcommand{\interior}[1]{{#1}^{\mathrm{o}}}
+
+% applies the closure operator
+\newcommand{\closure}[1]{\overline{#1}}
+
+% applies the boundary operator
+\newcommand{\boundary}[1]{\partial {#1}}
+
+
+% --- COMPLEX DYNAMICS ---------------------------------------------------------
+
+% inserts the symbol for the orbit of a point
+\newcommand{\orbit}{\mathcal{O}}

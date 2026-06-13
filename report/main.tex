@@ -21,11 +21,11 @@
 \addbibresource{refs.bib}
 
 % --- Defined Commands and Theorem Like Environments ---------------------------
-\input{commands}
-\input{theormen_like-environments}
+\input{../latex_utils/commands}
+\input{../latex_utils/theormen_like-environments-book}
 
 % --- Includes to Reproccess ---------------------------------------------------
-\includeonly{front,chap1-examples}
+\includeonly{sections/front, sections/chap1-examples}
 
 % --- Document Information -----------------------------------------------------
 \title{Título del trabajo en castellano}
@@ -35,14 +35,14 @@
 \begin{document}
 % --- Front Matter -------------------------------------------------------------
 % \frontmatter
-% \include{front}
+% \include{sections/front}
 
 % --- Main Matter --------------------------------------------------------------
 \mainmatter
-\include{chap1-examples}
+\include{sections/chap1-examples}
 % --- Appendix -----------------------------------------------------------------
 %\appendix
-%\include{append}
+%\include{sections/appendix}
 
 % --- Back Matter --------------------------------------------------------------
 \backmatter
