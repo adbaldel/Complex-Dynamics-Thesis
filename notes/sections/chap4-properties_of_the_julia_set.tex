@@ -44,7 +44,7 @@ From this and Theorems~\ref{thm:F_and_J_are_preserved_under_iteration} and
 \ref{thm:F_infty_is_completely_invariant_for_polynomials}, we have immediately
 the following result.
 
-\begin{corollary}[Exceptional points of $R$ with $\deg(R) \geq 2$ lie in $F$]
+\begin{corollary}[Exceptional points of rational maps lie in $F$]
     If $\deg(R) \geq 2$, then the exceptional points of $R$ lie in $F(R)$.
 \end{corollary}
 
@@ -103,7 +103,7 @@ the Julia set can be non-0empty, and our first task will be to settle this
 issue. The case when the rational map $R$ has degree one is trivial and of
 little interest, but in all other cases, $J$ is not empty.
 
-\begin{theorem}[$\deg(R) \geq 2 \implies J$ is infinite]
+\begin{theorem}[$J$ is infinite]
     \label{thm:J_is_infinite}
     If $\deg(R) \geq 2$, then $J(R)$ is infinite.
 \end{theorem}
@@ -164,10 +164,10 @@ definition from topology. Intuitively, a perfect set is one that is solid,
 containing no gaps and no lonely, isolated points.
 
 \begin{definition}[Perfect set]
-    A set $S$ is called \textbf{perfect} if it is closed and contains no
-    isolated points. Equivalently, $S$ is perfect if it equals its own derived
-    set, meaning $S = S_0$ (where $S_0$ is the set of all accumulation points of
-    $S$).
+    A set $E$ is called \emph{perfect} if it is closed and contains no
+    isolated points. Equivalently, $E$ is perfect if it equals its own derived
+    set, meaning $E = E_0$ (where $E_0$ is the set of all accumulation points of
+    $E$).
 \end{definition}
 
 Next, we show that the Julia set fits this description perfectly by analyzing
@@ -244,7 +244,7 @@ the examples studied in Chapter~\ref{chp:examples}). Given an open set $W$ which
 meets $J$, the result describes the extent to which the images $R^n(W)$ cover
 the sphere. We recall $E(R)$ has at most two elements.
 
-\begin{theorem}
+\begin{theorem}[$W$ open and $W \cap J \neq \emptyset \implies \bigcup R^n(W)$ explodes to $\ExtC - E(R)$ and $R^n(W)$ converges to a set that contains $J$]
     Let $R$ be a rational map of degree at least two, and let $W$ be any
     non-empty open set which meets $J$. Then:
     \begin{enumerate}
@@ -276,14 +276,14 @@ the closure, of some countable set.
     See \cite[70-71]{Beardon1991}.
 \end{proof}
 
-\begin{remark}[$J \subset \closure{[z]}$] We now consider the relationship
+\begin{remark}[$z$ non-exceptional $\implies J \subset \closure{[z]}$] We now consider the relationship
     between $J$ and an orbit $[z]$ of a non-exceptional point $z$. As the
     closure $\closure{[z]}$ of $[z]$ is both closed and completely invariant,
     the minimality of $J$ implies that \emph{if $z$ is not exceptional, then $J
     \subset \closure{[z]}$}.
 \end{remark}
 
-\begin{remark}[$z \in J \implies J = \closure{[z]}$] If $z$ is in $J$, then it
+\begin{remark}[$z$ non-exceptional and $z \in J \implies J = \closure{[z]}$] If $z$ is in $J$, then it
     is not exceptional, so $[z]$, and hence also $\closure{[z]}$, is contained
     in $J$: thus \emph{if $z$ is in $J$, then $J = \closure{[z]}$}. 
 \end{remark}
@@ -291,7 +291,7 @@ the closure, of some countable set.
 In fact, we can replace $[z]$ by the smaller set $\orbit^-(z)$ and still prove
 the following theorem.
 
-\begin{theorem}[$J \subset \closure{\orbit^-(z)}$ and if $z \in J$ they are equal]
+\begin{theorem}[$z$ non-exceptional $\implies J \subset \closure{\orbit^-(z)}$ and if $z \in J$ they are equal]
     \label{thm:J_contained_in_backwards_orbit_of_z_non_exceptional_and_equal_if_z_in_J}
     Let $R$ be a rational map with $\deg(R) \geq 2$.
     \begin{enumerate}
@@ -328,7 +328,7 @@ available.
     \label{thm:R_inverse_n_E_converges_to_J}
     Let $R$ be a rational map of degree at least two, and let $E$ be a compact
     subset of the complex sphere with the property that for all $z$ in $F(R)$,
-    the sequence $\{R^n(z) \mid n \geq 1\}$ does not accumulate at any point of
+    the sequence $(R^n(z))_{n \in \N}$ does not accumulate at any point of
     $E$. Then given any open set $U$ which contains $J(R)$, $R^{-n}(E) \subset
     U$ for all sufficiently large $n$.
 \end{theorem}
@@ -562,11 +562,17 @@ Theorem~\ref{thm:F_and_J_are_preserved_under_iteration}.
 We end this section with a characterization of those rational maps whose Julia
 set is the entire sphere, reference [53] in \cite{Beardon1991}.
 
-\begin{theorem}[$J = \ExtC \iff \exists z$ with dense forward orbit]
+\begin{definition}[Forward orbit]
+    For any $z$, the \emph{forward orbit} of $z$ is the set
+    \begin{equation*}
+        \orbit^+(z) = \{R^n(z) \mid n \geq 1\}.
+    \end{equation*}
+\end{definition}
+
+\begin{theorem}[$J = \ExtC \iff \exists z$ with dense forward orbit in $\ExtC$]
     \label{thm:J_equals_ExtC_iff_exists_z_with_dense_forward_orbit}
     Let $R$ be a rational map. Then $J(R) = \ExtC$ if and only if there is some
-    $z$ whose forward orbit $\{R^n(z) \mid n \geq 1\}$ is dense in the complex
-    sphere.
+    $z$ whose forward orbit is dense in the complex sphere.
 \end{theorem}
 \begin{proof}
     See \cite[76-77]{Beardon1991}.

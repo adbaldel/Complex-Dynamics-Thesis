@@ -1,0 +1,17 @@
+\tikzset{
+    blob6/.pic={
+        \begin{scope}[-]
+            \coordinate (4) at (-1.5, 4);
+            \coordinate (7) at (3.25, 3.25);
+            \coordinate (8) at (3, -2.75);
+            \coordinate (9) at (-0.75, -4.5);
+            \coordinate (10) at (-3.75, 0);
+
+            \draw [bend left=15] (10) to (4);
+            \draw [bend left] (7) to (8);
+            \draw [bend left] (8) to (9);
+            \draw [bend left=45] (9) to (10);
+            \draw [bend left=45] (4) to (7);
+        \end{scope}
+    }
+}

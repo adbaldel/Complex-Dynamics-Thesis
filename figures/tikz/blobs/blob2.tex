@@ -1,0 +1,31 @@
+\tikzset{
+    blob2/.pic={
+        \begin{scope}[-]
+            \coordinate (2) at (-5.25, 0.75);
+            \coordinate (3) at (-6, -1.5);
+            \coordinate (4) at (-4.25, -3);
+            \coordinate (5) at (-2, -2.75);
+            \coordinate (6) at (0.25, -2.25);
+            \coordinate (7) at (3, -2);
+            \coordinate (8) at (4.5, -1.25);
+            \coordinate (9) at (5.75, 0.5);
+            \coordinate (10) at (5.25, 2.5);
+            \coordinate (11) at (3.5, 3.5);
+            \coordinate (12) at (1.5, 3.25);
+            \coordinate (13) at (-1.75, 2);
+
+            \draw [bend right] (2) to (3);
+            \draw [bend right] (3) to (4);
+            \draw [bend right=15] (4) to (5);
+            \draw [bend left=15, looseness=0.75] (5) to (6);
+            \draw [bend right=15, looseness=0.50] (6) to (7);
+            \draw [bend right=15, looseness=0.50] (7) to (8);
+            \draw [bend right=15, looseness=0.50] (8) to (9);
+            \draw [bend right=45, looseness=0.75] (9) to (10);
+            \draw [bend right=15, looseness=0.25] (10) to (11);
+            \draw [bend right=30, looseness=0.75] (11) to (12);
+            \draw [bend left=15] (2) to (13);
+            \draw [bend right=15, looseness=0.50] (13) to (12);
+        \end{scope}
+    }
+}

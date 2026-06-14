@@ -1,12 +1,12 @@
 \chapter{The Fatou and Julia Sets}
 
-The informal discussion in Chapter~\ref{chp:examples} suggested that the dynamics of a rational
-map $R$ induces a subdivision of the complex sphere into two sets, namely the
-Fatou set $F$ and the Julia set $J$ of $R$. Here, we introduce the notion of
-equicontinuity of a family of maps, and then formally define the Fatou and Julia
-sets in terms of the equicontinuity of the family $\{R^n\}$. In addition, we
-consider conditions which imply that a family of analytic maps is equicontinuous
-(or a normal family) in a domain.
+The informal discussion in Chapter~\ref{chp:examples} suggested that the
+dynamics of a rational map $R$ induces a subdivision of the complex sphere into
+two sets, namely the Fatou set $F$ and the Julia set $J$ of $R$. Here, we
+introduce the notion of equicontinuity of a family of maps, and then formally
+define the Fatou and Julia sets in terms of the equicontinuity of the family
+$\{R^n\}$. In addition, we consider conditions which imply that a family of
+analytic maps is equicontinuous (or a normal family) in a domain.
 
 % --- SECTION ------------------------------------------------------------------
 % --- THE FATOU AND JULIA SETS -------------------------------------------------
@@ -14,9 +14,8 @@ consider conditions which imply that a family of analytic maps is equicontinuous
 
 \begin{definition}[Continuous function]
     Given two metric spaces $(X, d_X)$ and $(Y, d_Y)$. A map $f: X \to Y$ is
-    \emph{continuous at $x_0$} in $X$ if and only if, for every
-    positive $\varepsilon$ there exists a positive $\delta$ such that for all
-    $x$ in $X$,
+    \emph{continuous at $x_0$} in $X$ if and only if, for every positive
+    $\varepsilon$ there exists a positive $\delta$ such that for all $x$ in $X$,
     \begin{equation*}
         d_X(x_0, x) < \delta \quad \text{implies} \quad d_Y(f(x_0), f(x)) < \varepsilon.
     \end{equation*}
@@ -42,9 +41,24 @@ family of functions.
 
 It is important to realize that the equicontinuity of $\mathcal{F}$ at $x_0$ is
 the formal expression for the idea of preservation of proximity which was
-introduced informally in Chapter~\ref{chp:examples}: indeed, it implies that every function in
-$\mathcal{F}$ maps the open ball with center $x_0$ and radius $\delta$ into a
-ball of radius at most $\varepsilon$.
+introduced informally in Chapter~\ref{chp:examples}: indeed, it implies that
+every function in $\mathcal{F}$ maps the open ball with center $x_0$ and radius
+$\delta$ into a ball of radius at most $\varepsilon$.
+
+Suppose $\mathcal{F} = \{R^n \mid n \in N\}$ is an equicontinuous family, then
+given $z \in \ExtC$, points $w$ close to $z$ will remain close after $n$
+iterations ($R^n(w)$ will be close to $R^n(z)$). Indeed, if we take
+$\varepsilon_n$ to be the maximum distance we want between the $n$-th iterates,
+we can obtain a maximum distance between the $n-1$-th iterates
+($\varepsilon_{n-1}$). Doing this recursively we can obtain a maximum distance
+$\epsilon_0 = \delta$ between $w$ and $z$ so that their $n$-th iterates are as
+close as we want, see Figure~\ref{fig:equicontinuity_for_iterates}.
+\begin{figure}
+    \centering
+    \resizebox{\textwidth}{!}{\input{../figures/tikz/equicontinuity_for_iterates}}
+    \caption{Equicontinuity for the family $\mathcal{F} = \{R^n\}_{n \in N}$.}
+    \label{fig:equicontinuity_for_iterates}
+\end{figure}
 
 \begin{remark}[Equicontinuity is preserved under union]
     If the family $\mathcal{F}$ is equicontinuous on each of the subsets
@@ -64,8 +78,8 @@ principle.
 
 \begin{corollary}[$\exists$ a maximal open subset where $\{f^n\}$ is equicontinuous]
     If $f$ maps a metric space $(X, d_X)$ into itself, then there is a maximal
-    open subset of $X$ on which the family of iterates $\{f^n \mid n \in \N\}$ is
-    equicontinuous.
+    open subset of $X$ on which the family of iterates $\{f^n \mid n \in \N\}$
+    is equicontinuous.
 \end{corollary}
 
 This (at last) provides us with a formal definition for the Fatou and Julia sets
@@ -103,9 +117,9 @@ $\ExtC$ (\ref{thm:rational_maps_satify_a_lipschitz_condition}). Thus, if we
 conjugate $R$ with respect to a Möbius map, equicontinuity is transferred in the
 obvious way, and we have the following theorem.
 
-\begin{theorem}[Equicontinuity is transferred via conjugation]
-    Let $R$ be a non-constant rational map, let $g$ be a Möbius map, and let
-    $S = g R g^{-1}$. Then $F(S) = g(F(R))$ and $J(S) = g(J(R))$.
+\begin{theorem}[Equicontinuity is preserved under conjugation]
+    Let $R$ be a non-constant rational map, let $g$ be a Möbius map, and let $S
+    = g R g^{-1}$. Then $F(S) = g(F(R))$ and $J(S) = g(J(R))$.
 \end{theorem}
 
 A similar argument leads to the following theorem.
@@ -120,7 +134,8 @@ A similar argument leads to the following theorem.
 \end{proof}
 
 % --- SECTION ------------------------------------------------------------------
-% --- COMPLETELY INVARIANT SETS -------------------------------------------------
+% --- COMPLETELY INVARIANT SETS
+% -------------------------------------------------
 \section{Completely invariant sets}
 \label{sec:completely_invariant_sets}
 
@@ -136,8 +151,8 @@ A similar argument leads to the following theorem.
 \begin{remark}[$g$ surjective $\implies$ backward invariant $=$ completely invariant]
     If $g$ is surjective (that is, if $g(X) = X$) then the concepts of backward
     invariance and complete invariance coincide. Indeed, by surjectivity (but
-    not necessarily in the general case, because there may be some points in
-    $E$ where $g^{-1}(x) = \emptyset$),
+    not necessarily in the general case, because there may be some points in $E$
+    where $g^{-1}(x) = \emptyset$),
     \begin{equation*}
         g(g^{-1}(E)) = E
     \end{equation*}
@@ -158,7 +173,7 @@ invariance.
 We illustrate these ideas with the following result which will be of importance
 later.
 
-\begin{theorem}[Completely invariant $\implies$ non-empty, non-singleton set]
+\begin{theorem}[Completely invariant under $R$ and finite $\implies$ at most two elements]
     \label{thm:completely_invariant_implies_non_empty_non_singleton}
     Let $R$ be a rational map of degree at least two and suppose that a finite
     set $E$ is completely invariant under $R$. Then $E$ has at most two
@@ -226,8 +241,8 @@ discussion of completely invariant sets.
 \end{remark}
 
 \begin{definition}[Orbit of $x$ (under $g$)]
-    We denote the equivalence class containing $x$ by $[x]$, and we call this the
-    \emph{orbit} of $x$ (some authors call this the \enquote{great orbit}).
+    We denote the equivalence class containing $x$ by $[x]$, and we call this
+    the \emph{orbit} of $x$ (some authors call this the \enquote{great orbit}).
 \end{definition}
 
 It is easy to identify the orbit $[x]$, and we have the following theorem.
@@ -252,8 +267,8 @@ operators.
     \label{thm:complete_invarian_is_preserved_under_complement_interior_and_boundary}
     Let $g$ be any continuous, open map of a topological space $X$ onto itself
     and suppose that $E$ is completely invariant. Then so are the complement $X
-    - E$, the interior $\interior{E}$, the boundary $\boundary{E}$ and the closure
-    $\closure{E}$, of $E$.
+    - E$, the interior $\interior{E}$, the boundary $\boundary{E}$ and the
+    closure $\closure{E}$, of $E$.
 \end{theorem}
 \begin{proof}
     See \cite[53]{Beardon1991}.
@@ -287,7 +302,7 @@ is a polynomial, and we have the following theorem.
 We end this section with a simple observation which will be used several times
 later.
 
-\begin{proposition}[Periodic invariance of components]
+\begin{proposition}[Finite number of Fatou components $\implies$ they are periodic]
     Let $f$ be a continuous map of a topological space $X$ onto itself, and
     suppose that $X$ has only a finite number of components $X_j$. Then for some
     integer $m$, each $X_j$ is completely invariant under $f^m$.
@@ -341,7 +356,8 @@ We begin with the definitions relevant to normal families.
         &\lim_{n \to \infty} f_n = f \text{ pointwise} &&\iff \\
         &&&\forall x \in X \lim_{n \to \infty} f_n(x) = f(x); \\
         &\lim_{n \to \infty} f_n = f \text{ uniformly} &&\iff \\
-        &&&\lim_{n \to \infty} \sup\{d_Y(f_n(x), f(x)) \mid \forall x \in X\} = 0.
+        &&&\lim_{n \to \infty} \sup\{d_Y(f_n(x), f(x)) \mid \forall x \in X\} =
+        0.
     \end{alignat*}
     This last expression may also clarify why at the section A Topology on the
     Rational Functions (\ref{sec:a_topology_on_the_raional_functions}), we
@@ -366,7 +382,7 @@ We begin with the definitions relevant to normal families.
     A family $\mathcal{F}$ of maps from a metric space $(X, d_X)$ to a metric
     space $(Y, d_Y)$ is said to be \emph{normal}, or a \emph{normal family}, in
     $X$ if every infinite sequence of functions from $\mathcal{F}$ contains a
-    subsequence which converges locally uniformly on $X_1$.
+    subsequence which converges locally uniformly on $X$.
 \end{definition}
 
 We give the usual reminder that the limit of the convergent subsequence need not
@@ -421,7 +437,7 @@ results concerning normality: this result is absolutely essential for the study
 of iteration of rational maps, yet its substantial proof can safely be omitted
 without prejudicing an understanding of iteration theory.
 
-\begin{theorem}[The family of analytic maps $\{f: D \to \ExtC - \{0, 1, \infty\}\}$ is normal]
+\begin{theorem}[$\{f: D \to \ExtC - \{0, 1, \infty\} \mid f$ analytic$\}$ is normal]
     \label{thm:analytic_maps_not_touching_zero_one_and_infty_form_a_normal_family}
     Let $D$ be a domain on the complex sphere $\ExtC$, and let $\Omega$ be the
     domain $\ExtC - \{0, 1, \infty\}$. Then the family $\mathcal{F}$ of all
@@ -442,7 +458,7 @@ these, we assume only that each function $f$ fails to take three values which no
 completely arbitrary, and we must add the requirement that they are uniformly
 separated on the sphere.
 
-\begin{theorem}[The family of analytic maps $\{f: D \to \ExtC - \{a_f, b_f, c_f\}\}$ is normal]
+\begin{theorem}[$\{f: D \to \ExtC - \{a_f, b_f, c_f\} \mid f$ analytic$\}$ is normal]
     \label{thm:analytic_maps_not_touching_af_bf_and_cf_form_a_normal_family}
     Let $\mathcal{F}$ be a family of maps, each analytic in a domain $D$ on the
     complex sphere. Suppose also that there is a positive constant $m$ and, for
@@ -451,7 +467,8 @@ separated on the sphere.
     \begin{enumerate}
         \item $f$ in $\mathcal{F}$ does not take the values $a_f$, $b_f$ and
         $c_f$ in $D$; and
-        \item $\min\{\sigma(a_f, b_f), \sigma(b_f, c_f), \sigma(c_f, a_f)\} \geq m$.
+        \item $\min\{\sigma(a_f, b_f), \sigma(b_f, c_f), \sigma(c_f, a_f)\} \geq
+        m$.
     \end{enumerate}
     Then $\mathcal{F}$ is normal in $D$.
 \end{theorem}
@@ -468,7 +485,7 @@ every $f$. There is another variation of
 Theorem~\ref{thm:analytic_maps_not_touching_zero_one_and_infty_form_a_normal_family}
 that we shall need.
 
-\begin{theorem}[The family of analytic maps $\{f: D \to \ExtC\}$ such that $f(z) \neq \varphi_j(z)$ for $j=1$, $2$, $3$, is normal]
+\begin{theorem}[$\{f: D \to \ExtC \mid f$ analytic and $f(z) \neq \varphi_j(z)$ for $j=1$, $2$, $3\}$ is normal]
     Let $D$ be a domain, and suppose that the functions $\varphi_1$, $\varphi_2$
     and $\varphi_3$ are analytic in $D$, and are such that the closures of the
     domains $\varphi_j(D)$ are mutually disjoint. Now let $\mathcal{F}$ be a

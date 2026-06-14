@@ -1,0 +1,54 @@
+\begin{tikzpicture}[
+    >-Stealth,
+    point/.style={circle, fill=black, inner sep=1pt},
+    dashed circle/.style={dashed, draw=black, minimum size=3.5cm, circle},
+    mapping arrow/.style={->, thick, shorten >=5pt, shorten <=5pt}
+]
+
+    % --- REGION 1: N ----------------------------------------------------------
+    \node[dashed circle] (C1) {};
+    \node[below right=1cm and 1.25cm of C1.center] {$< \delta$};
+    \node[above right=0.5cm and -1.2cm of C1.center] {$N$};
+    
+    % Draw Blob
+    \pic [scale=0.35] at (C1.center) {blob7};
+    
+    % Points inside N
+    \node[point, label=above:{$z$}] (z1) at ($(C1.center) + (0, 0)$) {};
+    \node[point, label=left:{$w$}] (w1) at ($(C1.center) + (0.1, -0.7)$) {};
+
+    % --- REGION 2: R(N) -------------------------------------------------------
+    \node[dashed circle, right=2cm of C1] (C2) {};
+    \node[below right=1cm and 1.25cm of C2.center] {$< \varepsilon_1$};
+    \node[above right=0.85cm and -0.85cm of C2.center] {$R(N)$};
+
+    % Draw Blob
+    \pic [scale=0.25, rotate=45] at (C2.center) {blob4};
+    
+    % Points inside R(N)
+    \node[point, label=above:{$R(z)$}] (z2) at ($(C2.center) + (0, 0)$) {};
+    \node[point, label=above:{$R(w)$}] (w2) at ($(C2.center) + (-0.65, -0.5)$) {};
+
+
+    % --- REGION 3: R^n(N) -----------------------------------------------------
+    \node[dashed circle, right=5.4cm of C2] (C3) {};
+    \node[below right=1cm and 1.25cm of C3.center] {$< \varepsilon_n$};
+    \node[above right=-0.1cm and 0.35cm of C3.center] {$R^n(N)$};
+    
+    % Draw Blob
+    \pic [scale=0.24, rotate=-80] at (C3.center) {blob3};
+    
+    % Points inside R^n(N)
+    \node[point, label=below:{$R^n(z)$}] (z3) at ($(C3.center) + (0, 0)$) {};
+    \node[point, label=above:{$R^n(w)$}] (w3) at ($(C3.center) + (-0.35, 0.4)$) {};
+
+
+    % --- ARROWS & LABELS ------------------------------------------------------
+    \draw[mapping arrow] (C1.east) -- (C2.west) node[midway, above=3pt] {\Large $R$};
+    
+    \coordinate (Arrow2End) at ($(C2.east) + (1.9, 0)$);
+    \draw[mapping arrow] (C2.east) -- (Arrow2End) node[midway, above=3pt] {\Large $R$};
+    
+    \node[right=0.4cm of Arrow2End, font=\Huge, inner sep=0pt] (dots) {$\dots$};
+    \draw[mapping arrow] ($(dots.east) + (0.2, 0)$) -- (C3.west) node[midway, above=3pt] {\Large $R$};
+\end{tikzpicture}

@@ -1,0 +1,21 @@
+\tikzset{
+    blob5/.pic={
+        \begin{scope}[-]
+            \coordinate (4) at (-3.75, 4);
+            \coordinate (5) at (0.75, 4);
+            \coordinate (6) at (1.75, 0.75);
+            \coordinate (7) at (4.5, -0.75);
+            \coordinate (8) at (5, -4.25);
+            \coordinate (9) at (0.75, -4.25);
+            \coordinate (10) at (-3.75, 0);
+
+            \draw [bend left=15] (10) to (4);
+            \draw [bend left=75] (4) to (5);
+            \draw [bend right=15, looseness=1.25] (5) to (6);
+            \draw [bend right, looseness=0.75] (6) to (7);
+            \draw [bend left=75] (7) to (8);
+            \draw [bend left=15] (8) to (9);
+            \draw [bend left] (9) to (10);
+        \end{scope}
+    }
+}

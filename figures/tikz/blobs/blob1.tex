@@ -1,0 +1,19 @@
+\tikzset{
+    blob1/.pic={
+        \begin{scope}[-]
+            \coordinate (0) at (-6.5, 0.5);
+            \coordinate (1) at (-1.75, 2.75);
+            \coordinate (2) at (3.75, 2.5);
+            \coordinate (3) at (6, -1);
+            \coordinate (4) at (1.5, -2.5);
+            \coordinate (5) at (-4, -2);
+
+            \draw [bend left=45, looseness=0.75] (0) to (1);
+            \draw [bend right=15, looseness=0.75] (1) to (2);
+            \draw [bend left=60] (2) to (3);
+            \draw [bend left=45, looseness=0.75] (3) to (4);
+            \draw [bend right=15] (4) to (5);
+            \draw [bend right=60, looseness=1.25] (0) to (5);
+        \end{scope}
+    }
+}

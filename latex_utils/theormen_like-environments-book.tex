@@ -35,18 +35,17 @@
 \newtheorem*{definition*}{Definition}
 \newtheorem*{definicion*}{Definición} % In Spanish
 
-% Defines the remark environment for remarks
-\theoremstyle{remark}
-\newtheorem{remark}[theorem]{Remark}
-\newtheorem{observacion}[theorem]{Observación}
-% For unnumbered remarks
-\newtheorem*{remark*}{Remark}
-\newtheorem*{observacion*}{Observación}
-
 % Defines the example environment for examples
-\theoremstyle{definition}
 \newtheorem{example}{Example}[chapter]
 \newtheorem{ejemplo}[example]{Ejemplo} % In Spanish
 % For unnumbered examples
 \newtheorem*{example*}{Example}
 \newtheorem*{ejemplo*}{Ejemplo} % In Spanish
+
+% Defines the remark environment for remarks
+\theoremstyle{remark}
+\newtheorem{remark}{Remark}[chapter]
+\newtheorem{observacion}[remark]{Observación}
+% For unnumbered remarks
+\newtheorem*{remark*}{Remark}
+\newtheorem*{observacion*}{Observación}

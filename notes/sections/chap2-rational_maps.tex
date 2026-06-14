@@ -289,12 +289,16 @@ fixed point for all polynomials.
     The rational maps are precisely the analytic maps of $\ExtC$ into itself.
 \end{theorem}
 
+\begin{definition}[$d$-fold map]
+    We say a map $f: V \to W$ is a \emph{$d$-fold map} if, for every $w$ in $W$,
+    the equation $f(z) = w$ has \emph{exactly} $d$ solutions in $V$ (counting
+    multiple solutions by their multiplicity).
+\end{definition}
+
 \begin{theorem}[Rational maps are $d$-fold maps in $\ExtC$]
     \label{thm:rational_map_are_dfold_maps}
     Given $R$ a rational function of positive degree $d$. Then $R$ is a $d$-fold
-    map of $\ExtC$ \emph{onto} itself: that is, for any $w$ in $\ExtC$, the
-    equation $R(z) = w$ has \emph{precisely} $d$ solutions in $z$ (counting
-    multiplicities).
+    map of $\ExtC$ \emph{onto} itself.
 \end{theorem}
 \begin{proof}
     See \cite[31-32]{Beardon1991}.
@@ -343,7 +347,7 @@ fixed point for all polynomials.
     See \cite[33-34]{Beardon1991}.
 \end{proof}
 
-\begin{theorem}[Möbius transformations \emph{family} explicit uniform Lipschitz condition]
+\begin{theorem}[Möbius transformations family explicit uniform Lipschitz condition]
     Let m be any positive number. Then the Möbius transformations $g$ which
     satisfy
     \begin{alignat*}{3}
@@ -454,24 +458,34 @@ polynomials within the class of rational maps.
 % --- VALENCY ------------------------------------------------------------------
 \section{Valency}
 
+Given any function $f$ that is non-constant and holomorphic near the point $z_0$
+in $\C$. Then $f$ has a Taylor expansion at $z_0$, say
+\begin{equation*}
+    f(z) = f(z_0) + a_k(z-z_0)^k + a_{k+1}(z-z_0)^{k+1} + \dots
+\end{equation*}
+where $a_k \neq 0$ and the positive integer $k$ is uniquely determined by the
+condition that the limit
+\begin{equation*}
+    \lim_{z \to z_0} \frac{f(z)-f(z_0)}{(z-z_0)^k}
+\end{equation*}
+exists, is finite, and is non-zero. 
+
 \begin{definition}[Valency of $f$ at $z_0 \in \C$]
     \label{def:valency_in_C}
-    Given any function $f$ that is non-constant and holomorphic near the point
-    $z_0$ in $\C$. Then $f$ has a Taylor expansion at $z_0$, say
-    \begin{equation*}
-        f(z) = f(z_0) + a_k(z-z_0)^k + a_{k+1}(z-z_0)^{k+1} + \dots
-    \end{equation*}
-    where $a_k \neq 0$ and the positive integer $k$ is uniquely determined by
-    the condition that the limit
-    \begin{equation*}
-        \lim_{z \to z_0} \frac{f(z)-f(z_0)}{(z-z_0)^k}
-    \end{equation*}
-    exists, is finite, and is non-zero. 
-    
     We denote this integer $k$ by $v_f(z_0)$ and call it the \emph{valency}, or
-    \emph{order}, of $f$ at $z_0$: of course, it is the number of solutions of
-    $f(z) = f(z_0)$ at $z_0$.
+    \emph{order}, of $f$ at $z_0$.
 \end{definition}
+
+\begin{remark}[Valency is a local property]
+    Note that when defining the valency, we've used the Taylor expansion at
+    $z_0$. This expansion is defined \emph{near the point $z_0$}, that is,
+    valency is defined locally in a neighborhood of a point.
+\end{remark}
+
+\begin{remark}[$v_f(z_0)$ is the number of solutions of $f(z) = f(z_0)$]
+    Of course, the valency of $f$ is the number of solutions of $f(z) = f(z_0)$
+    at $z_0$ (restricting $f$ to a neighborhood near $z_0$).
+\end{remark}
 
 \begin{proposition}[Chain Rule for Valency]
     The valency function $v$ satisfies the important \emph{Chain Rule}:
@@ -485,17 +499,18 @@ polynomials within the class of rational maps.
     See \cite[37-38]{Beardon1991}.
 \end{proof}
 
-\begin{remark}[Injectivity in terms of valency]
-    \label{rmk:injectivity_in_terms_of_valency}
+\begin{remark}[Local injectivity in terms of valency]
+    \label{rmk:local_injectivity_in_terms_of_valency}
     Given any function $f$ that is non-constant and holomorphic near the point
     $z_0$ in $\C$. Observe that $f$ is injective in some neighborhood of $z_0$
     if and only if $v_f(z_0) = 1$.
 \end{remark}
 
 \begin{remark}[Composing with injective functions preserves valency]
-    Because of the previous remark (\ref{rmk:injectivity_in_terms_of_valency}),
-    the Chain Rule shows that the valency is preserved under a pre-application,
-    and a post-application, of an injective function.
+    Because of the previous remark
+    (\ref{rmk:local_injectivity_in_terms_of_valency}), the Chain Rule shows that
+    the valency is preserved under a pre-application, and a post-application, of
+    an injective function.
 
     Explicitly, if $fg$ is defined near $z$ with $g$ injective near $z$, and if
     $hf$ is defined near $z$ with $h$ injective near $f(z)$, then:
@@ -646,7 +661,7 @@ $h$.
     Then,
     \begin{enumerate}
         \item $R$ fixes $\infty$ if and only if $\deg(P) > \deg(Q)$;
-        \item and $R$ fixes $\zeta \in \C$ if and only if$P(\zeta) = \zeta
+        \item and $R$ fixes $\zeta \in \C$ if and only if $P(\zeta) = \zeta
         Q(\zeta)$; that is, the \emph{fixed points of $R$ in $\C$} are the
         solutions of 
         \begin{equation*}
@@ -680,7 +695,7 @@ multiplicities.
 
 To count the number of fixed points at $\infty$, we need the following lemma.
 
-\begin{lemma}[$\zeta \in \C$ fixed by $f \implies \zeta$ fixed by conjugate in $\C$]
+\begin{lemma}[$\zeta \in \C$ fixed by $f \implies \zeta$ fixed by \enquote{conjugate} in $\C$]
     Let $\zeta$ in $\C$ be a fixed point of an analytic map $f$, and let
     $\varphi$ be any map that is analytic, injective and finite in some
     neighborhood of $\zeta$. Then, $\varphi f \varphi^{-1}$ has the same number
@@ -706,7 +721,7 @@ $\varphi$.
 Moreover, as a direct consequence of the previous lemma, we have the following
 theorem.
 
-\begin{theorem}[Number of fixed points is invariant under conjugacy]
+\begin{theorem}[Number of fixed points is preserved under conjugacy]
     Given two conjugate rational maps $R$ and $S$, where $S = g R g^{-1}$, $g$
     is a Möbius transformation. Then, the number of fixed points of $R$ at
     $\zeta$ is the same as the number of fixed points of $S$ at $g(\zeta)$.
@@ -904,10 +919,13 @@ iteration.
 
 \begin{definition}[Critical point of a rational map]
     Given a rational map $R$. A point $z_0$ in $\ExtC$ is a \emph{critical
-    point} of $R$ if $R$ fails to be injective in any neighborhood of $z_0$, and
-    if $R$ is not constant. These points are precisely the points at which
-    $v_R(z_0) > 1$.
+    point} of $R$ if $R$ fails to be injective in any neighborhood of $z_0$.
 \end{definition}
+
+\begin{remark}[Critical points in terms of valency]
+    Observe that if $R$ is not constant, critical points are precisely the points
+    at which $v_R(z_0) > 1$.
+\end{remark}
 
 \begin{definition}[Critical value of a rational map]
     Given a rational map $R$. A point $w_0$ in $\ExtC$ is a \emph{critical
@@ -920,8 +938,8 @@ iteration.
     value of $R$. Then, $R^{-1}\{w\}$ consists of precisely $d$ distinct points,
     say $z_1, z_2, \dots, z_d$. As none of the $z_j$ are critical points, there
     are neighborhoods of $N$ of $w$, and $N_1, \ldots, N_d$ of $z_1, \ldots,
-    z_d$ respectively, with $R$ acting as a bijection from each $N_j$ onto $N$.
-    See Figure~\ref{fig:bijective_restrictions_of_R_for_non_critical_value}. It
+    z_d$ respectively, with $R$ acting as a bijection from each $N_j$ onto $N$
+    (Figure~\ref{fig:bijective_restrictions_of_R_for_non_critical_value}). It
     follows that for each $j$, the restriction $R_j$ of $R$ to $N_j$ ($R: N_j
     \to N$) has an inverse
     \begin{equation*}
@@ -931,7 +949,7 @@ iteration.
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.6\textwidth]{ai_generated/bijective_restrictions_of_R_for_non_critical_value.png}
+    \resizebox{0.6\textwidth}{!}{\input{../figures/tikz/bijective_restrictions_of_R_for_non_critical_value}}
     \caption{Bijective restrictions of $R$ for a non-critical value $w$.}
     \label{fig:bijective_restrictions_of_R_for_non_critical_value}
 \end{figure}
@@ -947,7 +965,7 @@ By applying the Inverse Function Theorem
 on some neighborhood of any point in $\C$ at which $R'$ has neither a zero nor a
 pole: thus for all but a finite set of $z$, $v_R(z) = 1$ (recall that locally
 injective is the same as having valency 1
-(Remark~\ref{rmk:injectivity_in_terms_of_valency})) and, consequently,
+(Remark~\ref{rmk:local_injectivity_in_terms_of_valency})) and, consequently,
 \begin{equation*}
     \sum_{z \in \ExtC} [v_R(z) - 1] < \infty.
 \end{equation*}
@@ -958,7 +976,7 @@ difficulties in defining $R^{-1}$), and its actual value is given by the
 \begin{theorem}[Riemann-Hurwitz relation]
     Given a non-constant rational map $R$. Then,
     \begin{equation*}
-        \sum_{z \in \ExtC} [v_R(z) - 1] = 2d - 2.
+        \sum_{z \in \ExtC} [v_R(z) - 1] = 2\deg(R) - 2.
     \end{equation*}
 \end{theorem}
 \begin{proof}

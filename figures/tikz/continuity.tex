@@ -1,0 +1,31 @@
+\begin{tikzpicture}[
+    >-Stealth,
+    point/.style={circle, fill=black, inner sep=1pt},
+    dashed circle/.style={dashed, draw=black, minimum size=3.5cm, circle},
+    mapping arrow/.style={->, thick, shorten >=5pt, shorten <=5pt}
+]
+
+    % --- REGION 1: N ----------------------------------------------------------
+    \node (C1) {};
+    \draw[thick] (C1.center) circle [radius=2];
+    \node at (-1.8, 1.8) {$N$};
+    
+    % Points inside N
+    \node[point, label=above:{$z$}] (z1) at (C1.center) {};
+    \node[point, label=above:{$w$}] (w1) at ($(C1.center) + (1, -1)$) {};
+
+    % --- REGION 2: f(N) -------------------------------------------------------
+    \node[right=6 of C1] (C2) {};
+    \draw[dashed] (C2.center) circle [radius=1.8];
+    \node[above left=0.75 and 0.25 of C2.center] {$f(N)$};
+
+    % Draw Blob
+    \pic [thick, scale=0.27, rotate=45] at (C2.center) {blob4};
+    
+    % Points inside R(N)
+    \node[point, label=above:{$f(z)$}] (z2) at ($(C2.center) + (0, 0)$) {};
+    \node[point, label=above:{$f(w)$}] (w2) at ($(C2.center) + (-0.75, -0.65)$) {};
+
+    % --- ARROWS & LABELS ------------------------------------------------------
+    \draw[mapping arrow] ($(C1.center) + (2.2, 0)$) -- ($(C2.center) + (-2, 0)$) node[midway, above=3pt] {\Large $f$};
+\end{tikzpicture}

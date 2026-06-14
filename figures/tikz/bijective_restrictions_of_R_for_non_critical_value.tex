@@ -1,0 +1,65 @@
+\begin{tikzpicture}[
+    >-Stealth,
+    point/.style={circle, fill=black, inner sep=1pt},
+    mapping arrow/.style={->, thick, shorten >=15pt, shorten <=15pt}
+]
+
+    % --- RIGHT SIDE: REGION N -------------------------------------------------
+    % Center reference coordinate for the target region
+    \coordinate (N_center) at (5, 0);
+    
+    % Draw Blob
+    \pic [thick, scale=0.25, rotate=180] at (N_center) {blob7};
+
+    \node[point, label=right:{$w$}] (w) at (N_center) {};
+    \node[above right=0.75cm and 1cm of N_center] {$\mathcal{N}$};
+
+
+    % --- LEFT SIDE: REGIONS N_1, N_2, N_d -------------------------------------
+    
+    % --- Region N_1 (Top Left) ------------------------------------------------
+    \coordinate (N1_center) at (0, 2.5);
+    
+    % Draw Blob
+    \pic [thick, scale=0.21, rotate=-5] at (N1_center) {blob1};
+
+    \node[point, label=right:{$z_1$}] (z1) at (N1_center) {};
+    \node[left=1.4cm of N1_center] {$\mathcal{N}_1$};
+
+    % --- Region N_2 (Middle Left) ---------------------------------------------
+    \coordinate (N2_center) at (0, 0);
+    
+    % Draw Blob
+    \pic [thick, scale=0.2] at (N2_center) {blob4};
+
+    \node[point, label=right:{$z_2$}] (z2) at (N2_center) {};
+    \node[left=1.4cm of N2_center] {$\mathcal{N}_2$};
+
+    % --- Vertical Dots --------------------------------------------------------
+    \node[font=\Large] at (0, -1.2) {$\vdots$};
+
+    % --- Region N_d (Bottom Left) ---------------------------------------------
+    \coordinate (Nd_center) at (0, -2.5);
+
+    % Draw Blob
+    \pic [thick, scale=0.2] at (Nd_center) {blob3};
+
+    \node[point, label=right:{$z_d$}] (zd) at (Nd_center) {};
+    \node[left=1.4cm of Nd_center] {$\mathcal{N}_d$};
+
+
+    % --- MAPPING ARROWS -------------------------------------------------------
+    
+    % Arrow from N_1 to N
+    \draw[mapping arrow] ($(N1_center) + (1.1, 0)$) -- ($(N_center) + (-0.5, 0.5)$) 
+        node[midway, above=3pt] {$R_1$};
+        
+    % Arrow from N_2 to N
+    \draw[mapping arrow] ($(N2_center) + (0.75, 0)$) -- ($(N_center) + (-0.8, -0.0)$) 
+        node[midway, above=2pt] {$R_2$};
+        
+    % Arrow from N_d to N
+    \draw[mapping arrow] ($(Nd_center) + (1.1, 0)$) -- ($(N_center) + (-0.5, -0.5)$) 
+        node[midway, above=3pt] {$R_d$};
+
+\end{tikzpicture}

@@ -14,7 +14,7 @@
 % \usepackage{amsmath, amsthm, amssymb, amsfonts}
 \usepackage[hidelinks]{hyperref}
 \usepackage{tikz}
-\usetikzlibrary{decorations.pathmorphing, shapes.geometric, arrows.meta}
+\usetikzlibrary{decorations.pathmorphing, shapes.geometric, arrows.meta, positioning, calc}
 \usepackage{graphicx}
 \usepackage{subcaption}
 \graphicspath{ {../figures} }
@@ -29,6 +29,18 @@
 \input{../latex_utils/customization/customization_commands}
 % \input{../latex_utils/customization/title-customization}
 \input{../latex_utils/customization/theorem_like-environments-customization}
+
+% --- Defined tikzsets pics and layers ---------------------------------------------
+\pgfdeclarelayer{edgelayer}
+\pgfdeclarelayer{nodelayer}
+\pgfsetlayers{main,nodelayer,edgelayer}
+\input{../figures/tikz/blobs/blob1}
+\input{../figures/tikz/blobs/blob2}
+\input{../figures/tikz/blobs/blob3}
+\input{../figures/tikz/blobs/blob4}
+\input{../figures/tikz/blobs/blob5}
+\input{../figures/tikz/blobs/blob6}
+\input{../figures/tikz/blobs/blob7}
 
 % --- Includes to Reproccess ---------------------------------------------------
 \includeonly{

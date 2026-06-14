@@ -1,0 +1,18 @@
+\begin{tikzpicture}
+	\begin{pgfonlayer}{nodelayer}
+		\node [style=none] (0) at (-6.5, 0.5) {};
+		\node [style=none] (1) at (-1.75, 2.75) {};
+		\node [style=none] (2) at (3.75, 2.5) {};
+		\node [style=none] (3) at (6, -1) {};
+		\node [style=none] (4) at (1.5, -2.5) {};
+		\node [style=none] (5) at (-4, -2) {};
+	\end{pgfonlayer}
+	\begin{pgfonlayer}{edgelayer}
+		\draw [bend left=45, looseness=0.75] (0.center) to (1.center);
+		\draw [bend right=15, looseness=0.75] (1.center) to (2.center);
+		\draw [bend left=60] (2.center) to (3.center);
+		\draw [bend left=45, looseness=0.75] (3.center) to (4.center);
+		\draw [bend right=15] (4.center) to (5.center);
+		\draw [bend right=60, looseness=1.25] (0.center) to (5.center);
+	\end{pgfonlayer}
+\end{tikzpicture}
