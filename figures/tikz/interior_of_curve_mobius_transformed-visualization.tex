@@ -1,0 +1,109 @@
+\begin{tikzpicture}[
+    axis/.style={-{Stealth[length=2.5mm]}},
+    thick line/.style={thick, line cap=round, line join=round}
+]
+
+    % --- LEFT PLOT: \Omega and \gamma -----------------------------------------
+    
+    % Shape Path Definition
+    \draw[thick] (0,0)
+        to[out=120, in=0] (-1,0.75)
+        to[out=-180, in=90] (-2,0)
+        to[out=-90, in=180] (-1,-0.75)
+        to[out=0, in=-120] (0,0);
+
+    \draw[thick, fill=gray!30] (0,0)
+        to[out=60, in=180] (1,0.75)
+        to[out=0, in=90] (2,0)
+        to[out=-90, in=0] (1,-0.75)
+        to[out=180, in=-60] (0,0);
+
+    % Axes
+    \draw[axis] (-2.5,0) -- (2.5,0);
+    \draw[axis] (0,-2.5) -- (0,2.5);
+    
+    % Labels
+    \node at (1, 0.25) {$\Omega$};
+    \node at (-1.75, 0.75) {$\gamma$};
+
+    % --- MIDDLE ARROW: R(z) ---------------------------------------------------
+    \draw[-{Stealth[length=3mm]}, very thick] (3.0,0) -- (4.2,0) node[midway, above=2pt] {\large $R$};
+
+    % --- RIGHT PLOT: R(\Omega) and R(\gamma)  ---------------------------------
+    \begin{scope}[shift={(7.5,0)}]
+        
+        \begin{scope}[scale=0.45, transform shape, shift={(0, 0)}]
+            \begin{pgfonlayer}{nodelayer}
+                \node (0) at (1, 1) {};
+                \node (1) at (1, 2) {};
+                \node (2) at (1.5, 3) {};
+                \node (3) at (0, 4) {};
+                \node (4) at (-1, 3) {};
+                \node (5) at (0, 2) {};
+                \node (6) at (2.25, 1.75) {};
+                \node (7) at (-1, 1.25) {};
+                \node (8) at (-3, 0.5) {};
+                \node (9) at (-2, -1) {};
+                \node (10) at (-1.5, -2) {};
+                \node (11) at (-2.5, -2.75) {};
+                \node (12) at (-3.25, -1.75) {};
+                \node (13) at (0, -1.75) {};
+                \node (14) at (2, -2) {};
+                \node (15) at (3.25, -1) {};
+                \node (16) at (2.75, 0) {};
+                \node (17) at (2.25, 1.25) {};
+                \node (18) at (-3, -0.25) {};
+            \end{pgfonlayer}
+
+            % 1. Left Top Loop (Nodes: 1 -> 2 -> 3 -> 4 -> 5 -> 1)
+            \fill[gray!30] (1.center) 
+                [bend right] to (2.center)
+                [bend right=45, looseness=0.75] to (3.center)
+                [bend right] to (4.center)
+                [bend right=60] to (5.center)
+                -- cycle; % '-- cycle' cleanly closes the path back to (1.center)
+
+            % 2. Right Top Loop (Nodes: 0 -> 1 -> 6 -> 17 -> 0)
+            \fill[gray!30] (0.center) 
+                [bend left=60] to (1.center)
+                [bend left=15] to (6.center)
+                [bend left=60, looseness=1.25] to (17.center)
+                [bend left=15, looseness=0.75] to cycle;
+
+            \begin{pgfonlayer}{edgelayer}
+                \draw [bend left=60, thick] (0.center) to (1.center);
+                \draw [bend right, thick] (1.center) to (2.center);
+                \draw [bend right=45, looseness=0.75, thick] (2.center) to (3.center);
+                \draw [bend right, thick] (3.center) to (4.center);
+                \draw [bend right=45, thick] (4.center) to (5.center);
+                \draw [thick] (5.center) to (1.center);
+                \draw [bend left=15, thick] (1.center) to (6.center);
+                \draw [thick] (0.center) to (7.center);
+                \draw [bend left=330, looseness=0.75, thick] (7.center) to (8.center);
+                \draw [bend left, thick] (9.center) to (10.center);
+                \draw [bend left=45, thick] (10.center) to (11.center);
+                \draw [bend left=45, thick] (11.center) to (12.center);
+                \draw [bend left=45, thick] (12.center) to (9.center);
+                \draw [bend left=15, thick] (9.center) to (13.center);
+                \draw [bend right, thick] (13.center) to (14.center);
+                \draw [bend right=15, thick] (14.center) to (15.center);
+                \draw [bend right=45, thick] (15.center) to (16.center);
+                \draw [bend left=15, looseness=0.75, thick] (16.center) to (0.center);
+                \draw [bend left=60, looseness=1.25, thick] (6.center) to (17.center);
+                \draw [bend left=15, looseness=0.75, thick] (17.center) to (0.center);
+                \draw [bend right, thick] (8.center) to (18.center);
+                \draw [bend right=15, looseness=0.75, thick] (18.center) to (9.center);
+            \end{pgfonlayer}
+        \end{scope}
+     
+        % Axes
+        \draw[axis] (-2.5,0) -- (2.5,0);
+        \draw[axis] (0,-2.5) -- (0,2.5);
+
+        % Labels
+        \node at (1.25, 1.25) {$R(\Omega)$};
+        \node at (-1.5, 0.7) {$R(\gamma)$};
+        
+    \end{scope}
+
+\end{tikzpicture}

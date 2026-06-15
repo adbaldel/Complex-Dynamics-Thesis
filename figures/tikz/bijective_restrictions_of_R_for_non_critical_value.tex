@@ -12,13 +12,13 @@
     \pic [thick, scale=0.25, rotate=180] at (N_center) {blob7};
 
     \node[point, label=right:{$w$}] (w) at (N_center) {};
-    \node[above right=0.75cm and 1cm of N_center] {$\mathcal{N}$};
+    \node[above right=0.85cm and 0.6cm of N_center] {$\mathcal{N}$};
 
 
     % --- LEFT SIDE: REGIONS N_1, N_2, N_d -------------------------------------
     
     % --- Region N_1 (Top Left) ------------------------------------------------
-    \coordinate (N1_center) at (0, 2.5);
+    \coordinate (N1_center) at (0, 2);
     
     % Draw Blob
     \pic [thick, scale=0.21, rotate=-5] at (N1_center) {blob1};
@@ -30,19 +30,19 @@
     \coordinate (N2_center) at (0, 0);
     
     % Draw Blob
-    \pic [thick, scale=0.2] at (N2_center) {blob4};
+    \pic [thick, scale=0.2, rotate=-135] at (N2_center) {blob5};
 
     \node[point, label=right:{$z_2$}] (z2) at (N2_center) {};
     \node[left=1.4cm of N2_center] {$\mathcal{N}_2$};
 
-    % --- Vertical Dots --------------------------------------------------------
+    % Vertical Dots
     \node[font=\Large] at (0, -1.2) {$\vdots$};
 
     % --- Region N_d (Bottom Left) ---------------------------------------------
     \coordinate (Nd_center) at (0, -2.5);
 
     % Draw Blob
-    \pic [thick, scale=0.2] at (Nd_center) {blob3};
+    \pic [thick, scale=0.2] at (Nd_center) {blob2};
 
     \node[point, label=right:{$z_d$}] (zd) at (Nd_center) {};
     \node[left=1.4cm of Nd_center] {$\mathcal{N}_d$};
@@ -55,7 +55,7 @@
         node[midway, above=3pt] {$R_1$};
         
     % Arrow from N_2 to N
-    \draw[mapping arrow] ($(N2_center) + (0.75, 0)$) -- ($(N_center) + (-0.8, -0.0)$) 
+    \draw[mapping arrow] ($(N2_center) + (0.8, 0)$) -- ($(N_center) + (-0.8, -0.0)$) 
         node[midway, above=2pt] {$R_2$};
         
     % Arrow from N_d to N
