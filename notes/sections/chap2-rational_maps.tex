@@ -301,7 +301,7 @@ fixed point for all polynomials.
     map of $\ExtC$ \emph{onto} itself.
 \end{theorem}
 \begin{proof}
-    See \cite[31-32]{Beardon1991}.
+    See \cite[31--32]{Beardon1991}.
 \end{proof}
 
 \begin{remark}[Zeros and poles of rational maps]
@@ -344,7 +344,7 @@ fixed point for all polynomials.
     \end{equation*}
 \end{theorem}
 \begin{proof}
-    See \cite[33-34]{Beardon1991}.
+    See \cite[33--34]{Beardon1991}.
 \end{proof}
 
 \begin{theorem}[Möbius transformations family explicit uniform Lipschitz condition]
@@ -361,7 +361,7 @@ fixed point for all polynomials.
     \end{equation*}
 \end{theorem}
 \begin{proof}
-    See \cite[34-35]{Beardon1991}.
+    See \cite[34--35]{Beardon1991}.
 \end{proof}
 
 \begin{definition}[Complementary components of a closed curve $\gamma$]
@@ -385,7 +385,7 @@ fixed point for all polynomials.
     $\gamma$ does not meet the exterior $E(R(\gamma))$ of $R(\gamma)$.
 \end{theorem}
 \begin{proof}
-    See \cite[35-36]{Beardon1991}.
+    See \cite[35--36]{Beardon1991}.
 \end{proof}
 
 This result almost says that if the curve $\gamma$ is sufficiently small, then
@@ -457,6 +457,7 @@ polynomials within the class of rational maps.
 % --- SECTION ------------------------------------------------------------------
 % --- VALENCY ------------------------------------------------------------------
 \section{Valency}
+\label{sec:valency}
 
 Given any function $f$ that is non-constant and holomorphic near the point $z_0$
 in $\C$. Then $f$ has a Taylor expansion at $z_0$, say
@@ -496,7 +497,7 @@ exists, is finite, and is non-zero.
     $z_0$ respectively; and $z_0$, $g(z_0)$, and $fg(z_0)$ are all in $\C$.
 \end{proposition}
 \begin{proof}
-    See \cite[37-38]{Beardon1991}.
+    See \cite[37--38]{Beardon1991}.
 \end{proof}
 
 \begin{remark}[Local injectivity in terms of valency]
@@ -550,7 +551,8 @@ defined independently of the choice of $g$ and $h$.
 \end{remark}
 
 The converse \emph{need not hold}, being univalent is a global property (the
-whole domain), but valency is a local property (a neighborhood of $z_0$).
+whole domain of definition of the function), but valency is a local property (a
+neighborhood of $z_0$).
 
 \begin{example}
     The map $z \mapsto z^2$ of $\C - \{0\}$ onto itself has valency $1$
@@ -652,8 +654,8 @@ $h$.
 
 \begin{definition}[Fixed point of $f$]
     Given any function $f : D \to \ExtC$ defined on some domain $D \subseteq
-    \ExtC$. A point $z_0$ in $D$ is a \emph{fixed point} of $f$ if $f(z_0) =
-    z_0$.
+    \ExtC$. A point $\zeta$ in $D$ is a \emph{fixed point} of $f$ if $f(\zeta) =
+    \zeta$.
 \end{definition}
 
 \begin{proposition}[Fixed points of rational maps]
@@ -676,10 +678,11 @@ $h$.
 We count fixed points the same way we count zeros, that is, counting
 multiplicities.
 
-\begin{definition}[Number of fixed points at $z_0 \in \C$]
+\begin{definition}[Number of fixed points at $\zeta \in \C$]
     Given any function $f : D \to \ExtC$ defined on some domain $D \subseteq
-    \ExtC$. The number of fixed points of $f$ at a point $z_0$ in $\C$ is given
-    by the valency of the function $f(z) - z$ at $z_0$, i.e., $v_{f(z)-z}(z_0)$.
+    \ExtC$. The number of fixed points of $f$ at a point $\zeta$ in $\C$ is
+    given by the valency of the function $f(z) - z$ at $\zeta$, i.e.,
+    $v_{f(z)-z}(\zeta)$.
 \end{definition}
 
 \begin{example}
@@ -693,16 +696,17 @@ multiplicities.
     fact, $f(z) = f(0)$ has only one solution at $0$ ($f(z) = z(1 + z^2)$).
 \end{example}
 
-To count the number of fixed points at $\infty$, we need the following lemma.
+To count the number of fixed points at $\infty$, we need
 
 \begin{lemma}[$\zeta \in \C$ fixed by $f \implies \zeta$ fixed by \enquote{conjugate} in $\C$]
+    \label{lem:number_of_fixed_points_is_preserved_under_conjugacy_in_C}
     Let $\zeta$ in $\C$ be a fixed point of an analytic map $f$, and let
     $\varphi$ be any map that is analytic, injective and finite in some
     neighborhood of $\zeta$. Then, $\varphi f \varphi^{-1}$ has the same number
     of fixed points at $\varphi(\zeta)$ as $f$ has at $\zeta$.
 \end{lemma}
 \begin{proof}
-    See \cite[39-40]{Beardon1991}.
+    See \cite[39--40]{Beardon1991}.
 \end{proof}
 
 \begin{definition}[Number of fixed points at $\infty$]
@@ -718,8 +722,8 @@ maps $\varphi$, then the resulting answer will be the same; thus, the number of
 fixed points of $f$ at $\infty$ is defined independently of the choice of
 $\varphi$.
 
-Moreover, as a direct consequence of the previous lemma, we have the following
-theorem.
+With this definition,
+Lemma~\ref{lem:number_of_fixed_points_is_preserved_under_conjugacy_in_C} implies
 
 \begin{theorem}[Number of fixed points is preserved under conjugacy]
     Given two conjugate rational maps $R$ and $S$, where $S = g R g^{-1}$, $g$
@@ -916,21 +920,22 @@ iteration.
 % --- SECTION ------------------------------------------------------------------
 % --- CRITICAL POINTS ----------------------------------------------------------
 \section{Critical Points}
+\label{sec:critical_points}
 
 \begin{definition}[Critical point of a rational map]
-    Given a rational map $R$. A point $z_0$ in $\ExtC$ is a \emph{critical
-    point} of $R$ if $R$ fails to be injective in any neighborhood of $z_0$.
+    Given a rational map $R$. A point $z$ in $\ExtC$ is a \emph{critical point}
+    of $R$ if $R$ fails to be injective in any neighborhood of $z$.
 \end{definition}
 
 \begin{remark}[Critical points in terms of valency]
-    Observe that if $R$ is not constant, critical points are precisely the points
-    at which $v_R(z_0) > 1$.
+    Observe that if $R$ is not constant, critical points are precisely the
+    points at which $v_R(z) > 1$.
 \end{remark}
 
 \begin{definition}[Critical value of a rational map]
-    Given a rational map $R$. A point $w_0$ in $\ExtC$ is a \emph{critical
-    value} of $R$ if it is the image of some critical point; that is, if $w_0 =
-    R(z_0)$ for some critical point $z_0$ of $R$.
+    Given a rational map $R$. A point $w$ in $\ExtC$ is a \emph{critical value}
+    of $R$ if it is the image of some critical point; that is, if $w = R(z)$ for
+    some critical point $z$ of $R$.
 \end{definition}
 
 \begin{remark}
@@ -974,6 +979,7 @@ difficulties in defining $R^{-1}$), and its actual value is given by the
 \emph{Riemann-Hurwitz relation}.
 
 \begin{theorem}[Riemann-Hurwitz relation]
+    \label{thm:Riemann_Hurwitz_relation}
     Given a non-constant rational map $R$. Then,
     \begin{equation*}
         \sum_{z \in \ExtC} [v_R(z) - 1] = 2\deg(R) - 2.
@@ -987,8 +993,7 @@ The general term in the sum is positive only when $z$ is a critical point of $R$
 so, as the valency is an integer, this provides us with an estimate of the
 number of critical points of $R$. For a non-constant polynomial $P$, we have
 $v_P(\infty) = \deg(P)$, so, in the same way, we obtain an estimate of the
-number of critical points of $P$ in $\C$. These two estimates are given in the
-following corollary.
+number of critical points of $P$ in $\C$. These two estimates are given in
 
 \begin{corollary}[Bound on amount of critical points of a rational]
     A rational map of positive degree $d$ has at most $2d - 2$ critical points
@@ -1021,9 +1026,67 @@ the iterate $R^n$ in terms of the critical points of $R$.
 \end{proof}
 
 % --- SECTION ------------------------------------------------------------------
+% --- CONNECTEDNESS AND COMPACTNESS RECALL -------------------------------------
+\section{Connectedness and Compactness Recall}
+
+To support subsequent global dynamic formulations, we briefly review standard
+topological notions adapted to our setting.
+
+\begin{definition}[Connected Set]
+    A set $A$ is \emph{connected} if it cannot be partitioned by two disjoint,
+    non-empty open sets $V$ and $W$ such that $A \subseteq V \cup W$.
+\end{definition}
+
+\begin{definition}[Component of a set]
+    Given a set $B$, we say a subset $A$ of $B$ is a component of $B$ if it is a
+    maximal connected subset.
+\end{definition}
+
+\begin{definition}[Path-Connected Set]
+    A set $A \subseteq \ExtC$ is \emph{path-connected} if for every pair of
+    points $z_0, z_1 \in A$, there exists a continuous map (a path) $\gamma: [0,
+    1] \to A$ such that $\gamma(0) = z_0$ and $\gamma(1) = z_1$.
+\end{definition}
+
+In general topology, path-connectedness is a strictly stronger condition than
+connectedness; every path-connected set is connected, but the converse is false
+(as exemplified by the Topologist's Sine Curve).
+
+\begin{definition}[Domain]
+    An open, connected subset $D \subseteq \ExtC$ is called a \emph{domain}.
+\end{definition}
+
+The regular geometry of open sets yields an equivalence vital to complex
+dynamics.
+
+\begin{theorem}[An open set is connected $\iff$ is path-connected]
+    Let $U \subseteq \ExtC$ be an open set. Then $U$ is connected if and only if
+    it is path-connected. Consequently, any domain $D$ is automatically
+    path-connected.
+\end{theorem}
+
+Thus, domains could also be defined as open, path-connected subsets of $\ExtC$.
+
+\begin{definition}[Compact Set]
+    A set $K$ is \emph{compact} if every open cover of $K$ contains a finite
+    subcover.
+\end{definition}
+
+By the Heine-Borel theorem, compactness for a subset $K \subseteq \C$ is
+equivalent to $K$ being closed and bounded. However, because the extended plane
+$\ExtC$ is itself already compact (being homeomorphic to the sphere $S^2$),
+bounds are redundant. The transformation from $\C$ to $\ExtC$ represents a
+standard one-point or Alexandroff compactification.
+
+\begin{definition}[Compact set in $\ExtC$]
+    A subset $K \subseteq \ExtC$ is compact if and only if it is closed in the
+    chordal topology.
+\end{definition}
+
+% --- SECTION ------------------------------------------------------------------
 % --- A TOPOLOGY ON THE RATIONAL FUNCTIONS -------------------------------------
 \section{A Topology on the Rational Functions}
-\label{sec:a_topology_on_the_raional_functions}
+\label{sec:a_topology_on_the_rational_functions}
 
 To study the global dynamics and stability of families of rational maps, we must
 equip the set of rational functions with a robust topological structure.
@@ -1055,8 +1118,7 @@ differ by a bounded factor, we could equally well use the chordal metric here
 Now $\mathcal{R}$ is a closed subset of $\mathcal{C}$ because if the rational
 functions $R_n$ converge uniformly to $R$ on the complex sphere, then $R$ is
 analytic on the sphere and so it too is rational. More generally (and again we
-could use either the chordal metric or the spherical metric), we have the
-following theorem.
+could use either the chordal metric or the spherical metric), we have
 
 \begin{theorem}[Uniform Limits Preserve Analyticity]
     Suppose that each function in a sequence $\{f_n\}$ is analytic in a domain
@@ -1100,11 +1162,12 @@ abruptly under small uniform perturbations.
 As a consequence of this theorem
 (Theorem~\ref{thm:continuity_of_degree_function}), the class $\mathcal{R}_n$ of
 rational maps of degree $n$ is an open subset of $\mathcal{R}$ for it is the
-inverse image of the open subset $\{n\}$ of $\Z$ under the continuous map $\deg$.
-It is easy to see that each $\mathcal{R}_n$ is connected (for if $R$ and $S$ lie
-in $\mathcal{R}_n$, we can simply \enquote{slide} the zeros and poles of $R$ to those of $S$ while maintaining the same degree) so we obtain the following result.
+inverse image of the open subset $\{n\}$ of $\Z$ under the continuous map
+$\deg$. It is easy to see that each $\mathcal{R}_n$ is connected (for if $R$ and
+$S$ lie in $\mathcal{R}_n$, we can simply \enquote{slide} the zeros and poles of
+$R$ to those of $S$ while maintaining the same degree) so we obtain
 
-\begin{corollary}[Connected Components of $\mathcal{R}$]
+\begin{corollary}[Components of $\mathcal{R}$]
     The subspaces $\mathcal{R}_n$ are the components of $\mathcal{R}$.
 \end{corollary}
 

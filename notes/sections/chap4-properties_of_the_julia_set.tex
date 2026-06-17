@@ -42,7 +42,6 @@ exceptional.
 
 From this and Theorems~\ref{thm:F_and_J_are_preserved_under_iteration} and
 \ref{thm:F_infty_is_completely_invariant_for_polynomials}, we have immediately
-the following result.
 
 \begin{corollary}[Exceptional points of rational maps lie in $F$]
     If $\deg(R) \geq 2$, then the exceptional points of $R$ lie in $F(R)$.
@@ -75,7 +74,7 @@ We show now that the converse is true.
     See \cite[66]{Beardon1991}.
 \end{proof}
 
-As an application of this result we can obtain the following theorem.
+As an application of this result we can obtain
 
 \begin{theorem}[$R^k$ is conjugate to a polynomial $\implies R^2$ is conjugate to a polynomial]
     If for some positive integer $k$, $R^k$ is conjugate to a polynomial, then
@@ -164,43 +163,45 @@ definition from topology. Intuitively, a perfect set is one that is solid,
 containing no gaps and no lonely, isolated points.
 
 \begin{definition}[Perfect set]
-    A set $E$ is called \emph{perfect} if it is closed and contains no
-    isolated points. Equivalently, $E$ is perfect if it equals its own derived
-    set, meaning $E = E_0$ (where $E_0$ is the set of all accumulation points of
-    $E$).
+    A set $E$ is called \emph{perfect} if it is closed and contains no isolated
+    points. Equivalently, $E$ is perfect if it equals its own derived set,
+    meaning $E = \derived{E}$ (where $\derived{E}$ is the set of all
+    accumulation points of $E$).
 \end{definition}
 
 Next, we show that the Julia set fits this description perfectly by analyzing
 its behavior under the rational map $R$.
 
 \begin{proposition}[$J$ is a perfect set]
-    The derived set $J_0$ of $J$ is an infinite, closed, and completely
+    \label{prp:J_is_perfect}
+    The derived set $\derived{J}$ of $J$ is an infinite, closed, and completely
     invariant subset of $J$. By the minimality of $J$, it follows that $J
-    \subset J_0$, which implies $J = J_0$. Consequently, \emph{$J$ is a perfect
-    set (and thus has no isolated points)}.
+    \subset \derived{J}$, which implies $J = \derived{J}$. Consequently,
+    \emph{$J$ is a perfect set (and thus has no isolated points)}.
 \end{proposition}
 \begin{proof}
     First, since $J$ is infinite (by Theorem~\ref{thm:J_is_infinite}), it must
-    contain accumulation points, so $J_0$ is non-empty. By definition, any
-    derived set is automatically closed. 
+    contain accumulation points, so $\derived{J}$ is non-empty. By definition,
+    any derived set is automatically closed. 
     
     Next, we check invariance under the rational map $R$ (which is continuous
     and of finite degree):
     \begin{itemize}
         \item Since $R$ is continuous, it maps accumulation points to
-        accumulation points, so $R(J_0) \subset J_0$, which means $J_0 \subset
-        R^{-1}(J_0)$ (forward invariance).
+        accumulation points, so $R(\derived{J}) \subset \derived{J}$, which
+        means $\derived{J} \subset R^{-1}(\derived{J})$ (forward invariance).
         \item Since $R$ is an open map, the preimage of an accumulation point is
-        also an accumulation point, giving us $R^{-1}(J_0) \subset J_0$
-        (backward invariance).
+        also an accumulation point, giving us $R^{-1}(\derived{J}) \subset
+        \derived{J}$ (backward invariance).
     \end{itemize}
-    Combining these, we see that $J_0$ is completely invariant. Finally, by the
-    minimality of the Julia set (Theorem~\ref{thm:J_is_minimal}), any such set
-    within $J$ must be dense and infinite, verifying that $J = J_0$. By our
-    definition, $J$ is perfect.
+    Combining these, we see that $\derived{J}$ is completely invariant. Finally,
+    by the minimality of the Julia set (Theorem~\ref{thm:J_is_minimal}), any
+    such set within $J$ must be dense and infinite, verifying that $J =
+    \derived{J}$. By our definition, $J$ is perfect.
 \end{proof}
 
 \begin{theorem}[$J$ is uncountable]
+    \label{thm:J_is_uncountable}
     Let $R$ be a rational map with $\deg(R) \geq 2$. Then the Julia set $J$ is
     uncountable.
 \end{theorem}
@@ -273,23 +274,23 @@ the closure, of some countable set.
     set of periodic points of $R$.
 \end{theorem}
 \begin{proof}
-    See \cite[70-71]{Beardon1991}.
+    See \cite[70--71]{Beardon1991}.
 \end{proof}
 
-\begin{remark}[$z$ non-exceptional $\implies J \subset \closure{[z]}$] We now consider the relationship
-    between $J$ and an orbit $[z]$ of a non-exceptional point $z$. As the
-    closure $\closure{[z]}$ of $[z]$ is both closed and completely invariant,
-    the minimality of $J$ implies that \emph{if $z$ is not exceptional, then $J
-    \subset \closure{[z]}$}.
+\begin{remark}[$z$ non-exceptional $\implies J \subset \closure{[z]}$] We now
+    consider the relationship between $J$ and an orbit $[z]$ of a
+    non-exceptional point $z$. As the closure $\closure{[z]}$ of $[z]$ is both
+    closed and completely invariant, the minimality of $J$ implies that \emph{if
+    $z$ is not exceptional, then $J \subset \closure{[z]}$}.
 \end{remark}
 
-\begin{remark}[$z$ non-exceptional and $z \in J \implies J = \closure{[z]}$] If $z$ is in $J$, then it
-    is not exceptional, so $[z]$, and hence also $\closure{[z]}$, is contained
-    in $J$: thus \emph{if $z$ is in $J$, then $J = \closure{[z]}$}. 
+\begin{remark}[$z$ non-exceptional and $z \in J \implies J = \closure{[z]}$] If
+    $z$ is in $J$, then it is not exceptional, so $[z]$, and hence also
+    $\closure{[z]}$, is contained in $J$: thus \emph{if $z$ is in $J$, then $J =
+    \closure{[z]}$}. 
 \end{remark}
 
 In fact, we can replace $[z]$ by the smaller set $\orbit^-(z)$ and still prove
-the following theorem.
 
 \begin{theorem}[$z$ non-exceptional $\implies J \subset \closure{\orbit^-(z)}$ and if $z \in J$ they are equal]
     \label{thm:J_contained_in_backwards_orbit_of_z_non_exceptional_and_equal_if_z_in_J}
@@ -328,9 +329,9 @@ available.
     \label{thm:R_inverse_n_E_converges_to_J}
     Let $R$ be a rational map of degree at least two, and let $E$ be a compact
     subset of the complex sphere with the property that for all $z$ in $F(R)$,
-    the sequence $(R^n(z))_{n \in \N}$ does not accumulate at any point of
-    $E$. Then given any open set $U$ which contains $J(R)$, $R^{-n}(E) \subset
-    U$ for all sufficiently large $n$.
+    the sequence $(R^n(z))_{n \in \N}$ does not accumulate at any point of $E$.
+    Then given any open set $U$ which contains $J(R)$, $R^{-n}(E) \subset U$ for
+    all sufficiently large $n$.
 \end{theorem}
 \begin{proof}
     See \cite[72]{Beardon1991}.
@@ -352,12 +353,13 @@ Theorem~\ref{thm:F_and_J_are_preserved_under_iteration}.
     $R$ and $S$ commute, then $J(R) = J(S)$.
 \end{theorem}
 \begin{proof}
-    See \cite[72-73]{Beardon1991}.
+    See \cite[72--73]{Beardon1991}.
 \end{proof}
 
 % --- SECTION ------------------------------------------------------------------
 % --- RATIONAL MAPS WITH EMPTY FATOU SET ---------------------------------------
 \section{Rational Maps with Empty Fatou Set}
+\label{sec:rational_maps_with_empty_Fatou_set}
 
 \begin{example}
     Our first objective is to show that for the rational map
@@ -403,7 +405,7 @@ Theorem~\ref{thm:F_and_J_are_preserved_under_iteration}.
         \wp(z) = \frac{1}{z^2} +  \sum{}^*\left[\frac{1}{(z + \omega)^2} - \frac{1}{\omega^2}\right]
     \end{equation*}
     where $\sum{}^*$ denotes summation over non-zero elements $\omega$ in
-    $\Lambda$ (see for example, \cite[272-276]{Ahlfors1979}, \cite{DuVal1973} or
+    $\Lambda$ (see for example, \cite[272--276]{Ahlfors1979}, \cite{DuVal1973} or
     \cite{Lang1987}). We shall only give the main steps in the argument but, for
     the convenience of some readers, we give and expanded version in the
     Appendix to this chapter. Now $\wp$ and its derivatives satisfy certain
@@ -418,20 +420,20 @@ Theorem~\ref{thm:F_and_J_are_preserved_under_iteration}.
         R(z) = \frac{z^4 + g_2 z^2/2 + 2g_3z + (g_2/4)^2}{4z^3 - g_2z - g_3},
     \end{equation}
     and where $g_2$ and $g_3$ are known quantities defined in terms of the
-    lattice $\Lambda$. Note that (\ref{eq:wp_addition_formula}) is analogous to
+    lattice $\Lambda$. Note that \eqref{eq:wp_addition_formula} is analogous to
     the double angle formulae in elementary trigonometry.
 
     Now let $D$ be any disc in $\C$, let $U = \wp^{-1}(D)$, and define
     $\varphi(z) = 2z$. As $U$ is open, and as $\varphi^n(U)$ is the set $U$
     expanded by a factor $2^n$, it is clear that for sufficiently large $n$,
     $\varphi^n(U)$ contains a period parallelogram $\Omega$ of $\wp$. Using this
-    with (\ref{eq:wp_addition_formula}), we deduce that for these $n$,
+    with \eqref{eq:wp_addition_formula}, we deduce that for these $n$,
     \begin{equation*}
         R^n(D) = R^n(\wp(U)) = \wp(2^n U) = \ExtC:
     \end{equation*}
     roughly speaking, this implies that the functions $R^n$ explode any small
     disc $D$ onto the whole sphere. Clearly, as $D$ is arbitrary,
-    (\ref{eq:wp_addition_formula_function}) implies that the family $\{R^n\}$ is
+    \eqref{eq:wp_addition_formula_function} implies that the family $\{R^n\}$ is
     not equicontinuous on \emph{any} open subset of the complex sphere, and so
     we deduce that $J(R) = \ExtC$.
 
@@ -443,21 +445,21 @@ Theorem~\ref{thm:F_and_J_are_preserved_under_iteration}.
     \end{equation}
     and any pair ($g_2$, $g_3$) satisfying this is realized by some lattice (see
     \cite[39]{Lang1987}). Using this, we can construct $\Lambda$ so that $g_2 =
-    4$ and $g_3 = 0$; then $R$ given by (\ref{eq:wp_addition_formula_function})
-    is the function (\ref{eq:lattes_function_1}). However, there is an easier
+    4$ and $g_3 = 0$; then $R$ given by \eqref{eq:wp_addition_formula_function}
+    is the function \eqref{eq:lattes_function_1}. However, there is an easier
     construction than this. First, we let $\tau$ be a positive number, and we
     construct the square lattice $\Lambda$, and the corresponding function
     $\wp$, by taking $\lambda = \tau$ and $\mu = i\tau$. This choice leads
-    easily to $g_3 = 0$ (see the Appendix in \cite[77-79]{Beardon1991}), and
-    hence to a simplification of (\ref{eq:wp_addition_formula_function}), namely
+    easily to $g_3 = 0$ (see the Appendix in \cite[77--79]{Beardon1991}), and
+    hence to a simplification of \eqref{eq:wp_addition_formula_function}, namely
     \begin{equation*}
         R(z) = \frac{16z^4 + 8g_2z^2 + (g_2)^2}{16z(4z^2 - g_2)}.
     \end{equation*}
 
-    Now from (\ref{eq:g2_cubed_minus_27_g3_squared}), as $g_3 = 0$, we have $g_2
+    Now from \eqref{eq:g2_cubed_minus_27_g3_squared}, as $g_3 = 0$, we have $g_2
     \neq 0$, so by taking $h(z) = 2z/\sqrt{g_2}$, we find that $hRh^{-1}$ (which
     also has $\ExtC$ as its Julia set) is the function given in
-    (\ref{eq:lattes_function_1}). For further information and related examples,
+    \eqref{eq:lattes_function_1}. For further information and related examples,
     see references in \cite[75]{Beardon1991}.
 
     There are other interesting dynamical aspects of this example and briefly,
@@ -473,7 +475,7 @@ Theorem~\ref{thm:F_and_J_are_preserved_under_iteration}.
     Theorem~\ref{thm:J_contained_in_backwards_orbit_of_z_non_exceptional_and_equal_if_z_in_J},
     we find again that $J(R) = \ExtC$.
 
-    Next, the formula (\ref{eq:wp_addition_formula}) shows that if $m = 2^k -
+    Next, the formula \eqref{eq:wp_addition_formula} shows that if $m = 2^k -
     1$, then
     \begin{equation*}
         R^k(\wp(\omega/m)) = \wp(2^k \omega/m) = \wp(\omega + \omega/m) = \wp(\omega/m),
@@ -500,7 +502,7 @@ Theorem~\ref{thm:F_and_J_are_preserved_under_iteration}.
 \end{proof}
 
 \begin{example*}[Continuation]
-    The rational map $R$ in (\ref{eq:wp_addition_formula_function}) is of degree
+    The rational map $R$ in \eqref{eq:wp_addition_formula_function} is of degree
     four, so it has six critical points, say $c_1, \dots, c_6$. We shall show
     now that each $c_j$ is finite, and that each is mapped to $\infty$ (a fixed
     point of $R$) by $R^2$: then each $c_j$ is pre-periodic and we have $J =
@@ -508,7 +510,7 @@ Theorem~\ref{thm:F_and_J_are_preserved_under_iteration}.
     Appendix for more details.
 
     We shall now find the critical points of $R$ in
-    (\ref{eq:wp_addition_formula_function}). Let $\zeta_1, \dots, \zeta_6$ be
+    \eqref{eq:wp_addition_formula_function}. Let $\zeta_1, \dots, \zeta_6$ be
     the six points
     \begin{equation*}
         \lambda/4, \quad \mu/4, \quad (\lambda + \mu)/4, \quad (3\lambda + \mu)/4, \quad (2\lambda + \mu)/4, \quad (3\lambda + 2\mu)/4,
@@ -536,7 +538,7 @@ Theorem~\ref{thm:F_and_J_are_preserved_under_iteration}.
         R'(\wp(z))\wp'(z) = 2\wp'(2z),
     \end{equation*}
     we see that the six values $\wp(\zeta_j)$ are the six critical points of
-    $R$. Finally, it is immediate from (\ref{eq:wp_addition_formula}) that $R^2$
+    $R$. Finally, it is immediate from \eqref{eq:wp_addition_formula} that $R^2$
     maps each of these to $\infty$.
 \end{example*}
 
@@ -575,5 +577,5 @@ set is the entire sphere, reference [53] in \cite{Beardon1991}.
     $z$ whose forward orbit is dense in the complex sphere.
 \end{theorem}
 \begin{proof}
-    See \cite[76-77]{Beardon1991}.
+    See \cite[76--77]{Beardon1991}.
 \end{proof}

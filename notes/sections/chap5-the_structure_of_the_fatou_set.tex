@@ -9,3 +9,750 @@ these ideas and apply them to study the structure of $F$.
 % --- SECTION ------------------------------------------------------------------
 % --- THE TOPOLOGY OF THE SPHERE -----------------------------------------------
 \section{The Topology of the Sphere}
+
+Some results on the structure of the Fatou and Julia sets are simple
+consequences of facts concerning the topology of the complex sphere and so
+require almost nothing of theory of iteration. It seems best to present these
+results in this light and so our first task is to collect together the relevant
+topological results. Throughout, the underlying space is the complex sphere
+$\ExtC$, and the complement of a set $E$ is denoted by $\ExtC - E$.
+
+\begin{definition}[Simply connected domain]
+    A domain $D$ is \emph{simply connected} if every closed curve in $D$ can be
+    deformed (in $D$) to a point of $D$.
+\end{definition}
+
+In more intuitive terms, being simply connected is the same as not having any
+\enquote{holes} (otherwise a closed curve that surrounded a hole could not be
+deformed to a point).
+
+\begin{definition}[Domain connectivity operator]
+    The \emph{connectivity} $c(D)$ of a domain $D$ is the number of components
+    of $\boundary{D}$.
+\end{definition}
+
+In more intuitive terms, this operator measures how many \enquote{holes} does a
+domain have. A simply connected domain, has $0$ \enquote{holes}, thus,
+it has connectivity $1$.
+
+\begin{definition}[$k$-connected domain]
+    A domain $D$ is \emph{$k$-connected} if its connectivity satisfies $c(D) =
+    k$ for some integer $k$.
+\end{definition}
+
+In more intuitive terms, a $k$-connected domain has exactly $k-1$ \enquote{holes} 
+(for instance, a doubly connected domain like an annulus has $c(D) = 2$ and 
+contains a single hole).
+
+\begin{definition}[Infinitely connected domain]
+    A domain $D$ is \emph{infinitely connected} if its connectivity satisfies 
+    $c(D) = \infty$.
+\end{definition}
+
+In more intuitive terms, being infinitely connected is the same as having 
+infinitely many \enquote{holes}.
+
+The first three results are standard, and we omit their proofs (for more details
+see, for example, \cite{Ahlfors1979} or \cite{Newman1939}).
+
+\begin{proposition}[Connectedness is preserved under closure]
+    The closure of a connected set is connected.
+\end{proposition}
+
+\begin{proposition}[Characterization of disconnected for compact sets]
+    A compact set $K$ on the sphere is disconnected if and only if there exists
+    a Jordan curve $\gamma$ which separates $K$ (that is, $K$ is disjoint from
+    $\gamma$ and meets both components of the complement of $\gamma$).
+\end{proposition}
+
+\begin{proposition}[Simply connected domain $\iff$ complement connected]
+    \label{prp:simply_connected_iff_complement_connected}
+    A domain $D$ is simply connected if and only if its complement is connected.
+\end{proposition}
+
+We will also find the following two variations of
+Proposition~\ref{prp:simply_connected_iff_complement_connected} useful.
+
+\begin{proposition}[Simply connected domain $\iff$ bounday connected]
+    A domain $D$ is simply connected if and only if its boundary $\boundary{D}$
+    is connected.
+\end{proposition}
+
+\begin{proposition}[Complement of open set is connected $\iff$ its are components simply connected]
+    \label{prp:complement_open_set_connected_iff_components_simply_connected}
+    Let $D$ be an open subset of the complex sphere. Then $\ExtC - D$ is
+    connected if and only if each component of $D$ is simply connected.
+\end{proposition}
+\begin{proof}
+    See \cite[81]{Beardon1991}.
+\end{proof}
+
+To illustrate our earlier remarks, we record an immediate (though elementary)
+consequence of
+Proposition~\ref{prp:complement_open_set_connected_iff_components_simply_connected}.
+
+\begin{proposition}
+    Let $R$ be a rational map. Then $J(R)$ is connected if and only if each
+    component of $F(R)$ is simply connected.
+\end{proposition}
+\begin{proof}
+    See \cite[81]{Beardon1991}.
+\end{proof}
+
+Finally (because we use this idea often), we include this result.
+
+\begin{proposition}[The union of a linearly ordered by inclusion family of simply connected sets is simply connected]
+    Let $\{D_\alpha\}$ be a collection of simply connected domains that is
+    linearly ordered by inclusion. Then $\bigcup_\alpha D_\alpha$ is a simply
+    connected domain.
+\end{proposition}
+\begin{proof}
+    See \cite[82]{Beardon1991}.
+\end{proof}
+
+For finite families this is obvious, it becomes of interest when considering
+infinite or uncountable families.
+
+% --- SECTION ------------------------------------------------------------------
+% --- COMPLETELY INVARIANT COMPONENT OF THE FATOU SET --------------------------
+\section{Completely Invariant Components of the Fatou Set}
+
+We begin our discussion of the structure of the Fatou set $F$ by studying the
+completely invariant components of $F$. The basic result in this section is
+
+\begin{theorem}[Connectedness properties of completely invariant components of $F$]
+    \label{thm:connectedness_properties_of_completely_invariant_components_of_F}
+    Suppose that $\deg(R) \geq 2$ and that $F_0$ is a completely invariant
+    component of $F$. Then:
+    \begin{enumerate}
+        \item $\boundary{F_0} = J$;
+        \item $F_0$ is either simply connected or infinitely connected;
+        \item all other components of $F$ are simply connected; and
+        \item $F_0$ is simply connected if and only if $J$ is connected.
+    \end{enumerate}
+\end{theorem}
+\begin{proof}
+    See \cite[83]{Beardon1991}.
+\end{proof}
+
+Applying this directly to the case when the Fatou set itself is connected, we
+obtain this result.
+
+\begin{corollary}[$F$ connected $\implies$ $F$ simply (infinitely) connected and $J$ connected (has an infinite number of components)]
+    If $\deg(R) \geq 2$ and if $F$ is connected, then either:
+    \begin{enumerate}
+        \item $F$ is simply connected and $J$ is connected; or
+        \item $F$ is infinitely connected and $J$ has an infinite number of
+        components.
+    \end{enumerate}
+\end{corollary}
+
+In the case of a polynomial $P$, $\{\infty\}$ is a completely invariant set (see
+Theorem~\ref{thm:F_infty_is_completely_invariant_for_polynomials}) and hence too
+is the unbounded component of the Fatou set $F(P)$. With this, another direct
+application of
+Theorem~\ref{thm:connectedness_properties_of_completely_invariant_components_of_F}
+yields
+
+\begin{theorem}[For polynomials: connectedness properties of components of $F$]
+    \label{thm:connectedness_properties_of_fatou_components_of_P}
+    Let $F$ be the Fatou set of a non-linear polynomial. Then:
+    \begin{enumerate}
+        \item the unbounded component of $F$ is either simply connected or
+        infinitely connected; and
+        \item each bounded component of $F$ is simply connected.
+    \end{enumerate}
+\end{theorem}
+
+Examples of the two possibilities described in
+Theorem~\ref{thm:connectedness_properties_of_fatou_components_of_P} occur in
+Chapters~\ref{chp:examples} and 9 (\cite[192--245]{Beardon1991}), and
+Theorem~\ref{thm:connectedness_properties_of_fatou_components_of_P} verifies a
+visually obvious feature of the illustrations of Julia sets given earlier.
+
+% --- SECTION ------------------------------------------------------------------
+% --- THE EULER CHARACTERISTIC -------------------------------------------------
+\section{The Euler Characteristic}
+
+We devote this section to a brief and informal introduction to the Euler
+characteristic (a detailed can be found in any one of numerous standard texts on
+the subject). Let $S$ be a compact, or a bordered, surface: for our
+applications, it is enough to consider $S$ to be either the sphere, or a plane
+domain together with its boundary, provided that this boundary consists only of
+a finite number of simple closed curves.
+
+\begin{definition}[Triangulation, vertices, edges and faces]
+    A \emph{triangulation} $T$ of $S$ is a partition of $S$ to a finite number
+    of mutually disjoint subsets called \emph{vertices}, \emph{edges} and
+    \emph{faces} with the following properties:
+    \begin{enumerate}
+        \item each vertex is a point of $S$;
+        \item for each edge $e$, there is a homeomorphism $\varphi$ of a closed
+        interval $[a, b]$ in $\R$ into $S$ which maps the open interval $(a, b)$
+        onto $e$, and the end-points $a$ and $b$ to vertices of $T$;
+        \item for each face $f$, there is a homeomorphism $\varphi$ of a closed
+        triangle $Q$ in $\C$ into $S$ which maps the edges and vertices of $Q$
+        (in the usual sense) to edges and vertices of $T$, and such that $f$ is
+        the $\varphi$-image of the interior of $Q$.
+    \end{enumerate}
+\end{definition}
+
+We stress that $T$ partitions $S$ into mutually disjoint subsets of $S$.
+
+\begin{definition}[Simplex]
+    Each such subset is either a vertex, and edge or a face, and we call each of
+    these a \emph{simplex} of $T$ (of dimension $0$, $1$ and $2$ respectively).
+\end{definition}
+
+\begin{definition}[Euler characteristic]
+    For any simplex $s$ of dimension $m$ we define the \emph{Euler
+    characteristic} $\chi(s)$ as $(-1)^m$: more generally, if $S_0$ is any
+    subset of $S$ comprising a union of simplices, say $s_1, \dots, s_r$
+    where $s_j$ has dimension $n_j$, we define
+    \begin{equation*}
+        \chi(S_0) = \sum_j \chi(s_j) = \sum_j (-1)^{n_j}.
+    \end{equation*}
+\end{definition}
+
+\begin{remark}[$\chi(S) = F - E + V$]
+    In particular, if the triangulation $T$ contains $F$ faces, $E$ edges and
+    $V$ vertices respectively, then the Euler characteristic $\chi(S)$ of $S$
+    is, by definition,
+    \begin{equation*}
+        \chi(S) = F - E + V.
+    \end{equation*}
+\end{remark}
+
+\begin{theorem}[The Euler characteristic is a topological invariant]
+    The crucial, and well-known, fact (which we accept here without proof) is
+    that $\chi(S)$ is a topological invariant which is independent of the
+    particular triangulation $T$ used.
+\end{theorem}
+
+Thus, we can compute $\chi(S)$ by using any convenient triangulation we choose.
+When we refer to a triangulation and Euler characteristic of a domain, we are
+implicitly assuming that the closure of the domain can be triangulated so that
+the domain itself is a union of simplices.
+
+Calculations of $\chi$ can often be simplified by using the following simple
+idea. Suppose that $S_1$ and $S_2$ are subsets of $S$, each comprising a union
+of some of the simplices in $T$: then, simply by counting the contribution of
+each simplex to each side of the equation, we obtain
+\begin{equation}
+    \label{eq:euler_characteristic_is_sum_of_interior_and_boundary_characteristics}
+    \chi(S_1 \cup S_2) + \chi(S_1 \cap S_2) = \chi(S_1) + \chi(S_2).
+\end{equation}
+
+Let us illustrate this with some simple examples. The boundary $\boundary{S}$ of
+$S$ must be a union of edges and vertices (for clearly, no face can meet
+$\boundary{S}$) so if $\interior{S}$ denotes the interior of $S$, we have
+\begin{equation*}
+    \chi(S) = \chi(\interior{S}) + \chi(\boundary{S}).
+\end{equation*}
+It is easy to see that a simple closed curve $\gamma$ is a union of the same
+number of edges and vertices, so $\chi(\gamma) = 0$. From this, we see that if
+the boundary of a surface $S$ consists of a finite number of mutually disjoint
+simple closed curves, then $S$ and its interior $\interior{S}$ have the same
+Euler characteristic.
+
+\begin{remark}[$\chi(\ExtC) = 2$ and $\chi(D) = 1$ for any open or closed disc $D$]
+    Next, by constructing explicit triangulations it is easy to see that
+    $\chi(\ExtC) = 2$, and that $\chi(D) = 1$ for any open or closed disc $D$:
+    these computations are simple but important.
+\end{remark}
+
+Now suppose that $D$ is the complement (in $\ExtC$) of $k$ mutually disjoint
+topological closed discs $Q_1, \dots, Q_k$, each being bounded by a Jordan
+curve, so $D$ is of connectivity $k$ (has $k$ \enquote{holes}). We can
+triangulate the sphere such that each of $D$, $Q_1, \dots, Q_k$ is a union
+of simplices, and then
+\eqref{eq:euler_characteristic_is_sum_of_interior_and_boundary_characteristics}
+yields
+\begin{equation*}
+    2 = \chi(\ExtC) = \chi(D) + \sum \chi(Q_j)
+\end{equation*}
+so $\chi(D) = 2 - k$.
+
+\begin{remark}[Euler characteristic and connectedness]
+    Note that for any such domain $D$ of the sphere:
+    \begin{enumerate}
+        \item $\chi(D) = 2$ if and only if $D$ is the sphere $\ExtC$;
+        \item $\chi(D) = 1$ if and only if $D$ is simply connected, but not
+        $\ExtC$;
+        \item $\chi(D) = 0$ if and only if $D$ is doubly connected;
+    \end{enumerate}
+    while in all other cases, $\chi(D)$ is negative.
+\end{remark}
+
+Later, when we apply these ideas to a component of the Fatou set, we shall see
+that there is an important distinction between the cases $\chi(D) \geq 0$ and
+$\chi(D) < 0$.
+
+% --- SECTION ------------------------------------------------------------------
+% --- THE RIEMANN-HURWITZ FORMULA FOR COVERING MAPS ----------------------------
+\section{The Riemann-Hurwitz Formula for Covering Maps}
+
+We are going to obtain the Riemann-Hurwitz formula for the situation described
+briefly by
+\begin{equation*}
+    R: U \to V,
+\end{equation*}
+where $R$ is a rational map, and $U$ and $V$ are domains in $\ExtC$ (and so
+generalize the Riemann-Hurwitz formula described in
+section~\ref{sec:critical_points} which is the case $U$ = $V$ = $\ExtC$.
+
+\begin{remark}[For any domain $U$, $V = R(U)$: $\boundary{V} \subset R(\boundary{U})$]
+    First, for any domain $U$, we have
+    \begin{equation*}
+        \boundary{R(U)} \subset R(\boundary{U})
+    \end{equation*}
+    so, if $R$ maps $U$ onto $V$, then
+    \begin{equation}
+        \label{eq:V_in_R_of_the_boundary_of_U}
+        \boundary{V} \subset R(\boundary{U});
+    \end{equation}
+    of course, there may be strict inclusion here (for example, imagine $U$ is a
+    small disk, and $R$ wraps its boundary around itself like a loop that
+    crosses through the interior of $V$. The boundary points of $U$ can map
+    inside $V$, not just to its boundary).
+\end{remark}
+\begin{proof}
+    Let $U$ be a domain in $\mathbb{C}_\infty$ and let $V = R(U)$. Since $R$ is
+    a non-constant rational map on the Riemann sphere $\mathbb{C}_\infty$, it is
+    both an open map and a closed map. 
+    
+    Because $R$ is a closed map, the image of the closure of $U$ is equal to the
+    closure of its image:
+    \begin{equation*}
+        R(\closure{U}) = \closure{R(U)} = \closure{V}.
+    \end{equation*}
+    Since $R$ is an open map and $U$ is open, $V = R(U)$ is also open, which
+    implies that the interior of $V$ is $V$ itself. Recall that the boundary of
+    any set is its closure minus its interior. Thus, we can express the boundary
+    of $V$ as:
+    \begin{equation*}
+        \boundary{V} = \closure{V} \setminus V = R(\closure{U}) \setminus R(U).
+    \end{equation*}
+    By writing $\closure{U} = U \cup \boundary{U}$, we can expand the image of
+    the closure as $R(\closure{U}) = R(U) \cup R(\boundary{U})$. Substituting
+    this into the boundary equation yields:
+    \begin{equation*}
+        \boundary{V} = \big( R(U) \cup R(\boundary{U}) \big) \setminus R(U).
+    \end{equation*}
+    Any point belonging to this set must lie in $R(\boundary{U})$ because it
+    explicitly cannot lie in $R(U)$. Therefore, we conclude that:
+    \begin{equation*}
+        \boundary{V} \subset R(\boundary{U}).
+    \end{equation*}
+\end{proof}
+
+\begin{remark}[For $U$ a component of $R^{-1}(V)$: $R(U) = V$ and $R(\boundary{U}) = \boundary{V}$]
+    Suppose now that $U$ is a component of $R^{-1}(V)$. Then each point $\zeta$
+    of $\boundary{U}$ must map to $\boundary{V}$ (for certainly, $R(\zeta)$ must
+    be in the closure of $V$, and it cannot lie in $V$ unless $\zeta$ lies in
+    $U$) so
+    \begin{equation}
+        \label{eq:R_of_the_boundary_of_U_in_V}
+        R(\boundary{U}) \subset \boundary{V}.
+    \end{equation}
+    In addition to this, $R$ maps $U$ onto $V$. Indeed, $R(U) \subset V$ and if
+    there is not equality here, we could join a point of $R(U)$ to a point of $V
+    - R(U)$ by a curve in $V$ and such a curve would have to meet
+    $\boundary{R(U)}$ in $V$, contradicting the fact that $\boundary{R(U)}
+    \subset R(\boundary{U}) \subset \boundary{V}$. It follows that if $U$ is a
+    component of $R^{-1}(V)$, then both \eqref{eq:V_in_R_of_the_boundary_of_U}
+    and \eqref{eq:R_of_the_boundary_of_U_in_V} hold and so in this case,
+    \begin{equation*}
+        \boundary{V} = R(\boundary{U}).
+    \end{equation*}
+\end{remark}
+
+These facts suggest that instead of considering a map $R$ of $U$ into $V$, we
+should (as is so often the case) emphasize $R^{-1}$ and study the map $R$ of a
+component $U$ of $R^{-1}(V)$ onto $V$. This change of emphasis is important.
+
+In this section, our objective is to use $R$ to relate the Euler characteristics
+$\chi(U)$ and $\chi(V)$ of domains $U$ and $V$ as above. Any such relationship
+will involve a contribution from the critical points of $R$ and in order to
+quantify this, we introduce the deficiency of $R$ at $z$.
+
+\begin{definition}[Deficiency of $R$ at $z$]
+    The \emph{deficiency} of $R$ at $z$ is
+    \begin{equation}
+        \label{eq:deficiency}
+        \delta_R(z) = v_R(z) - 1,
+    \end{equation}
+    where $v_R(z)$ is the valency as defined in section~\ref{sec:valency}.
+\end{definition}
+
+\begin{definition}[Total deficiency of $R$ over $A$]
+    For any set $A$ we define the \emph{total deficiency of $R$ over $A$} as
+    \begin{equation*}
+        \delta_R(A) = \sum_{z \in A} \delta_R(z).
+    \end{equation*}
+\end{definition}
+
+\begin{remark}[Total deficiency is additive]
+    The total deficiency is additive, that is, for disjoint sets $A$ and $B$ we
+    have
+    \begin{equation*}
+        \delta_R(A \cup B) = \delta_R(A) + \delta_R(B).
+    \end{equation*}
+\end{remark}
+
+Frequently, but only when $R$ is understood, we omit the suffix $R$ and use
+$\delta$ instead of $\delta_R$.
+
+The reader will recall that \eqref{eq:deficiency} is the expression arising in
+the Riemann-Hurwitz relation (Theorem~\ref{thm:Riemann_Hurwitz_relation}) and
+that $\delta_R(z) = 0$ for all but a finite set of $z$. In our new notation, the
+Riemann-Hurwitz relation is
+\begin{equation*}
+    \delta(\ExtC) = 2 \deg(R) - 2,
+\end{equation*}
+and, of course, for a polynomial $P$, $\delta(\C) = \deg(P) - 1$.
+
+We are now ready to relate the quantities $\chi(U)$, $\chi(V)$, $\deg(R)$ and
+$\delta_R(U)$ as suggested above. We shall assume:
+\begin{enumerate}
+    \item $V$ is a domain bounded by a finite number of mutually disjoint Jordan
+    curves;
+    \item $U$ is a component of $R^{-1}(V)$; and
+    \item there are no critical values of $R$ on $\boundary{V}$;
+\end{enumerate}
+and with these assumptions we prove
+
+\begin{theorem}[TODO1]
+    \label{thm:TODO1}
+    With the assumptions above, there is an integer $m$ such that $R$ is an
+    $m$-fold map of $U$ onto $V$ and
+    \begin{equation}
+        \label{eq:TODO1}
+        \chi(U) + \delta_R(U) = m \chi(V).
+    \end{equation}
+\end{theorem}
+\begin{proof}
+    See \cite[87--89]{Beardon1991}.
+\end{proof}
+
+In order to obtain a better appreciation of this result, we briefly consider
+some consequences of it. First, taking $U$ and $V$ to be $\ExtC$, we have
+$\chi(U) = \chi(V) = 2$ and $m = \deg(R)$ and this recaptures the
+Riemann-Hurwitz relation given in section~\ref{sec:critical_points}. Second, if
+we take $V$ to be a simply connected domain other than $\ExtC$, then $\chi(V) =
+1$ and (\eqref{eq:TODO1}) yields
+\begin{equation*}
+    \delta_R(U) = (m-1) + (1-\chi(U)).
+\end{equation*}
+Written this way, both terms on the right are non-negative and we can conclude
+that either:
+\begin{enumerate}
+    \item $R$ has critical points in $U$ (that is, $\delta_R(U) > 0$); or
+    \item $U$ is simply connected and $R$ is a homeomorphism of $U$ onto $V$.
+\end{enumerate}
+If, in addition to this, $R^{-1}(V)$ is connected, then we must have $U =
+R^{-1}(V)$ and $m = \deg(R)$, so in this case,
+\begin{equation*}
+    \delta_R(R^{-1}(V)) \geq d-1
+\end{equation*}
+with inequality only when $R^{-1}(V)$ is simply connected (for example, the map
+$z \mapsto z^d$ of the unit disc onto itself). For future reference, we state
+this as
+
+\begin{corollary}
+    Let $R$ be a rational map of degree $d$, suppose that $V$ is simply
+    connected, and that $R^{-1}(V)$ is connected. Then
+    \begin{equation*}
+        \delta_R(R^{-1}(V)) \geq d-1
+    \end{equation*}
+    with inequality only when $R^{-1}(V)$ is simply connected.
+\end{corollary}
+
+We end this section with another simple consequence of Theorem~\ref{thm:TODO1},
+and we recall that for a domain $D$ bounded by $c(D)$ Jordan curves,
+\begin{equation}
+    \label{eq:Eulers_characteristic_formula_for_bounded_domains_via_connectivity}
+    \chi(D) = 2 - c(D).
+\end{equation}
+We now have
+
+\begin{proposition}[$c(U) \geq c(V)$]
+    With the same assumptions as in Theorem~\ref{thm:TODO1}, $c(U) \geq c(V)$.
+\end{proposition}
+\begin{proof}
+    See \cite[89]{Beardon1991}.
+\end{proof}
+
+% --- SECTION ------------------------------------------------------------------
+% --- MAPS BETWEEN COMPONENTS COMPONENTS OF THE FATOU SET ----------------------
+\section{Maps Between Components of the Fatou Set}
+
+The Euler characteristic of a domain $D$ on the complex sphere has been defined
+whenever its boundary $\boundary{D}$ consists of a finite number of Jordan
+curves. In general, however, the boundary of a domain $D$ is much more
+complicated than this; we may not be able to triangulate the closure of $D$ and
+in these circumstances, $\chi(D)$ is as yet undefined. As this is likely to be
+so in the case of major interest to us (when $D$ is a component of the Fatou
+set), this presents us with a problem which we must now tackle. We propose to
+show that given any domain $D$, we can define $\chi(D)$ as the limiting value of
+the Euler characteristic of subdomains which exhaust $D$ and, once this has been
+done, we can then use the Euler characteristic as a tool to study the way in
+which $R$ maps one component of the Fatou set onto another. We shall restrict
+our discussion to subdomains of $\ExtC$; nevertheless, the following development
+is closely related to the construction of the ideal boundary components of a
+Riemann surface (see \cite[25--26, 81--87]{Ahlfors1960}).
+
+\begin{definition}[Regular subdomain]
+    Let $D$ be any domain on the sphere. A subdomain $\Omega$ of $D$ is said to
+    be a \emph{regular subdomain} of $D$ if:
+    \begin{enumerate}
+        \item \label{itm:regular_subdomain_first_condition} $\Omega$ is bounded
+        by a finite union of mutually disjoint Jordan curves, say $\gamma_1$,
+        $\dots$, $\gamma_n$, all of which lie in $D$; and
+        \item \label{itm:regular_subdomain_second_condition} the complement of
+        $D$ consists of $n$ topological discs, say $W_1, \dots, W_n$
+        (bounded by $\gamma_1, \dots, \gamma_n$ respectively) and each $W_j$
+        meets the complement of $D$.
+    \end{enumerate}
+\end{definition}
+
+\begin{example}
+    For example, $\{|z| < 1\}$ is a regular subdomain of $\C$, whereas $\{1 <
+    |z| < 2\}$ is not.
+\end{example}
+
+Observe that $\chi(\Omega)$ is defined for each regular subdomain of $D$.
+
+Of course, if a subdomain $\Omega$ of $D$ satisfies
+(\ref{itm:regular_subdomain_first_condition}) but not
+(\ref{itm:regular_subdomain_second_condition}), we can adjoin to $\Omega$ those
+sets $W_j \cup \gamma_j$ which do not meet the complement of $D$ to form a
+regular subdomain $\Omega_0$ of $D$. Obviously, $\Omega$ has a higher
+connectivity than $\Omega_0$, and $\chi(\Omega_0) \geq \chi(\Omega)$.
+
+We want to consider $D$ as the limit of regular subdomains, and as no canonical
+sequence of subdomains of $D$ presents itself, it is best to reject the idea of
+a sequential limit and to consider instead convergence with respect to the
+\emph{directed set} (or \emph{net}) of regular subdomains. There is no need for
+great generality here and the details are quite simple and explicit. First we
+prove
+
+\begin{lemma}[TODO2]
+    \label{lem:TODO2}
+    Let $D$ be a proper subdomain of the complex sphere. Then:
+    \begin{enumerate}
+        \item any compact subset of $D$ lies in some regular subdomain of $D$;
+        and
+        \item if $\Omega_1$ and $\Omega_2$ are regular subdomains of $D$, then
+        there is a regular subdomain $\Omega$ of $D$ which contains both
+        $\Omega_1$ and $\Omega_2$.
+    \end{enumerate}
+\end{lemma}
+\begin{proof}
+    See \cite[91]{Beardon1991}.
+\end{proof}
+
+Our next task is to show that $\chi(\Omega)$ is a monotonic function on the
+class $\mathcal{R}(D)$ of all regular subdomains $D$, and so tends to a limit
+(which may be $-\infty$) as $\Omega$ increases to $D$ through $\mathcal{R}(D)$.
+The monotonicity property is expressed in
+
+\begin{lemma}[TODO3]
+    \label{lem:TODO3}
+    The Euler characteristic $\chi$ is a decreasing function on
+    $\mathcal{R}(D)$: explicitly, if $\Omega_1$ and $\Omega_2$ are regular
+    subdomains of $D$ such that $\Omega_1 \subset \Omega_2$ then $\chi(Omega_2)
+    \leq \chi(\Omega_1)$.
+\end{lemma}
+\begin{proof}
+    See \cite[91]{Beardon1991}.
+\end{proof}
+
+Lemma~\ref{lem:TODO2} says that the class $\mathcal{R}(D)$ of regular subdomains
+of $D$ is a \emph{net} and Lemma~\ref{lem:TODO3} is the monotonicity of the
+function $\chi: \mathcal{R}(D) \to \{2, 1, 0, \dots, -\infty\}$: thus these lead
+to
+
+\begin{definition}
+    For any subdomain $D$ of $\ExtC$,
+    \begin{equation*}
+        \chi(D) = \inf{\chi(\Omega): \Omega \text{ a regular subdomain of } D}.
+    \end{equation*}
+    Quite explicitly, either:
+    \begin{enumerate}
+        \item $\chi(D) = -\infty$, and there are regular subdomains $\Omega_n$
+        with $\chi(\Omega_n) \to -\infty$ or, equivalently, with $c(\Omega_n)
+        \to +\infty$; or
+        \item there is some regular subdomain $\Omega_0$ of $D$ such that
+        \begin{equation*}
+            \chi(\Omega_0) = \chi(D) > -\infty,
+        \end{equation*}
+        and then (from Lemma\ref{lem:TODO3}) $\chi(\Omega) = \chi(D)$ whenever
+        $\Omega$ is a regular subdomain which contains $\Omega_0$. Note that
+        when $\chi(D)$ is finite, it is necessarily attained by some $\Omega_0$
+        as $\chi$ is integer valued.
+    \end{enumerate}
+\end{definition}
+
+If $D$ is a simply connected domain, then $\boundary{D}$ is connected and each
+regular subdomain $\Omega$ can only have one complementary component: thus
+$\chi(D) = 1$ for a simply connected domain $D$, regardless of the nature of
+$\boundary{D}$. More generally, if $D$ has connectivity $k$, then $\chi(\Omega)
+= 2 - k$ for all sufficiently large regular subdomains $\Omega$, and so $\chi(D)
+= 2 - k$, again irrespective of the complexity of $\boundary{D}$.
+
+As culmination of these ideas, we have
+
+\begin{theorem}[TODO4]
+    \label{thm:TODO4}
+    Let $F_0$ and $F_1$ be components of the Fatou set $F$ of a rational map $R$
+    and suppose that $R$ maps $F_0$ into $F_1$. Then, for some integer $m$, $R$
+    is an $m$-fold map of $F_0$ onto $F_1$ and
+    \begin{equation}
+        \label{eq:TODO4}
+        \chi(F_0) + \delta_R(F_0) = m \chi(F_1)
+    \end{equation}
+\end{theorem}
+\begin{proof}
+    See \cite[92--93]{Beardon1991}.
+\end{proof}
+
+\begin{remark}
+    We call \eqref{eq:TODO4} the Riemann-Hurwitz relation.
+\end{remark}
+
+% --- SECTION ------------------------------------------------------------------
+% --- THE NUMBER OF COMPONENTS OF THE FATOU SET --------------------------------
+\section{The Number of Components of the Fatou Set}
+
+\begin{theorem}[Number of completely invariant components of $F$]
+    \label{thm:number_of_completely_invariant_components_of_F}
+    The Fatou set $F$ or $R$ contains at most two completely invariant
+    components, and if there are two, then each is simply connected.
+\end{theorem}
+\begin{proof}
+    We suppose that $R$ has degree $d$, where $d \geq 2$, and we shall now
+    obtain information on the number of components of $F$. Suppose first that
+    each of $F_1, \dots, F_k$ is a completely invariant component of $F$, where
+    $k \geq 2$. Applying
+    Theorem~\ref{thm:connectedness_properties_of_completely_invariant_components_of_F}
+    to each of the components $F_j$ in turn, we find  (as $k \geq 2$) that every
+    $F_j$is simply connected. Next, we apply Theorem~\ref{thm:TODO4} to each
+    $F_j$ and, noting that $F_j$ is simply connected, $\chi(F_j) = 1$, we obtain
+    \begin{equation*}
+        \delta_R(F_j) = (d - 1) \chi(F_j) = d - 1.
+    \end{equation*}
+    The Riemann-Hurwitz relation now yields
+    \begin{align*}
+        k (d - 1) &= \sum_{j=1}^k \delta_R(F_j) \\
+                &\leq \delta_R(\ExtC)
+                &= 2d - 2,
+    \end{align*}
+    and so $k \leq 2$.
+\end{proof}
+
+\begin{example}
+    Both of the possibilities in
+    Theorem~\ref{thm:number_of_completely_invariant_components_of_F} can arise:
+    if $R(z) = z^2 - 2$, then $F$ has a single completely invariant component,
+    and if $R(z) = z^2$, then $F$ has two completely invariant components.
+\end{example}
+
+Theorem~\ref{thm:number_of_completely_invariant_components_of_F} does not by
+itself exclude the possibility that $F$ may have two completely invariant
+components and other additional components: however, it will be a consequence of
+Sullivan's No Wondering Domain Theorem that \emph{if $F$ has two completely
+invariant components, then these are the only components of $F$}.
+
+\begin{remark}[For any $m$, $\exists$ simply connected domains $D_1, \dots, D_m$ with $\boundary{D_1} = \cdots = \boundary{D_m}$]
+    With reference to
+    Theorem~\ref{thm:number_of_completely_invariant_components_of_F}, it is of
+    interest to note that for any positive integer $m$, there exist simply connected
+    domains $D_1, \dots, D_m$ with
+    \begin{equation*}
+        \boundary{D_1} = \boundary{D_2} = \cdots = \boundary{D_m};
+    \end{equation*}
+    see \cite[143]{Hocking1961} (for this shows that we cannot prove
+    Theorem~\ref{thm:number_of_completely_invariant_components_of_F}) from the
+    single topological fact that all the completely invariant components of $F$
+    have a common boundary, namely $J$).
+\end{remark}
+
+An argument similar to that used above enables us to obtain information on the
+total number of components of $F$. First, Chapter~\ref{chp:examples} contains a
+discussion of the examples
+\begin{equation*}
+    z \mapsto z^2 - 2, \quad z \mapsto z^2, \quad z \mapsto z^2 -1,
+\end{equation*}
+and in these, $F$ has one, tow and infinitely many components respectively. In
+addition, we have seen (in section~\ref{sec:rational_maps_with_empty_Fatou_set})
+that it is possible for $F$ to be empty. It is possible, then, for $F$ to have
+exactly $0$, $1$, $2$, or infinitely many components, and our last result in
+this section says that these are the only possibilities.
+
+\begin{theorem}[$F$ has either $0$, $1$, $2$ or $\infty$ components]
+    The Fatou set $F$ of a rational map $R$ has either $0$, $1$, $2$ or
+    infinitely many components.
+\end{theorem}
+\begin{proof}
+    See \cite[94]{Beardon1991}.
+\end{proof}
+
+\begin{remark}
+    The proof of
+    Theorem~\ref{thm:number_of_completely_invariant_components_of_F} is based on
+    the idea that certain components of $F(R)$ contain critical points and this,
+    in conjunction with the Riemann-Hurwitz relation, bounds the number of
+    components. This idea is important and will be used again later to good
+    effect.
+\end{remark}
+
+% --- SECTION ------------------------------------------------------------------
+% --- COMPONENTS OF THE JULIA SET ----------------------------------------------
+\section{Components of the Julia Set}
+
+As usual, $R$ is a rational map of degree $d$, where $d \geq 2$.
+
+\begin{remark}[$J$ disconnected $\implies$ it has infinitely many components]
+    We have seen that no point of $J$ is isolated
+    (Proposition~\ref{prp:J_is_perfect}), and it is easy to show that if $J$ is
+    disconnected, then it has infinitely many components. Indeed, if $J$ has
+    only a finite number of components, say $J_1, \dots J_n$, then some $J_k$,
+    say $J_1$, is infinite (as $J$ is). Moreover, by
+    Proposition~\ref{prp:finite_number_of_Fatou_components_implies_they_are_periodic},
+    there is some integer $m$ such that each $J_k$ is completely invariant under
+    $R^m$ so, by the minimality of the Julia set,
+    \begin{equation*}
+        J(R) = J(R^m) = J_1,
+    \end{equation*}
+    and $J(R)$ is connected.
+\end{remark}
+
+We now prove a stronger result than this, namely
+
+\begin{theorem}[$J$ disconnected $\implies$ it has uncountably many components and its points are accumulation points of and infinite number of those]
+    \label{thm:J_disconnected_implies_uncountably_many_components}
+    If $J$ is disconnected, then it has uncountably many components and each
+    point of $J$ is an accumulation point of infinitely many distinct components
+    of $J$.
+\end{theorem}
+\begin{proof}
+    See \cite[95--96]{Beardon1991}.
+\end{proof}
+
+In Chapter 11 of \cite{Beardon1991}, we can see an example of a rational map $R$
+with the properties (1) $J$ is disconnected, and (2) each component $F_j$ of $F$
+has finite connectivity. It follows that only a countable number of components
+of $J$ can meet the boundary of some $F_j$; thus in this example, \emph{there
+are components of $J$ which do not meet the closure of any component of $F$}.
+
+In order to prove
+Theorem~\ref{thm:J_disconnected_implies_uncountably_many_components}, we need
+
+\begin{lemma}
+    Let $K$ be a compact, connected subset of the complex plane. Then $R^{-1}(K)$
+    has at most $d$ components and each is mapped by $R$ onto $K$.
+\end{lemma}
+\begin{proof}
+    See \cite[96--98]{Beardon1991}.
+\end{proof}
