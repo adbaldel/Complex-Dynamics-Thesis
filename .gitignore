@@ -13,7 +13,7 @@ ENV/
 
 # LaTeX Auxiliary Files
 *.aux
-*.bbl
+*.bbl*
 *.blg
 *.bcf
 *.fdb_latexmk
@@ -28,6 +28,7 @@ ENV/
 *.nav
 *.snm
 *.vrb
+
 
 #OS generated files
 .DS_Store
