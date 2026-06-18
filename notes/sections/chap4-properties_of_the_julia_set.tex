@@ -1,4 +1,5 @@
 \chapter{Properties of the Julia Set}
+\label{chp:properties_of_the_Julia_set}
 
 This chapter is devoted to developing the basic and most easily available
 properties of the Julia set of a rational map. Other properties of the Julia set
@@ -7,6 +8,7 @@ occur throughout the text.
 % --- SECTION ------------------------------------------------------------------
 % --- EXCEPTIONAL POINTS -------------------------------------------------------
 \section{Exceptional Points}
+\label{exceptional_points}
 
 We begin now to exploit the fundamental
 Theorem~\ref{thm:analytic_maps_not_touching_zero_one_and_infty_form_a_normal_family}.
@@ -94,6 +96,7 @@ As an application of this result we can obtain
 % --- SECTION ------------------------------------------------------------------
 % --- PROPERTIES OF THE JULIA SET ----------------------------------------------
 \section{Properties of the Julia Set}
+\label{properties_of_the_Julia_set}
 
 We shall continue to exploit
 Theorem~\ref{thm:analytic_maps_not_touching_zero_one_and_infty_form_a_normal_family}
@@ -277,22 +280,22 @@ the closure, of some countable set.
     See \cite[70--71]{Beardon1991}.
 \end{proof}
 
-\begin{remark}[$z$ non-exceptional $\implies J \subset \closure{[z]}$] We now
-    consider the relationship between $J$ and an orbit $[z]$ of a
+\begin{remark}[$z$ non-exceptional point $\implies J \subset \closure{[z]}$]
+    We now consider the relationship between $J$ and an orbit $[z]$ of a
     non-exceptional point $z$. As the closure $\closure{[z]}$ of $[z]$ is both
     closed and completely invariant, the minimality of $J$ implies that \emph{if
     $z$ is not exceptional, then $J \subset \closure{[z]}$}.
 \end{remark}
 
-\begin{remark}[$z$ non-exceptional and $z \in J \implies J = \closure{[z]}$] If
-    $z$ is in $J$, then it is not exceptional, so $[z]$, and hence also
+\begin{remark}[$z$ non-exceptional point and $z \in J \implies J = \closure{[z]}$]
+    If $z$ is in $J$, then it is not exceptional, so $[z]$, and hence also
     $\closure{[z]}$, is contained in $J$: thus \emph{if $z$ is in $J$, then $J =
     \closure{[z]}$}. 
 \end{remark}
 
 In fact, we can replace $[z]$ by the smaller set $\orbit^-(z)$ and still prove
 
-\begin{theorem}[$z$ non-exceptional $\implies J \subset \closure{\orbit^-(z)}$ and if $z \in J$ they are equal]
+\begin{theorem}[$z$ non-exceptional point $\implies J \subset \closure{\orbit^-(z)}$ and if $z \in J$ they are equal]
     \label{thm:J_contained_in_backwards_orbit_of_z_non_exceptional_and_equal_if_z_in_J}
     Let $R$ be a rational map with $\deg(R) \geq 2$.
     \begin{enumerate}
@@ -337,12 +340,12 @@ available.
     See \cite[72]{Beardon1991}.
 \end{proof}
 
-\begin{remark}
-    If the conclusion of the theorem holds we say that $R^{-n}(E)$ converges to
-    $J$ and write $R^{-n}(E) \to J$. Examples of such sets $E$ are easy to find:
-    for example, if $F_0$ is a component of the Fatou set that contains an
-    attracting fixed point $\zeta$, then any compact subset of $F_0 - \{\zeta\}$
-    has the required property.
+\begin{remark}[Notation $R^{-n}(E) \to J$]
+    If the conclusion of the theorem holds we say that \emph{$R^{-n}(E)$
+    converges to $J$ and write $R^{-n}(E) \to J$}. Examples of such sets $E$ are
+    easy to find: for example, if $F_0$ is a component of the Fatou set that
+    contains an attracting fixed point $\zeta$, then any compact subset of $F_0
+    - \{\zeta\}$ has the required property.
 \end{remark}
 
 We end this section with the following generalization of
@@ -374,7 +377,7 @@ Theorem~\ref{thm:F_and_J_are_preserved_under_iteration}.
 
     We shall use the technique illustrated in
     section~\ref{sec:tchebychev_polynomials}, although here, we use a group of
-    translations with two generator, and we require considerably more complex
+    translations with two generators, and we require considerably more complex
     analysis. Let $\lambda$ and $\mu$ be complex numbers that are not real
     multiples of each other, and let $\Lambda$ be the corresponding lattice,
     that is,
@@ -405,9 +408,9 @@ Theorem~\ref{thm:F_and_J_are_preserved_under_iteration}.
         \wp(z) = \frac{1}{z^2} +  \sum{}^*\left[\frac{1}{(z + \omega)^2} - \frac{1}{\omega^2}\right]
     \end{equation*}
     where $\sum{}^*$ denotes summation over non-zero elements $\omega$ in
-    $\Lambda$ (see for example, \cite[272--276]{Ahlfors1979}, \cite{DuVal1973} or
-    \cite{Lang1987}). We shall only give the main steps in the argument but, for
-    the convenience of some readers, we give and expanded version in the
+    $\Lambda$ (see for example, \cite[272--276]{Ahlfors1979}, \cite{DuVal1973}
+    or \cite{Lang1987}). We shall only give the main steps in the argument but,
+    for the convenience of some readers, we give and expanded version in the
     Appendix to this chapter. Now $\wp$ and its derivatives satisfy certain
     algebraic identities, and among these there is the \emph{addition formula}
     \begin{equation}

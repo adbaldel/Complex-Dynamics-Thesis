@@ -1,4 +1,5 @@
 \chapter{The Fatou and Julia Sets}
+\label{chp:the_fatou_and_julia_sets}
 
 The informal discussion in Chapter~\ref{chp:examples} suggested that the
 dynamics of a rational map $R$ induces a subdivision of the complex sphere into
@@ -11,6 +12,7 @@ analytic maps is equicontinuous (or a normal family) in a domain.
 % --- SECTION ------------------------------------------------------------------
 % --- THE FATOU AND JULIA SETS -------------------------------------------------
 \section{The Fatou and Julia Sets}
+\label{sec:the_fatou_and_julia_sets}
 
 \begin{definition}[Continuous function]
     Given two metric spaces $(X, d_X)$ and $(Y, d_Y)$. A map $f: X \to Y$ is
@@ -45,13 +47,13 @@ introduced informally in Chapter~\ref{chp:examples}: indeed, it implies that
 every function in $\mathcal{F}$ maps the open ball with center $x_0$ and radius
 $\delta$ into a ball of radius at most $\varepsilon$.
 
-Suppose $\mathcal{F} = \{R^n \mid n \in N\}$ is an equicontinuous family, then
+Suppose $\mathcal{F} = \{R^n \mid n \in \N\}$ is an equicontinuous family, then
 given $z \in \ExtC$, points $w$ close to $z$ will remain close after $n$
 iterations ($R^n(w)$ will be close to $R^n(z)$). Indeed, if we take
 $\varepsilon_n$ to be the maximum distance we want between the $n$-th iterates,
 we can obtain a maximum distance between the $n-1$-th iterates
 ($\varepsilon_{n-1}$). Doing this recursively we can obtain a maximum distance
-$\epsilon_0 = \delta$ between $w$ and $z$ so that their $n$-th iterates are as
+$\varepsilon_0 = \delta$ between $w$ and $z$ so that their $n$-th iterates are as
 close as we want, see Figure~\ref{fig:equicontinuity_for_iterates}.
 \begin{figure}
     \centering
@@ -134,8 +136,7 @@ A similar argument leads to
 \end{proof}
 
 % --- SECTION ------------------------------------------------------------------
-% --- COMPLETELY INVARIANT SETS
-% -------------------------------------------------
+% --- COMPLETELY INVARIANT SETS ------------------------------------------------
 \section{Completely invariant sets}
 \label{sec:completely_invariant_sets}
 
@@ -183,10 +184,10 @@ later.
     See \cite[52]{Beardon1991}.
 \end{proof}
 
-It is convenient to collect together several general, but elementary, properties
-of completely invariant sets and throughout, \emph{we shall assume that $g: X
-\to X$ is surjective} so that we may use complete invariance and backward
-invariance interchangeably.
+It is convenient to collect together several, general, but elementary,
+properties of completely invariant sets and throughout, \emph{we shall assume
+that $g: X \to X$ is surjective} so that we may use complete invariance and
+backward invariance interchangeably.
 
 \begin{proposition}[Complete invariance is preserved under conjugation]
     Given a surjective map $g$ of a set $X$ into itself, and a completely
@@ -214,8 +215,13 @@ invariance interchangeably.
 
 This means, that we can take any subset $E_0$ and form the intersection, say
 $E$, of all those completely invariant sets which contain $E_0$: obviously, $E$
-is then the \emph{smallest completely invariant set that contains $E_0$}, and we
-say that \customhighlight{lightPastelPurple}{$E_0$ \emph{generates} $E$}.
+is then the \emph{smallest completely invariant set that contains $E_0$}.
+
+\begin{definition}[Generation of a completely invariant set]
+    We say that $E_0$ \emph{generates} $E$ if $E$ is the intersection of all the
+    completely invariant sets that contain $E_0$. That is, $E$ is then the
+    smallest completely invariant set that contains $E_0$.
+\end{definition}
 
 We now introduce an equivalence relation which greatly facilitates the
 discussion of completely invariant sets.
@@ -302,7 +308,7 @@ is a polynomial, and we have
 We end this section with a simple observation which will be used several times
 later.
 
-\begin{proposition}[Finite number of Fatou components $\implies$ they are periodic]
+\begin{proposition}[Finite number of components $\implies$ they are periodic (under a continuous map $f: X \to X$)]
     \label{prp:finite_number_of_Fatou_components_implies_they_are_periodic}
     Let $f$ be a continuous map of a topological space $X$ onto itself, and
     suppose that $X$ has only a finite number of components $X_j$. Then for some
@@ -318,6 +324,7 @@ Theorem~\ref{thm:completely_invariant_implies_non_empty_non_singleton}.
 % --- SECTION ------------------------------------------------------------------
 % --- NORMAL FAMILIES AND EQUICONTINUITY ---------------------------------------
 \section{Normal families and equicontinuity}
+\label{sec:normal_families_and_equicontinuity}
 
 We have defined the Fatou and Julia sets in terms of the equicontinuity of the
 family $\{R^n\}$. However, equicontinuity is closely related to normal families
@@ -355,7 +362,7 @@ We begin with the definitions relevant to normal families.
     in terms of limits we have:
     \begin{alignat*}{2}
         &\lim_{n \to \infty} f_n = f \text{ pointwise} &&\iff \\
-        &&&\forall x \in X \lim_{n \to \infty} f_n(x) = f(x); \\
+        &&&\forall x \in X \lim_{n \to \infty} d_Y(f_n(x), f(x)) = 0; \\
         &\lim_{n \to \infty} f_n = f \text{ uniformly} &&\iff \\
         &&&\lim_{n \to \infty} \sup\{d_Y(f_n(x), f(x)) \mid \forall x \in X\} =
         0.
