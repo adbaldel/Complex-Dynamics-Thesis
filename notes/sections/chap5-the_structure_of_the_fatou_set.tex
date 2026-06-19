@@ -131,11 +131,11 @@ infinite or uncountable families.
 We begin our discussion of the structure of the Fatou set $F$ by studying the
 completely invariant components of $F$. The basic result in this section is
 
-\begin{theorem}[Connectedness properties of completely invariant components of $F$]
+\begin{theorem}[Connectedness properties when there is a completely invariant component of $F$]
     \label{thm:connectedness_properties_of_completely_invariant_components_of_F}
     Suppose that $\deg(R) \geq 2$ and that $F_0$ is a completely invariant
     component of $F$. Then:
-    \begin{enumerate}
+    \begin{enumerate}[label=(\roman*)]
         \item $\boundary{F_0} = J$;
         \item $F_0$ is either simply connected or infinitely connected;
         \item all other components of $F$ are simply connected; and
@@ -149,9 +149,9 @@ completely invariant components of $F$. The basic result in this section is
 Applying this directly to the case when the Fatou set itself is connected, we
 obtain this result.
 
-\begin{corollary}[$F$ connected $\implies$ $F$ simply (infinitely) connected and $J$ connected (has an infinite number of components)]
+\begin{corollary}[$F$ connected $\implies F$ simply (infinitely) connected and $J$ connected (has an infinite number of components)]
     If $\deg(R) \geq 2$ and if $F$ is connected, then either:
-    \begin{enumerate}
+    \begin{enumerate}[label=(\roman*)]
         \item $F$ is simply connected and $J$ is connected; or
         \item $F$ is infinitely connected and $J$ has an infinite number of
         components.
@@ -168,7 +168,7 @@ yields
 \begin{theorem}[For polynomials: connectedness properties of components of $F$]
     \label{thm:connectedness_properties_of_fatou_components_of_P}
     Let $F$ be the Fatou set of a non-linear polynomial. Then:
-    \begin{enumerate}
+    \begin{enumerate}[label=(\roman*)]
         \item \label{itm:first_connectedness_property_of_fatou_components_of_P}
         the unbounded component of $F$ is either simply connected or infinitely
         connected; and
@@ -178,7 +178,7 @@ yields
 \end{theorem}
 
 Examples of the two possibilities described in
-Theorem~\ref{thm:connectedness_properties_of_fatou_components_of_P}~(\ref{itm:first_connectedness_property_of_fatou_components_of_P})
+Theorem~\ref{thm:connectedness_properties_of_fatou_components_of_P}~\ref{itm:first_connectedness_property_of_fatou_components_of_P}
 occur in Chapters~\ref{chp:examples} and 9 (\cite[192--245]{Beardon1991}), and
 Theorem~\ref{thm:connectedness_properties_of_fatou_components_of_P} verifies a
 visually obvious feature of the illustrations of Julia sets given earlier.
@@ -199,7 +199,7 @@ a finite number of simple closed curves.
     A \emph{triangulation} $T$ of $S$ is a partition of $S$ to a finite number
     of mutually disjoint subsets called \emph{vertices}, \emph{edges} and
     \emph{faces} with the following properties:
-    \begin{enumerate}
+    \begin{enumerate}[label=(\roman*)]
         \item each vertex is a point of $S$;
         \item for each edge $e$, there is a homeomorphism $\varphi$ of a closed
         interval $[a, b]$ in $\R$ into $S$ which maps the open interval $(a, b)$
@@ -299,7 +299,7 @@ so $\chi(D) = 2 - k = 2 - c(D)$.
 
 \begin{remark}[Euler characteristic and connectedness]
     Note that for any such domain $D$ of the sphere:
-    \begin{enumerate}
+    \begin{enumerate}[label=(\roman*)]
         \item $\chi(D) = 2$ if and only if $D$ is the sphere $\ExtC$;
         \item $\chi(D) = 1$ if and only if $D$ is simply connected, but not
         $\ExtC$;
@@ -395,6 +395,14 @@ These facts suggest that instead of considering a map $R$ of $U$ into $V$, we
 should (as is so often the case) emphasize $R^{-1}$ and study the map $R$ of a
 component $U$ of $R^{-1}(V)$ onto $V$. This change of emphasis is important.
 
+\begin{definition}[Covering map]
+    Let $X$ and $Y$ be topological spaces. A continuous, surjective map $f: X
+    \to Y$ is a \emph{covering map} if every point $y \in Y$ has an open
+    neighborhood $V$ such that the pre-image $f^{-1}(V)$ is a union of disjoint
+    open sets $U_i$ in $X$, each of which is mapped homeomorphically onto $V$ by
+    $f$.
+\end{definition}
+
 In this section, our objective is to use $R$ to relate the Euler characteristics
 $\chi(U)$ and $\chi(V)$ of domains $U$ and $V$ as above. Any such relationship
 will involve a contribution from the critical points of $R$ and in order to
@@ -438,7 +446,7 @@ and, of course, for a polynomial $P$, $\delta(\C) = \deg(P) - 1$.
 
 We are now ready to relate the quantities $\chi(U)$, $\chi(V)$, $\deg(R)$ and
 $\delta_R(U)$ as suggested above. We shall assume:
-\begin{enumerate}
+\begin{enumerate}[label=(\arabic*)]
     \item $V$ is a domain bounded by a finite number of mutually disjoint Jordan
     curves;
     \item $U$ is a component of $R^{-1}(V)$; and
@@ -470,7 +478,7 @@ we take $V$ to be a simply connected domain other than $\ExtC$, then $\chi(V) =
 \end{equation*}
 Written this way, both terms on the right are non-negative, and we can conclude
 that either:
-\begin{enumerate}
+\begin{enumerate}[label=(\roman*)]
     \item $R$ has critical points in $U$ (that is, $\delta_R(U) > 0$); or
     \item $U$ is simply connected and $R$ is a homeomorphism of $U$ onto $V$.
 \end{enumerate}
@@ -534,7 +542,7 @@ Riemann surface (see \cite[25--26, 81--87]{Ahlfors1960}).
 \begin{definition}[Regular subdomain]
     Let $D$ be any domain on the sphere. A subdomain $\Omega$ of $D$ is said to
     be a \emph{regular subdomain} of $D$ if:
-    \begin{enumerate}
+    \begin{enumerate}[label=(\arabic*)]
         \item \label{itm:regular_subdomain_first_condition} $\Omega$ is bounded
         by a finite union of mutually disjoint Jordan curves, say $\gamma_1$,
         $\dots$, $\gamma_n$, all of which lie in $D$; and
@@ -545,7 +553,7 @@ Riemann surface (see \cite[25--26, 81--87]{Ahlfors1960}).
     \end{enumerate}
 \end{definition}
 
-Intuitively, (\ref{itm:regular_subdomain_second_condition}) says that a regular
+Intuitively, \ref{itm:regular_subdomain_second_condition} says that a regular
 subdomain $\Omega$ is a piece of a domain that is not allowed to have any
 \enquote{new holes} that the parent domain $D$ didn't already have.
 
@@ -557,8 +565,8 @@ subdomain $\Omega$ is a piece of a domain that is not allowed to have any
 Observe that $\chi(\Omega)$ is defined for each regular subdomain of $D$.
 
 Of course, if a subdomain $\Omega$ of $D$ satisfies
-(\ref{itm:regular_subdomain_first_condition}) but not
-(\ref{itm:regular_subdomain_second_condition}), we can adjoin to $\Omega$ those
+\ref{itm:regular_subdomain_first_condition} but not
+\ref{itm:regular_subdomain_second_condition}, we can adjoin to $\Omega$ those
 sets $W_j \cup \gamma_j$ which do not meet the complement of $D$ to form a
 regular subdomain $\Omega_0$ of $D$. Obviously, $\Omega$ has a higher
 connectivity than $\Omega_0$, and $\chi(\Omega_0) \geq \chi(\Omega)$.
@@ -573,7 +581,7 @@ prove
 \begin{lemma}[Exhaustion by regular subdomains]
     \label{lem:exhaustion_by_regular_subdomains}
     Let $D$ be a proper subdomain of the complex sphere. Then:
-    \begin{enumerate}
+    \begin{enumerate}[label=(\roman*)]
         \item any compact subset of $D$ lies in some regular subdomain of $D$;
         and
         \item if $\Omega_1$ and $\Omega_2$ are regular subdomains of $D$, then
@@ -613,7 +621,7 @@ monotonicity of the function $\chi: \mathcal{R}(D) \to \{2, 1, 0, \dots,
         \chi(D) = \inf\{\chi(\Omega): \Omega \text{ a regular subdomain of } D\}.
     \end{equation*}
     Quite explicitly, either:
-    \begin{enumerate}
+    \begin{enumerate}[label=(\arabic*)]
         \item $\chi(D) = -\infty$, and there are regular subdomains $\Omega_n$
         with $\chi(\Omega_n) \to -\infty$ or, equivalently, with $c(\Omega_n)
         \to +\infty$; or
@@ -780,7 +788,7 @@ We now prove a stronger result than this, namely
 \end{proof}
 
 In Chapter 11 of \cite{Beardon1991}, we can see an example of a rational map $R$
-with the properties (1) $J$ is disconnected, and (2) each component $F_j$ of $F$
+with the properties (i) $J$ is disconnected, and (ii) each component $F_j$ of $F$
 has finite connectivity. It follows that only a countable number of components
 of $J$ can meet the boundary of some $F_j$; thus in this example, \emph{there
 are components of $J$ which do not meet the closure of any component of $F$}.

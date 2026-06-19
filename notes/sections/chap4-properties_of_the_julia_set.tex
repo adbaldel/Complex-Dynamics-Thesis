@@ -30,7 +30,7 @@ exceptional.
     \label{thm:rational_maps_have_at_most_two_exceptional_points}
     A rational map $R$ of degree at least two has at most two exceptional
     points.
-    \begin{enumerate}
+    \begin{enumerate}[label=(\roman*)]
         \item If $E(R) = \{\zeta\}$, then $R$ is conjugate to a polynomial with
         $\zeta$ corresponding to $\infty$.
         \item If $E(R) = \{\zeta_1, \zeta_2\}$, then $R$ is conjugate to some
@@ -122,7 +122,7 @@ in a decisive way in the next result.
     \label{thm:J_is_minimal}
     Let $R$ be a rational map with $\deg(R) \geq 2$, and suppose that $E$ is a
     closed, completely invariant subset of the complex sphere. Then either:
-    \begin{enumerate}
+    \begin{enumerate}[label=(\roman*)]
         \item $E$ has at most two elements and $E \subset E(R) \subset F(R)$; or
         \item $E$ is infinite and $E \supset J(R)$.
     \end{enumerate}
@@ -219,7 +219,7 @@ its behavior under the rational map $R$.
     \end{equation*}
     Let $E_i = \{x_i\}$ be the singleton set containing only the point $x_i$. We
     analyze its topological properties within $J$:
-    \begin{enumerate}
+    \begin{enumerate}[label=(\roman*)]
         \item Each singleton $\{x_i\}$ is closed because finite points are
         closed in metric spaces.
         \item Because $J$ has no isolated points, no single point can form an
@@ -251,7 +251,7 @@ the sphere. We recall $E(R)$ has at most two elements.
 \begin{theorem}[$W$ open and $W \cap J \neq \emptyset \implies \bigcup R^n(W)$ explodes to $\ExtC - E(R)$ and $R^n(W)$ converges to a set that contains $J$]
     Let $R$ be a rational map of degree at least two, and let $W$ be any
     non-empty open set which meets $J$. Then:
-    \begin{enumerate}
+    \begin{enumerate}[label=(\roman*)]
         \item $\cup_{n=0}^\infty R^n(W) \supset \ExtC - E(R)$; and
         \item for all sufficiently large integers $n$, $R^n(W) \supset J$.
     \end{enumerate}
@@ -264,8 +264,9 @@ The next three results show how the Julia set $J$ is realized as the limit, or
 the closure, of some countable set.
 
 \begin{definition}[Periodic point]
+    \label{def:periodic_point}
     A point $\zeta$ is a \emph{periodic point} of $R$ if it is fixed by some
-    iterate $R^n$.
+    iterate $R^m$.
 \end{definition}
 
 \begin{remark}[The number of periodic points is countable]
@@ -298,7 +299,7 @@ In fact, we can replace $[z]$ by the smaller set $\orbit^-(z)$ and still prove
 \begin{theorem}[$z$ non-exceptional point $\implies J \subset \closure{\orbit^-(z)}$ and if $z \in J$ they are equal]
     \label{thm:J_contained_in_backwards_orbit_of_z_non_exceptional_and_equal_if_z_in_J}
     Let $R$ be a rational map with $\deg(R) \geq 2$.
-    \begin{enumerate}
+    \begin{enumerate}[label=(\roman*)]
         \item If $z$ is not exceptional, then $J$ is contained in the closure of
         $\orbit^-(z)$.
         \item If $z \in J$, then $J$ is the closure of $\orbit^-(z)$.
@@ -491,8 +492,9 @@ Theorem~\ref{thm:F_and_J_are_preserved_under_iteration}.
 \end{example}
 
 \begin{definition}[Pre-periodic point]
-    A critical point of a rational map $R$ is said to be \emph{pre-periodic} if
-    it is not periodic, but a forward image of it is.
+    \label{def:preperiodic_point}
+    A point $\zeta$ is \emph{pre-periodic} under $R$ if it is not periodic, but
+    a forward image of it is.
 \end{definition}
 
 \begin{theorem}[$\forall z \in C$, $z$ pre-periodic $\implies J = \ExtC$]

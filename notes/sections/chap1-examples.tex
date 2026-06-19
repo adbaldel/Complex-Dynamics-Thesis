@@ -9,6 +9,7 @@ that will be met in a general context later.
 % --- SECTION ------------------------------------------------------------------
 % --- INTRODUCTION -------------------------------------------------------------
 \section{Introduction}
+\label{sec:introduction}
 
 \begin{proposition}[{$z_n \xrightarrow[n \to \infty]{} w \implies w$ is a fixed
     point}] Let $z_0 \in \ExtC$, $R$ be a rational function in $\ExtC$, and $z_n
@@ -36,6 +37,7 @@ notes ensuring $z_{n+1}$ cannot arbitrarily stay closer than $z_n$ if repelled).
 % --- SECTION ------------------------------------------------------------------
 % --- ITERATION OF MÖBIUS TRANSFORMATIONS --------------------------------------
 \section{Iteration of Möbius Transformations}
+\label{sec:iteration_of_mobius_transformations}
 
 \begin{definition}[Möbius Transformation]
     A \emph{Möbius transformation} is a rational function $R: \ExtC \to \ExtC$
@@ -48,7 +50,7 @@ notes ensuring $z_{n+1}$ cannot arbitrarily stay closer than $z_n$ if repelled).
 
 \begin{theorem}[Classification of Möbius Transformations]
     Given $R$ a Möbius transformation, then either it has:
-    \begin{enumerate}
+    \begin{enumerate}[label=(\roman*)]
         \item One fixed point, $\zeta$, and for every $z \in \C$, $R^n(z) \to
         \zeta$.
         \item Two fixed points, $\zeta_1$ and $\zeta_2$, and for every $z \in
@@ -108,11 +110,12 @@ notes ensuring $z_{n+1}$ cannot arbitrarily stay closer than $z_n$ if repelled).
 % --- SECTION ------------------------------------------------------------------
 % --- ITERATION OF z^2 ---------------------------------------------------------
 \section{Iteration of $z \mapsto z^2$}
+\label{sec:iteratcion_of_z_squared}
 
 \begin{definition}[Forward and Backward Invariant]
     Given a set $E \subseteq \ExtC$ and a rational function $R: \ExtC \to
     \ExtC$, we say $E$ is:
-    \begin{enumerate}
+    \begin{enumerate}[label=(\alph*)]
         \item \emph{Forward invariant} if $R(E) \subseteq E$.
         \item \emph{Backward invariant} if $R^{-1}(E) \subseteq E$.
     \end{enumerate}
@@ -125,7 +128,7 @@ notes ensuring $z_{n+1}$ cannot arbitrarily stay closer than $z_n$ if repelled).
 
 In the Julia set of $z \mapsto z^2$ (which is $J = \{z : |z| = 1\}$), two close
 points may behave radically differently. And it has this properties:
-\begin{enumerate}
+\begin{enumerate}[label=(\roman*)]
     \item Given $I$ an arc in $J$, $\exists N \in \Nzero$ such that $\forall n
     \geq N$, $R^n(I) = J$.
     \item $\exists z_0 \in J$ such that $\{R^n(z_0) \mid n \in \Nzero\}$ is
@@ -151,6 +154,8 @@ points may behave radically differently. And it has this properties:
 % --- SECTION ------------------------------------------------------------------
 % --- ITERATION OF z^2 - 1 -----------------------------------------------------
 \section{Iteration of $z \mapsto z^2 - 1$}
+\label{sec:iteration_of_z_squared_minus_one}
+
 For polynomials like $P(z) = z^2 - 1$, points outside a certain radius escape to
 infinity ($z \in F_\infty \implies P^n(z) \to \infty$).
 
@@ -162,6 +167,8 @@ F_\infty$.
 % --- SECTION ------------------------------------------------------------------
 % --- ITERATION OF z^2 + c -----------------------------------------------------
 \section{Iteration of $z \mapsto z^2 + c$}
+\label{sec:iteration_of_z_squared_plus_c}
+
 Recall Vieta's formulas. Given a polynomial $P(x) = ax^2 + bx + c$ with roots
 $r_1, r_2$:
 \begin{equation*}
@@ -194,6 +201,8 @@ we have
 % --- SECTION ------------------------------------------------------------------
 % --- ITERATION OF z + 1/z -----------------------------------------------------
 \section{Iteration of $z \mapsto z + 1/z$}
+\label{sec:iteration_of_z_plus_one_over_z}
+
 We consider the dynamics of the rational map defined by:
 \begin{equation*} R(z) = z + \frac{1}{z} \end{equation*}
 
@@ -293,6 +302,8 @@ near $\infty$.
 % --- SECTION ------------------------------------------------------------------
 % --- ITERATION OF 2z - 1/z ----------------------------------------------------
 \section{Iteration of $z \mapsto 2z - 1/z$}
+\label{sec:iteration_of_two_z_minus_one_over_z}
+
 For $R(z) = 2z - 1/z$, we find the fixed points:
 \begin{itemize}
     \item $\zeta_1 = 1$ (repelling),
@@ -303,6 +314,8 @@ For $R(z) = 2z - 1/z$, we find the fixed points:
 % --- SECTION ------------------------------------------------------------------
 % --- NEWTON's APPROXIMATION ---------------------------------------------------
 \section{Newton's Approximation}
+\label{sec:newtons_approximation}
+
 To find the roots of a polynomial function $f$ in $\R$, the Newton-Raphson
 method uses the formula:
 \begin{equation*}
@@ -321,7 +334,7 @@ set of $R$ (which for polynomials $f$ with degree $3$ or more is usually a
 complex fractal).
 
 Properties of the Newton method:
-\begin{enumerate}
+\begin{enumerate}[label=(\roman*)]
     \item The roots of $f$ correspond with fixed points of $R$ (proved in the
     book \cite{Beardon1991}).
     \item Successive iterates of $R$ have a tendency to converge to an
@@ -348,6 +361,8 @@ area $0$)
 % --- SECTION ------------------------------------------------------------------
 % --- GENERAL REMARKS ----------------------------------------------------------
 \section{General Remarks}
+\label{sec:general_remarks}
+
 For typical rational functions $R$, the extended complex plane $\ExtC$ is
 divided into $J$ (Julia set) and $F$ (Fatou set).
 \begin{itemize}

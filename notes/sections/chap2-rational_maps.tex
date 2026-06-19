@@ -313,7 +313,7 @@ fixed point for all polynomials.
     zeros of $R$ are the zeros of $P$, and the poles of $R$ are the zeros of
     $Q$. Moreover, the number of zeros and poles of $R$ at $\infty$ (counting
     multiplicities) are given by the following cases:
-    \begin{enumerate}
+    \begin{enumerate}[label=(\roman*)]
         \item if $n = m$, then all the zeros and poles of $R$ are in $\C$;
         \item if $n > m$, then the number of poles at $\infty$ is $n-m$;
         \item and if $n < m$, then the number of zeros at $\infty$ is $m-n$.
@@ -430,7 +430,7 @@ carefully in terms of the exterior of the image curve
 \begin{remark}[Invariant properties of conjugacy]
     Given two conjugate rational maps $R$ and $S$, where $S = g R g^{-1}$. Then,
     the following are true:
-    \begin{enumerate}
+    \begin{enumerate}[label=(\roman*)]
         \item $\deg(R) = \deg(S)$;
         \item $S^n = g R^n g^{-1}$ (this means that we can transfer a problem
         concerning $R$ to a (possibly simpler) problem concerning a conjugate
@@ -668,7 +668,7 @@ $h$.
 \begin{proposition}[Fixed points of rational maps]
     Given by two coprime polynomials $P$ and $Q$ and the rational map $R = P/Q$.
     Then,
-    \begin{enumerate}
+    \begin{enumerate}[label=(\roman*)]
         \item $R$ fixes $\infty$ if and only if $\deg(P) > \deg(Q)$;
         \item and $R$ fixes $\zeta \in \C$ if and only if $P(\zeta) = \zeta
         Q(\zeta)$; that is, the \emph{fixed points of $R$ in $\C$} are the
@@ -755,6 +755,12 @@ Lemma~\ref{lem:number_of_fixed_points_is_preserved_under_conjugacy_in_C} implies
     \end{equation*}
 \end{definition}
 
+\begin{remark}[Multiplier in $\C$ is preserved under conjugation]
+    Note that since the derivate is invariant under a conjugation, the multiplier
+    is also invariant under a conjugation (provided the corresponding point is
+    also in $\ExtC$).
+\end{remark}
+
 \begin{definition}[Multiplier of the fixed point $\infty$]
     Given a rational map $R$ with a fixed point at $\infty$. Then, we can select
     a Möbius map $g$ that maps $\infty$ to some point in $\C$, and then define
@@ -767,6 +773,11 @@ Lemma~\ref{lem:number_of_fixed_points_is_preserved_under_conjugacy_in_C} implies
 
 Note that, by the preceding remarks, this definition is independent of the
 choice of $g$.
+
+\begin{remark}[Multiplier is preserved under conjugation]
+    We now have defined a \emph{conjugation invariant multiplier $m(R, \zeta)$}
+    of any rational map $R$ at any of its fixed points.
+\end{remark}
 
 \begin{example}[Multiplier at $\infty$ for a rational map]
     Let $R$ be a rational map of the form
@@ -1031,105 +1042,6 @@ the iterate $R^n$ in terms of the critical points of $R$.
 \begin{proof}
     See \cite[45]{Beardon1991}.
 \end{proof}
-
-% --- SECTION ------------------------------------------------------------------
-% --- CONNECTEDNESS AND COMPACTNESS RECALL -------------------------------------
-\section{Connectedness and Compactness Recall}
-\label{sec:connectedness_and_compactness_recall}
-
-To support subsequent global dynamic formulations, we briefly review standard
-topological notions adapted to our setting.
-
-\begin{definition}[Connected Set]
-    A set $A$ is \emph{connected} if it cannot be partitioned by two disjoint,
-    non-empty open sets $V$ and $W$ such that $A \subseteq V \cup W$.
-\end{definition}
-
-\begin{definition}[Component of a set]
-    Given a set $B$, we say a subset $A$ of $B$ is a component of $B$ if it is a
-    maximal connected subset.
-\end{definition}
-
-\begin{definition}[Path-Connected Set]
-    A set $A \subseteq \ExtC$ is \emph{path-connected} if for every pair of
-    points $z_0, z_1 \in A$, there exists a continuous map (a path) $\gamma: [0,
-    1] \to A$ such that $\gamma(0) = z_0$ and $\gamma(1) = z_1$.
-\end{definition}
-
-In general topology, path-connectedness is a strictly stronger condition than
-connectedness; every path-connected set is connected, but the converse is false
-(as exemplified by the Topologist's Sine Curve).
-
-\begin{definition}[Domain]
-    An open, connected subset $D \subseteq \ExtC$ is called a \emph{domain}.
-\end{definition}
-
-The regular geometry of open sets yields an equivalence vital to complex
-dynamics.
-
-\begin{theorem}[An open set is connected $\iff$ is path-connected]
-    Let $U \subseteq \ExtC$ be an open set. Then $U$ is connected if and only if
-    it is path-connected. Consequently, any domain $D$ is automatically
-    path-connected.
-\end{theorem}
-
-Thus, domains could also be defined as open, path-connected subsets of $\ExtC$.
-
-\begin{definition}[Compact Set]
-    A set $K$ is \emph{compact} if every open cover of $K$ contains a finite
-    subcover.
-\end{definition}
-
-By the Heine-Borel theorem, compactness for a subset $K \subseteq \C$ is
-equivalent to $K$ being closed and bounded. However, because the extended plane
-$\ExtC$ is itself already compact (being homeomorphic to the sphere $S^2$),
-bounds are redundant. The transformation from $\C$ to $\ExtC$ represents a
-standard one-point or Alexandroff compactification.
-
-\begin{definition}[Compact set in $\ExtC$]
-    A subset $K \subseteq \ExtC$ is compact if and only if it is closed in the
-    chordal topology.
-\end{definition}
-
-% --- SUBSECTION ---------------------------------------------------------------
-% --- JORDAN CURVES AND SEPARATION PROPERTIES ----------------------------------
-\section{Jordan Curves}
-\label{sec:jordan_curves}
-
-To properly interpret the connectivity of domains and properties of the Fatou
-and Julia sets, we recall the basic topology of curves on the Riemann sphere
-$\ExtC$.
-
-\begin{definition}[Jordan Arc and Jordan Curve]
-    A \emph{Jordan arc} is the image of a continuous, injective map $\gamma: [0,
-    1] \to \ExtC$. A \emph{Jordan curve} (or a simple closed curve) is the image
-    of a continuous map $\gamma: [0, 1] \to \ExtC$ that is injective on $[0, 1)$
-    and satisfies $\gamma(0) = \gamma(1)$.
-\end{definition}
-
-The fundamental global property of Jordan curves is their ability to divide the
-sphere into distinct regions, a result which is heavily utilized in complex
-dynamics when defining domain connectivity.
-
-\begin{theorem}[Jordan Curve Theorem]
-    \label{thm:jordan_curve_theorem}
-    Let $\gamma$ be a Jordan curve in $\ExtC$. Then its complement $\ExtC -
-    \gamma$ consists of exactly two disjoint connected components, each of which
-    is an open domain having $\gamma$ as its common boundary.
-\end{theorem}
-
-While the Jordan Curve Theorem guarantees exactly two components, complex
-dynamics frequently requires these components to be topologically well-behaved.
-This regular geometry is guaranteed by a stronger two-dimensional extension.
-
-\begin{theorem}[Schoenflies Theorem for the Sphere]
-    \label{thm:schoenflies_theorem}
-    Let $\gamma$ be a Jordan curve in $\ExtC$. Then there exists a homeomorphism
-    $\Phi: \ExtC \to \ExtC$ that maps $\gamma$ directly onto the standard
-    equatorial circle. Consequently, the two components of $\ExtC - \gamma$ are
-    homeomorphic to open discs, and their closures are homeomorphic to closed
-    discs (topological discs).
-\end{theorem}
 
 % --- SECTION ------------------------------------------------------------------
 % --- A TOPOLOGY ON THE RATIONAL FUNCTIONS -------------------------------------

@@ -5,25 +5,313 @@
 \chapter*{Prerequisites}
 \addcontentsline{toc}{chapter}{Prerequisites}
 
+% --- SECTION ------------------------------------------------------------------
+% --- FROM COMPLEX ANALYSIS ----------------------------------------------------
 \section*{From Complex Analysis}
-\begin{itemize}
-    \item $d$-fold map: We say $f$ is a $d$-fold map of $V$ onto $W$ if, for
-    every $w \in W$, the equation $f(z) = w$ has exactly $d$ solutions in $V$
-    (counting multiple solutions by their multiplicity).
-    \item Maximum Modulus Theorem.
-    \item Schwarz's Lemma.
-    \item Rouché's Theorem.
-    \item Hurwitz's Theorem: If a sequence of univalent analytic maps $f_n$ on a
-    domain $D$ converges uniformly to $f$, then $f$ is either constant or
-    univalent in $D$.
-\end{itemize}
 
+\begin{definition*}[$d$-fold map]
+    We say a map $f: V \to W$ is a \emph{$d$-fold map} if, for every $w$ in $W$,
+    the equation $f(z) = w$ has \emph{exactly} $d$ solutions in $V$ (counting
+    multiple solutions by their multiplicity).
+\end{definition*}
+
+\begin{theorem*}[Inverse Function Theorem in $\C$]
+    \label{thm:inverse_function_theorem_in_C}
+    Let $f: U \to \C$ be a holomorphic function on an open set $U \subseteq \C$,
+    and let $z_0 \in U$. If $f'(z_0) \neq 0$, then there exist open
+    neighborhoods $V \subseteq U$ of $z_0$ and $W$ of $f(z_0)$ such that the
+    restriction $f: V \to W$ is a bijection.
+    
+    Furthermore, the local inverse function $f^{-1}: W \to V$ is holomorphic,
+    and its derivative satisfies:
+    \begin{equation*}
+        (f^{-1})'(f(z_0)) = \frac{1}{f'(z_0)}.
+    \end{equation*}
+\end{theorem*}
+
+\begin{theorem*}[Maximum Modulus Theorem]
+    Let $D \subseteq \C$ be a domain (an open, connected set) and let $f: D \to \C$
+    be a holomorphic function. If there exists a point $z_0 \in D$ such that
+    $|f(z_0)| \geq |f(z)|$ for all $z \in D$, then $f$ must be a constant
+    function on $D$.
+\end{theorem*}
+
+\begin{lemma*}[Schwarz's Lemma]
+    Let $C = \{ z \in \C \mid |z| < 1 \}$ be the open unit disk, and let
+    $f: C \to C$ be a holomorphic function such that $f(0) = 0$. Then, for all
+    $z \in C$, we have $|f(z)| \leq |z|$ and $|f'(0)| \leq 1$.
+
+    Furthermore, if $|f(z)| = |z|$ for some non-zero $z \in C$, or if
+    $|f'(0)| = 1$, then $f$ is a rotation, meaning $f(z) = \lambda z$ for some
+    constant $\lambda \in \C$ with $|\lambda| = 1$.
+\end{lemma*}
+
+\begin{theorem*}[Rouché's Theorem]
+    Let $D \subseteq \C$ be a domain, and let $\gamma$ be a simple closed contour
+    in $D$ whose interior is also entirely contained in $D$. If $f$ and $g$ are
+    holomorphic functions on $D$ satisfying
+    \[ |f(z) - g(z)| < |f(z)| \]
+    for all points $z$ on $\gamma$, then $f$ and $g$ have the exact same number
+    of zeros strictly inside $\gamma$, counting multiplicities.
+\end{theorem*}
+
+\begin{theorem*}[Hurwitz's Theorem]
+    If a sequence of univalent analytic maps $f_n$ on a domain $D$ converges
+    uniformly to $f$, then $f$ is either constant or univalent in $D$.
+\end{theorem*}
+
+% --- SECTION ------------------------------------------------------------------
+% --- FROM TOPOLOGY ------------------------------------------------------------
 \section*{From Topology}
-\begin{itemize}
-    \item Metric spaces: Uniform continuity.
-    \item Compactness.
-    \item Connectedness.
-\end{itemize}
+
+To support subsequent global dynamic formulations, we briefly review standard
+topological notions adapted to our setting.
+
+% --- SUBSECTION - BASIC CONCEPTS ----------------------------------------------
+\subsection*{Basic concepts}
+
+\begin{definition*}[Topology]
+    Let $X$ be a set. A \emph{topology} on $X$ is a collection $\tau$ of subsets
+    of $X$ that satisfies the following three properties:
+    \begin{itemize}
+        \item The empty set $\emptyset$ and the set $X$ itself belong to $\tau$.
+        \item The union of any arbitrary collection of sets in $\tau$ also
+        belongs to $\tau$.
+        \item The intersection of any finite collection of sets in $\tau$ also
+        belongs to $\tau$.
+    \end{itemize}
+\end{definition*}
+
+\begin{definition*}[Topological space]
+    A \emph{topological space} is a pair $(X, \tau)$ consisting of a set $X$ and
+    a topology $\tau$ on $X$. When the topology $\tau$ is clear from the
+    context, we often simply refer to the space $X$.
+\end{definition*}
+
+\begin{definition*}[Open set]
+    Let $(X, \tau)$ be a topological space. A subset $U \subseteq X$ is called
+    an \emph{open set} if it belongs to the topology $\tau$, that is, if $U \in
+    \tau$.
+\end{definition*}
+
+\begin{definition*}[Closed set]
+    A subset $K \subseteq X$ of a topological space is called a \emph{closed
+    set} if its complement, $X - K$, is an open set.
+\end{definition*}
+
+\begin{definition*}[Closure]
+    Let $A$ be a subset of a topological space $X$. The \emph{closure} of $A$,
+    denoted by $\closure{A}$, is the intersection of all closed sets containing
+    $A$. Equivalently, it is the smallest closed set containing $A$.
+\end{definition*}
+
+\begin{definition*}[Dense set]
+    A subset $A$ of a topological space $X$ is called \emph{dense} in $X$ if its
+    closure is the entire space, that is, if $\closure{A} = X$.
+\end{definition*}
+
+\begin{definition*}[Interior]
+    Let $A$ be a subset of a topological space $X$. The \emph{interior} of $A$,
+    denoted by $\interior{A}$, is the union of all open
+    sets contained within $A$. Equivalently, it is the largest open set contained
+    in $A$.
+\end{definition*}
+
+\begin{definition*}[Boundary]
+    Let $A$ be a subset of a topological space $X$. The \emph{boundary} (or
+    frontier) of $A$, denoted by $\boundary{A}$, is the set of points that are in
+    the closure of $A$ but not in the interior of $A$. Thus, $\boundary{A} =
+    \closure{A} - \interior{A}$.
+\end{definition*}
+
+\begin{definition*}[Accumulation points and derived set]
+    Let $A \subseteq X$. A point $x \in X$ is an \emph{accumulation point} (or
+    limit point) of $A$ if every neighborhood of $x$ contains at least one point
+    of $A$ distinct from $x$. The set of all accumulation points of $A$ is
+    called the \emph{derived set} of $A$ and is denoted by $\derived{A}$.
+\end{definition*}
+
+\begin{definition*}[Isolated points]
+    Let $A \subseteq X$. A point $x \in A$ is an \emph{isolated point} of $A$ if
+    it is not an accumulation point of $A$; equivalently, if there exists a
+    neighborhood of $x$ that contains no other points of $A$ besides $x$.
+\end{definition*}
+
+\begin{definition*}[Neighborhood]
+    A subset $N$ of a topological space $X$ is a \emph{neighborhood} of a point
+    $x \in X$ if there exists an open set $U$ such that $x \in U \subseteq N$.
+    If $N$ itself is an open set, it is frequently referred to as an \emph{open
+    neighborhood}.
+\end{definition*}
+
+% --- SUBSECTION - METRIC SPACES -----------------------------------------------
+\subsection*{Metric spaces}
+
+\begin{definition*}[Metric or distance]
+    Let $X$ be a non-empty set. A \emph{metric} (or \emph{distance}) (on $X$) is
+    a mapping
+    \begin{alignat*}{2}
+        \sigma: X \times X &{}\to{}     &&[0, \infty)  \\
+                    (x, y) &{}\mapsto{} &&\sigma(x, y)
+    \end{alignat*}
+    verifying the following for every $x, y, z \in X$:
+    \begin{itemize}
+        \item $\sigma(x, y) = 0 \iff x = y$;
+        \item $\sigma(x, y) = \sigma(y,x)$; and
+        \item $\sigma(x, z) \leq \sigma(x, y) + \sigma(y, z)$.
+    \end{itemize}
+\end{definition*}
+
+\begin{definition*}[Metric space]
+    A metric space is a tuple $(X, \sigma)$ where $X$ is a non-empty set and
+    $\sigma$ is a metric on $X$.
+\end{definition*}
+
+\begin{definition*}[Distance from a point to a set]
+    Let $(X, \sigma)$ be a metric space, $A \subseteq X$ a non-empty set, and $x
+    \in X$. The \emph{distance} between the point $x$ and the set $A$ is defined
+    as
+    \begin{equation*}
+        \sigma(x, A) = \inf_{y \in A} \sigma(x, y).
+    \end{equation*}
+\end{definition*}
+
+\begin{definition*}[Distance between two sets]
+    Let $A$ and $B$ be non-empty subsets of a metric space $(X, \sigma)$. The
+    \emph{distance} between $A$ and $B$ is defined as
+    \begin{equation*}
+        \sigma(A, B) = \inf_{\substack{x \in A \\ y \in B}} \sigma(x, y).
+    \end{equation*}
+\end{definition*}
+
+\begin{definition*}[Diameter of a set]
+    Let $A$ be a non-empty subset of a metric space $(X, \sigma)$. The
+    \emph{diameter} of $A$ is defined as
+    \begin{equation*}
+        \diameter(A) = \sup_{x, y \in A} \sigma(x, y).
+    \end{equation*}
+\end{definition*}
+
+\begin{definition*}[Ball]
+    Let $(X, \sigma)$ be a metric space, $x \in X$, and $r > 0$. The \emph{open
+    ball} (or simply the \emph{ball}) of radius $r$ centered at $x$ is the set
+    \begin{equation*}
+        B(x, r) = \{ y \in X \mid \sigma(x, y) < r \}.
+    \end{equation*}
+    Similarly, the \emph{closed ball} of radius $r$ centered at $x$ is the set
+    \begin{equation*}
+        \closure{B}(x, r) = \{ y \in X \mid \sigma(x, y) \leq r \}.
+    \end{equation*}
+\end{definition*}
+
+\begin{definition*}[Bounded set]
+    A subset $A$ of a metric space $(X, \sigma)$ is \emph{bounded} if its
+    diameter is finite, that is, if $\diameter(A) < \infty$. Equivalently, $A$
+    is bounded if it is contained in a ball (open or closed).
+\end{definition*}
+
+\begin{definition*}[Open set]
+    A subset $U$ of a metric space $(X, \sigma)$ is \emph{open} if, for every
+    point $x \in U$, there exists a radius $r > 0$ such that the ball $B(x, r)$
+    is entirely contained in $U$.
+\end{definition*}
+
+% --- SUBSECTION - COMPACTNESS -------------------------------------------------
+\subsection*{Compactness}
+
+\begin{definition*}[Compact Set]
+    A set $K$ is \emph{compact} if every open cover of $K$ contains a finite
+    subcover. In a metric space, this is equivalent to \emph{sequential
+    compactness}, where every sequence in $K$ has a convergent subsequence whose
+    limit is in $K$.
+\end{definition*}
+
+By the Heine-Borel theorem, compactness for a subset $K \subseteq \C$ is
+equivalent to $K$ being closed and bounded. However, because the extended plane
+$\ExtC$ is itself already compact (being homeomorphic to the sphere $S^2$),
+bounds are redundant. The transformation from $\C$ to $\ExtC$ represents a
+standard one-point or Alexandroff compactification.
+
+\begin{definition*}[Compact set in $\ExtC$]
+    A subset $K \subseteq \ExtC$ is compact if and only if it is closed in the
+    chordal topology.
+\end{definition*}
+
+% --- SUBSECTION - CONNECTEDNESS -----------------------------------------------
+\subsection*{Connectedness}
+
+\begin{definition*}[Connected Set]
+    A set $A$ is \emph{connected} if it cannot be partitioned by two disjoint,
+    non-empty open sets $V$ and $W$ such that $A \subseteq V \cup W$.
+\end{definition*}
+
+\begin{definition*}[Component of a set]
+    Given a set $B$, we say a subset $A$ of $B$ is a component of $B$ if it is a
+    maximal connected subset.
+\end{definition*}
+
+\begin{definition*}[Path-Connected Set]
+    A set $A \subseteq \ExtC$ is \emph{path-connected} if for every pair of
+    points $z_0, z_1 \in A$, there exists a continuous map (a path) $\gamma: [0,
+    1] \to A$ such that $\gamma(0) = z_0$ and $\gamma(1) = z_1$.
+\end{definition*}
+
+In general topology, path-connectedness is a strictly stronger condition than
+connectedness; every path-connected set is connected, but the converse is false
+(as exemplified by the Topologist's Sine Curve).
+
+\begin{definition*}[Domain]
+    An open, connected subset $D \subseteq \ExtC$ is called a \emph{domain}.
+\end{definition*}
+
+The regular geometry of open sets yields an equivalence vital to complex
+dynamics.
+
+\begin{theorem*}[An open set is connected $\iff$ is path-connected]
+    Let $U \subseteq \ExtC$ be an open set. Then $U$ is connected if and only if
+    it is path-connected.
+\end{theorem*}
+
+Consequently, any domain $D$ is automatically path-connected. Thus, domains
+could also be defined as open, path-connected subsets of $\ExtC$.
+
+% --- SUBSECTION - JORDAN CURVES -----------------------------------------------
+\subsection*{Jordan Curves}
+
+To properly interpret the connectivity of domains and properties of the Fatou
+and Julia sets, we recall the basic topology of curves on the Riemann sphere
+$\ExtC$.
+
+\begin{definition*}[Jordan Arc and Jordan Curve]
+    A \emph{Jordan arc} is the image of a continuous, injective map $\gamma: [0,
+    1] \to \ExtC$. A \emph{Jordan curve} (or a simple closed curve) is the image
+    of a continuous map $\gamma: [0, 1] \to \ExtC$ that is injective on $[0, 1)$
+    and satisfies $\gamma(0) = \gamma(1)$.
+\end{definition*}
+
+The fundamental global property of Jordan curves is their ability to divide the
+sphere into distinct regions, a result which is heavily utilized in complex
+dynamics when defining domain connectivity.
+
+\begin{theorem*}[Jordan Curve Theorem]
+    \label{thm:jordan_curve_theorem}
+    Let $\gamma$ be a Jordan curve in $\ExtC$. Then its complement $\ExtC -
+    \gamma$ consists of exactly two disjoint connected components, each of which
+    is an open domain having $\gamma$ as its common boundary.
+\end{theorem*}
+
+While the Jordan Curve Theorem guarantees exactly two components, complex
+dynamics frequently requires these components to be topologically well-behaved.
+This regular geometry is guaranteed by a stronger two-dimensional extension.
+
+\begin{theorem*}[Schoenflies Theorem for the Sphere]
+    \label{thm:schoenflies_theorem}
+    Let $\gamma$ be a Jordan curve in $\ExtC$. Then there exists a homeomorphism
+    $\Phi: \ExtC \to \ExtC$ that maps $\gamma$ directly onto the standard
+    equatorial circle. Consequently, the two components of $\ExtC - \gamma$
+    are homeomorphic to open discs, and their closures are homeomorphic to closed
+    discs (topological discs).
+\end{theorem*}
 
 % --- Table of Contents --------------------------------------------------------
 \tableofcontents
