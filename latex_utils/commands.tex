@@ -22,16 +22,13 @@
 \newcommand{\ExtC}{\mathbb{C}_\infty}
 
 
-% --- NUMBER SETS --------------------------------------------------------------
+% --- SPECIAL SYMBOLS ----------------------------------------------------------
 
 % inserts the symbol for the identity function
 \newcommand{\Id}{\mathrm{I}}
 
 % inserts the non italics Euler's number (roman e)
 \newcommand{\E}{\mathrm{e}}
-
-% inserts the non italics imaginary number (roman i)
-\newcommand{\I}{\mathrm{i}}
 
 
 % --- ONE VARIABLE DIFFERENTIATION ---------------------------------------------
@@ -50,6 +47,17 @@
 % and can recieve an optional argument to indicate the order of the derivative
 \newcommand{\dnbyd}[3][]{\frac{\D^{#1}#2}{\D #3^{#1}}}
 
+
+% --- COMPLEX ANALYSIS ---------------------------------------------------------
+
+% inserts the non italics imaginary number (roman i)
+\newcommand{\I}{\mathrm{i}}
+
+% applies the real part operator
+\newcommand{\real}[1]{\mathop{Re}\left[{#1}\right]}
+
+% applies the imaginary part operator
+\newcommand{\imaginary}[1]{\mathop{Im}\left[{#1}\right]}
 
 % --- TOPOLOGY -----------------------------------------------------------------
 

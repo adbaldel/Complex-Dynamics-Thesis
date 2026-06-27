@@ -336,17 +336,20 @@ def make_generate_fatou_basins_jitted(jitted_func):
                         escaped_to_inf = True
                         break
                 
-                if escaped_to_inf:
-                    if inf_index != -1:
-                        basins[i, j] = inf_index
-                else:
-                    # Check distance to known finite attractors
+                    converged = False
                     for k in range(len(attractors)):
                         if k == inf_index:
                             continue
                         if abs(z - attractors[k]) < tolerance:
                             basins[i, j] = k
+                            converged = True
                             break
+                    
+                    if converged:
+                        break
+
+                if escaped_to_inf and inf_index != -1:
+                    basins[i, j] = inf_index
 
         return basins
 

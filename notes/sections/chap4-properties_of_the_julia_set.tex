@@ -87,10 +87,10 @@ As an application of this result we can obtain
     there is some $w$ with $\left(R^k\right)^{-1}\{w\} = \{w\}$ (see
     Theorem~\ref{thm:characterization_of_the_conjugacy_class_of_the_polynomials})
     and using Theorem~\ref{thm:characterization_of_exceptional_points} this
-    implies that $w$ is exceptional for $R$. Now such map need not be conjugate
-    to a polynomial (consider, for example, $z \mapsto z^{-2}$) but from
-    Theorem~\ref{thm:rational_maps_have_at_most_two_exceptional_points}, $R^2$
-    must be. Thus, we have proved the theorem.
+    implies that $w$ is exceptional for $R$. Now such a map need not be
+    conjugate to a polynomial (consider, for example, $z \mapsto z^{-2}$) but
+    from Theorem~\ref{thm:rational_maps_have_at_most_two_exceptional_points},
+    $R^2$ must be. Thus, we have proved the theorem.
 \end{proof}
 
 % --- SECTION ------------------------------------------------------------------
@@ -101,7 +101,7 @@ As an application of this result we can obtain
 We shall continue to exploit
 Theorem~\ref{thm:analytic_maps_not_touching_zero_one_and_infty_form_a_normal_family}
 as we explore the structure of the Julia set. We have not yet considered whether
-the Julia set can be non-0empty, and our first task will be to settle this
+the Julia set can be non-empty, and our first task will be to settle this
 issue. The case when the rational map $R$ has degree one is trivial and of
 little interest, but in all other cases, $J$ is not empty.
 
@@ -153,7 +153,7 @@ We now begin to develop these corollaries.
 \begin{proof}
     We know that $F$ is completely invariant: likewise, $J$ is and hence so are
     $\interior{J}$ and $\boundary{J}$
-    (Theorem~\ref{thm:complete_invarian_is_preserved_under_complement_interior_and_boundary}).
+    (Theorem~\ref{thm:complete_invariance_is_preserved_under_complement_interior_and_boundary}).
     If $F$ is not empty then $F \cup \boundary{J}$ is an infinite, closed,
     completely invariant set and so, by the minimality of $J$, it contains $J$.
     In these circumstances, $J \subset \boundary{J}$ and this yields the result.
@@ -249,6 +249,7 @@ meets $J$, the result describes the extent to which the images $R^n(W)$ cover
 the sphere. We recall $E(R)$ has at most two elements.
 
 \begin{theorem}[$W$ open and $W \cap J \neq \emptyset \implies \bigcup R^n(W)$ explodes to $\ExtC - E(R)$ and $R^n(W)$ converges to a set that contains $J$]
+    \label{thm:union_of_iterates_of_an_open_set_that_meet_J_explode_to_ExtC_minus_exceptional_points}
     Let $R$ be a rational map of degree at least two, and let $W$ be any
     non-empty open set which meets $J$. Then:
     \begin{enumerate}[label=(\roman*)]
@@ -274,6 +275,7 @@ the closure, of some countable set.
 \end{remark}
 
 \begin{theorem}[$J \subset \closure{\{\text{periodic points}\}}$]
+    \label{thm:J_contained_in_closure_of_periodic_points_set}
     Suppose that $\deg(R) \geq 2$. Then $J$ is contained in the closure of the
     set of periodic points of $R$.
 \end{theorem}
@@ -313,7 +315,7 @@ In fact, we can replace $[z]$ by the smaller set $\orbit^-(z)$ and still prove
     This shows that for any non-exceptional $z$ the backward orbit $\orbit^-(z)$
     is a countable set which accumulates at every point of $J$, and this is
     often used as the basis of a computer program to illustrate $J$. Roughly
-    speaking, one select a non-exceptional $z$ and then computes successive
+    speaking, one selects a non-exceptional $z$ and then computes successive
     inverse images of $z$ to plot the set $J$ where these accumulate. There are
     difficulties, however; for example, if $\deg(R) = d$, then the number of
     inverse images at the $n$-th stage is $d^n$ and this grows too rapidly for
@@ -406,19 +408,19 @@ Theorem~\ref{thm:F_and_J_are_preserved_under_iteration}.
 
     Our argument is based on the properties of the Weierstrass elliptic function
     \begin{equation*}
-        \wp(z) = \frac{1}{z^2} +  \sum{}^*\left[\frac{1}{(z + \omega)^2} - \frac{1}{\omega^2}\right]
+        \wp(z) = \frac{1}{z^2} +  {\sum}^*\left[\frac{1}{(z + \omega)^2} - \frac{1}{\omega^2}\right]
     \end{equation*}
-    where $\sum{}^*$ denotes summation over non-zero elements $\omega$ in
+    where ${\sum}^*$ denotes summation over non-zero elements $\omega$ in
     $\Lambda$ (see for example, \cite[272--276]{Ahlfors1979}, \cite{DuVal1973}
     or \cite{Lang1987}). We shall only give the main steps in the argument but,
-    for the convenience of some readers, we give and expanded version in the
+    for the convenience of some readers, we give an expanded version in the
     Appendix to this chapter. Now $\wp$ and its derivatives satisfy certain
     algebraic identities, and among these there is the \emph{addition formula}
     \begin{equation}
         \label{eq:wp_addition_formula}
         \wp(2z) = R(\wp(z)),
     \end{equation}
-    where $r$ is the rational function given by
+    where $R$ is the rational function given by
     \begin{equation}
         \label{eq:wp_addition_formula_function}
         R(z) = \frac{z^4 + g_2 z^2/2 + 2g_3z + (g_2/4)^2}{4z^3 - g_2z - g_3},
@@ -510,7 +512,7 @@ Theorem~\ref{thm:F_and_J_are_preserved_under_iteration}.
     The rational map $R$ in \eqref{eq:wp_addition_formula_function} is of degree
     four, so it has six critical points, say $c_1, \dots, c_6$. We shall show
     now that each $c_j$ is finite, and that each is mapped to $\infty$ (a fixed
-    point of $R$) by $R^2$: then each $c_j$ is pre-periodic and we have $J =
+    point of $R$) by $R^2$: then each $c_j$ is pre-periodic, and we have $J =
     \ExtC$. Again, we only sketch the main ideas and refer the reader to the
     Appendix for more details.
 

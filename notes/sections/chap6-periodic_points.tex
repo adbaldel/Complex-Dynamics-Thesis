@@ -1,5 +1,1493 @@
 \chapter{Periodic Points}
+\label{chp:periodic_points}
+
+This chapter is devoted to an extensive discussion of the fixed and periodic
+points of a rational map and their role in iteration theory.
 
 % --- SECTION ------------------------------------------------------------------
 % --- THE CLASSIFICATION OF PERIODIC POINTS ------------------------------------
 \section{The Classification of Periodic Points}
+\label{sec:the_classification_of_periodic_points}
+
+We have already used elementary facts about fixed points, and we turn now to a
+systematic and detailed discussion of the periodic points of a rational map $R$.
+A fixed point $\zeta$ of $R$ is classified according to the \emph{multiplier
+$m(R, \zeta)$} of $R$ at $\zeta$ (see \ref{sec:fixed_points}) and as this is
+conjugation invariant, we may assume that $\zeta$ is in $\C$ and so $m(R, \zeta)
+= R'(\zeta)$. It is important to realize that as the classification of fixed
+points is a purely local matter, it applies to any analytic function and, in
+particular, to the local inverse (when it exists) of a rational map.
+
+\begin{definition}[Types of fixed points based on the multiplier]
+    Suppose that $\zeta$ in $\C$ is a fixed point of an analytic function $f$.
+    Then $\zeta$ is:
+    \begin{enumerate}[label=(\alph*)]
+        \item \label{itm:supper_attracting_fixed_point} \emph{super-attracting}
+        if $f'(\zeta) = 0$;
+        \item \label{itm:attracting_fixed_point} \emph{attracting} if $0 <
+        |f'(\zeta)| < 1$;
+        \item \label{itm:repelling_fixed_point} \emph{repelling} if $|f'(\zeta)|
+        > 1$;
+        \item \label{itm:rationally_indifferent_fixed_point} \emph{rationally
+        indifferent} if $f'(\zeta)$ is a root of unity;
+        \item \label{itm:irrationally_indifferent_fixed_point}
+        \emph{irrationally indifferent} if $|f'(\zeta)| = 1$, but $|f'(\zeta)|$
+        is not a root of unity.
+    \end{enumerate}
+\end{definition}
+
+Some explanatory remarks may be helpful. First, the distinction between
+\ref{itm:supper_attracting_fixed_point} and \ref{itm:attracting_fixed_point} is
+that a super-attracting fixed point is a critical point of $f$, whereas an
+attracting fixed point is not; thus $f$ has a local inverse near $\zeta$ if
+$\zeta$ is attracting but not if it is super-attracting. The reader may recall
+that in section \ref{sec:introduction} no such distinction was made and, of
+course, there are still occasions when we wish to embrace both cases; we do this
+by saying that $\zeta$ is \emph{(super)attracting}. Similarly, it is convenient
+to combine cases \ref{itm:rationally_indifferent_fixed_point} and
+\ref{itm:irrationally_indifferent_fixed_point}, and such a fixed point is said
+to be \emph{indifferent}. For an indifferent fixed point $\zeta$, the best
+linear approximation of $f$ near $\zeta$ is a rotation about $\zeta$ and the
+distinction between \ref{itm:rationally_indifferent_fixed_point} and
+\ref{itm:irrationally_indifferent_fixed_point} is simply whether this rotation
+has finite or infinite order.
+
+The notion of periodic points, and the extension of the classification to these,
+is straightforward. As we already defined in
+Definition~\ref{def:periodic_point}, a point $\zeta$ is a \emph{periodic point}
+of a rational function $R$ if it is a fixed point of some iterate $R^m$. For
+such a point $\zeta$ there is a positive integer $n$ for which
+\begin{equation}
+    \label{eq:cycle_of_a_periodic_point}
+    \zeta, R(\zeta), R^2(\zeta), \dots, R^{n-1}(\zeta)
+\end{equation}
+are distinct but $R^n(\zeta) = \zeta$.
+
+\begin{definition}[Cycle of a periodic point]
+    The finite set of points in \eqref{eq:cycle_of_a_periodic_point} is the
+    \emph{cycle of $\zeta$}.
+\end{definition}
+
+\begin{definition}[Period of a periodic point]
+    The integer $n$ is the \emph{period} of $\zeta$.
+\end{definition}
+
+Of course, the fixed points of $R$ are points of period one: more generally,
+$\zeta$ has period $n$ if and only if it is a fixed point of $R^n$ but not of
+any lower-order iterate.
+
+\begin{remark}[$(R^n)'(\zeta_m) = \prod_{k=0}^{n-1} R'(\zeta_k)$]
+    A periodic point $\zeta$ of period $n$ is classified as a fixed point of
+    $R^n$, but we can say a little more than this. By conjugation, we may assume
+    that the cycle does not contain $\infty$, and we write
+    \begin{equation*}
+        \zeta_m = R^m(\zeta), \quad m = 0, 1, 2, \dots,
+    \end{equation*}
+    so $\zeta_{m+n} = \zeta_m$. By $n$ applications of the Chain Rule, we now
+    have
+    \begin{align*}
+        (R^n)'(\zeta_m) &= \prod_{k=0}^{n-1} R'(R^k(\zeta_m))
+                        &= \prod_{k=0}^{n-1} R'(\zeta_k),
+    \end{align*}
+    the product being a re-arrangement of the first. This argument shows that
+    the derivative $(R^n)'$ has the same value at each point $\zeta_j$ of the
+    cycle.
+\end{remark}
+
+As a consequence of this, we can extend our classification to cycles and speak
+naturally of the \emph{multiplier of the cycle}, \emph{attracting cycles} and so
+on.
+
+\begin{definition}[Multiplier of $R$ on a cycle]
+    We define the multiplier of a cycle as the multiplier of $R$ on any point of
+    the cycle (all of them have the same multiplier).
+\end{definition}
+
+\begin{definition}[Types of cycles based on the multiplier]
+    We say a cycle is \emph{super-attracting}, \emph{attracting},
+    \emph{repelling}, \emph{rationally indifferent} or \emph{irrationally
+    indifferent} depending on the type of its points (all of them are of the
+    same type).
+\end{definition}
+
+As we already defined in Definition~\ref{def:periodic_point}, a point $\zeta$ is
+\emph{pre-periodic} under $R$ if it is not periodic but if some image, say
+$R^m(\zeta)$, is: in this case there exist positive integers $m$ and $n$ with
+\begin{equation*}
+    \zeta, R(\zeta), R^2(\zeta), \dots, R^m(\zeta), \dots, R^{m+n-1}(\zeta)
+\end{equation*}
+distinct but with $R^{m+n}(\zeta) = R^m(\zeta)$. Most periodic points have
+associated pre-periodic points.
+
+\begin{example}
+    For example, the origin is a pre-periodic point of the polynomial $z^2 - 2$.
+\end{example}
+
+In the remainder of this chapter, we shall discuss how the attracting, repelling
+and indifferent cycles relate to the Fatou and Julia sets.
+
+\begin{remark}[(Super)Attracting points are in $F$ and repelling points are in $J$]
+    Briefly, the (super)attracting cycles are in the Fatou set, while the
+    repelling cycles are in the Julia set.
+\end{remark}
+
+The corresponding results for indifferent cycles are more delicate and require
+much more work.
+
+% --- SECTION ------------------------------------------------------------------
+% --- THE EXITENCE OF PERIODIC POINTS ------------------------------------------
+\section{The Existence of Periodic Points}
+\label{sec:the_existence_of_periodic_points}
+
+In an attempt to find the periodic points of period $n$ of a rational map $R$,
+we naturally consider the solutions of
+\begin{equation}
+    \label{eq:periodic_points_equation}
+    R^n(z) = z.
+\end{equation}
+Any solution of this equation will be periodic; however, it will not necessarily
+be of period $n$ for it may already be fixed by some earlier iterate $R^m$,
+where $m < n$.
+
+\begin{example}
+    This occurs, for example, when
+    \begin{equation}
+        \label{eq:z_squared_minus_z}
+        R(z) = z^2 - z:
+    \end{equation}
+    in this case every solution of $R^2(z) = z$ is also a solution of $R(z) = z$
+    and so for this $R$, \emph{there are no periodic points of period $2$}. The
+    Julia set of $z^2 - z$ is shown in
+    Figure~\ref{fig:z_squared_minus_z_julia_set}.
+\end{example}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.6\textwidth]{z_squared_minus_z_julia_set-thin.pdf}
+    \caption{Julia set of $z \mapsto z^2 - z$.}
+    \label{fig:z_squared_minus_z_julia_set}
+\end{figure}
+
+This example raises a question of existence, namely: How often are periodic
+points absent? Could there exist, for example, a rational function with only
+finitely many periodic points? The answer is no. In fact, in the vast majority
+of cases, periodic points of a given period do exist and for polynomials, the
+situation is particularly striking. We have
+
+\begin{theorem}[Existence of periodic points for polynomials]
+    \label{thm:existence_of_periodic_points_for_polynomials_maps}
+    Let $P$ be a polynomial of degree at least two and suppose that $P$ has no
+    periodic points of period $n$. Then $n = 2$ and $P$ is conjugate to $z
+    \mapsto z^2 - z$.
+\end{theorem}
+
+In short, the example given in \eqref{eq:z_squared_minus_z} was the only example
+of this type (up to conjugacy) that we could possibly have given. There is also
+a corresponding (though slightly weaker) result for rational functions, namely
+
+\begin{theorem}[Existence of periodic points for rational maps]
+    \label{thm:existence_of_periodic_points_for_rational_maps}
+    Let $R$ be a rational function of degree $d$, where $d \geq 2$, and suppose
+    that $R$ has no periodic points of period $n$. Then $(d, n)$ is one of the
+    pairs
+    \begin{equation*}
+        (2, 2), (2, 3), (3, 2), (4, 2);
+    \end{equation*}
+    moreover, each such pair does arise from some $R$ in this way.
+\end{theorem}
+
+This shows for example, that all rational functions have periodic points of
+period $4, 5, 6, \dots$, and that every rational function of degree five or more
+has periodic points of all orders. These results are due to I.N. Baker
+\cite{Baker1964}, and we shall prove them in
+section~\ref{sec:the_proof_of_the_existence_of_periodic_points}. Roughly
+speaking, if a rational map fails to have any periodic points of period $n$,
+then every solution of $R^n(z) = z$ must also be a solution of some equation
+$R^m(z) = z$ for some $m$ which divides, and is less than, $n$. This places a
+strong algebraic constraint on the coefficients of $R$ which, according to the
+two results above, is rarely satisfied; nevertheless, the known proofs of these
+results are function-theoretic.
+
+The reader should note that not only is
+Theorem~\ref{thm:existence_of_periodic_points_for_rational_maps} weaker than
+Theorem~\ref{thm:existence_of_periodic_points_for_polynomials_maps} in that
+several exceptional pairs $(d, n)$ arise, but is also weaker in that an
+exceptional pair $(d, n)$ does not necessarily determine a unique conjugacy
+class of exceptional maps $R$.
+
+\begin{remark}[Each rational map has periodic points with prime period $p$ for all but at most $d + 1$ prime numbers $p$]
+    Although we shall prove
+    Theorem~\ref{thm:existence_of_periodic_points_for_polynomials_maps} and
+    Theorem~\ref{thm:existence_of_periodic_points_for_rational_maps} later, we
+    shall give a simple argument now which guarantees the existence of at least
+    an infinite set of periodic points for each rational map (a fact that we
+    shall need before we prove the two theorems). This also follows from
+    Theorem~\ref{thm:J_contained_in_closure_of_periodic_points_set}, but the
+    following argument is simple and direct. We suppose that $R$ is a rational
+    function of degree $d$, where $d \geq 2$, and that $R$ has no points of
+    period $p$, where $p$ is a prime. Then every solution $\zeta$, say, of
+    $R^p(z) = z$ is of some period $k$, where $k$ is less than, and divides $p$:
+    thus $k$ = 1, and $\zeta$ is a fixed point of $R$ itself. As $R$ and $R^p$
+    have divided $d + 1$ and $d^p + 1$ fixed points respectively, we deduce that
+    there must be some fixed point $\zeta$ of $R$ such that $R^p$ has more fixed
+    points at $\zeta$ than $R$ does, and the only way that this can arise is
+    that $R'(\zeta) \neq 1$ but $R'(\zeta)^p = 1$ (see
+    Corollary~\ref{cor:fn_has_at_least_as_many_fixed_points_as_f}). Finally,
+    there are at most $d + 1$ fixed points $\zeta$ fixed by $R$ and for each of
+    these, $R'(\zeta)^q = 1$ for at most one prime $q$. Thus, \emph{each
+    rational map has periodic points with prime period $p$ for all but at most
+    $d + 1$ prime numbers $p$}.
+\end{remark}
+
+If we consider this argument when $R$ is a quadratic polynomial with no periodic
+points of period two, we find that up to conjugacy $R(0) = 0$ and $R'(0) = -1$.
+It follows that $R(z) = az^2 - z$, and just by changing the scale, this is
+easily seen to be conjugate to the polynomial $z^2 - z$ in
+\eqref{eq:z_squared_minus_z}.
+
+% --- SECTION ------------------------------------------------------------------
+% --- (SUPER)ATTRACTING CYCLES -------------------------------------------------
+\section{(Super)Attracting Cycles}
+\label{sec:attracting_cycles}
+
+Suppose that $\zeta$ is a (super)attracting fixed point of a rational map $R$.
+Then $|R'(\zeta)| < 1$ and there is a number $\alpha$, $|R'(\zeta)| < \alpha <
+1$, and a disc $D$ centered at $\zeta$ such that in $D$,
+\begin{equation*}
+    |R(z) - \zeta| = |R(z) - R(\zeta)| < \alpha |z - \zeta|.
+\end{equation*}
+This shows that each $R^n$ maps $D$ into itself, so $D$ lies in the Fatou set
+$F(R)$ and $|R^n| \to \zeta$ uniformly on $D$. By Vitali's Theorem
+(Theorem~\ref{thm:Vitalis_theorem}), $R^n \to \zeta$ locally uniformly on the
+component $F(R)$ which contains $\zeta$, and as $F(R^q) = F(R)$ for any iterate
+$R^q$, we easily obtain
+
+\begin{theorem}[Local basins of a (super)attracting cycle]
+    \label{thm:local_basins_of_a_superattracting_cycle}
+    Let $\{\zeta_1, \dots, \zeta_q\}$ be a (super)attracting cycle of $R$. Then
+    each $\zeta_j$ lies in a component, say $F_j$, of the Fatou set $F(R)$, and as
+    $n \to \infty$, $(R^q)^n \to \zeta_j$ locally uniformly on $F_j$.
+\end{theorem}
+
+Thus, each point of the cycle must lie in a distinct Fatou component, as every
+point in $F_j$ converges to $\zeta_j$. In view of this, we introduce some
+terminology.
+
+\begin{definition}[Local or immediate basin of a (super)attracting fixed point]
+    Given a (super)attracting fixed point $\zeta$ of $R$, the component of
+    $F(R)$ which contains $\zeta$ is called the \emph{local}, or
+    \emph{immediate}, \emph{basin} of $\zeta$.
+\end{definition}
+
+It follows that $R^n \to \zeta$ precisely when $z$ lies in some inverse image
+$R^{-m}(B)$, $m \geq 0$, of the local basin $B$.
+
+\begin{definition}[Basin or stable set of a (super)attracting fixed point]
+    We call the set of such $z$ the \emph{basin} (or \emph{stable set}) for
+    $\zeta$. 
+\end{definition}
+
+More generally, for cycles of any period,
+
+\begin{definition}[Local basin of a (super)attracting cycle]
+    The \emph{local basin of a (super)attracting cycle $\{\zeta_1, \dots,
+    \zeta_q\}$} is the union of the (necessarily distinct) components $F_1,
+    \dots, F_q$ of $F(R)$ (as in
+    Theorem~\ref{thm:local_basins_of_a_superattracting_cycle})
+\end{definition}
+
+\begin{definition}[Basin of a (super)attracting cycle]
+    And the \emph{basin} of the cycle is the union of the local basins and all
+    its inverse images.
+\end{definition}
+
+Although a rational map $R$ of degree $d$, $d \geq 2$, has infinitely many
+cycles, we shall see later that it can have \emph{only finitely many
+(super)attracting} cycles (in fact, at most $2d - 2$). Thus, for example, a
+quadratic polynomial can have at most one (super)attracting cycle in $\C$ (the
+reader may recall that in section~\ref{sec:iteration_of_z_squared_plus_c} we
+showed that a quadratic polynomial can have at most one attracting fixed point
+in $\C$).
+
+Our next task is to analyze the behavior of an analytic function $f$ in a
+neighborhood of an attracting fixed point $\zeta$, and this analysis will enable
+us to understand completely the dynamics of $f$ near $\zeta$. We suppose, then,
+that $f$ is analytic in some neighborhood $N$ of an attracting fixed point
+$\zeta$, and we may assume that $f(N) \subset N$. Now let $g$ be any function
+which is analytic and univalent on $N$ with $g(\zeta) = 0$, and let $F = g f
+g^{-1}$. Then $F$ is defined and analytic on the neighborhood $g(N)$ of the
+origin (see Figure~\ref{fig:figure_6_3_1}) and, as $F'(0) = f'(\zeta)$, we see
+that $0$ is an attracting fixed point of $F$.
+
+\begin{definition}[Local analytic conjugate]
+    We call $F$ a \emph{local (analytic) conjugate} of $f$.
+\end{definition}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.6\textwidth]{beardons_book/figure_6_3_1.png}
+    \caption{}
+    \label{fig:figure_6_3_1}
+\end{figure}
+
+And we ask whether, by choosing $g$ suitably, we can arrange for $F$ to be
+considerably simpler (say, in terms of Taylor coefficients) than $f$ is. The
+benefits that arise depend on how simple we can choose $F$ to be but, in any
+case, the iterates of $f$ (near $\zeta$) are reflected in the behavior of the
+iterates of $F$ for $F^n = g f^n g^{-1}$.
+
+We shall assume that $\zeta = 0$: this simplifies the formulae, and the
+corresponding results for a general fixed point $\zeta$ can easily be obtained
+afterward by conjugation. The function $f$ has a Taylor expansion at $0$, say
+\begin{equation*}
+    f(z) = az + b z^q + \dots , \quad 0 < |a| < 1,
+\end{equation*}
+and because $F'(0) = f'(\zeta)$, we must have
+\begin{equation*}
+    F(z) = az + b_2 z^2 + b_3 z^3 + \dots .
+\end{equation*}
+We shall now show that by choosing a suitable $g$, we can achieve the greatest
+possible simplification, namely that each $b_j$ is zero and $F$ is the map $z
+\mapsto az$.
+
+\begin{theorem}[Koenigs' local linearization theorem]
+    \label{thm:koenigs_local_linearization}
+    Suppose that $f$ is analytic in a neighborhood of the origin, that $f(0) =
+    0$, and that $f'(0) = a$ where $0 < |a| < 1$. Then there exists a unique
+    function $g$ which is analytic in some disc $\{|z| < r\}$ with $g(0) = 0$,
+    $g'(0) = 1$, and which satisfies $g f g^{-1} = az$ for all $z$ sufficiently
+    near the origin.
+\end{theorem}
+\begin{proof}
+    See \cite[106]{Beardon1991}.
+\end{proof}
+
+In fact, this result implies more than we have stated so far.
+
+\begin{remark}[$B = W \cup W_1 \cup W_2 \cup \cdots$]
+    We consider the case when $f$ is a rational function, which we now denote by
+    $R$, and we let $B$ be the local basin of an attracting fixed point $\zeta$
+    of $R$. According to Theorem~\ref{thm:koenigs_local_linearization}, there is
+    a disc $W$ centered at $\zeta$ such that $R(W) \subset W$, and a power
+    series $g$ analytic in $W$ such that $g R(z) = a g(z)$ there. Now let $W_n$
+    be the component of $R^{-n}(W)$ that contains $\zeta$: we claim that
+    \begin{equation}
+        \label{eq:local_basin_formula}
+        B = W \cup W_1 \cup W_2 \cup \cdots .
+    \end{equation}
+\end{remark}
+\begin{proof}
+    First, as $W_n$ is a connected subset of $F(R)$, it must lie within $B$.
+    Next, given any $z$ in $B$, join $z$ to $\zeta$ by a curve $\gamma$ in $B$.
+    Then by Theorem~\ref{thm:local_basins_of_a_superattracting_cycle}, there is
+    some $n$ such that $R^n(\gamma) \subset W$, and hence $\gamma$, being
+    connected, lies in $W_n$. This shows that $z$ is in $W_n$ and thus proves
+    \eqref{eq:local_basin_formula}.
+\end{proof}
+
+\begin{remark}[Analytic continuation of $g$ to local basin]
+    Now we define $g_n$ on $W_n$ by the formula
+    \begin{equation*}
+        g_n(z) = a^{-n} g(R^n z).
+    \end{equation*}
+    Clearly, $g_n$ is analytic on $W_n$ and for all $z$ sufficiently close to
+    the origin, $g_n(z) = g(z)$. We deduce that the sequence $g_n$ provides an
+    analytic continuation of $g$ to the entire local basin $B$, and by analytic
+    continuation, $g R(z) = a g(z)$ throughout $B$.
+\end{remark}
+
+Finally, we observe that
+\begin{equation*}
+    g(W_n) = a^{-n} g(R^n(W_n)),
+\end{equation*}
+and as $R^n$ maps each component of $R^{-n}(W)$ onto $W$, we have
+\begin{equation*}
+    g(W_n) = a^{-n} g(W).
+\end{equation*}
+Now $g(W)$ is an open neighborhood of the origin, and as $|a| < 1$, we easily
+deduce that $g(B) = \C$, and we have proved
+
+\begin{theorem}[Koenigs' global linearization theorem]
+    \label{thm:koenigs_global_linearization}
+    Let $\zeta$ be an attracting fixed point of the rational map $R$ with
+    $R'(\zeta) = a$, and let $B$ be the local basin of $\zeta$. Then there
+    exists a unique function $g$ that is analytic in $B$ with $g(\zeta) = 0$,
+    $g'(\zeta) = 1$, and $g(B) = \C$, and such that in $B$, $g R(z) = a g(z)$.
+\end{theorem}
+\begin{proof}
+    See \cite[108--109]{Beardon1991}
+\end{proof}
+
+\begin{remark}[$g^{-1}$ does not exist throughout $B$]
+    Unlike the local conjugacy relation $g R g^{-1}(z) = az$, the functional
+    equation $g R(z) = a g(z)$ does not require the existence of $g^{-1}$
+    (indeed, by Liouville's Theorem, $g^{-1}$ cannot exist throughout $B$). The
+    analysis of these equations and their solutions is attributed to Poincaré,
+    Schröder and Koenigs.
+\end{remark}
+
+% --- SECTION ------------------------------------------------------------------
+% --- REPELLING CYCLES ---------------------------------------------------------
+\section{Repelling Cycles}
+\label{sec:repelling_cycles}
+
+We begin with
+
+\begin{theorem}[Repelling cycles are in $J$]
+    \label{thm:repelling_cycles_are_in_J}
+    For any rational map $R$, every repelling cycle of $R$ lies in $J(R)$.
+\end{theorem}
+\begin{proof}
+    See \cite[109--110]{Beardon1991}.
+\end{proof}
+
+We can also interpret Theorem~\ref{thm:koenigs_global_linearization} in the
+context of repelling fixed points. Suppose that $\zeta$ is a repelling fixed
+point of the rational map $R$, which implies that $R(\zeta) = \zeta$ and
+$|R'(\zeta)| > 1$. Because the derivative $R'(\zeta)$ is non-zero, the Inverse
+Function Theorem (Theorem~\ref{thm:inverse_function_theorem_in_C}) guarantees
+that a local branch of the inverse map, $R^{-1}$, exists in a small neighborhood
+of $\zeta$. This inverse branch also fixes $\zeta$ (since $R^{-1}(\zeta) =
+\zeta$), and its derivative at $\zeta$ is given by the reciprocal of the
+original derivative:
+\begin{equation*}
+    (R^{-1})'(\zeta) = \frac{1}{R'(\zeta)}.
+\end{equation*}
+Because $|R'(\zeta)| > 1$, it follows that $|(R^{-1})'(\zeta)| < 1$.
+Consequently, $\zeta$ acts as an \emph{attracting} fixed point for this local
+inverse branch $R^{-1}$. 
+
+We can now directly apply Theorem~\ref{thm:koenigs_local_linearization} to this
+attracting branch $R^{-1}$. This provides a local analytic change of coordinates
+$g$ such that $R^{-1}$ is conjugate to a strict linear contraction near the
+origin:
+\begin{equation*}
+    g R^{-1} g^{-1}(z) = \frac{1}{R'(\zeta)} z.
+\end{equation*}
+By taking the algebraic inverse of both sides of this coordinate equation, we
+can undo the effect of $R^{-1}$ and return to our original map. This
+demonstrates that $R$ itself is locally conjugate to a linear expansion, namely
+\begin{equation*}
+    g R g^{-1}(z) = R'(\zeta) z,
+\end{equation*}
+valid in a sufficiently small neighborhood of the repelling fixed point $\zeta$.
+
+% --- SECTION ------------------------------------------------------------------
+% --- RATIONALLY INDIFFERENT CYCLES --------------------------------------------
+\section{Rationally Indifferent Cycles}
+\label{sec:rationally_indifferent_cycles}
+
+Although it is not easy to decide whether a given indifferent cycle lies in the
+Fatou or the Julia set, the question is easily settled for rationally
+indifferent cycles.
+
+\begin{theorem}[Rationally indifferent cycles are in $J$]
+    If $\deg(R) \geq 2$ then every rationally indifferent cycle of $R$ lies in
+    $J(R)$.
+\end{theorem}
+\begin{proof}
+    See \cite[111]{Beardon1991}.
+\end{proof}
+
+The remainder of this section is devoted to a detailed description of the
+dynamics of the iterates $R^n$ near rationally indifferent cycles. This is a
+long and difficult task, and in order to obtain a clear understanding of the
+global structure of the arguments, we have provided a succession of results,
+each (generally speaking) being an improvement on the preceding results. One of
+the reasons why this description is much harder to obtain than, say, the
+description of the dynamics near an attracting fixed point, is that a rational
+map $R$ is \emph{not} locally conjugate to its (linear) derivative near a
+rationally indifferent point $\zeta$. Because the derivative is a rotation of
+finite order about $\zeta$ ($|R'(\zeta)| = 1 \implies R'(\zeta) = \exp(i
+\theta)$ because $\zeta$ is indifferent, and it is a root of the unity), and $R$
+can have finite order only if $\deg(R) = 1$ (because if $R$ has finite order,
+there exists a natural number $k$ such that $R^k = \Id$, thus, $\deg(R^k) =
+\deg(R)^k = \deg(\Id) = 1$). This observation means that we have to find another
+way to describe the dynamics of the $R^n$ near such a cycle, and the answer lies
+in showing that $R$ is conjugate to a translation not, of course, on the whole
+neighborhood of $\zeta$, but on certain open sets which have $\zeta$ on their
+boundary. We shall include examples to illustrate the ideas as we proceed, and
+we begin with a simple lemma which isolates the most basic idea in this section.
+
+\begin{lemma}[Alternating attracting and repelling sectors for a rationally indifferent point]
+    \label{lem:alternating_attracting_and_repelling_sectors_for_a_rationally_indifferent_point}
+    Suppose that $f$ is analytic and satisfies
+    \begin{equation*}
+        f(z) = z - z^{p+1} + O(z^{p+2})
+    \end{equation*}
+    in some neighborhood $N$ of the origin. Let $\omega_1, \dots, \omega_p$ be
+    the $p$-th roots of unity and let $\eta_1, \dots, \eta_n$ be the $p$-th
+    roots of $-1$. Then for sufficiently small positive numbers $r_0$ and
+    $\theta_0$:
+    \begin{enumerate}[label=(\roman*)]
+        \item $|f(z)| < |z|$ on each sector
+        \begin{equation*}
+            S_j = \left\{z \colon 0 < \left|\frac{z}{\omega_j}\right| < r_0, \left|\arg\left(\frac{z}{\omega_j}\right)\right| < \theta_0\right\};
+        \end{equation*}
+        and
+        \item $|f(z)| > |z|$ on each sector
+        \begin{equation*}
+            \Sigma_j = \left\{z \colon 0 < \left|\frac{z}{\eta_j}\right| < r_0, \left|\arg\left(\frac{z}{\eta_j}\right)\right| < \theta_0\right\}.
+        \end{equation*}
+    \end{enumerate}
+\end{lemma}
+\begin{proof}
+    See \cite[112]{Beardon1991}.
+\end{proof}
+
+The numbers $\omega_j$ and $\eta_j$ in
+Lemma~\ref{lem:alternating_attracting_and_repelling_sectors_for_a_rationally_indifferent_point}
+are the $2p$-th roots of unity, and they are alternately and equally spaced
+around the unit circle (see
+Figure~\ref{fig:alternating_attracting_and_repelling_sectors_for_a_rationally_indifferent_point}).
+If
+\begin{equation*}
+    f(z) = z + az^{p+1} + O(z^{p+2}), \quad a \neq 0,
+\end{equation*}
+a similar result holds with the directions $\omega_j$ and $\eta_j$ replaced by
+the directions of the solutions $az^p = -1$ and $az^p = 1$ respectively. Also
+with this $f$, $f^{-1}$ exists near the origin and
+\begin{equation*}
+    f^{-1}(z) = z - az^{p+1} + O(z^{p+2})
+\end{equation*}
+so (with $r_0$ and $\theta_0$ small enough) $|f^{-1}(z)| > |z|$ on each $S_j$
+and $|f^{-1}(z)| < |z|$ on each $\Sigma_j$.
+
+\begin{figure}[htbp]
+    \centering
+    % Top Row
+    \begin{subfigure}[b]{0.38\textwidth}
+        \centering
+        \resizebox{\textwidth}{!}{\input{../figures/tikz/alternating_attracting_and_repelling_sectors_for_a_rationally_indifferent_point-order_3}}
+        \caption{$p = 3$.}
+    \end{subfigure}
+    % \hfill % Adds horizontal space between the two images
+    \begin{subfigure}[b]{0.38\textwidth}
+        \centering
+        \resizebox{\textwidth}{!}{\input{../figures/tikz/alternating_attracting_and_repelling_sectors_for_a_rationally_indifferent_point-order_4}}
+        \caption{$p = 4$.}
+    \end{subfigure}
+    \caption{Alternating attracting and repelling sectors for a rationally
+    indifferent point}
+    \label{fig:alternating_attracting_and_repelling_sectors_for_a_rationally_indifferent_point}
+\end{figure}
+
+Next, we consider a simple example and here our discussion contains the ideas
+that we shall use to develop the general theory.
+
+\begin{example}
+    The polynomial
+    \begin{equation*}
+        P(z) = z - z^2
+    \end{equation*}
+    has a rationally indifferent fixed point at the origin. If $0 < x < 1$, then
+    $0 < P(x) < x$, and so $P^n(x) \to 0$ (for $P^n(x)$ can only converge to a
+    fixed point of $P$): if $x < 0$, then $P(x) < x < 0$, and so $P^n(x) \to
+    \infty$. These observations are consistent with
+    Lemma~\ref{lem:alternating_attracting_and_repelling_sectors_for_a_rationally_indifferent_point},
+    and we shall now investigate the behavior of $P^n(z)$ for all $z$ near the
+    origin.
+
+    Let $\sigma(z) = 1/z$ and replace $P$ by its conjugate $Q = \sigma P
+    \sigma^{-1}$: thus
+    \begin{equation*}
+        Q(z) = z + 1 + \frac{1}{z-1}.
+    \end{equation*}
+    Now note that if $\real{z} > 1$ then $\real{(z-1)^{-1}} > 0$ so
+    \begin{equation*}
+        \real{Q(z)} \geq \real{z} + 1.
+    \end{equation*}
+    In particular, if $t > 1$, then $Q$ maps $\{x + iy \mid x > t\}$ into $\{x +
+    iy \mid x > t + 1\}$, and rewriting this in terms of $P$, we see that $P^n
+    \to 0$ uniformly in each sufficiently small disc $\{z \colon |z - r| < r\}$.
+    In fact, $P$ acts as illustrated in Figure~\ref{fig:figure_6_5_1} (which the
+    reader should compare with
+    Figure~\ref{fig:action_of_z_plus_one_over_z_near_infinity}).
+\end{example}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.4\textwidth]{beardons_book/figure_6_5_1.png}
+    \caption{}
+    \label{fig:figure_6_5_1}
+\end{figure}
+
+\begin{example*}[Continuation]
+    Because of the particular simple form of $Q$, we can say more than this.
+    Suppose that $\Pi$ is any region that is disjoint from $\{|z| \leq 3\}$, and
+    which is mapped into itself by $Q$. Then on $\Pi$,
+    \begin{equation*}
+        \real{Q(z)} \geq \real{z} + 1 - \frac{1}{|z-1|} \geq \real{z} + \frac{1}{2},
+    \end{equation*}
+    so
+    \begin{equation*}
+        \real{Q^n(z)} \geq \real{z} + n/2
+    \end{equation*}
+    and $Q^n \to \infty$ on $\Pi$ (\enquote{drifting} to the right). One
+    possibility for this $\Pi$ is the half-plane $\{\real{z} > 3\}$, but it is
+    easy to find a much larger region than this. Now $Q(z)$ lies in the shaded
+    disc illustrated in Figure~\ref{fig:figure_6_5_2}, and if $z \in \Pi$, the
+    radius $r(z)$ of this disc is at most $1/2$. Furthermore, $r(z) \to 0$ as $z
+    \to \infty$ and this suggests that we might be able to take $\Pi$ to be
+    bounded by some parabola. We shall now show that we can.
+\end{example*}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.6\textwidth]{beardons_book/figure_6_5_2.png}
+    \caption{}
+    \label{fig:figure_6_5_2}
+\end{figure}
+
+\begin{example*}[Continuation]  
+    Let
+    \begin{equation*}
+        \Pi = \{x + iy \mid y^2 > 12(3 - x)\}.
+    \end{equation*}
+    The boundary of $\Pi$ is a parabola which cuts the $x$-axis when $x = 3$,
+    and it is easy to see that $\Pi$ is disjoint from $\{|z| \leq 3\}$. Writing
+    \begin{equation*}
+        z = x + iy, \quad Q(z) = X + iY, \quad \frac{1}{z-1} = a + ib
+    \end{equation*}
+    the expression of $Q(z)$ yields
+    \begin{equation*}
+        X = x + 1 + a, \quad Y = y + b
+    \end{equation*}
+    and so for $z$ in $\Pi$,
+    \begin{align*}
+        Y^2 - 12(3 - X) &= (y + b)^2 - 12(3 - [x + 1 + a]) \\
+                        &= [y^2 - 12(3 - x)] + b^2 + 2by + 12(1 + a) \\
+                        &\geq 12 - 2|by| - 12|a|.
+    \end{align*}
+    However, as $|z| \geq 3$, we have
+    \begin{equation*}
+        |a| \leq |a + ib| \leq \frac{1}{|z| - 1} < \frac{1}{2}
+    \end{equation*}
+    and
+    \begin{equation*}
+        |yb| \leq \frac{|z|}{|z| - 1} < \frac{1}{3}.
+    \end{equation*}
+    It follows that if $z$ is in $\Pi$, then $Y^2 > 12(3 - X)$ and hence so is
+    $Q(z)$: we deduced that $Q$ maps $\Pi$ into itself and so $P^n \to 0$ on
+    $\sigma(\Pi)$. The Julia set of $P$ is illustrated in
+    Figure~\ref{fig:figure_6_5_3} where the black region is $\sigma(\Pi)$.
+\end{example*}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.3\textwidth]{beardons_book/figure_6_5_3.png}
+    \caption{Julia set of $z \mapsto z - z^2$.}
+    \label{fig:figure_6_5_3}
+\end{figure}
+
+In order to analyze the situation for a general rationally indifferent fixed
+point, we need the notion of petals (which, roughly speaking, play the role of
+the region $\sigma(\Pi)$ in the example above).
+
+\begin{definition}[Petal]
+    For each positive $t$, each positive integer $p$ and each $k$ in $\{0, 1,
+    \dots, p-1\}$, we define the sets
+    \begin{equation*}
+        \Pi_k(t) = \left\{r e^{i\theta} \middle| r^p < t(1 + \cos(p\theta)); \left|\frac{2k\pi}{p - \theta}\right| < \frac{\pi}{p}\right\}.
+    \end{equation*}
+    These sets are called \emph{petals} (at the origin).
+\end{definition}
+
+We can see an illustration of these petals when $p = 6$ in
+Figure~\ref{fig:figure_6_5_4}. Note that the petals are pairwise disjoint, and
+that each subtends an angle $2\pi/p$ at the origin (so the total angle subtended
+at the origin by all the petals is $2\pi$).
+
+\begin{definition}[Axis of a petal]
+    We call the line of symmetry of $\Pi_k(t)$ (the ray $\theta = 2k\pi/p$) the
+    \emph{axis} of $\Pi_k$.
+\end{definition}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.6\textwidth]{beardons_book/figure_6_5_4.png}
+    \caption{Julia set of $z \mapsto z - z^2$.}
+    \label{fig:figure_6_5_4}
+\end{figure}
+
+We come now to the first major result of this section and in this, we describe
+the dynamics of the iterates $R^n$ in the petals at a fixed point $\zeta$ where
+$R'(\zeta) = 1$. By conjugation, we may assume that $\zeta = 0$ and, in
+addition, we shall assume that $R$ has a Taylor expansion there of the form
+\begin{equation*}
+    R(z) = z(1 - z^p + bz^{2p} + cz^{2p+1} + \cdots).
+\end{equation*}
+Of course, we can always ensure that $z^{p+1}$ has coefficient $-1$ simply by
+conjugating $R$ with a map of the form $z \mapsto \alpha z$: thus \emph{the
+significant part of this assumption is that there are no terms between $z^{p+1}$
+and $z^{2p+1}$ in the Taylor series for $R$}. We emphasize that the role of this
+assumption is that it enables us to give an \emph{explicit description of the
+petals}; without it, we can only establish the existence of petal shaped regions
+which are conformal images of $\Pi_k(t)$ described above.
+
+Despite the fact that our interest centers on rational functions, it is
+desirable to prove the result for general analytic functions, for we can then
+apply it to branches $R^{-1}$. We now prove
+
+\begin{theorem}[The Petal Theorem]
+    \label{thm:the_petal_theorem}
+    Suppose that the analytic map $f$ has a Taylor expansion
+    \begin{equation}
+        \label{eq:taylor_expansion_for_the_petal_theorem}
+        f(z) = z - z^{p+1} + O(z^{2p+1})
+    \end{equation}
+    at the origin. Then for all sufficiently small $t$:
+    \begin{enumerate}[label=(\roman*)]
+        \item \label{itm:petal_forward_invariance} $f$ maps each petal
+        $\Pi_k(t)$ into itself;
+        \item \label{itm:iterates_converge_to_zero_uniformly} $f^n(z) \to 0$
+        uniformly on each petal as $n \to \infty$;
+        \item \label{itm:iterates_convergence_to_zero_along_petal_axis}
+        $\arg(f^n(z)) \to 2k\pi/p$ locally uniformly on $\Pi_k$ as $n \to
+        \infty$;
+        \item \label{itm:attracting_behavior_on_the_petals_axis} $|f(z)| < |z|$
+        on a neighborhood of the axis of each petal;
+        \item \label{itm:linear_behavior_in_the_petals} $f: \Pi_k(t) \to
+        \Pi_k(t)$ is conjugate to a translation.
+    \end{enumerate}
+\end{theorem}
+\begin{proof}
+    See \cite[116--122]{Beardon1991}.
+
+    In the proof the following lemmas are used.
+
+    Lemma[Forward Invariance and Translation of $\Pi$]:
+    \begin{enumerate}[label=(\roman*)]
+        \item $\Pi$ is forward invariant under $g$;
+        \item $\real{g^n(w)} \to +\infty$ uniformly on $\Pi$;
+        \item $g: \Pi \to \Pi$ is conjugate to a translation.
+    \end{enumerate}
+
+    Proof: \cite[118--122]{Beardon1991}
+
+    Lemma[Local Uniform Convergence of $u_n$]: $u_n$ converges locally uniformly
+    on $\Pi$ to some function $u$ that is holomorphic and univalent on $\Pi$.
+    
+    Proof: \cite[122]{Beardon1991}.
+\end{proof}
+
+By \ref{itm:petal_forward_invariance} the iterates $f^n$ are defined on each
+$\Pi_k(t)$, and \ref{itm:iterates_convergence_to_zero_along_petal_axis} implies
+that for any $z$ in $\Pi_k(t)$, the sequence $f^n(z)$ converges to $0$ along a
+path which is asymptotic to the axis of the petal $\Pi_k(t)$: see
+Figure~\ref{fig:figure_6_5_5}.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.6\textwidth]{beardons_book/figure_6_5_5.png}
+    \caption{The dynamics on a petal.}
+    \label{fig:figure_6_5_5}
+\end{figure}
+
+We recall that Theorem~\ref{thm:the_petal_theorem} has only been proved under
+the assumption~\eqref{eq:taylor_expansion_for_the_petal_theorem} on the
+coefficients of $R$. The next step is to prove the corresponding result for
+functions $f$ which satisfy $f(0) = 0$ and $f'(0) = 1$, but not the
+condition~\eqref{eq:taylor_expansion_for_the_petal_theorem}, and for this we
+need the following result.
+
+\begin{theorem}[Condition relaxation for the Petal Theorem]
+    \label{thm:condition_relaxation_for_the_petal_theorem}
+    Suppose that $f$ is analytic near $0$ with
+    \begin{equation*}
+        f(z) = z + az^{p+1} + O(z^{p+2}), \quad a \neq 0,
+    \end{equation*}
+    as $z \to 0$. Then $f$ is conjugate near $0$ to a function
+    \begin{equation*}
+        F(z) = z - z^{p+1} + O(z^{2p+1}).
+    \end{equation*}
+\end{theorem}
+\begin{proof}
+    See \cite[123--124]{Beardon1991}.
+\end{proof}
+
+\begin{remark}[First generalization of the Petal Theorem, still $R'(0) = 1$]
+    With this available, the existence of petals (and the dynamics of $f^n$ on
+    these petals) for analytic maps of the form
+    \begin{equation*}
+        f(z) = z + a z^{p+1} + \cdots,
+    \end{equation*}
+    follows immediately. Indeed, by
+    Theorem~\ref{thm:condition_relaxation_for_the_petal_theorem}, such and $f$
+    is conjugate to some $F$ near the origin, and
+    Theorem~\ref{thm:the_petal_theorem} is applicable to $F$; thus we can define
+    the petals for $f$ as the conformal images (under the conjugation map) of
+    the petals of $F$. We shall not give an explicit statement of this result,
+    and it suffices to remark that the conclusions of
+    Theorem~\ref{thm:the_petal_theorem} are valid (using
+    Lemma~\ref{lem:alternating_attracting_and_repelling_sectors_for_a_rationally_indifferent_point}
+    to justify \ref{itm:attracting_behavior_on_the_petals_axis}) in these more
+    general circumstances except for the fact that we no longer have an explicit
+    expression for the petals. We do, however, know that each petal for $f$
+    subtends an angle $2\pi/p$ at the origin, and that the petals are pairwise
+    disjoint (if taken small enough) for the function conjugating $f$ to $F$ is
+    conformal there.
+\end{remark}
+
+Theorems~\ref{thm:the_petal_theorem} and
+\ref{thm:condition_relaxation_for_the_petal_theorem} describe the action of the
+iterates of any map of the form
+\begin{equation*}
+    f(z) = z + az^{p+1} + \cdots
+\end{equation*}
+on the $p$ petals of $f$ at the origin. We now consider the case when $f$ is a
+rational map $R$ and obtain information about the relationship of the petals to
+the Fatou set of $R$.
+
+\begin{theorem}[Relation between petals and the Fatou set]
+    \label{thm:relation_between_petals_and_fatou_set}
+    Let $R$ be a rational map and suppose that
+    \begin{equation*}
+        R(z) = z + az^{p+1} + \cdots, \quad a \neq 0,
+    \end{equation*}
+    near the origin. Let $\Pi_j$ be the petals of $R$ and, for each $j$, let
+    $F_j$ be the component of $F(R)$ that contains $\Pi_j$. Then:
+    \begin{enumerate}[label=(\roman*)]
+        \item $R^n(z) \to 0$ and $\arg(R^n(z)) \to 2\pi k/p$ on $F_k$; and
+        \item $F_0, \dots, F_{p-1}$ are distinct components of $F(R)$.
+    \end{enumerate}
+\end{theorem}
+\begin{proof}
+    See \cite[126]{Beardon1991}.
+\end{proof}
+\begin{proof}
+    See \cite[126--128]{Beardon1991}.
+
+    In the proof the following lemmas are used.
+
+    Lemma[Normality of Iterates in W]: $\{\varphi_n\}$ is normal in $W$.
+
+    Proof: See \cite[127]{Beardon1991}.
+\end{proof}
+\begin{proof}
+    See \cite[128--130]{Beardon1991}.
+\end{proof}
+
+The geometric picture, then, is as follows. The rationally indifferent fixed
+point $0$ lies on the boundary of $p$ components $F_k$ of $F(R)$, and each $F_k$
+contains a petal $\Pi_k$ which makes an angle $2\pi/p$ at $0$. Next, $R$ maps
+each $F_k$ into itself, and $R^n(z) \to 0$ locally uniformly on each $F_k$ in
+such a way that for any $z$ in $F_k$, $R^n(z) \to 0$ on a path which is
+asymptotic to the axis of the petal $\Pi_k$. It is an immediate consequence of
+this that different petals lie in different components of $F(R)$. In addition,
+this convergence shows that for any $z$, $R^n(z)$ ultimately lies within
+$\Pi_k$, so the consecutive inverse images of the petal $\Pi_k$ in $F_k$ expand
+to fill the entire component $F_k$.
+
+Finally, we note that a rationally indifferent fixed point may also lie on the
+boundary of components of $F$ other than the $F_j$: indeed, if $P(z) = z +
+\cdots$ is any non-linear polynomial, then the origin is not only on the
+boundary of each of the $p$ components $F_j$, but it is also on the boundary of
+the completely invariant component $F_\infty$ of $F$ which contains $\infty$
+(and which is distinct from each $F_j$ because $P^n \to \infty$ on $F_\infty$).
+As $F_\infty$ is connected, it must therefore contain a thin \enquote{tongue}
+which stretches to the origin \emph{between} the petals: see
+Figure~\ref{fig:figure_6_5_8} (where $p = 5$) and Figure~\ref{fig:figure_6_5_9}
+(where $p = 3$) in which the petals are colored black.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.6\textwidth]{beardons_book/figure_6_5_8.png}
+    \caption{}
+    \label{fig:figure_6_5_8}
+\end{figure}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.6\textwidth]{beardons_book/figure_6_5_9.png}
+    \caption{$z \mapsto e^{2\pi i/3}z + z^2$.}
+    \label{fig:figure_6_5_9}
+\end{figure}
+
+\begin{remark}[Second generalization of the Petal Theorem]
+    There is still one more result that we must consider before we can give the
+    Petal Theorem in its full generality, namely the extension of
+    \ref{thm:relation_between_petals_and_fatou_set} to the case when $R(0) = 0$
+    and $R'(0)$ is a root of unity other than $1$. We assume, then, that
+    \begin{equation}
+        \label{eq:taylor_expansion_for_the_general_petal_theorem}
+        R(z) = az + bz^{p+1} + \cdots,
+    \end{equation}
+    where $a \neq 1$ but $a = \exp(2\pi i r/q)$ where $r$ and $q$ are coprime
+    (so $a^n = 1$ when $n = q$ but not for any smaller $n$). In this case, $R^q$
+    is of the form
+    \begin{equation*}
+        R^q(z) = z + cz^{t+1} + \cdots
+    \end{equation*}
+    for some $t$, so $R^q$ has $t$ petals at the origin. This means that there
+    are components $F_1, \dots, F_t$ of $F(R^q)$, and hence of $F(R)$, each
+    containing a petal of $R^q$. As $R$ maps each $F_j$ to some component of
+    $F(R)$ which makes an angle $2\pi/t$ at the origin, we see that $R$ must act
+    as a permutation of the set $\{F_1, \dots, F_t\}$. Further, as $a =
+    \exp(2\pi i r/q)$ with $(r, q) = 1$, we find (from
+    Theorem~\ref{thm:the_petal_theorem} applied to $R^q$) that $R$ (viewed as a
+    permutation of the $F_j$) is a composition of, say, $k$ disjoint cycles each
+    of length $q$, and if follows that $t = kq$. Thus, given $R$ in the form
+    \eqref{eq:taylor_expansion_for_the_general_petal_theorem}, there is an
+    integer $k$ such that $R$ has $kq$ petals at the origin, these dividing
+    naturally into $k$ sets of $q$ petals such that $R$ acts as a cycle of
+    length $q$ on each such set. We shall not give a formal statement of this as
+    it is a special case of our final version of the Petal Theorem which follows
+    very shortly.
+\end{remark}
+
+Observe that if $R$ is given by
+\eqref{eq:taylor_expansion_for_the_general_petal_theorem}, then
+\begin{equation*}
+    R^n(z) = a^n z + \cdots,
+\end{equation*}
+so if $q$ does not divide $n$, then $R^n$ has only one fixed point at the
+origin. If $q$ does divide $n$, say $n = mq$, then
+\begin{equation*}
+    R^q(z) = z + cz^{t+1} + \cdots
+\end{equation*}
+so
+\begin{align*}
+    R^n(z) &= (R^q)^m(z) \\
+           &= z + mcz^{t+1} + \cdots
+\end{align*}
+and as $R^n$ has $t + 1$ ($= kq + 1$) fixed points at the origin.
+
+We turn now to the final and most comprehensive version of the Petal Theorem.
+Let $\{\zeta_1, \dots, \zeta_m\}$ be a rationally indifferent cycle of $R$ and
+write
+\begin{equation*}
+    \zeta_{n+i} = R^n(\zeta_i)
+\end{equation*}
+for all $n$, $n \geq 1$, so that $\zeta_i = \zeta_j$ if and only if $i \equiv j
+\mod m$. Essentially the only difference between this case and the previous one
+is that now, $R$ maps each component of $F(R)$ that contains a petal at
+$\zeta_j$ to some other component containing a petal at $\zeta_{j+1}$.
+
+Of course, the previous version applies to the map $R^m$ at each point $\zeta_j$
+of the cycle, so we now put $S = R^m$ and suppose that
+\begin{align}
+    \label{eq:taylor_expansion_of_m_iterate_for_the_general_petal_theorem}
+    S(z) &= R^m(z) \\
+         &= \zeta_j + \exp\left(\frac{2\pi i r}{q}\right) (z - \zeta_j) + b(z - \zeta_j)^{p+1} + \cdots,
+\end{align}
+where $(r, q) = 1$. Note that the coefficient $\exp(2\pi i r/q)$ is independent
+of the choice of $j$ here as it is the multiplier of the cycle. In keeping with
+the previous case, we also assume that
+\begin{align}
+    \label{eq:taylor_expansion_of_mq_iterate_for_the_general_petal_theorem}
+    S^q(z) &= R^{mq}(z) \\
+         &= \zeta_j + (z - \zeta_j) + c(z - \zeta_j)^{t+1} + \cdots,
+\end{align}
+where (as before, but using $S$ instead of $R$) $t = kq$ for some $k$. Note that
+$S^q$ acting near $\zeta_j$ is conjugate (by the branch of $R^{-1}$ which maps
+$\zeta_{j+1}$ to $\zeta_j$) to $R S^q R^{-1}$ ($= S^q$) acting near
+$\zeta_{j+1}$, and so $S^q$ has the same number of fixed points at $\zeta_j$ as
+it has at $\zeta_{j+1}$: this proves that $t$ in
+\eqref{eq:taylor_expansion_of_mq_iterate_for_the_general_petal_theorem}, and
+hence $k$ also, is independent of the choice of $\zeta_j$.
+
+Now $S$ has $qk$ ($=t$) petals at each $\zeta_j$, hence associated with the
+cycle $\{\zeta_1, \dots, \zeta_m\}$ are $mkq$ components $F_1, \dots, F_{mkq}$
+of $F(R)$. The action of $R$ is to map $F_1$, say, with a petal at $\zeta_1$, to
+$F_2$, say with a petal at $\zeta_2$, then $F_2$ to $F_3$ with a petal at
+$\zeta_3$, and so on until $F_{m+1}$ ($=\zeta_1$). However, $F_{m+1} \neq F_1$
+(unless $q = 1$) for $S$ maps $F_1$ to $F_{m+1}$. In this way, $R$ acts as a
+permutation of $\{F_1, \dots, F_{mkq}\}$ as the product of $k$ cycles each of
+length $mq$. Thus, we have the next (and final) version of the Petal Theorem.
+
+\begin{theorem}[The Petal Theorem for cycles]
+    \label{thm:the_petal_theorem_for_cycles}
+    Let $\{\zeta_1, \dots, \zeta_m\}$ be a rationally indifferent cycle for $R$,
+    and let the multiplier of $R^m$ at each point of the cycle be $\exp(2\pi i
+    r/q)$ where $(r, q) = 1$. Then there exists an integer $k$, and $mkq$
+    distinct components $F_1, \dots, F_{mkq}$ of $F(R)$ such that at each
+    $\zeta_j$ there are exactly $kq$ of these components containing a petal of
+    angle $2\pi/kq$ at $\zeta_j$. Further, $R$ acts as a permutation $\tau$ on
+    $\{F_1, \dots, F_{mkq}\}$, where $\tau$ is a composition of $k$ disjoint
+    cycles of length $mq$, and a petal based at $\zeta_j$ maps under $R$ to a
+    petal based at $\zeta_{j+1}$.
+\end{theorem}
+
+More information can be found in
+section~\ref{sec:the_Julia_set_and_periodic_points}, especially in
+Theorem~\ref{thm:tau_is_invarian_under_analytic_conjugation} and \eqref{eq:taylor_expansion_for_conjugate_of_analytic_function_with_fixed_point_at_0_and_multiplier_1}.
+
+We end with a count of the number of fixed points of $R$ in the cycle described
+in the Petal Theorem: this will be needed in section~\ref{sec:local_conjugacy},
+and it is convenient to prove it here while the relevant ideas are still fresh
+in the reader's mind. We recall that $q \mid n$ means that $q$ divides $n$,
+while $q \nmid n$ means that it does not.
+
+\begin{theorem}[Fixed points of $R^n$ at $\zeta_j$]
+    \label{thm:fixed_points_of_Rn_at_zeta_j}
+    Suppose that the hypotheses of
+    Theorem~\ref{thm:the_petal_theorem_for_cycles} and also
+    \eqref{eq:taylor_expansion_of_m_iterate_for_the_general_petal_theorem},
+    \eqref{eq:taylor_expansion_of_mq_iterate_for_the_general_petal_theorem}
+    hold. 
+    \begin{enumerate}[label=(\roman*)]
+        \item If $m \nmid n$, then $R^n$ has no fixed points at $\zeta_j$.
+        \item If $m \mid n$ but $mq \nmid n$, then $R^n$ has one fixed point at
+        $\zeta_j$.
+        \item If $mq \mid n$, then $R^n$ has $t+1$ fixed points at $\zeta_j$.
+    \end{enumerate}
+\end{theorem}
+\begin{proof}
+    See \cite[132]{Beardon1991}.
+\end{proof}
+
+% --- SECTION ------------------------------------------------------------------
+% --- IRRATIONALLY INDIFFERENT CYCLES IN F -------------------------------------
+\section{Irrationally Indifferent Cycles in $F$}
+\label{sec:irrationally_indifferent_cycles_in_F}
+
+We recall the following definition.
+
+\begin{definition}[Linearizable map]
+    An analytic map $f$ is \emph{linearizable} near a fixed point $\zeta$ if $f$
+    is conjugate to
+    \begin{equation*}
+        f_0: z \mapsto \zeta + (z - \zeta) f'(\zeta)
+    \end{equation*}
+    in some neighborhood of $\zeta$: explicitly, if there is some neighborhood
+    $N$ of $\zeta$, and some map $g$ which fixed $\zeta$, such that $f$ is
+    analytic on $N$, $g$ is analytic and injective in $N \cup f(N)$, and $g f
+    g^{-1} = f_0$ on $g(N)$.
+\end{definition}
+
+We have seen that a rational map $R$ is linearizable near each attracting, and
+each repelling, fixed point. Near an indifferent fixed point $\zeta$, $R$ is or
+is not linearizable depending \emph{only} on whether $\zeta$ is in $F$ or $J$,
+and this is our next result.
+
+\begin{theorem}[$R$ linearizable near $\zeta$ indifferent $\iff \zeta \in F$]
+    \label{thm:R_linearizable_near_indifferent_fixed_points_in_F_not_in_J}
+    Let $\zeta$ be an indifferent fixed point of a rational map $R$. Then $R$ is
+    linearizable near $\zeta$ if and only if $\zeta$ lies in $F(R)$.
+\end{theorem}
+\begin{proof}
+    See \cite[133]{Beardon1991}.
+\end{proof}
+
+With reference to
+Theorem~\ref{thm:R_linearizable_near_indifferent_fixed_points_in_F_not_in_J}, we
+know that there can be indifferent fixed points of $R$ in $J(R)$ (for example,
+rationally indifferent fixed points), and we shall soon see that there can be
+indifferent fixed points in $F(R)$. Ignoring (for the moment) this question of
+existence, we proceed to characterize the indifferent fixed points in the Fatou
+set by a method which gives an alternative proof of
+Theorem~\ref{thm:R_linearizable_near_indifferent_fixed_points_in_F_not_in_J}. We
+prove
+
+\begin{theorem}[Fatou components containing indifferent fixed points are Siegel discs]
+    \label{thm:Fatou_components_containing_indifferent_fixed_points_are_Siegel_discs}
+    Let $R$ be a rational map of degree $d$, $d \geq 2$, and suppose that
+    $\zeta$ is an indifferent fixed point lying in some component $F_0$ of
+    $F(R)$. Then $F_0$ is simply connected, and $R: F_0 \to F_0$ is analytically
+    conjugate to a rotation of infinite order of the unit disc $\Delta$.
+\end{theorem}
+\begin{proof}
+    See \cite[134--136]{Beardon1991}.
+\end{proof}
+
+\begin{definition}[Siegel disc]
+    Any component $F_0$ of this type is called a \emph{Siegel disc}.
+\end{definition}
+
+Siegel discs are named after C.L. Siegel who, in 1941, was the first to
+establish their existence (see \cite{Siegel1942} and \cite{Siegel1971}). We
+shall verify their existence here, and for this we need the following two
+results.
+
+\begin{theorem}[Condition for an analytic funtion to be linearizable]
+    \label{thm:condition_for_an_analytic_function_to_be_linearizable}
+    Suppose that $|\alpha| = 1$, and that for some positive $M$ and $k$, and all
+    positive integers $n$,
+    \begin{equation}
+        \label{eq:condition_for_an_analytic_function_to_be_linearizable}
+        \frac{1}{|\alpha^n - 1|} \leq M n^k.
+    \end{equation}
+    Then any analytic function $f$ with Taylor expansion
+    \begin{equation*}
+        f(z) = \alpha z + a_2 z^2 + \cdots
+    \end{equation*}
+    is linearizable near the origin.
+\end{theorem}
+\begin{proof}
+    See \cite[136--141]{Beardon1991}.
+
+    The following lemmas are used in the proof.
+
+    Lemma[Action Scheme of Conjugating Maps]: The maps $\varphi$, $f$ and
+    $\varphi^{-1}$ act according to the scheme
+    \begin{equation*}
+        D_4 \xrightarrow{\varphi} D_3 \xrightarrow{f} D_2 \xrightarrow{\varphi^{-1}} D_1
+    \end{equation*}
+
+    Proof: \cite[139]{Beardon1991}.
+
+    Lemma[Derivative Bound for G on $D_5$]: On $D_5$, $|G'(z)| \leq 2C\delta^2 / \theta^{k+2}$.
+
+    Proof: \cite[139]{Beardon1991}.
+
+    Or see Chapter 3 of \cite{Siegel1971} or the original proof in
+    \cite{Siegel1942}.
+\end{proof}
+
+\begin{theorem}[Measure of the set of $\alpha$'s that satisfy the condition for an analytic function to be linearizable]
+    \label{thm:measure_of_the_set_of_alphas}
+    Let $S$ be the set of numbers $\alpha$ which satisfy $|\alpha| = 1$ and
+    \eqref{eq:condition_for_an_analytic_function_to_be_linearizable} for some
+    $M$ and $k$, and all $n$. Then $S$ has measure $2 \pi$.
+\end{theorem}
+\begin{proof}
+    See \cite[141--142]{Beardon1991}.
+\end{proof}
+
+These imply the existence of Siegel discs, for
+Theorem~\ref{thm:measure_of_the_set_of_alphas} shows that there is some $\alpha$
+in $S$, and
+Theorem~\ref{thm:condition_for_an_analytic_function_to_be_linearizable} then
+implies that $P: z \mapsto \alpha z + z^2$ is linearizable near the origin. It
+follows from
+Theorem~\ref{thm:R_linearizable_near_indifferent_fixed_points_in_F_not_in_J}
+that $0 \in F(P)$ and finally, by
+Theorem~\ref{thm:Fatou_components_containing_indifferent_fixed_points_are_Siegel_discs},
+that the origin is the center of a Siegel disc for $P$. Much work has been done
+to find necessary and sufficient conditions on $\alpha$ for $f$ to be
+linearizable, and we refer the reader to \cite{Herman1986} for more details.
+
+% --- SECTION ------------------------------------------------------------------
+% --- IRRATIONALLY INDIFFERENT CYCLES IN J -------------------------------------
+\section{Irrationally Indifferent Cycles in $J$}
+\label{sec:irrationally_indifferent_cycles_in_J}
+
+Our earlier results give us a clear understanding of the dynamics of the
+iterates $R^n$ in the vicinity of all attracting, repelling, and rationally
+indifferent cycles, and also irrationally indifferent cycles in $F$, and we
+shall consider super-attracting cycles in Theorem~\ref{thm:simple_local_analytic_conjugate_for_superattracting_fixed_point}. The one
+result in these sections shows that the remaining possibility, namely
+irrationally indifferent cycles in $J$, can occur although the geometry and
+dynamics of the iterates in a neighborhood of these cycles seems not to be
+understood at all. We prove
+
+\begin{theorem}[Condition for existence of irrationally indifferent fixed points in J for polynomials]
+    \label{thm:condition_for_irrationally_indifferent_fixed_point_in_J_of_P}
+    Suppose that $P(z) = \alpha z + \cdots + z^d$, where $d \geq 2$ and
+    $|\alpha| = 1$ but $\alpha$ is not a root of unity. If
+    \begin{equation}
+        \label{eq:condition_for_irrationally_indifferent_fixed_point_in_J_of_P}
+        |\alpha^n - 1| \leq \left(\frac{1}{n}\right)^{d^n - 1}
+    \end{equation}
+    for infinitely many $n$, then the origin is an irrationally indifferent
+    fixed point of $P$ that lies in $J(P)$.
+\end{theorem}
+\begin{proof}
+    See \cite[143]{Beardon1991}.
+\end{proof}
+
+\begin{remark}[Compare conditions on $\alpha$]
+    The reader should compare \eqref{eq:condition_for_irrationally_indifferent_fixed_point_in_J_of_P} with
+    \eqref{eq:condition_for_an_analytic_function_to_be_linearizable}
+\end{remark}
+
+\begin{remark}[$\alpha$'s verifying \eqref{eq:condition_for_irrationally_indifferent_fixed_point_in_J_of_P} exist]
+    Of course,
+    Theorem~\ref{thm:condition_for_irrationally_indifferent_fixed_point_in_J_of_P}
+    does not establish the existence of irrationally indifferent fixed points in
+    $J$, for we have yet to show that number $\alpha$ satisfying
+    \eqref{eq:condition_for_irrationally_indifferent_fixed_point_in_J_of_P} do
+    exist. In fact, it is easy to see that such numbers $\alpha$ are dense in the
+    unit circle, and we begin by showing that if $\alpha = \exp(2\pi i \theta)$,
+    then the condition
+    \eqref{eq:condition_for_irrationally_indifferent_fixed_point_in_J_of_P} is
+    closely related to the approximation of $\theta$ by rational numbers.
+
+    Now for any positive integers $m$ and $n$, we have
+    \begin{align*}
+        |\alpha^n - 1| &= |e^{n\pi i \theta} - e^{-n\pi i \theta}| \\
+                    &= 2|\sin(n\pi\theta)| \\
+                    &= 2|\sin\pi(n\theta - m)| \\
+                    &\leq 2\pi |n\theta - m|.
+    \end{align*}
+    It follows that
+    \eqref{eq:condition_for_irrationally_indifferent_fixed_point_in_J_of_P}
+    holds if for infinitely many $n$ there is some $m$ (depending on $n$) such
+    that
+    \begin{equation}
+        \label{eq:condition_for_existence_of_alpha_verifying_the_condition_for_irrationally_indifferent_fixed_point_in_J_of_P}
+        \left|\theta - \frac{m}{n}\right| \leq \frac{1}{n^{N+2}},
+    \end{equation}
+    for then (with $n > 2\pi$)
+    \begin{equation*}
+        |\alpha^n - 1| \leq 2\pi n \left|\theta - \frac{m}{n}\right| \leq \frac{1}{n^{N}}.
+    \end{equation*}
+
+    The problem, then, reduces to showing that the set of $\theta$ satisfying
+    \eqref{eq:condition_for_existence_of_alpha_verifying_the_condition_for_irrationally_indifferent_fixed_point_in_J_of_P}
+    is dense in $\R$. Now each real number $x$ has a continued fraction
+    expansion and the convergents of the continued fractions are particularly
+    good rational approximations to $x$. By defining $\theta$ in terms of a
+    specified continued fraction expansion, we can construct many $\theta$
+    satisfying
+    \eqref{eq:condition_for_existence_of_alpha_verifying_the_condition_for_irrationally_indifferent_fixed_point_in_J_of_P},
+    and it is apparent from the construction that the set of such $\theta$ is
+    dense in $\R$. A self-contained argument for the construction is given in
+    the exercises \cite{Beardon1991}.
+\end{remark}
+
+% --- SECTION ------------------------------------------------------------------
+% --- THE PROOF OF EXISTENCE OF PERIODIC POINTS --------------------------------
+\section{The Proof of the Existence of Periodic Points}
+\label{sec:the_proof_of_the_existence_of_periodic_points}
+
+We recall Theorem~\ref{thm:existence_of_periodic_points_for_polynomials_maps},
+namely that if a polynomial $P$ of degree $d$ ($d \geq 2$) has no periodic
+points of period $N$, then $N = 2$ and $P$ is conjugate to $z \mapsto z^2 - z$.
+In this section, we prove this result and also the corresponding result for
+rational functions
+(Theorem~\ref{thm:existence_of_periodic_points_for_rational_maps}).
+
+\begin{proof}[The Proof of Theorem~\ref{thm:existence_of_periodic_points_for_polynomials_maps}]
+    See \cite[145--147]{Beardon1991}.
+\end{proof}
+
+Finally, we comment on the
+
+\begin{proof}[The Proof of Theorem~\ref{thm:existence_of_periodic_points_for_rational_maps}]
+    See \cite[147--148]{Beardon1991}.
+\end{proof}
+
+% --- SECTION ------------------------------------------------------------------
+% --- THE JULIA SET AND PERIODIC POINTS ----------------------------------------
+\section{The Julia Set and Periodic Points}
+\label{sec:the_Julia_set_and_periodic_points}
+
+We are now in a position to relate the Julia set to periodic points. First, we
+prove
+
+\begin{theorem}[$J = \derived{\{\text{periodic points}\}}$]
+    \label{thm:J_is_the_derived_set_of_the_periodic_points}
+    Let $R$ be a rational map of degree $d$, where $d \geq 2$. Then $J$ is the
+    derived set of the periodic points of $R$.
+\end{theorem}
+\begin{proof}
+    See \cite[148--149]{Beardon1991}.
+
+    In the proof Lemma~\ref{lem:components_of_F_have_at_most_one_periodic_point}
+    is used to prove that the derived set of the periodic points of $R$ is
+    contained in $J$.
+\end{proof}
+
+\begin{remark}[Recall of definition of accumulation point]
+    We recall that $z$ is in the derived set of $E$ if and only if there are
+    \emph{distinct} points $z_n$ in $E$ such that $z_n \to z$.
+\end{remark}
+
+Later, we shall see that $R$ has at most $2d - 2$ non-repelling cycles, and with
+this Theorem~\ref{thm:J_is_the_derived_set_of_the_periodic_points} implies that
+$J$ is the derived set of the repelling cycles. As each repelling cycles lies in
+$J$ (and anticipating the result in section~9.6 of \cite{Beardon1991}), this
+yields
+
+\begin{theorem}[$J = \closure{\{\text{repelling periodic points}\}}$]
+    $J$ is the closure of the repelling periodic points of $R$.
+\end{theorem}
+
+\begin{lemma}[Components of $F$ have at most one periodic point]
+    \label{lem:components_of_F_have_at_most_one_periodic_point}
+    Any component of $F$ contains at most one periodic point of $R$.
+\end{lemma}
+\begin{proof}
+    See \cite[149]{Beardon1991}.
+\end{proof}
+
+We end this section with the following extension of
+Theorem~\ref{thm:union_of_iterates_of_an_open_set_that_meet_J_explode_to_ExtC_minus_exceptional_points}
+
+\begin{theorem}[$W$ domain and $W \cap J \neq \emptyset \implies R^n(W)$ contains any compact set that doesn't have exceptional points]
+    Let $R$ be a rational map of degree $d$, where $d \geq 2$, let $W$ be a
+    domain that meets $J$, and let $K$ be a compact set which contains no
+    exceptional points of $R$. Then for all sufficiently large $n$, $R^n(W)
+    \subset K$.
+\end{theorem}
+\begin{proof}
+    See \cite[149--150]{Beardon1991}.
+\end{proof}
+
+% --- SECTION ------------------------------------------------------------------
+% --- LOCAL CONJUGACY ----------------------------------------------------------
+\section{Local Conjugacy}
+\label{sec:local_conjugacy}
+
+Let
+\begin{equation*}
+    f(z) = a_1 z + a_2 z^2 + \cdots
+\end{equation*}
+be a power series, analytic near the origin. In this final section of the
+chapter, we comment briefly on the possible forms that the local conjugates $g f
+g^{-1}$ of $f$ can take. We shall assume that $g(0) = 0$, and we shall discuss
+\emph{analytic conjugacy} (when $g$ is analytic), \emph{topological conjugacy}
+(when $g$ is a homeomorphism), and \emph{formal conjugacy} (when $g$ is a formal
+power series).
+
+We have already discussed analytic conjugacy when $|a_1| \neq 0, 1$
+(Theorem~\ref{thm:koenigs_local_linearization}). The situation when $a_1 = 0$ is
+straightforward, and the most optimistic guess is that in this case $f$ is
+conjugate to the first non-trivial term of its Taylor expansion, say to $a_q
+z^q$ where $q \geq 2$. This is correct, but as $q \geq 2$, the two maps $z
+\mapsto a_q z^q$ and $z \mapsto z^q$ are conjugate, and so we can state this
+result in the following form
+
+\begin{theorem}[Simple local analytic conjugate for super-attracting fixed point]
+    \label{thm:simple_local_analytic_conjugate_for_superattracting_fixed_point}
+    Suppose that
+    \begin{equation*}
+        f(z) = b_0 z^q + b_1 z^{q+1} + \cdots
+    \end{equation*}
+    is analytic near the origin, and that $b_0 \neq 0$, $q \geq 2$. Then there
+    exists a unique function $g$, analytic near the origin, such that:
+    \begin{enumerate}[label=(\roman*)]
+        \item $g(0) = 0$, $g'(0) = 1$; and
+        \item for all $z$ near the origin, $g f g^{-1}(z) = z^q$.
+    \end{enumerate}
+\end{theorem}
+\begin{proof}
+    See \cite[151--152]{Beardon1991}
+\end{proof}
+
+\begin{lemma}[Principal root bound]
+    Suppose that $n \geq 2$, let $W = \{w \colon |w-1| < 1/2\}$, and let
+    $z^{1/n}$ denote the principal branch of the $n$-th root of $z$ in $W$. Then
+    \begin{equation*}
+        \left|z^{\frac{1}{n}} - 1\right| < 2\frac{|z - 1|}{n} < \frac{1}{n}.
+    \end{equation*}
+\end{lemma}
+\begin{proof}
+    See \cite[151]{Beardon1991}.
+\end{proof}
+
+We shall now briefly consider the local analytic conjugates of $f$ when $a_1 =
+1$. In this case, $f$ has the form
+\begin{equation}
+    \label{eq:taylor_expansion_for_analytic_function_with_fixed_point_at_0_and_multiplier_1}
+    f(z) = z(1 + \alpha_p z^p + \alpha_{p+1} z^{p+1} + \cdots)
+\end{equation}
+and by the Residue Theorem, the function $\tau(f)$ defined by
+\begin{equation*}
+    \tau(f) = \frac{1}{2\pi i} \int_{|z|=r} \frac{1}{f(z) - z} \D z
+\end{equation*}
+is independent of $r$ for $r < r_0$, say. Further, if we expand $(f(z) -
+z)^{-1}$ in a Laurent series about the origin, we see that $\tau(f)$ is of the
+form
+\begin{equation*}
+    \frac{P(\alpha_p, \dots, \alpha_{2p})}{(\alpha_p)^{p+1}}
+\end{equation*}
+for some polynomial $P$: for example, if $p = 1$, then
+\begin{equation*}
+    \tau(f) = -\frac{\alpha_2}{\alpha_1^2}.
+\end{equation*}
+We now prove that the function $\tau$ is invariant under analytic conjugation.
+
+\begin{theorem}[$\tau$ is invariant under analytic conjugation]
+    \label{thm:tau_is_invarian_under_analytic_conjugation}
+    If $f$ is of the form
+    \eqref{eq:taylor_expansion_for_analytic_function_with_fixed_point_at_0_and_multiplier_1},
+    and is analytically conjugate to $g$ near the origin, then $\tau(f) =
+    \tau(g)$.
+\end{theorem}
+\begin{proof}
+    See \cite[153--154]{Beardon1991}.
+\end{proof}
+
+As an application of
+Theorem~\ref{thm:tau_is_invarian_under_analytic_conjugation}, recall that if $f$
+is of the form
+\eqref{eq:taylor_expansion_for_analytic_function_with_fixed_point_at_0_and_multiplier_1},
+then $f$ is locally conjugate to a function
+\begin{equation}
+    \label{eq:taylor_expansion_for_conjugate_of_analytic_function_with_fixed_point_at_0_and_multiplier_1}
+    z \mapsto z(1 + z^p + Az^{2p} + O(z^{2p+1}))
+\end{equation}
+(Theorem~\ref{thm:condition_relaxation_for_the_petal_theorem}), and in this
+case, a simple calculation gives
+\begin{equation*}
+    \tau(f) = -A.
+\end{equation*}
+
+Next, we have
+
+\begin{theorem}[Elimination of intermediate terms]
+    Suppose that $f$ is given by
+    \eqref{eq:taylor_expansion_for_analytic_function_with_fixed_point_at_0_and_multiplier_1}:
+    then for any integer $q$ with $q > 2p$, $f$ is analytically conjugate to
+    some function
+    \begin{equation*}
+        z \mapsto z(1 + z^p + A z^{2p} + O(z^q)).
+    \end{equation*}
+\end{theorem}
+
+The proof is essentially the same as that for
+Theorem~\ref{thm:condition_relaxation_for_the_petal_theorem}, and we omit the
+details. By contrast, we also have
+
+\begin{theorem}[Analytic Conjugation to a Linear Map Modulo $z^N$]
+    Suppose that $f$ has a Taylor expansion
+    \begin{equation*}
+        f(z) = a_1 z + a_2 z^2 + \cdots,
+    \end{equation*}
+    where $a_1$ is not a root of unity. Then given any positive integer $N$,
+    there is some function $g$, analytic near and vanishing at the origin, such
+    that near the origin
+    \begin{equation*}
+        g^{-1} f g(z) = a_1 z + O(z^N).
+    \end{equation*}
+\end{theorem}
+\begin{proof}
+    See \cite[154]{Beardon1991}.
+\end{proof}
+
+We turn now to discuss topological conjugacy and here, of course, the conjugacy
+classes are much larger.
+
+\begin{remark}[Fixed points are preserved under topological conjugacy]
+    First, observe that the dynamics of the iterates $f^n$ near an attracting
+    fixed point is invariant under topological conjugacy, for if $f^n(z) \to 0$
+    and $F = h f h^{-1}$, then $F^n(hz) \to 0$ also, but in this case we cannot
+    talk of the multiplier. In fact, given any two functions $f$ and $g$ (not
+    necessarily analytic) which are orientation-preserving homeomorphisms of
+    some neighborhood of the origin into itself such that $|f(z)| < |z|$ and
+    $|g(z)| < |z|$, then $f$ and $g$ are topologically conjugate
+    \cite{Sternberg1957}.
+\end{remark}
+
+In the case of rationally indifferent fixed points, we have
+
+\begin{theorem}[Conjugation for finite order iterates]
+    Suppose that
+    \begin{equation*}
+        f(z) = a_1 z + a_2 z^2 + \cdots,
+    \end{equation*}
+    where $a_1 = \exp(2\pi i p / q)$, $(p, q) = 1$, and also that the iterate
+    $f^n$ is the identity. Then there is some integer $k$ such that near the
+    origin, $f$ is analytically conjugate to
+    \begin{equation*}
+        z \mapsto a_1 z (1 + z^{kq} + \cdots),
+    \end{equation*}
+    and topologically conjugate to $z \mapsto z(1 + z^{kq})$.
+\end{theorem}
+
+The reader is referred to \cite{Camacho1978} for the details.
+
+Finally, we comment briefly on the question of formal conjugacy, and we mention
+just one result which sheds more light on the work in this section.
+
+\begin{theorem}[Voronin's formal conjugacy classification]
+    Any formal power series about the origin is formally conjugate to one and
+    only one formal series of the form $z(1 + z^p + A z^{2p})$.
+\end{theorem}
+
+The proof is by repeated applications of
+Theorem~\ref{thm:tau_is_invarian_under_analytic_conjugation}, and we refer the
+reader to \cite{Voronin1981} for more details.

@@ -3,9 +3,39 @@
 
 We begin with the simple properties of the Fatou set of a rational map $R$. As
 $R$ is a branched covering map of the sphere onto itself with the critical
-points as branch points, the position of the critical points influences the
+points as branch points, the positions of the critical points influences the
 structure of the Fatou set $F$ through the Euler characteristic. We discuss
 these ideas and apply them to study the structure of $F$.
+
+\begin{remark}[Rational maps as branched covering maps]
+    A rational map $R: \ExtC \to \ExtC$ of degree $d \geq 2$ can be
+    geometrically interpreted as a \emph{branched covering map} of the sphere
+    onto itself. This structural behavior underpins why the positions of
+    critical points directly influence the topology of the Fatou set.
+    
+    To see this from a local perspective, recall from Chapter 2 that if $w \in
+    \ExtC$ is a non-critical value, its preimage $R^{-1}\{w\}$ consists of
+    exactly $d$ distinct points $z_1, \dots, z_d$. Around these points, there
+    exist neighborhoods $N$ of $w$ and $N_j$ of $z_j$ such that each restriction
+    $R: N_j \to N$ is a bijection (and hence a homeomorphism). Topologically, if
+    we remove the finite set of critical values from the target sphere and their
+    preimages from the domain sphere, $R$ acts as a local homeomorphism. This is
+    precisely the definition of an unbranched $d$-fold \emph{covering map}.
+    
+    This uniform covering behavior breaks down exclusively at the critical
+    points of $R$. At any critical point $z_0$ where the valency satisfies
+    $v_R(z_0) = k > 1$, the map fails to be a local injection. Instead, under an
+    appropriate local change of coordinates, $R$ behaves exactly like the
+    standard analytic power map $z \mapsto z^k$. This means a neighborhood of
+    $z_0$ is wrapped around a neighborhood of the critical value $R(z_0)$
+    exactly $k$ times.
+    
+    Because the total number of critical points is finite (bounded globally by
+    $\delta(\ExtC) = 2d - 2$), $R$ is a covering map punctured by a finite
+    number of these singular \emph{branch points}. This rigid geometric
+    framework is what justifies using the Euler characteristic $\chi$ to track
+    how domains pull back and split across the Riemann sphere.
+\end{remark}
 
 % --- SECTION ------------------------------------------------------------------
 % --- THE TOPOLOGY OF THE SPHERE -----------------------------------------------
@@ -14,10 +44,10 @@ these ideas and apply them to study the structure of $F$.
 
 Some results on the structure of the Fatou and Julia sets are simple
 consequences of facts concerning the topology of the complex sphere and so
-require almost nothing of theory of iteration. It seems best to present these
-results in this light and so our first task is to collect together the relevant
-topological results. Throughout, the underlying space is the complex sphere
-$\ExtC$, and the complement of a set $E$ is denoted by $\ExtC - E$.
+require almost nothing of the theory of iteration. It seems best to present
+these results in this light and so our first task is to collect together the
+relevant topological results. Throughout, the underlying space is the complex
+sphere $\ExtC$, and the complement of a set $E$ is denoted by $\ExtC - E$.
 
 \begin{definition}[Simply connected domain]
     A domain $D$ is \emph{simply connected} if every closed curve in $D$ can be
@@ -33,8 +63,8 @@ deformed to a point).
     of $\boundary{D}$.
 \end{definition}
 
-In more intuitive terms, this operator measures how many \enquote{holes} does a
-domain have. A simply connected domain, has $0$ \enquote{holes}, thus, it has
+In more intuitive terms, this operator measures how many \enquote{holes} domain
+has. A simply connected domain, has $0$ \enquote{holes}; thus, it has
 connectivity $1$.
 
 \begin{definition}[$k$-connected domain]
@@ -66,8 +96,8 @@ sets).
 
 \begin{definition}[Separation by a Jordan Curve]
     Let $K \subseteq \ExtC$ be a compact set. We say a Jordan curve $\gamma$
-    \emph{separates} $K$ is disjoint from $\gamma$ and meets both components of
-    the complement of $\gamma$.
+    \emph{separates} $K$ if $K$ is disjoint from $\gamma$ and meets both
+    components of the complement of $\gamma$.
 \end{definition}
 
 \begin{proposition}[Characterization of disconnected for compact sets]
@@ -83,7 +113,7 @@ sets).
 We will also find the following two variations of
 Proposition~\ref{prp:simply_connected_iff_complement_connected} useful.
 
-\begin{proposition}[Simply connected domain $\iff$ bounday connected $\iff$ $c(D)=1$]
+\begin{proposition}[Simply connected domain $\iff$ boundary connected $\iff$ $c(D)=1$]
     A domain $D$ is simply connected if and only if its boundary $\boundary{D}$
     is connected.
 \end{proposition}
@@ -111,7 +141,7 @@ Proposition~\ref{prp:complement_open_set_connected_iff_components_simply_connect
 
 Finally (because we use this idea often), we include this result.
 
-\begin{proposition}[The union of a linearly ordered by inclusion family of simply connected sets is simply connected]
+\begin{proposition}[The union of a family of simply connected sets that is linearly ordered by inclusion is simply connected]
     Let $\{D_\alpha\}$ be a collection of simply connected domains that is
     linearly ordered by inclusion. Then $\bigcup_\alpha D_\alpha$ is a simply
     connected domain.
@@ -189,14 +219,14 @@ visually obvious feature of the illustrations of Julia sets given earlier.
 \label{sec:the_euler_characteristic}
 
 We devote this section to a brief and informal introduction to the Euler
-characteristic (a detailed can be found in any one of numerous standard texts on
-the subject). Let $S$ be a compact, or a bordered, surface: for our
-applications, it is enough to consider $S$ to be either the sphere, or a plane
-domain together with its boundary, provided that this boundary consists only of
-a finite number of simple closed curves.
+characteristic (a detailed account can be found in any one of numerous
+standard texts on the subject). Let $S$ be a compact, or a bordered, surface:
+for our applications, it is enough to consider $S$ to be either the sphere, or a
+plane domain together with its boundary, provided that this boundary consists
+only of a finite number of simple closed curves.
 
 \begin{definition}[Triangulation, vertices, edges and faces]
-    A \emph{triangulation} $T$ of $S$ is a partition of $S$ to a finite number
+    A \emph{triangulation} $T$ of $S$ is a partition of $S$ into a finite number
     of mutually disjoint subsets called \emph{vertices}, \emph{edges} and
     \emph{faces} with the following properties:
     \begin{enumerate}[label=(\roman*)]
@@ -214,7 +244,7 @@ a finite number of simple closed curves.
 We stress that $T$ partitions $S$ into mutually disjoint subsets of $S$.
 
 \begin{definition}[Simplex]
-    Each such subset is either a vertex, and edge or a face, and we call each of
+    Each such subset is either a vertex, an edge or a face, and we call each of
     these a \emph{simplex} of $T$ (of dimension $0$, $1$ and $2$ respectively).
 \end{definition}
 
@@ -244,9 +274,9 @@ We stress that $T$ partitions $S$ into mutually disjoint subsets of $S$.
 \end{theorem}
 
 Thus, we can compute $\chi(S)$ by using any convenient triangulation we choose.
-When we refer to a triangulation and Euler characteristic of a domain, we are
-implicitly assuming that the closure of the domain can be triangulated so that
-the domain itself is a union of simplices.
+When we refer to a triangulation and the Euler characteristic of a domain, we
+are implicitly assuming that the closure of the domain can be triangulated so
+that the domain itself is a union of simplices.
 
 Calculations of $\chi$ can often be simplified by using the following simple
 idea. Suppose that $S_1$ and $S_2$ are subsets of $S$, each comprising a union
@@ -336,7 +366,7 @@ section~\ref{sec:critical_points} which is the case $U$ = $V$ = $\ExtC$).
         \boundary{V} \subset R(\boundary{U});
     \end{equation}
     of course, there may be strict inclusion here (for example, imagine $U$ is a
-    small disk, and $R$ wraps its boundary around itself like a loop that
+    small disc, and $R$ wraps its boundary around itself like a loop that
     crosses through the interior of $V$. The boundary points of $U$ can map
     inside $V$, not just to its boundary).
 \end{remark}
@@ -394,14 +424,6 @@ section~\ref{sec:critical_points} which is the case $U$ = $V$ = $\ExtC$).
 These facts suggest that instead of considering a map $R$ of $U$ into $V$, we
 should (as is so often the case) emphasize $R^{-1}$ and study the map $R$ of a
 component $U$ of $R^{-1}(V)$ onto $V$. This change of emphasis is important.
-
-\begin{definition}[Covering map]
-    Let $X$ and $Y$ be topological spaces. A continuous, surjective map $f: X
-    \to Y$ is a \emph{covering map} if every point $y \in Y$ has an open
-    neighborhood $V$ such that the pre-image $f^{-1}(V)$ is a union of disjoint
-    open sets $U_i$ in $X$, each of which is mapped homeomorphically onto $V$ by
-    $f$.
-\end{definition}
 
 In this section, our objective is to use $R$ to relate the Euler characteristics
 $\chi(U)$ and $\chi(V)$ of domains $U$ and $V$ as above. Any such relationship
@@ -652,7 +674,7 @@ As culmination of these ideas, we have
     and suppose that $R$ maps $F_0$ into $F_1$. Then, for some integer $m$, $R$
     is an $m$-fold map of $F_0$ onto $F_1$ and
     \begin{equation}
-        \label{eq:thm:Riemann_Hurwitz_relation_for_related_Fatou_components}
+        \label{eq:Riemann_Hurwitz_relation_for_related_Fatou_components}
         \chi(F_0) + \delta_R(F_0) = m \chi(F_1)
     \end{equation}
 \end{theorem}
@@ -661,7 +683,7 @@ As culmination of these ideas, we have
 \end{proof}
 
 \begin{remark}[Riemann-Hurwitz relation in our context]
-    We call \eqref{eq:thm:Riemann_Hurwitz_relation_for_related_Fatou_components}
+    We call \eqref{eq:Riemann_Hurwitz_relation_for_related_Fatou_components}
     the Riemann-Hurwitz relation.
 \end{remark}
 
@@ -672,7 +694,7 @@ As culmination of these ideas, we have
 
 \begin{theorem}[Number of completely invariant components of $F$]
     \label{thm:number_of_completely_invariant_components_of_F}
-    The Fatou set $F$ or $R$ contains at most two completely invariant
+    The Fatou set $F$ of $R$ contains at most two completely invariant
     components, and if there are two, then each is simply connected.
 \end{theorem}
 \begin{proof}
@@ -683,17 +705,16 @@ As culmination of these ideas, we have
     Theorem~\ref{thm:connectedness_properties_of_completely_invariant_components_of_F}
     to each of the components $F_j$ in turn, we find  (as $k \geq 2$) that every
     $F_j$is simply connected. Next, we apply
-    Theorem~\ref{thm:Riemann_Hurwitz_relation_for_related_Fatou_components}
-    to each $F_j$ and, noting that $F_j$ is simply connected, $\chi(F_j) = 1$,
-    we obtain
+    Theorem~\ref{thm:Riemann_Hurwitz_relation_for_related_Fatou_components} to
+    each $F_j$ and, noting that $F_j$ is simply connected, $\chi(F_j) = 1$, we
+    obtain
     \begin{equation*}
         \delta_R(F_j) = (d - 1) \chi(F_j) = d - 1.
     \end{equation*}
     The Riemann-Hurwitz relation now yields
     \begin{align*}
         k (d - 1) &= \sum_{j=1}^k \delta_R(F_j) \\
-                &\leq \delta_R(\ExtC)
-                &= 2d - 2,
+                &\leq \delta_R(\ExtC) = 2d - 2,
     \end{align*}
     and so $k \leq 2$.
 \end{proof}
@@ -708,7 +729,7 @@ As culmination of these ideas, we have
 Theorem~\ref{thm:number_of_completely_invariant_components_of_F} does not by
 itself exclude the possibility that $F$ may have two completely invariant
 components and other additional components: however, it will be a consequence of
-Sullivan's No Wondering Domain Theorem that \emph{if $F$ has two completely
+Sullivan's No Wandering Domain Theorem that \emph{if $F$ has two completely
 invariant components, then these are the only components of $F$}.
 
 \begin{remark}[For any $m$, $\exists$ simply connected domains $D_1, \dots, D_m$ with $\boundary{D_1} =$ $\cdots =$ $\boundary{D_m}$]
@@ -720,7 +741,7 @@ invariant components, then these are the only components of $F$}.
         \boundary{D_1} = \boundary{D_2} = \cdots = \boundary{D_m};
     \end{equation*}
     see \cite[143]{Hocking1961} (for this shows that we cannot prove
-    Theorem~\ref{thm:number_of_completely_invariant_components_of_F}) from the
+    Theorem~\ref{thm:number_of_completely_invariant_components_of_F} from the
     single topological fact that all the completely invariant components of $F$
     have a common boundary, namely $J$).
 \end{remark}
@@ -788,15 +809,16 @@ We now prove a stronger result than this, namely
 \end{proof}
 
 In Chapter 11 of \cite{Beardon1991}, we can see an example of a rational map $R$
-with the properties (i) $J$ is disconnected, and (ii) each component $F_j$ of $F$
-has finite connectivity. It follows that only a countable number of components
-of $J$ can meet the boundary of some $F_j$; thus in this example, \emph{there
-are components of $J$ which do not meet the closure of any component of $F$}.
+with the properties (i) $J$ is disconnected, and (ii) each component $F_j$ of
+$F$ has finite connectivity. It follows that only a countable number of
+components of $J$ can meet the boundary of some $F_j$; thus in this example,
+\emph{there are components of $J$ which do not meet the closure of any component
+of $F$}.
 
 In order to prove
 Theorem~\ref{thm:J_disconnected_implies_uncountably_many_components}, we need
 
-\begin{lemma}[For $K$ compact and connected, $R^{-1}(K)$ has at most $\deg(R)$ and each is mapped by $R$ onto $K$]
+\begin{lemma}[For $K$ compact and connected, $R^{-1}(K)$ has at most $\deg(R)$ components and each is mapped by $R$ onto $K$]
     Let $K$ be a compact, connected subset of the complex plane. Then
     $R^{-1}(K)$ has at most $\deg(R)$ components and each is mapped by $R$ onto
     $K$.

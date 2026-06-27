@@ -33,8 +33,8 @@ in $\R^3$. Let $S$ be the unit sphere in $\R^3$ centered at the origin, and $N =
 (0,0,1)$ be the north pole.
 
 We now project each point in $\C$ to a point in $S$ by taking the intersection
-between the line that crosses the point $(x_1, x_2, 0)$ and $N$ with $S$. An
-illustration of this projection is given in
+of the unit sphere $S$ with the line passing through $N$ and the point $(x_1,
+x_2, 0)$. An illustration of this projection is given in
 Figure~\ref{fig:stereographic_projection}.
 
 \begin{figure}[htbp]
@@ -188,7 +188,7 @@ to scalar multiplication. This allows us to define the degree of a rational map.
 \end{definition}
 
 \begin{proposition}[{$\deg(RS) = \deg(R)\deg(S)$}]
-    Given two rational function $R$, $S$, the degree of $RS$ is $\deg(R)$ times
+    Given two rational function $R$ and $S$, the degree of $RS$ is $\deg(R)$ times
     $\deg(S)$. That is,
     \begin{equation*}
         \deg(RS) = \deg(R)\deg(S).
@@ -352,7 +352,7 @@ fixed point for all polynomials.
 \end{proof}
 
 \begin{theorem}[Möbius transformations family explicit uniform Lipschitz condition]
-    Let m be any positive number. Then the Möbius transformations $g$ which
+    Let $m$ be any positive number. Then the Möbius transformations $g$ which
     satisfy
     \begin{alignat*}{3}
         &\sigma(g(0),      &&g(1))      &&\geq m, \\
@@ -402,10 +402,11 @@ carefully in terms of the exterior of the image curve
 \begin{figure}[htbp]
     \centering
     \resizebox{\textwidth}{!}{\input{../figures/tikz/interior_of_curve_mobius_transformed-visualization}}
-    \caption{If the curve $\gamma$ is sufficiently small ($\mathrm{diam}(\gamma)
-    < \delta$), the image of its interior component $\Omega$ under a rational
-    function $R$ is entirely contained within the bounded regions defined by the
-    image curve $R(\gamma)$, never entering the exterior $E(R(\gamma))$.}
+    \caption{If the curve $\gamma$ is sufficiently small
+    ($\diameter_{\sigma_0}(\gamma) < \delta$), the image of its interior
+    component $\Omega$ under a rational function $R$ is entirely contained
+    within the bounded regions defined by the image curve $R(\gamma)$, never
+    entering the exterior $E(R(\gamma))$.}
     \label{fig:interior_of_curve_mobius_transformed}
 \end{figure}
 
@@ -748,7 +749,7 @@ Lemma~\ref{lem:number_of_fixed_points_is_preserved_under_conjugacy_in_C} implies
 
 \begin{definition}[Multiplier of a fixed point in $\C$]
     Given a rational map $R$ and a fixed point $\zeta$ in $\C$ of $R$. We define
-    \emph{multiplier} of $R$ at $\zeta$, denoted by $m(R, \zeta)$, as the
+    the \emph{multiplier} of $R$ at $\zeta$, denoted by $m(R, \zeta)$, as the
     complex number given by the derivative:
     \begin{equation*}
         m(R, \zeta) = R'(\zeta).
@@ -756,9 +757,9 @@ Lemma~\ref{lem:number_of_fixed_points_is_preserved_under_conjugacy_in_C} implies
 \end{definition}
 
 \begin{remark}[Multiplier in $\C$ is preserved under conjugation]
-    Note that since the derivate is invariant under a conjugation, the multiplier
-    is also invariant under a conjugation (provided the corresponding point is
-    also in $\ExtC$).
+    Note that since the derivative is invariant under a conjugation, the
+    multiplier is also invariant under a conjugation (provided the corresponding
+    point is also in $\ExtC$).
 \end{remark}
 
 \begin{definition}[Multiplier of the fixed point $\infty$]
@@ -903,6 +904,7 @@ iteration.
 \end{proof}
 
 \begin{corollary}[Number of fixed points at $0$ of the iterates]
+    \label{cor:fn_has_at_least_as_many_fixed_points_as_f}
     The iterate $f^n$ has at least as many fixed points at the origin as $f$
     has. Furthermore, if $f^n$ has strictly more fixed points at the origin than
     $f$, then $a \neq 1$ but $a^n = 1$.
@@ -925,7 +927,7 @@ iteration.
     Now, let's show that if $f^n$ has strictly more fixed points at the origin
     than $f$, then $a \neq 1$ but $a^n = 1$. From our analysis above, if $a =
     1$, the multiplicities are exactly equal, so for $f^n$ to have strictly more
-    fixed points at the origin than $f$, we cannot have $a = 1$. Thus $a \neq
+    fixed points at the origin than $f$, we cannot have $a = 1$. Thus, $a \neq
     1$.
 
     If $a \neq 1$, then $f$ has a single fixed point at the origin. For $f^n$ to
@@ -956,7 +958,7 @@ iteration.
     some critical point $z$ of $R$.
 \end{definition}
 
-\begin{remark}[Bijective restrictions of $R^{-1}$ for non critica values]
+\begin{remark}[Bijective restrictions of $R^{-1}$ for non-critical values]
     Given a rational function $R$ of degree $d \geq 1$, and $w$ a non-critical
     value of $R$. Then, $R^{-1}\{w\}$ consists of precisely $d$ distinct points,
     say $z_1, z_2, \dots, z_d$. As none of the $z_j$ are critical points, there

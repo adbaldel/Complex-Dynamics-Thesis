@@ -51,14 +51,14 @@ Suppose $\mathcal{F} = \{R^n \mid n \in \N\}$ is an equicontinuous family, then
 given $z \in \ExtC$, points $w$ close to $z$ will remain close after $n$
 iterations ($R^n(w)$ will be close to $R^n(z)$). Indeed, if we take
 $\varepsilon_n$ to be the maximum distance we want between the $n$-th iterates,
-we can obtain a maximum distance between the $n-1$-th iterates
+we can obtain a maximum distance between the $(n-1)$-th iterates
 ($\varepsilon_{n-1}$). Doing this recursively we can obtain a maximum distance
 $\varepsilon_0 = \delta$ between $w$ and $z$ so that their $n$-th iterates are as
 close as we want, see Figure~\ref{fig:equicontinuity_for_iterates}.
 \begin{figure}
     \centering
     \resizebox{\textwidth}{!}{\input{../figures/tikz/equicontinuity_for_iterates}}
-    \caption{Equicontinuity for the family $\mathcal{F} = \{R^n\}_{n \in N}$.}
+    \caption{Equicontinuity for the family $\mathcal{F} = \{R^n\}_{n \in \N}$.}
     \label{fig:equicontinuity_for_iterates}
 \end{figure}
 
@@ -115,9 +115,9 @@ appeal.
 We end this section with two simple, but important, properties of $F$ and $J$. A
 rational map, and in particular, a Möbius map and its inverse, satisfy a
 Lipschitz condition with respect to the spherical (and chordal) metric on
-$\ExtC$ (\ref{thm:rational_maps_satify_a_lipschitz_condition}). Thus, if we
-conjugate $R$ with respect to a Möbius map, equicontinuity is transferred in the
-obvious way, and we have
+$\ExtC$ (Theorem~\ref{thm:rational_maps_satify_a_lipschitz_condition}). Thus, if
+we conjugate $R$ with respect to a Möbius map, equicontinuity is transferred in
+the obvious way, and we have
 
 \begin{theorem}[Equicontinuity is preserved under conjugation]
     Let $R$ be a non-constant rational map, let $g$ be a Möbius map, and let $S
@@ -163,7 +163,7 @@ A similar argument leads to
 \end{remark}
 
 \begin{example}
-    The map $z \mapsto \exp(z)$ shows how this concepts can be different. Under
+    The map $z \mapsto \exp(z)$ shows how these concepts can be different. Under
     this map $\C$ is backward invariant, but not completely invariant.
 \end{example}
 
@@ -228,7 +228,7 @@ discussion of completely invariant sets.
 
 \begin{definition}[Relation $\sim$ (under $g$)]
     Given a map $g$ of a set $X$ into itself, for any $x$ and $y$ in $X$, we
-    define the relation $\sim$ on $X$ by $x \sim y$ if and only if there exists
+    define the relation $\sim$ on $X$ by $x \sim y$ if and only if there exist
     non-negative integers $n$ and $m$ with
     \begin{equation}
         \label{eq:equivalence_relation}
@@ -238,7 +238,7 @@ discussion of completely invariant sets.
 
 \begin{remark}[$\sim$ is an equivalence relation]
     Obviously the relation $\sim$ is symmetric and reflexive, and it is also
-    transitive for \eqref{eq:equivalence_relation} and $g^p(y) = g^q(z)$ imply
+    transitive, since \eqref{eq:equivalence_relation} and $g^p(y) = g^q(z)$ imply
     that
     \begin{equation*}
         g^{n+p}(x) = g^{m+q}(z);
@@ -269,8 +269,8 @@ It is easy to identify the orbit $[x]$, and we have
 This suggests we should also look at the interior, closure and boundary
 operators.
 
-\begin{theorem}[Completely invariance is preserved under the complement, interior and boundary operators]
-    \label{thm:complete_invarian_is_preserved_under_complement_interior_and_boundary}
+\begin{theorem}[Complete invariance is preserved under the complement, interior and boundary operators]
+    \label{thm:complete_invariance_is_preserved_under_complement_interior_and_boundary}
     Let $g$ be any continuous, open map of a topological space $X$ onto itself
     and suppose that $E$ is completely invariant. Then so are the complement $X
     - E$, the interior $\interior{E}$, the boundary $\boundary{E}$ and the
@@ -367,10 +367,10 @@ We begin with the definitions relevant to normal families.
         &&&\lim_{n \to \infty} \sup\{d_Y(f_n(x), f(x)) \mid \forall x \in X\} =
         0.
     \end{alignat*}
-    This last expression may also clarify why at the section A Topology on the
-    Rational Functions (\ref{sec:a_topology_on_the_rational_functions}), we
-    called $\rho$ the \emph{metric of uniform convergence}. Since, using that
-    metric, convergence in $\mathcal{C}$ is the same as uniform convergence.
+    This last expression may also clarify why in
+    section~\ref{sec:a_topology_on_the_rational_functions}, we called $\rho$ the
+    \emph{metric of uniform convergence}. Since, using that metric, convergence
+    in $\mathcal{C}$ is the same as uniform convergence.
 \end{remark}
 
 \begin{definition}[Local uniform convergence]
@@ -414,6 +414,7 @@ to derive information about the limit $f$ of a sequence $(f_n)$ throughout a
 domain $D$ simply from a knowledge of $f$ on only a small part of $D$.
 
 \begin{theorem}[Vitali's Theorem]
+    \label{thm:Vitalis_theorem}
     Suppose that the family $\{f_1, f_2, \ldots\}$ of analytic maps is normal in
     a domain $D$, and that $f_n$ converges pointwise to some function $f$ on
     some non-empty open subset $W$ of $D$. Then $f$ extends to a function $F$
@@ -433,7 +434,7 @@ analytic functions.
 \end{proposition}
 \begin{proof}
     It is an elementary consequence of Cauchy's Integral Formula that if $f$ is
-    holomorphic and satisfied $|f| \leq M$ in a domain $D$ in $\C$, then $|f'|$
+    holomorphic and satisfies $|f| \leq M$ in a domain $D$ in $\C$, then $|f'|$
     is bounded above on each compact subset $K$ of $D$, the upper bound
     depending on $M$, $K$, and $D$ \emph{but not on $f$}.
 \end{proof}
@@ -445,7 +446,7 @@ results concerning normality: this result is absolutely essential for the study
 of iteration of rational maps, yet its substantial proof can safely be omitted
 without prejudicing an understanding of iteration theory.
 
-\begin{theorem}[$\{f: D \to \ExtC - \{0, 1, \infty\} \mid f$ analytic$\}$ is normal]
+\begin{theorem}[Montel's fundamental normality criterion]
     \label{thm:analytic_maps_not_touching_zero_one_and_infty_form_a_normal_family}
     Let $D$ be a domain on the complex sphere $\ExtC$, and let $\Omega$ be the
     domain $\ExtC - \{0, 1, \infty\}$. Then the family $\mathcal{F}$ of all
@@ -461,12 +462,12 @@ is that each function in $\mathcal{F}$ fails to take the values $0$, $1$ and
 $\infty$ at any point of $D$. Let's see how
 Theorem~\ref{thm:analytic_maps_not_touching_zero_one_and_infty_form_a_normal_family}
 can be used to produce two variations on the same theme. In the first one of
-these, we assume only that each function $f$ fails to take three values which no
-\emph{may depend on $f$}. It is too much to expect that three values can be
+these, we assume only that each function $f$ fails to take three values which
+now \emph{may depend on $f$}. It is too much to expect that three values can be
 completely arbitrary, and we must add the requirement that they are uniformly
 separated on the sphere.
 
-\begin{theorem}[$\{f: D \to \ExtC - \{a_f, b_f, c_f\} \mid f$ analytic$\}$ is normal]
+\begin{theorem}[Montel's theorem with separated values]
     \label{thm:analytic_maps_not_touching_af_bf_and_cf_form_a_normal_family}
     Let $\mathcal{F}$ be a family of maps, each analytic in a domain $D$ on the
     complex sphere. Suppose also that there is a positive constant $m$ and, for
@@ -493,7 +494,7 @@ every $f$. There is another variation of
 Theorem~\ref{thm:analytic_maps_not_touching_zero_one_and_infty_form_a_normal_family}
 that we shall need.
 
-\begin{theorem}[$\{f: D \to \ExtC \mid f$ analytic and $f(z) \neq \varphi_j(z)$ for $j=1$, $2$, $3\}$ is normal]
+\begin{theorem}[Montel's theorem for omitted functions]
     Let $D$ be a domain, and suppose that the functions $\varphi_1$, $\varphi_2$
     and $\varphi_3$ are analytic in $D$, and are such that the closures of the
     domains $\varphi_j(D)$ are mutually disjoint. Now let $\mathcal{F}$ be a

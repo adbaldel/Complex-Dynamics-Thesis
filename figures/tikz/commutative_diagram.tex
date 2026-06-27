@@ -1,0 +1,15 @@
+\usepackage{tikz-cd}
+
+\begin{tikzcd}[row sep=2cm, column sep=2cm]
+	S \arrow[d, "f"'] & W \arrow[l, "\sigma^{-1}"'] \arrow[d, "g"] \\
+	\ExtC \arrow[r, "\sigma"'] & \ExtC
+\end{tikzcd}
+
+or
+
+\begin{tikzcd}[row sep=large, column sep=large]
+	S & W \arrow[l, "\sigma^{-1}"'] \\
+	\ExtC \arrow[r, "\sigma"'] & \ExtC
+	\arrow[u, "f"]
+	\arrow[u, "g"']
+\end{tikzcd}
