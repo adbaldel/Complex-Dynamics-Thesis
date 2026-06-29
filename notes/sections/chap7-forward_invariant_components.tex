@@ -1,5 +1,407 @@
 \chapter{Forward Invariant Components}
+\label{chp:forward_invariant_components}
+
+In Chapter~\ref{chp:the_no_wandering_domains_theorem} we shall show that each
+component of the Fatou set $F$ of $R$ has a forward image that is mapped onto
+itself by some iterate $R^m$. Anticipating this, we devote this chapter to the
+classification of the forward invariant components of the Fatou set of a
+rational map. Although this classification logically follows
+Chapter~\ref{chp:the_no_wandering_domains_theorem}, by giving it first we
+emphasize that it does not depend on the more advanced material in
+Chapter~\ref{chp:the_no_wandering_domains_theorem}.
 
 % --- SECTION ------------------------------------------------------------------
 % --- THE FIVE POSSIBILITIES ---------------------------------------------------
 \section{The Five Possibilities}
+\label{sec:the_five_possibilities}
+
+Our objective is to give a complete analysis of the possible forward invariant
+components of the Fatou set of a rational map. We shall show that such a
+component can arise in exactly one of five different ways, and we begin with the
+terminology used to describe these possibilities: as usual, $R$ is a rational
+map of degree at least two with Fatou set $F$.
+
+\begin{definition}[Types of forward invariant components of $F$]
+    \label{def:types_of_forward_invariant_components_of_F}
+    A forward invariant component $F_0$ of $F$ is:
+    \begin{enumerate}[label=(\alph*)]
+        \item \label{itm:attracting_component} an \emph{attracting component} if
+        it contains an attracting fixed point $\zeta$ of $R$;
+        \item \label{itm:superattracting_component} a \emph{super-attracting
+        component} if it contains a super-attracting fixed point $\zeta$ of $R$;
+        \item \label{itm:parabolic_component} a \emph{parabolic component} (or a
+        \emph{Leau domain}) if there is a rationally indifferent fixed point
+        $\zeta$ of $R$ on the boundary of $F_0$, and if $R^n \to \zeta$ on
+        $F_0$;
+        \item \label{itm:siegel_disc} a \emph{Siegel disc} if $R: F_0 \to F_0$
+        is analytically conjugate to a Euclidean rotation of the unit disc onto
+        itself;
+        \item \label{itm:herman_ring} a \emph{Herman ring} if $R: F_0 \to F_0$
+        is analytically conjugate to a Euclidean rotation of some annulus onto
+        itself.
+    \end{enumerate}
+\end{definition}
+
+Of course, in \ref{itm:siegel_disc} and \ref{itm:herman_ring}, the rotations
+necessarily have infinite order for otherwise, some $R^n$ would be the identity
+and then $\deg(R) = 1$. We know that attracting, super-attracting and parabolic
+components exist, and the existence of Siegel discs was established in
+Chapter~\ref{chp:periodic_points}. The proof that Herman rings exist is more
+difficult, and we comment on this in
+section~\ref{sec:siegel_discs_and_herman_rings}.
+
+The central, and most important, result in this chapter is that
+\ref{itm:attracting_component}-\ref{itm:herman_ring} are the only possibilities
+for a forward invariant component of $F$, and this is recorded in
+
+\begin{theorem}[There are only five possibilities for a forward invariant component of $F$]
+    \label{thm:there_are_only_five_possibilities_for_a_forward_invariant_component_of_F}
+    A forward invariant component of the Fatou set $F(R)$ is one of the types
+    \ref{itm:attracting_component}-\ref{itm:siegel_disc} in
+    Definition~\ref{def:types_of_forward_invariant_components_of_F}.
+\end{theorem}
+\begin{proof}
+    Theorem~\ref{thm:there_are_only_five_possibilities_for_a_forward_invariant_component_of_F}
+    is simply an amalgamation of several other theorems that occur later in this
+    chapter, but we shall explain the general strategy of the proof now. The
+    five possibilities in
+    Definition~\ref{def:types_of_forward_invariant_components_of_F} can almost
+    be distinguished from each other by considering those functions which can be
+    expressed as the limit of some subsequence of $R^n$ in $F_0$. In
+    \ref{itm:attracting_component} and \ref{itm:superattracting_component}, the
+    only possible limit is the fixed point $\zeta$ and this is in $F_0$; in
+    \ref{itm:parabolic_component}, the only limit function is $\zeta$, and this
+    is in $\boundary{F_0}$; and finally, in \ref{itm:siegel_disc} and
+    \ref{itm:herman_ring}, non-constant limit functions exist. To complete the
+    description note that \ref{itm:attracting_component} and
+    \ref{itm:superattracting_component} are distinguished according to whether
+    $\zeta$ is, or is not, a critical point, and \ref{itm:siegel_disc} and
+    \ref{itm:herman_ring} are distinguished by the connectivity of $F_0$, or by
+    the existence of a fixed point in $F_0$.
+\end{proof}
+
+% --- SECTION ------------------------------------------------------------------
+% --- LIMIT FUNCTIONS ----------------------------------------------------------
+\section{Limit Functions}
+\label{sec:limit_functions}
+
+We now consider the class of functions which arise as locally uniform limits of
+subsequences of $(R^n)_{n \in \N}$ in $F_0$. First (and regardless of whether
+$F_0$ is forward invariant or not) we have
+
+\begin{definition}[Limit function]
+    A function $\varphi$ is a \emph{limit function} on a component $F_0$ of
+    $F(R)$ if there is some subsequence of $(R^n)_{n \in \N}$ which converges
+    locally uniformly to $\varphi$ on $F_0$. The class of limit functions on
+    $F_0$ is denoted by $\mathbb{F}(F_0)$.
+\end{definition}
+
+\begin{remark}[$\mathbb{F}(F_0)$ is always non-empty and limit functions are analytic]
+    As $\{R^n \mid n \geq 1\}$ is normal in $F_0$, $\mathbb{F}(F_0)$ is always
+    non-empty, and each map in $\mathbb{F}(F_0)$ is analytic in $F_0$.
+\end{remark}
+
+\begin{remark}[$F_0$ forward invariant $\implies \varphi(F_0) \subset \closure{F_0}$]
+    If $F_0$ is forward invariant, and if $\varphi$ is a limit function in
+    $F_0$, then $\varphi(F_0)$ lies in the closure of $F_0$: in particular, if
+    $\varphi$ is a constant, with value $\zeta$ say, then $\zeta \in F_0 \cup
+    \boundary{F_0}$.
+\end{remark}
+
+\begin{lemma}[Constant limit functions are fixed points]
+    If $F_0$ is a forward invariant component of $F$, and if there exists a
+    constant limit function on $F_0$ with value $\zeta$, then $\zeta$ is a fixed
+    point of $R$.
+\end{lemma}
+\begin{proof}
+    If $z$ is in $F_0$, then so is $R(z)$, and so on some sequence of integers
+    $n$ tending to $\infty$,
+    \begin{equation*}
+        R(\zeta) = R\left(\lim_{n \to \infty} R^n(z) \right) = \lim_{n \to \infty} R^n(R(z)) = \varphi(R(z)) = \zeta.
+    \end{equation*}
+\end{proof}
+
+Of course, if the component $F_0$ is (super)attracting with fixed point $\zeta$,
+say, then $R^n \to \zeta$ locally uniformly on $F_0$ and so $\mathbb{F}(F_0)$
+contains a single function, namely the constant function with value $\zeta$. The
+same is true (by definition) if $F_0$ is a parabolic component as in
+Definition~\ref{def:types_of_forward_invariant_components_of_F}\ref{itm:parabolic_component}:
+note that it is necessary to assume that $R^n \to \zeta$ in this case for a
+rationally indifferent fixed point can lie on the boundary of a super-attracting
+component $F$ (for example, when $R$ is a polynomial).
+
+The next two results enable us to separate \ref{itm:attracting_component},
+\ref{itm:superattracting_component} and \ref{itm:parabolic_component} from
+\ref{itm:siegel_disc} and \ref{itm:herman_ring} but before giving these, we
+recall 
+
+\begin{definition}[Automorphism]
+    An \emph{automorphism} of a domain $D$ is an analytic bijection of $D$ onto
+    itself. The group of automorphisms of $D$ is denoted by $\automorphism{D}$.
+\end{definition}
+
+\begin{theorem}[$F_0$ forward invariant and $\mathbb{F}(F_0)$ has only constant functions $\implies \mathbb{F}(F_0) = \{\zeta\}$ fixed point and $R^n \to \zeta$ locally uniformly on $F_0$]
+    \label{thm:if_all_limit_functions_are_constant_on_F0_all_limit_functions_all_constant_equals_to_the_limit_fixed_point_of_F0}
+    Suppose that $F_0$ is forward invariant and that every function in
+    $\mathbb{F}(F_0)$ is constant. Then $\mathbb{F}(F_0)$ contains exactly one
+    function, with value $\zeta$, say, where $R(\zeta) = \zeta$ and $R^n \to
+    \zeta$ locally uniformly on $F_0$.
+\end{theorem}
+\begin{proof}
+    See \cite[163]{Beardon1991}.
+\end{proof}
+
+\begin{theorem}[$F_0$ forward invariant and $\mathbb{F}(F_0)$ has a non-constant function $\implies R \in \automorphism{F_0}$ and $\Id \in \mathbb{F}(F_0)$]
+    \label{thm:if_there_is_a_nonconstant_limit_function_on_F0_all_limit_functions_are_automorphisms_and_id_is_a_limit_function}
+    Suppose that $F_0$ is forward invariant, and that $\mathbb{F}(F_0)$ contains
+    some non-constant function. Then $R$ is in $\automorphism{F_0}$, and the
+    identity map $\Id$ is in $\mathbb{F}(F_0)$.
+\end{theorem}
+\begin{proof}
+    See \cite[163--164]{Beardon1991}.
+\end{proof}
+
+\begin{remark}[$\varphi$ is a non-constant limit function, then $\varphi \in \automorphism{F_0}$]
+    The same ideas enable one to show (in the proof of
+    Theorem~\ref{thm:if_there_is_a_nonconstant_limit_function_on_F0_all_limit_functions_are_automorphisms_and_id_is_a_limit_function})
+    that if $\varphi$ is a non-constant limit function, then $\varphi \in
+    \automorphism{F_0}$. 
+\end{remark}
+\begin{proof}
+    Indeed, $R \in \automorphism{F_0}$ and so has an inverse, say $S: F_0 \to
+    F_0$. Now $\{S^n\}$ is a normal family in $F_0$ (because the values taken by
+    $S^n$ do not lie in $J$), thus given any sequence $n_j$ with $R^{n_j} \to
+    \varphi$ locally uniformly in $F_0$, we can take a subsequence $m_j$ of
+    $n_j$ such that $S^{m_j}$ converges locally uniformly to some function
+    $\psi$ on $F_0$. Now as $\varphi$ maps $F_0$ into itself, it follows that
+    \begin{equation}
+        \label{eq:psi_varphi_z_equals_z}
+        \psi\varphi(z) = \lim S^{m_j}R^{m_j}(z) = z,
+    \end{equation}
+    and hence that $\varphi$ is injective on $F_0$. Further,
+    \eqref{eq:psi_varphi_z_equals_z} shows that $\psi$ is not constant, and
+    exactly as in the proof of
+    Theorem~\ref{thm:if_there_is_a_nonconstant_limit_function_on_F0_all_limit_functions_are_automorphisms_and_id_is_a_limit_function},
+    we see that $\psi$ maps $F_0$ into itself. With this, we can reverse the
+    roles of $\varphi$ and $\psi$ in \eqref{eq:psi_varphi_z_equals_z} and deduce
+    that $\varphi\psi(z) = z$ on $F_0$. It follows that $\varphi$ is a bijection
+    of $F_0$ onto itself and so is in $\automorphism{F_0}$.
+\end{proof}
+
+% --- SECTION ------------------------------------------------------------------
+% --- PARABOLIC DOMAINS --------------------------------------------------------
+\section{Parabolic Domains}
+\label{sec:parabolic_domains}
+
+Suppose now that $F_0$ is a forward invariant component of $F(R)$ and for the
+moment, regard $\boundary{F_0}$ as the ideal boundary point of the one-point
+compactification of $F_0$: explicitly,
+\begin{equation}
+    \label{eq:ideal_boundary_point}
+    R^n \to \boundary{F_0}
+\end{equation}
+means that for each compact subset $K$ of $F_0$, $R^n(K)$ is disjoint from $K$
+for all but a finite set of $n$. If this is so, then any limit function
+$\varphi$ on $F_0$ satisfies $\varphi(F_0) \subset \boundary{F_0}$, and as
+$\boundary{F_0}$ has an empty interior (simply because $F_0$ is a domain), we
+deduce (from the Open Mapping Theorem) that $\varphi$ is necessarily constant.
+Thus, if \eqref{eq:ideal_boundary_point} holds, then by
+Theorem~\ref{thm:if_all_limit_functions_are_constant_on_F0_all_limit_functions_all_constant_equals_to_the_limit_fixed_point_of_F0},
+there is some fixed point $\zeta$ of $R$ in $\boundary{F_0}$ such that $R^n \to
+\zeta$ locally uniformly on $F_0$. Our next result contains these conclusions
+and adds one other important fact.
+
+\begin{theorem}[$R^n \to \boundary{F_0} \implies F_0$ is a parabolic component]
+    \label{thm:if_Rn_converges_on_boundary_F0_then_F0_is_a_parabolic_component}
+    Suppose that $F_0$ is a forward invariant component of $F(R)$, and that $R^n
+    \to \boundary{F_0}$ as $n \to \infty$. Then there is some rationally
+    indifferent fixed point $\zeta$ of $R$ in $\boundary{F_0}$ such that:
+    \begin{itemize}[label=(\alph*)]
+        \item $R^n \to \zeta$ locally uniformly on $F_0$ as $n \to \infty$; and
+        \item $R'(\zeta) = 1$.
+    \end{itemize}
+\end{theorem}
+\begin{proof}
+    See \cite[165-166]{Beardon1991}.
+\end{proof}
+
+\begin{remark}[If every limit function in $\mathbb{F}(F_0)$ is constant, $F_0$ is a (super)attracting or parabolic component]
+    Suppose that $F_0$ is forward invariant and that every limit function in
+    $\mathbb{F}(F_0)$ is constant. Then for some fixed point $\zeta$, $R^n \to
+    \zeta$ in $F_0$ and $\zeta \in F_0 \cup \boundary{F_0}$. If $\zeta \in F_0$,
+    then $F_0$ is a (super)attracting component of $F(R)$ (see the proof of
+    Theorem~\ref{thm:if_all_limit_functions_are_constant_on_F0_all_limit_functions_all_constant_equals_to_the_limit_fixed_point_of_F0}),
+    while if $\zeta \in \boundary{F_0}$, then by
+    Theorems~\ref{thm:if_all_limit_functions_are_constant_on_F0_all_limit_functions_all_constant_equals_to_the_limit_fixed_point_of_F0}
+    and
+    \ref{thm:if_Rn_converges_on_boundary_F0_then_F0_is_a_parabolic_component},
+    $F_0$ is a parabolic component of $F(R)$. Thus, with reference to the proof
+    of
+    Theorem~\ref{thm:there_are_only_five_possibilities_for_a_forward_invariant_component_of_F},
+    we have shown that if every limit function in $\mathbb{F}(F_0)$ is constant,
+    then $F_0$ is one of the types \ref{itm:attracting_component},
+    \ref{itm:superattracting_component} and \ref{itm:parabolic_component} in
+    Definition~\ref{def:types_of_forward_invariant_components_of_F}.
+\end{remark}
+
+% --- SECTION ------------------------------------------------------------------
+% --- SIEGEL DISCS AND HERMAN RINGS --------------------------------------------
+\section{Siegel Discs and Herman Rings}
+\label{sec:siegel_discs_and_herman_rings}
+
+In this section we prove
+
+\begin{theorem}[$F_0$ forward invariant and $\mathbb{F}(F_0)$ has non-constant functions $\implies F_0$ is a Siegel disc or a Herman ring]
+    \label{thm:if_there_are_nonconstant_limit_functions_on_F0_then_F0_is_a_Siegel_disc_or_Herman_ring}
+    Suppose that $F_0$ is a forward invariant component of $F(R)$, where
+    $\deg(R) \geq 2$, and that $\mathbb{F}(F_0)$ contains non-constant
+    functions. Then $F_0$ is either a Siegel disc or a Herman ring.
+\end{theorem}
+\begin{proof}
+    See \cite[167--170]{Beardon1991}.
+
+    The idea of the proof of
+    Theorem~\ref{thm:if_there_are_nonconstant_limit_functions_on_F0_then_F0_is_a_Siegel_disc_or_Herman_ring}
+    is as follows. As $J$ has at least three points, the universal covering
+    space of $F_0$ is the unit disc $\Delta$, and $F_0$ is conformally
+    equivalent to $\Delta / \Gamma$, where $\Gamma$ is the cover group (of
+    Möbius transformations) acting on $\Delta$. Now the conformal automorphisms
+    $R^n$ of $F_0$ accumulate at the identity map (see
+    Theorem~\ref{thm:if_there_is_a_nonconstant_limit_function_on_F0_all_limit_functions_are_automorphisms_and_id_is_a_limit_function}),
+    and if we rewrite this in terms of the group $\Gamma$ and its normalizer, we
+    find that $\Gamma$ is Abelian. However, the only Abelian cover groups are
+    cyclic, and if we now list all possible cyclic groups and compute the
+    corresponding quotient spaces, we find that $\Delta / \Gamma$, and hence
+    $F_0$, is simply or doubly connected. It follows that $F_0$ is conformally
+    equivalent to either a disc or an annulus and the rest of the argument is
+    straightforward.
+\end{proof}
+
+\begin{remark}[Completion of the proof of Theorem~\ref{thm:there_are_only_five_possibilities_for_a_forward_invariant_component_of_F}]
+    With this, we will have completed the proof of
+    Theorem~\ref{thm:there_are_only_five_possibilities_for_a_forward_invariant_component_of_F}.
+\end{remark}
+
+We end this section with some brief remarks on the existence of Herman rings.
+Let
+\begin{equation}
+    \label{eq:example_of_R_with_a_Herman_rings}
+    R(z) = \lambda z^2 \left(\frac{1 + \overline{\alpha} z}{z + \alpha}\right),
+\end{equation}
+where $|\lambda| = 1$ and $0 < |\alpha| < 1$. If $|\alpha|$ sufficiently small,
+then $R$ is a homeomorphism of the unit circle $\boundary{\Delta}$ onto itself.
+Now it is known that for suitable choices of $\lambda$ and $\alpha$, $R: V \to
+V$ is analytically conjugate to a rotation (necessarily of infinite order) of
+$\boundary{\Delta}$ and moreover, this conjugacy extends to an $R$-invariant
+neighborhood $V$ of $\boundary{\Delta}$ such that $R: V \to V$ is analytically
+conjugate to a rotation of an annulus (see \cite{Arnold1965} and
+\cite{Herman1979}). Clearly, $\{R^n \mid n \geq 1\}$ is normal in $V$, and if
+$F_0$ is the component of $F(R)$ which contains $V$, then $\mathbb{F}(F_0)$
+contains non-constant limit functions. We deduce that for these choices of
+$\lambda$ and $\alpha$, $F_0$ is either a Siegel disc or a Herman ring. As both
+$0$ and $\infty$ are super-attracting fixed points of $R$, $F_0$ is not simply
+connected and so $F_0$ must be a Herman ring.
+
+For an alternative construction of Herman rings, and quantitative information
+about them see \cite{Shishikura1987}; this construction uses quasiconformal
+maps, and we consider these a part of material in \cite{Shishikura1987} in
+Chapter~8 and section~9.8 \cite{Beardon1991}.
+
+For computer-generated illustrations of Siegel discs see
+Figure~\ref{fig:figure_7_4_1}, \cite{Peitgen1986}, and for Herman rings, see
+\cite{Ushiki1986}. For further information, see also references in
+\cite[171]{Beardon1991}.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.8\textwidth]{beardons_book/figure_7_4_1.png}
+    \caption{$z \mapsto \lambda z + z^2$, $\lambda = \exp(\pi i(\sqrt{5} -
+    1))$.}
+    \label{fig:figure_7_4_1}
+\end{figure}
+
+% --- SECTION ------------------------------------------------------------------
+% --- CONNECTIVITY OF INVARIANT COMPONENTS -------------------------------------
+\section{Connectivity of Invariant Components}
+\label{sec:Connectivity_of_invariant_components}
+
+This section contains results about the connectivity of a component $F_0$ of
+$F(R)$. To prove these, we need two results about critical points, the first of
+which is
+
+\begin{theorem}[$F_0$ contains a (super)attracting fixed point $\implies F_0$ contains a critical point]
+    \label{thm:F0_attracting_component_implies_F0_contains_a_critical_point}
+    Let $R$ be a rational map of degree at least two. If a component $F_0$ of
+    $F(R)$ contains a (super)attracting fixed point of $R$, then it also
+    contains a critical point of $R$.
+\end{theorem}
+\begin{proof}
+    See \cite[172--173]{Beardon1991}.
+\end{proof}
+
+The second result about critical points is the corresponding result for Petal
+domains, namely
+
+\begin{theorem}[$F_0$ has a rationally indifferent fixed point on the boundary $\implies F_0$ contains a critical point]
+    \label{thm:F0_parabolic_component_implies_F0_contains_a_critical_point}
+    Let $R$ be a rational map of degree at least two, let $\zeta$ be a
+    rationally indifferent fixed point lying on the boundary of some forward
+    invariant component $F_0$ of $F(R)$, and suppose that $R^n \to \zeta$
+    locally uniformly in $F_0$. Then $F_0$ contains a critical point of $R$.
+\end{theorem}
+
+Although we shall not prove this result until Chapter~9 \cite{Beardon1991}
+(which is devoted to the study of critical points), it is convenient (but not
+necessary) to use it in the proof of the next result. For a proof, readers may
+now consult Theorem~9.3.2 \cite{Beardon1991} and its proof, but for those who
+would prefer not to do this, we have also included an outline of a proof of the
+next result which does not use
+Theorem~\ref{thm:F0_parabolic_component_implies_F0_contains_a_critical_point}.
+We can now start to derive results about the connectivity of forward invariant
+components of $F(R)$. First, we have
+
+\begin{theorem}[$F_0$ forward invariant $\implies c(F_0) \in \{1, 2, \infty\}$]
+    \label{thm:F0_forward_invariant_implies_cF0_is_1_2_or_infty}
+    Let $R$ be a rational map of degree at least two. Then any forward invariant
+    component of $F(R)$ is simply, doubly, or infinitely, connected.
+\end{theorem}
+\begin{proof}
+    See \cite[173]{Beardon1991}.
+\end{proof}
+
+Theorem~\ref{thm:F0_forward_invariant_implies_cF0_is_1_2_or_infty} and its proof
+contains the following results.
+
+\begin{corollary}[$F$ connected $\implies c(F) \in \{1, \infty\}$]
+    If $F$ is connected, then it is either simply or infinitely connected.
+\end{corollary}
+
+\begin{corollary}[$F_0$ has a fixed point $\implies c(F_0) \in \{1, \infty\}$]
+    If a component of $F(R)$ contains a fixed point of $R$, then it is either
+    simply or infinitely connected.
+\end{corollary}
+
+\begin{corollary}[$F_0$ doubly connected $\iff F_0$ Herman ring]
+    \label{cor:F0_doubly_connected_iff_F0_Herman_ring}
+    A forward invariant component of $R$ is doubly connected if and only if it
+    is a Herman Ring.
+\end{corollary}
+
+\begin{remark}[$F_0$ (super)attracting or parabolic component $\implies c(F_0) \in \{1, \infty\}$]
+    If a forward invariant component $F_0$ is of one of the types
+    \ref{itm:attracting_component}, \ref{itm:superattracting_component} or
+    \ref{itm:parabolic_component}, then according to
+    Theorem~\ref{thm:F0_forward_invariant_implies_cF0_is_1_2_or_infty} and
+    Corollary~\ref{cor:F0_doubly_connected_iff_F0_Herman_ring}, it must be
+    simply or infinitely connected: in fact, all six possibilities can occur.
+\end{remark}
+
+We end this section with a sketch of a proof of
+Theorem~\ref{thm:F0_forward_invariant_implies_cF0_is_1_2_or_infty} that does not
+use
+Theorem~\ref{thm:F0_parabolic_component_implies_F0_contains_a_critical_point}.
+This argument is closer in spirit to the proof of
+Theorem~\ref{thm:F0_attracting_component_implies_F0_contains_a_critical_point},
+it requires more background knowledge, and we omit the details.
+
+For the sketch see \cite[174--175]{Beardon1991}.

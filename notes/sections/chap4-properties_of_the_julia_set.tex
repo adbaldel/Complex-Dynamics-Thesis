@@ -101,9 +101,9 @@ As an application of this result we can obtain
 We shall continue to exploit
 Theorem~\ref{thm:analytic_maps_not_touching_zero_one_and_infty_form_a_normal_family}
 as we explore the structure of the Julia set. We have not yet considered whether
-the Julia set can be non-empty, and our first task will be to settle this
-issue. The case when the rational map $R$ has degree one is trivial and of
-little interest, but in all other cases, $J$ is not empty.
+the Julia set can be non-empty, and our first task will be to settle this issue.
+The case when the rational map $R$ has degree one is trivial and of little
+interest, but in all other cases, $J$ is not empty.
 
 \begin{theorem}[$J$ is infinite]
     \label{thm:J_is_infinite}
@@ -240,6 +240,10 @@ its behavior under the rational map $R$.
     conclude that $J$ must be uncountable.
 \end{proof}
 
+In the next chapter (Chapter~\ref{chp:the_structure_of_the_Fatou_set}) we shall
+prove a stronger, but similar, result for the components of $J$
+(Theorem~\ref{thm:J_disconnected_implies_uncountably_many_components}).
+
 We continue to explore the consequences of
 Theorem~\ref{thm:analytic_maps_not_touching_zero_one_and_infty_form_a_normal_family},
 and the next result says that the successive iterates of $R$ increasingly expand
@@ -283,17 +287,17 @@ the closure, of some countable set.
     See \cite[70--71]{Beardon1991}.
 \end{proof}
 
-\begin{remark}[$z$ non-exceptional point $\implies J \subset \closure{[z]}$]
-    We now consider the relationship between $J$ and an orbit $[z]$ of a
+\begin{remark}[$z$ non-exceptional point $\implies J \subset \closure{[z]}$] We
+    now consider the relationship between $J$ and an orbit $[z]$ of a
     non-exceptional point $z$. As the closure $\closure{[z]}$ of $[z]$ is both
     closed and completely invariant, the minimality of $J$ implies that \emph{if
     $z$ is not exceptional, then $J \subset \closure{[z]}$}.
 \end{remark}
 
-\begin{remark}[$z$ non-exceptional point and $z \in J \implies J = \closure{[z]}$]
-    If $z$ is in $J$, then it is not exceptional, so $[z]$, and hence also
-    $\closure{[z]}$, is contained in $J$: thus \emph{if $z$ is in $J$, then $J =
-    \closure{[z]}$}. 
+\begin{remark}[$z$ non-exceptional point and $z \in J \implies J =
+    \closure{[z]}$] If $z$ is in $J$, then it is not exceptional, so $[z]$, and
+    hence also $\closure{[z]}$, is contained in $J$: thus \emph{if $z$ is in
+    $J$, then $J = \closure{[z]}$}. 
 \end{remark}
 
 In fact, we can replace $[z]$ by the smaller set $\orbit^-(z)$ and still prove
@@ -348,7 +352,12 @@ available.
     converges to $J$ and write $R^{-n}(E) \to J$}. Examples of such sets $E$ are
     easy to find: for example, if $F_0$ is a component of the Fatou set that
     contains an attracting fixed point $\zeta$, then any compact subset of $F_0
-    - \{\zeta\}$ has the required property.
+    - \{\zeta\}$ has the required property. In
+    Chapters~\ref{chp:forward_invariant_components} and
+    \ref{chp:the_no_wandering_domains_theorem}, we shall analyze completely the
+    possible forward images of $\{R^n(z) \mid n \geq 1\}$ of a point $z$ in $F$
+    and after that, Theorem~\ref{thm:R_inverse_n_E_converges_to_J} will be even
+    more significant.
 \end{remark}
 
 We end this section with the following generalization of
@@ -505,7 +514,7 @@ Theorem~\ref{thm:F_and_J_are_preserved_under_iteration}.
     \ExtC$.
 \end{theorem}
 \begin{proof}
-    See Chapter 9 of \cite{Beardon1991}.
+    See Chapter~9 of \cite{Beardon1991}.
 \end{proof}
 
 \begin{example*}[Continuation]

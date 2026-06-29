@@ -9,7 +9,8 @@ conjugacy, valency, fixed points and critical points are discussed, and the
 Riemann-Hurwitz relation is proved.
 
 % --- SECTION ------------------------------------------------------------------
-% --- THE EXTENDED COMPLEX PLANE -----------------------------------------------
+% --- THE EXTENDED COMPLEX PLANE
+% -----------------------------------------------
 \section{The Extended Complex Plane}
 \label{sec:the_extended_complex_plane}
 
@@ -143,7 +144,8 @@ our study of rational dynamics whenever global constants are allowed to change.
 \end{remark}
 
 % --- SECTION ------------------------------------------------------------------
-% --- RATIONAL MAPS ------------------------------------------------------------
+% --- RATIONAL MAPS
+% ------------------------------------------------------------
 \section{Rational Maps}
 \label{sec:rational_maps}
 
@@ -188,8 +190,8 @@ to scalar multiplication. This allows us to define the degree of a rational map.
 \end{definition}
 
 \begin{proposition}[{$\deg(RS) = \deg(R)\deg(S)$}]
-    Given two rational function $R$ and $S$, the degree of $RS$ is $\deg(R)$ times
-    $\deg(S)$. That is,
+    Given two rational function $R$ and $S$, the degree of $RS$ is $\deg(R)$
+    times $\deg(S)$. That is,
     \begin{equation*}
         \deg(RS) = \deg(R)\deg(S).
     \end{equation*}
@@ -321,7 +323,8 @@ fixed point for all polynomials.
 \end{remark}
 
 % --- SECTION ------------------------------------------------------------------
-% --- THE LIPSCHITZ CONDITION --------------------------------------------------
+% --- THE LIPSCHITZ CONDITION
+% --------------------------------------------------
 \section{The Lipschitz Condition}
 \label{sec:the_lipschitz_condition}
 
@@ -411,7 +414,8 @@ carefully in terms of the exterior of the image curve
 \end{figure}
 
 % --- SECTION ------------------------------------------------------------------
-% --- CONJUGACY ----------------------------------------------------------------
+% --- CONJUGACY
+% ----------------------------------------------------------------
 \section{Conjugacy}
 \label{sec:conjugacy}
 
@@ -461,7 +465,8 @@ polynomials within the class of rational maps.
 \end{theorem}
 
 % --- SECTION ------------------------------------------------------------------
-% --- VALENCY ------------------------------------------------------------------
+% --- VALENCY
+% ------------------------------------------------------------------
 \section{Valency}
 \label{sec:valency}
 
@@ -577,7 +582,8 @@ neighborhood of $z_0$).
 \end{remark}
 
 % --- SECTION ------------------------------------------------------------------
-% --- THE INVERSE FUNCTION THEOREM ---------------------------------------------
+% --- THE INVERSE FUNCTION THEOREM
+% ---------------------------------------------
 \section{The Inverse Function Theorem}
 \label{sec:the_inverse_function_theorem}
 
@@ -656,7 +662,8 @@ $h$.
 \end{remark}
 
 % --- SECTION ------------------------------------------------------------------
-% --- FIXED POINTS -------------------------------------------------------------
+% --- FIXED POINTS
+% -------------------------------------------------------------
 \section{Fixed Points}
 \label{sec:fixed_points}
 
@@ -665,6 +672,9 @@ $h$.
     \ExtC$. A point $\zeta$ in $D$ is a \emph{fixed point} of $f$ if $f(\zeta) =
     \zeta$.
 \end{definition}
+
+The fixed points of a mapping play an important role in much of our later work,
+and they will be studied and classified in Chapter~\ref{chp:periodic_points}.
 
 \begin{proposition}[Fixed points of rational maps]
     Given by two coprime polynomials $P$ and $Q$ and the rational map $R = P/Q$.
@@ -938,9 +948,14 @@ iteration.
 \end{proof}
 
 % --- SECTION ------------------------------------------------------------------
-% --- CRITICAL POINTS ----------------------------------------------------------
+% --- CRITICAL POINTS
+% ----------------------------------------------------------
 \section{Critical Points}
 \label{sec:critical_points}
+
+This section is devoted to the notion of critical points and critical values
+even though their full significance for iteration will not be apparent until
+Chapter~9 of \cite{Beardon1991}.
 
 \begin{definition}[Critical point of a rational map]
     Given a rational map $R$. A point $z$ in $\ExtC$ is a \emph{critical point}
@@ -1030,6 +1045,20 @@ number of critical points of $P$ in $\C$. These two estimates are given in
     1$. Thus, the number of critical points of $P$ in $\C$ is at most $(2d - 2)
     - (d - 1) = d - 1$.
 \end{proof}
+
+We shall see later that these estimates play a vital role in iteration theory.
+
+\begin{definition}[Multiplicity of a critical point]
+    Usually, we allocate a multiplicity to a critical point $z$: this
+    multiplicity is $v_R(z) - 1$ and with this convention, a rational map of
+    degree $d$ has exactly $2d - 2$ critical points.
+\end{definition}
+
+A topological proof of Theorem~\ref{thm:Riemann_Hurwitz_relation}, using the
+Euler characteristic is available and has the advantage that, suitably modified,
+it is valid for any analytic map between compact Riemann surfaces: this is given
+in Chapter~\ref{chp:the_structure_of_the_Fatou_set}. However, at this point some
+readers may prefer the previous more elementary proof.
 
 We end this section with a simple result which locates the critical values of
 the iterate $R^n$ in terms of the critical points of $R$.
