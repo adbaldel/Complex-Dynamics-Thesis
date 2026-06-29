@@ -1,6 +1,939 @@
 \chapter{The No Wandering Domains Theorem}
 \label{chp:the_no_wandering_domains_theorem}
 
+This chapter is devoted to the proof of Sullivan's important theorem, namely
+that for any component $\Omega$ of the Fatou set of $R$, the sequence $\Omega,
+R(\Omega), R^2(\Omega), \dots$ is eventually periodic.
+
 % --- SECTION ------------------------------------------------------------------
 % --- THE NO WANDERING DOMAINS THEOREM -----------------------------------------
 \section{The No Wandering Domains Theorem}
+\label{sec:the_no_wandering_domains_theorem}
+
+Consider the sequence
+\begin{equation}
+    \label{eq:Fatou_component_iterates}
+    \Omega, R(\Omega), R^2(\Omega), \dots, R^n(\Omega), \dots
+\end{equation}
+of successive images of a component $\Omega$ of the Fatou set of a rational map
+$R$. This chapter is devoted to the proof that this sequence is eventually
+periodic (the only alternative being that the regions in
+\eqref{eq:Fatou_component_iterates} are pairwise disjoint). We begin with the
+terminology which enables us to refer briefly to each possibility and, as usual,
+$R$ is a rational map with $\deg(R) \geq 2$.
+
+\begin{definition}[Types of components of $F$]
+    A component $\Omega$ of the Fatou set $F(R)$ is:
+    \begin{enumerate}[label=(\alph*)]
+        \item \emph{periodic} if for some positive integer $n$, $R^n(\Omega) =
+        \Omega$;
+        \item \emph{eventually periodic} if for some positive integer $m$,
+        $R^m(\Omega)$ is periodic; and
+        \item \emph{wandering} if the sets $R^n(\Omega)$, $n \geq 0$, are
+        pairwise disjoint.
+    \end{enumerate}
+\end{definition}
+
+A wandering component of $F(R)$ is called a \emph{wandering domain} of $R$.
+Fatou asked whether such domains can exist and in 1985, \cite{Sullivan1985},
+Sullivan proved that they cannot (for an alternative proof, see
+\cite{Bers1987}).
+
+\begin{theorem}[The No Wandering Domains Theorem]
+    \label{thm:the_no_wandering_domains_theorem}
+    Every component of the Fatou set of a rational map is eventually periodic.
+\end{theorem}
+
+Sullivan's result is probably the most significant advance made in this subject
+in recent times, and we shall devote this entire chapter to its proof. It
+implies, for example, that the long-term dynamic of a rational map $R$ on its
+Fatou set $F$ is the action of $R$ on the periodic components of $F$, and as a
+periodic component of $F$ is forward invariant under some $R^m$, we have already
+analyzed this situation in Chapter~\ref{chp:forward_invariant_components}.
+Further important applications arise by combining it with the results on
+critical points in Chapter~9 \cite{Beardon1991}, for periodic components imply
+the existence of critical points (see
+Theorems~\ref{thm:F0_attracting_component_implies_F0_contains_a_critical_point}
+and \ref{thm:F0_parabolic_component_implies_F0_contains_a_critical_point}), and
+from the Riemann-Hurwitz relation we know that there are at most $2d - 2$
+critical points. The rest of this chapter is concerned only with the proof of
+Theorem~\ref{thm:the_no_wandering_domains_theorem}, and the reader who is
+primarily interested in applications can now pass safely on to Chapter~9.
+
+Although we shall not consider entire functions in this text, we remark that
+wandering domains can exist for these: see references in
+\cite[177]{Beardon1991}.
+
+% --- SECTION ------------------------------------------------------------------
+% --- A PRELIMINARY RESULT -----------------------------------------------------
+\section{A Preliminary Result}
+\label{sec:a_preliminary_result}
+
+The proof of Theorem~\ref{thm:the_no_wandering_domains_theorem} will be by
+contradiction so we suppose now that $R$ does have a wandering domain. In this
+section we shall derive a consequence of this assumption which enables us to
+simplify Sullivan's original proof by restricting ourselves to simply connected
+components of $F(R)$: of course, this only contributes towards the required
+contradiction, and it will have no significance at all once
+Theorem~\ref{thm:the_no_wandering_domains_theorem} has been proved. We prove
+
+\begin{lemma}[Properties of wandering domains of $R$]
+    \label{lem:properties_of_wandering_domains_of_R}
+    Suppose that $R$ has a wandering domain. Then for some component $W$ of
+    $F(R)$, the components
+    \begin{equation}
+        \label{eq:Fatou_wandering_component_iterates}
+        W, R(W), R^2(W), \dots, R^n(W), \dots
+    \end{equation}
+    of $F(R)$ are pairwise disjoint, simply connected, and contain no critical
+    points of $R$. In particular, each is mapped by $R$ homeomorphically onto
+    the next.
+\end{lemma}
+
+The heart of the argument lies in showing that the existence of a wandering
+domain implies the existence of a simply connected wandering domain. We use
+$\diameter[E]$ to denote the diameter of a set $E$ with respect to the spherical
+metric, and as a first step, we prove
+
+\begin{lemma}[Compact subsets of wandering disappear]
+    \label{lem:compact_subsets_of_wandering_domains_disappear}
+    Suppose that $W$ is a wandering domain. Then for any compact subset $K$ of
+    $W$, $\diameter[R^n(K)] \to 0$ as $n \to \infty$.
+\end{lemma}
+\begin{proof}
+    Suppose that this is false: then there is some compact subset $K$ of $W$,
+    some positive $\varepsilon$, and some increasing sequence $n_j$ of integers
+    such that for $j = 1, 2, \dots$,
+    \begin{equation}
+        \label{eq:diam_of_compact_subsets_of_wandering_domains_doesnt_disappear}
+        \diameter[R^{n_j}(W)] \geq \varepsilon.
+    \end{equation}
+    As $\{R^n\}$ is normal in $W$, there is a subsequence of $R^{n_j}$ which
+    converges locally uniformly on $W$ to some analytic function $g$: for
+    convenience, we relabel this subsequence and so assume that $R^{n_j}$ itself
+    has this property. Now if $g$ is constant, with value $\alpha$ say, on $W$,
+    then $R^{n_j}$ converges uniformly to $\alpha$ on $K$ and so, for large $j$,
+    $R^{n_j}(K)$ lies in a $\varepsilon/3$-neighbourhood of $\alpha$. This
+    contradicts
+    \eqref{eq:diam_of_compact_subsets_of_wandering_domains_doesnt_disappear},
+    and we conclude that $R^{n_j}$ converges to a non-constant $g$ locally
+    uniformly on $W$.
+
+    We now take a point $\zeta$ in $W$ where $g'(\zeta) \neq 0$ and draw a small
+    circle $C$ with center $\zeta$ which with its interior $D$ lies in $W$, and
+    which is such that $g(z) \neq g(\zeta)$ when $z$ is on $C$. Then for $j \geq
+    j_0$, say,
+    \begin{equation*}
+        |R^{n_j}(z) - g(z)| < \inf_{w \in C} |g(w) - g(z)| < |g(z) - g(\zeta)|
+    \end{equation*}
+    on $C$ and so by Rouché's Theorem, $R^{n_j}(D)$ contains the point
+    $g(\zeta)$. This contradicts the fact that $W$ is a wandering domain and so
+    completes the proof.
+\end{proof}
+
+We can now give the
+
+\begin{proof}[Proof of Lemma~\ref{lem:properties_of_wandering_domains_of_R}]
+    First, $R$ has a wandering domain, $\Omega$ say, so only a finite number of
+    the sets $R^n(\Omega)$ contain critical points of $R$. Taking $N$ to be
+    sufficiently large, we let $W = R^N(\Omega)$ and $W_n = R^n(W)$, so $W$ is a
+    wandering domain and no $W_j$ contains any critical points of $R$. As a
+    consequence of this, we have
+    \begin{equation}
+        \label{eq:Riemann_Hurwitz_relation_for_a_wandering_domain}
+        \chi(W_n) = m_n \chi(W_{n+1}),
+    \end{equation}
+    where $R$ is an $m_n$-fold map of $W_n$ onto $W_{n+1}$
+    (Theorem~\ref{thm:Riemann_Hurwitz_relation_for_related_Fatou_components}).
+    Now it is only necessary to prove that $W$ ($= W_0$) is simply connected for
+    then, from \eqref{eq:Riemann_Hurwitz_relation_for_related_Fatou_components},
+    $m_0 \chi(W_1) = 1$; hence $W_1$ is also simply connected, $m_0 = 1$ and the
+    argument then proceeds by induction in the same way to drive the simple
+    connectivity of $W_n$ for all subsequent $n$.
+
+    To complete the proof, then, we show that $W$ is simply connected, and again
+    we proceed by contradiction. Given that $W$ is not simply connected, there
+    is a simple closed curve, say $\gamma$, in $W$ which is not homotopically
+    trivial in $W$, and we define $\gamma_n = R^n(\gamma)$. Now
+    \begin{equation*}
+        R^n: W \to R^n(W)
+    \end{equation*}
+    is a smooth unlimited covering map (for by construction, there are no
+    critical points of any of the factors $R$ in the composition $R^n$), and
+    this ensures that $\gamma_n$ is not homotopically trivial in $R^n(W)$, for
+    if it were, the Monodromy Theorem would enable us to take the deformation of
+    $\gamma_n$ into a point of $R^n(W)$ and lift it to a deformation of $\gamma$
+    into a point of $W$.
+
+    We now recall
+    Theorem~\ref{thm:interior_components_mapping_theorem_for_rational_maps} and
+    the $\delta$ defined in that result. By
+    Lemma~\ref{lem:compact_subsets_of_wandering_domains_disappear} (with $K =
+    \gamma$) there is some $m$ such that for $n \geq m$,
+    \begin{equation*}
+        \diameter[\gamma_n] \leq \delta.
+    \end{equation*}
+    Now according to
+    Theorem~\ref{thm:interior_components_mapping_theorem_for_rational_maps}, if
+    $n \geq m$ then $R$ maps the union of $\gamma_n$ and its interior components
+    into the union of $\gamma_{n+1}$ and its interior components. Using
+    Theorem~\ref{thm:analytic_maps_not_touching_af_bf_and_cf_form_a_normal_family},
+    we deduce that $\{R^n \mid n \geq 1\}$ is normal in each interior component
+    of $\gamma_m$ and so each such component lies in $F$. It now follows that
+    the union of $\gamma_m$ and all its interior components is a connected,
+    compact subset of $F(R)$ whose complement is (by
+    Proposition~\ref{prp:simply_connected_iff_complement_connected}) simply
+    connected. We deduce that $\gamma_m$ is homotopic to a point in $F(R)$ (see
+    Exercise~8.2.1 \cite{Beardon1991}), and hence also in $W_n$, contrary to our
+    earlier observation. It follows that $W$ is simply connected, and the proof
+    is complete.
+\end{proof}
+
+\begin{remark}[Note about the proof]
+    When (in section~\ref{sec:the_proof_of_the_no_wandering_domains_theorem}) we
+    proceed to the proof of Theorem~\ref{thm:the_no_wandering_domains_theorem}
+    by contradiction, we shall assume that the (hypothetical) wandering domain
+    has those properties given in
+    Lemma~\ref{lem:properties_of_wandering_domains_of_R}.
+\end{remark}
+
+% --- SECTION ------------------------------------------------------------------
+% --- CONFORMAL STRUCTURES -----------------------------------------------------
+\section{Conformal Structures}
+\label{sec:conformal_structures}
+
+We shall need certain facts about quasiconformal maps and in order to avoid too
+great a disruption to the proof of
+Theorem~\ref{thm:the_no_wandering_domains_theorem}, we shall adopt a rather
+axiomatic view and confine ourselves to a brief discussion of the few standard
+results that we need. The reader is referred to \cite{Ahlfors2006},
+\cite{Lehto1987} and \cite{Lehto1973} for the proofs and the background
+material.
+
+We begin with a generalization of the Cauchy-Riemann equations. Given any
+function $f$ with continuous partial derivatives in a domain $D$, we introduce
+the two differential operators
+\begin{equation*}
+    \pbyp{f}{\overline{z}} = \frac{1}{2}\left(\pbyp{f}{x} + i \pbyp{f}{y}\right), \quad \pbyp{f}{z} = \frac{1}{2i}\left(\pbyp{f}{x} - i \pbyp{f}{y}\right)
+\end{equation*}
+Observe that if $f$ is analytic, then
+\begin{equation*}
+    \pbyp{f}{\overline{z}} = 0, \quad \pbyp{f}{z} = f'(z),
+\end{equation*}
+the first of these being the Cauchy-Riemann equations. 
+
+\begin{definition}[Beltrami equation]
+    Our generalization of these equations is the
+    \emph{Beltrami equation}
+    \begin{equation}
+        \label{eq:Beltrami_equation}
+        \pbyp{f}{\overline{z}} = \mu \pbyp{f}{z},
+    \end{equation}
+    where $\mu$ is some suitable complex-valued function on $D$
+\end{definition}
+
+The basic idea is that if $\mu = 0$ throughout $D$, then any sufficiently smooth
+solution $f$ of \eqref{eq:Beltrami_equation} is analytic in $D$, while in the
+general situation, $\mu$ is taken as a measure of the deviation of a solution
+$f$ from conformality. Of course, given a function $f$ on $D$, we can use
+\eqref{eq:Beltrami_equation} to define $\mu$.
+
+\begin{definition}[Complex dilation of $f$]
+    This $\mu$ (when it exists) is called the complex dilatation of $f$ and is
+    denoted by $\mu_f$.
+\end{definition}
+
+An essential feature of the theory is that it is developed for a very large
+class of $\mu$; most notably, $\mu$ is not required to be continuous and as a
+result we have a tool of great flexibility. The functions $\mu: D \to \C$ are
+required to be Lebesgue measurable and to satisfy
+\begin{equation}
+    \label{eq:condition_for_mu_to_be_Beltrami_coefficient}
+    ||\mu||_\infty < 1
+\end{equation}
+in $D$, so $|\mu| \leq ||\mu||_\infty$ almost everywhere (that is, except on a
+set of zero area).
+
+\begin{definition}[Beltrami coefficient]
+    We shall call any such function $\mu$ a \emph{Beltrami coefficient} on $D$.
+\end{definition}
+
+\begin{definition}[Quasiconformal homeomorphism]
+    Given a domain $D$ and a Beltrami coefficient $\mu$ on $D$, we say that a
+    homeomorphism $f$ on $D$ is \emph{quasiconformal} with \emph{complex
+    dilation} $\mu$ on $D$ if $f$ is an $L^2$ solution of
+    \eqref{eq:Beltrami_equation} in $D$ (see \cite[24]{Lehto1987}).
+\end{definition}
+
+The reader need not worry about the technical nature of the definition as we
+shall not mention these ideas again; however, some explanatory remarks may be
+helpful.
+
+\begin{remark}[Quasiconformal maps are differentiable]
+    First, a quasiconformal map $f$ is differentiable (in the sense that its
+    derivative is a linear map from $\R^2$ to itself) almost everywhere (a.e.)
+    in $D$, and we only require \eqref{eq:Beltrami_equation} to be satisfied
+    a.e. in $D$.
+\end{remark}
+
+\begin{remark}[Quasiconformal maps move infinitesimal circles to infinitesimal ellipses with bounded eccentricity]
+    Second, the intuitive implication of \eqref{eq:Beltrami_equation} is that
+    for almost all $z$, the function $f$ maps an infinitesimal circle $C$
+    centered at $z$ to an infinitesimal ellipse $E$ centered at $f(z)$, where
+    both the eccentricity and the orientation of $E$ are determined by $\mu(z)$.
+    The significance of \eqref{eq:condition_for_mu_to_be_Beltrami_coefficient}
+    is that it controls this distortion induced by $f$, and it implies that the
+    eccentricity of $E$ is bounded above throughout $D$.
+\end{remark}
+
+We turn now to the basic existence and uniqueness theorem for solutions of
+\eqref{eq:Beltrami_equation}; see Theorems~4.2 and 4.4 in \cite{Lehto1987}.
+
+\begin{theorem}[Existence of quasiconformal maps with a given complex dilation]
+    \label{thm:existence_of_quasiconformal_maps_with_a_given_complex_dilation}
+    Let $\mu$ be a Beltrami coefficient on a domain $D$ on the complex sphere.
+    Then:
+    \begin{enumerate}[label=(\roman*)]
+        \item
+        \label{itm:existence_of_quasiconformal_maps_with_a_given_complex_dilation}
+        there exists a quasiconformal map with complex dilation $\mu$ on $D$;
+        and
+        \item \label{itm:transition_between_coordinate_charts_in_analytic} if
+        $\varphi$ and $\psi$ are two such maps, then $\varphi\psi^{-1}$ is
+        analytic.
+    \end{enumerate}
+\end{theorem}
+
+Taking $\mu$ to be identically zero and $\psi$ to be the identity we obtain
+
+\begin{corollary}[Quasiconformal with dilation $0 \implies$ conformal]
+    If $\varphi$ is quasiconformal with dilation $0$ on $D$, then it is
+    conformal on $D$.
+\end{corollary}
+
+\begin{remark}[Measurable Riemann Mapping Theorem]
+    Given a simply connected domain $D$ (conformally equivalent to the unit disc
+    $\Delta$), and a Beltrami coefficient $\mu$ on $D$, then there is a
+    quasiconformal map $\varphi$ of $D$ onto $\Delta$ with dilation $\mu$ almost
+    everywhere in $D$: this is the \emph{Measurable Riemann Mapping Theorem} for
+    the case when $\mu$ is identically zero is the classical Riemann Mapping
+    Theorem.
+\end{remark}
+
+Theorem~\ref{thm:existence_of_quasiconformal_maps_with_a_given_complex_dilation}
+leads naturally to the idea that each $\mu$ on $D$ creates a Riemann surface,
+namely the space $D$ together with a conformal structure on $D$ determined by
+$\mu$. For a given $D$ and $\mu$, this conformal structure is defined by the
+atlas $\mathbb{A}(\mu)$ (the totality of charts) consisting of the family of all
+maps $\varphi: D \to \ExtC$ which are quasiconformal with dilation $\mu$ on $D$.
+Theorem~\ref{thm:existence_of_quasiconformal_maps_with_a_given_complex_dilation}\ref{itm:existence_of_quasiconformal_maps_with_a_given_complex_dilation}
+guarantees that each point of $D$ is in the domain of some such $\varphi$, and
+Theorem~\ref{thm:existence_of_quasiconformal_maps_with_a_given_complex_dilation}\ref{itm:transition_between_coordinate_charts_in_analytic}
+guarantees that the transition map between two different co-ordinate charts is
+analytic; thus, $\mathbb{A}(\mu)$ defines a conformal structure on $D$ and so
+converts $D$ into a Riemann surface.
+
+\begin{definition}[$\mu$-conformal structure]
+    We shall denote this Riemann surface by $D[\mu]$, and we call the structure
+    the \emph{$\mu$-conformal structure} on $D$.
+\end{definition}
+
+Of course, if $\mu \equiv 0$, then $D[\mu]$ is simply $D$ with the usual
+structure as a subdomain of $\ExtC$, and we usually use $D$ rather than $D[0]$;
+however, where there may be some gain in clarity, we shall use $D[0]$.
+
+\begin{definition}[$\mu$-analytic]
+    Given the Riemann surface $D[\mu]$, we say that the map
+    \begin{equation*}
+        f: D \to \ExtC
+    \end{equation*}
+    is $\mu$-analytic if it is an analytic map between the Riemann surfaces
+    $D[\mu]$ and $\ExtC$ (with the usual structure).
+\end{definition}
+
+\begin{definition}[$\mu$-conformal]
+    If, in addition, $f$ is a homeomorphism, we say that it is $\mu$-conformal
+    on $D$.
+\end{definition}
+
+Of course, we retain the usual usage of \emph{analytic} and \emph{conformal}
+when $\mu$ is identically zero.
+
+\begin{remark}[Analyticity is preserved under composition]
+    Note that if $f$ is $\mu$-analytic on $D$, and $g$ is analytic on $f(D)$,
+    then (as the composition of analytic maps is analytic), $fg$ is
+    $\mu$-analytic on $D$. 
+\end{remark}
+
+Quite generally, a homeomorphism $\varphi$ form an open subset of a Riemann
+surface $\mathbb{R}$ to $\ExtC$ is analytic if and only if it is a chart in the
+maximal atlas for $\mathbb{R}$; thus we record the different points of view in
+
+\begin{lemma}[Characterizations of $\mu$-conformal]
+    \label{lem:characterizations_of_muconformal}
+    Let $\varphi$ be a homeomorphism defined on $D$. Then the following are
+    equivalent:
+    \begin{enumerate}[label=(\roman*)]
+        \item $\varphi$ is $\mu$-conformal on $D$;
+        \item $\varphi$ is a chart for $D[\mu]$;
+        \item $\varphi: D[\mu] \to \ExtC[0]$ is analytic
+    \end{enumerate}
+\end{lemma}
+
+Our last task in this section is to formulate the transfer of a conformal
+structure from one domain to another in terms of complex dilatations. If $g$ is
+a bijection of a Riemann surface $X$ onto a set $Y$, then $g$ can be used to
+transfer the conformal  structure on $X$ to $Y$ in a natural, trivial, and
+unique, way so that $g: X \to Y$ is analytic. We need to express this transfer
+of structure in terms of Beltrami coefficients and we prove
+
+\begin{lemma}[$\mu$-conformal structure transfer via Beltrami coefficients]
+    \label{lem:muconformal_structure_transfer}
+    Suppose that $\mu$ and $\nu$ are Beltrami coefficients on the domains $U$
+    and $V$ respectively and let $g$ be an analytic map of $U$ onto $V$. Then:
+    \begin{enumerate}[label=(\roman*)]
+        \item \label{itm:muconformal_structure_transfer_1} $g: U[\mu] \to
+        V[\nu]$ is analytic; if and only if
+        \item \label{itm:muconformal_structure_transfer_2} $\nu(gz) =
+        [g'(z)/\overline{g'(z)}]\mu(z)$ a.e. in $U$.
+    \end{enumerate}
+\end{lemma}
+\begin{proof}
+    See \cite[182]{Beardon1991}.
+\end{proof}
+
+We shall use Lemma~\ref{lem:muconformal_structure_transfer} to transfer
+structure in two different ways. First, if $g$ is an analytic homeomorphism from
+$U$ to $V$, and if $\mu$ is given on $U$, then we can define $\nu$ by
+\ref{itm:muconformal_structure_transfer_2} and, as a result,
+\ref{itm:muconformal_structure_transfer_1} will hold: thus we have transferred
+the structure from $U$ to $V$. If we no longer assume $g$ is injective, this
+process may not be valid as \ref{itm:muconformal_structure_transfer_2} may
+provide conflicting definitions of $\nu$ at some point of $V$. However, in this
+case, if $\nu$ is given, we can use \ref{itm:muconformal_structure_transfer_2}
+to define $\mu$ and again force \ref{itm:muconformal_structure_transfer_1} to be
+true: thus we have transferred the structure from $V$ to $U$. Thus, quite
+generally, we can pull back a conformal structure against the action of an
+analytic function so that the function remains analytic with respect to the two
+new structures. We shall use both of these ideas in the next section.
+
+% --- SECTION ------------------------------------------------------------------
+% --- QUASICONFORMAL CONJUGATES OF RATIONAL MAPS -------------------------------
+\section{Quasiconformal Conjugates of Rational Maps}
+\label{sec:quasiconformal_conjugates_of_rational_maps}
+
+In this section we focus attention on the conjugate $\varphi R \varphi^{-1}$ of
+a rational map $R$ by some $\mu$-conformal map $\varphi$ of the complex sphere
+onto itself. In general $\varphi R \varphi^{-1}$ will not be analytic, and our
+next result enables us to recognize when it is. We have
+
+\begin{lemma}[Preservation of rationality via quasiconformal conjugation]
+    \label{lem:preservation_of_rationality_via_quasiconformal_conjugation}
+    Suppose that $R$ is a rational map, and that $\varphi$ is a $\mu$-conformal
+    map of the complex sphere onto itself. Then $\varphi R \varphi^{-1}$ is
+    rational if and only if
+    \begin{equation}
+        \label{eq:condition_for_preservation_of_rationality_via_quasiconformal_conjugation}
+        \mu(Rz) = [R'(z)/\overline{R'(z)}]\mu(z)
+    \end{equation}
+    a.e. on the sphere, and when this is so, $\deg(\varphi R \varphi^{-1}) =
+    \deg(R)$.
+\end{lemma}
+\begin{proof}
+    By virtue of Lemma~\ref{lem:muconformal_structure_transfer}, condition
+    \eqref{eq:condition_for_preservation_of_rationality_via_quasiconformal_conjugation}
+    is equivalent to the statement that
+    \begin{equation*}
+        R: \ExtC[\mu] \to \ExtC[\mu]
+    \end{equation*}
+    is analytic and this, in turn, is equivalent to the statement that $\varphi
+    R \varphi^{-1}$ is an analytic map of the complex sphere onto itself with
+    the usual structure (for $\varphi$ is a chart of the Riemann surface
+    $\ExtC[\mu]$). This proves that
+    \eqref{eq:condition_for_preservation_of_rationality_via_quasiconformal_conjugation}
+    holds if and only if $\varphi R \varphi^{-1}$ is analytic throughout the
+    sphere, and hence rational. Moreover, $\varphi R \varphi^{-1}$ must have the
+    same degree as $R$ because $\varphi$ is a homeomorphism of the sphere onto
+    itself and the degree of $\varphi R \varphi^{-1}$ is given by the
+    cardinality of $(\varphi R \varphi^{-1})^{-1}\{w\}$ for most points $w$.
+\end{proof}
+
+We emphasize that
+\eqref{eq:condition_for_preservation_of_rationality_via_quasiconformal_conjugation}
+guarantees that we can conjugate a rational map by a \emph{non-analytic}
+function $\varphi$ and yet still remain analyticity.
+
+We shall now incorporate this result into the situation in which a wandering
+domain exists, and in doing so, we take a significant step forward in our proof
+of Theorem~\ref{thm:the_no_wandering_domains_theorem}. We prove
+
+\begin{lemma}[Extension of Beltrami coefficients on a wandering domain to $\ExtC$]
+    \label{lem:extension_of_Beltrami_coefficients_on_a_wandering_domain_to_ExtC}
+    Let $R$ be a rational map, and suppose that $W$ satisfies the conditions of
+    Lemma~\ref{lem:properties_of_wandering_domains_of_R}. Then any Beltrami
+    coefficient $\mu$ on $W$ extends to a Beltrami coefficient on the complex
+    sphere with the property that if $\varphi$ is any $\mu$-conformal map of the
+    sphere onto itself, then $\varphi R \varphi^{-1}$ is a rational map with the
+    same degree as $R$.
+\end{lemma}
+\begin{proof}
+    We begin with a Beltrami coefficient $\mu$ on $W$ and our objective is to
+    extend $\mu$ to the sphere so that the extension satisfies
+    \eqref{eq:Beltrami_equation} a.e. on the sphere. As the sphere is the
+    disjoint union of the completely invariant set $[W]$ and its (completely
+    invariant) complement, say $K$, we can extend $\mu$ to $[W]$ and to $K$
+    separately and then verify that \eqref{eq:Beltrami_equation} holds on each
+    of these two sets. We define $\mu$ to be identically zero on $K$ so
+    \eqref{eq:Beltrami_equation} is certainly satisfied there.
+
+    The extension from $W$ to $[W]$ is carried out as follows. First, using
+    Lemma~\ref{lem:properties_of_wandering_domains_of_R} and the ideas expressed
+    at the end of the preceding section, we define $\mu$ on the (pairwise
+    disjoint) $W_n$ ($= R^n(W)$), $n \geq 0$, by ensuring that the map
+    \begin{equation*}
+        R: W_n[\mu] \to W_{n+1}[\mu], \quad W_n = R^n(W),
+    \end{equation*}
+    is analytic. Next, we define $\mu$ on successive inverse images of the $W_n$
+    by the requirement that $R$ provides an analytic map between any component
+    $\Omega$ and its image under $R$ (with the $\mu$-structures): this process
+    determines $\mu$ uniquely on $[W]$ and is characterized by the fact that for
+    every component $\Omega$ of $[W]$, the map
+    \begin{equation*}
+        R: \Omega[\mu] \to R(\Omega)[\mu]
+    \end{equation*}
+    is analytic. As a consequence of this, the functional relation
+    \eqref{eq:Beltrami_equation} holds a.e. on $[W]$ (this is simply
+    Lemma~\ref{lem:muconformal_structure_transfer}) and this proves
+    Lemma~\ref{lem:extension_of_Beltrami_coefficients_on_a_wandering_domain_to_ExtC}.
+\end{proof}
+
+% --- SECTION ------------------------------------------------------------------
+% --- BOUNDARY VALUES OF CONJUGATE MAPS ----------------------------------------
+\section{Boundary Values of Conjugate Maps}
+\label{sec:boundary_values_of_conjugate_maps}
+
+Our proof of Theorem~\ref{thm:the_no_wandering_domains_theorem} requires a
+comparison between the boundary values of two functions which are conjugate to
+each other by a conformal map, so we devote this section to this topic. Let
+$\mu$ be a Beltrami coefficient on the unit disc $\Delta$, let $g$ be a
+conformal map of $\Delta$ onto a simply connected domain $W$ in $\C$, and use
+$g$ to transfer $\mu$ to a Beltrami coefficient $\nu$ on $W$ (as in
+Lemma~\ref{lem:muconformal_structure_transfer}). Suppose now that $\Phi$ is a
+$\nu$-conformal map of $W$ onto itself, and that $\Phi$ extends to a
+homeomorphism of the closure of $W$ onto itself such that $\Phi \equiv \Id$ (the
+identity map) on $\boundary{W}$. Then the map
+\begin{equation*}
+    \varphi = g^{-1} \Phi g
+\end{equation*}
+is a $\mu$-conformal map of $\Delta$ onto itself, and as such, it extends to a
+homeomorphism of the closed disc onto itself (\cite[47]{Ahlfors2006}). Our
+objective is to study the behavior of $\varphi$ on $\boundary{\Delta}$: one
+approach to this problem is through the theory of prime ends, but we shall take
+a different route.
+
+When comparing maps which are conjugate by a conformal map, it is natural to try
+to exploit conformal invariants and one such invariant is the hyperbolic metric.
+
+\begin{definition}[(Hyperbolic) Displacement function of $\Phi$]
+    For any homeomorphism $\Phi$ of a simply $\Omega$ onto itself, we define the
+    (hyperbolic) \emph{displacement function} of $\Phi$ by
+    \begin{equation*}
+        z \mapsto \rho(\Phi z, z),
+    \end{equation*}
+    where $\rho$ is the hyperbolic metric of $\Omega$ (which exists unless
+    $\Omega$ is conformally equivalent to $\C$ or $\ExtC$).
+\end{definition}
+
+\begin{remark}[Having a bounded displacement is preserved under conformal conjugation]
+    Returning to the discussion above, the conformal equivalence $g$ is an
+    isometry with respect to the hyperbolic metrics in $\Delta$ and $W$ and so
+    the property of having a bounded displacement is invariant under conjugation
+    by $g$: thus if $\Phi$ has a bounded displacement o $W$, then $\varphi$ has
+    a bounded displacement on $\Delta$ (and conversely).
+\end{remark}
+
+This, however, implies that $\varphi = \Id$ on $\boundary{\Delta}$ for it
+implies that $\varphi(z)$ lies in the hyperbolic disc $\Delta(z, d)$ with center
+$z$ and some (fixed) radius $d$, and as $z$ converges to any $\zeta$ on
+$\boundary{\Delta}$, the Euclidean radius of $\Delta(z, d)$ tends to zero (see
+Exercise~8.5.1 \cite{Beardon1991}).
+
+We now seek a criterion for $\Phi$ to have a bounded displacement function in
+$W$, and for our purposes, it will be sufficient to assume that $\nu$ is a
+Beltrami coefficient on the entire sphere, and that $\Phi$ is a $\nu$-conformal
+map of the sphere onto itself. With this additional information, we can readily
+obtain a criterion for $\Phi$ to have a bounded displacement function with
+respect to the chordal metric on the sphere, and we can then convert this to a
+criterion for $\Phi$ to have a bounded hyperbolic displacement on $W$. First, we
+have
+
+\begin{lemma}[Criterion for $\Phi$ to have a bounded displacement function with respect to the chordal metric on the sphere]
+    \label{lem:criterion_for_Phi_to_have_a_bounded_displacement_function_with_respect_to_the_chordal_metric_on_the_sphere}
+    For each positive $\varepsilon$ there is a positive $\delta$ such that if
+    the Beltrami coefficient $\nu$ on $\ExtC$ satisfies $||\nu|| < \delta$, then
+    $\sigma(Fz, z) < \varepsilon$ in $\ExtC$ for every function $F$ that is a
+    $\nu$-conformal map of $\ExtC$ onto itself which fixes $0$, $1$ and
+    $\infty$.
+\end{lemma}
+\begin{proof}
+    This is a non-sequential version of Theorem~4.6, \cite{Lehto1987}. If the
+    conclusion is false there is a positive $\varepsilon$, a sequence of
+    $\nu_n$-conformal maps $F_n$, and a sequence $z_n$, such that:
+    \begin{enumerate}[label=(\roman*)]
+        \item
+        \label{itm:property_1_of_sequence_to_prove_the_criterion_for_Phi_to_have_a_bounded_displacement_function_with_respect_to_the_chordal_metric_on_the_sphere}
+        $F_n$ fixes $0$, $1$ and $\infty$;
+        \item
+        \label{itm:property_2_of_sequence_to_prove_the_criterion_for_Phi_to_have_a_bounded_displacement_function_with_respect_to_the_chordal_metric_on_the_sphere}
+        $||\nu_n|| < 1/n$; and
+        \item 
+        \label{itm:property_3_of_sequence_to_prove_the_criterion_for_Phi_to_have_a_bounded_displacement_function_with_respect_to_the_chordal_metric_on_the_sphere}
+        $\sigma(F_n z_n, z_n) \geq \varepsilon$.
+    \end{enumerate}
+    By Theorem~4.6, \cite{Lehto1987},
+    \ref{itm:property_1_of_sequence_to_prove_the_criterion_for_Phi_to_have_a_bounded_displacement_function_with_respect_to_the_chordal_metric_on_the_sphere}
+    and
+    \ref{itm:property_2_of_sequence_to_prove_the_criterion_for_Phi_to_have_a_bounded_displacement_function_with_respect_to_the_chordal_metric_on_the_sphere}
+    imply that $F_n \to 1$ uniformly on $\ExtC$, and this contradicts
+    \ref{itm:property_3_of_sequence_to_prove_the_criterion_for_Phi_to_have_a_bounded_displacement_function_with_respect_to_the_chordal_metric_on_the_sphere}.
+\end{proof}
+
+Now let $\delta_0$ be the value of $\delta$ corresponding to $\varepsilon = 1/8$
+in
+Lemma~\ref{lem:criterion_for_Phi_to_have_a_bounded_displacement_function_with_respect_to_the_chordal_metric_on_the_sphere}.
+Then, we have
+
+\begin{lemma}[Hyperbolic displacement bound for $\nu$-conformal maps]
+    \label{lem:hyperbolic_displacement_bound_for_nuconformal_maps}
+    Let $\rho$ be the hyperbolic metric of a simply connected subdomain $W$ of
+    $\ExtC$. If the Beltrami coefficient $\nu$ on $\ExtC$ satisfies $||\nu|| <
+    \delta_0$, then $\rho(\Phi z, z) < \log(2)$ in $W$ for every function $\Phi$
+    which is a $\nu$-conformal map of $\ExtC$ onto itself and which satisfies
+    $\Phi(W) = W$, and $\Phi = \Id$ on $\boundary{W}$.
+\end{lemma}
+\begin{proof}
+    As the statement of
+    Lemma~\ref{lem:hyperbolic_displacement_bound_for_nuconformal_maps} is
+    invariant under conjugation by a Möbius map, we may assume that $\infty \in
+    \boundary{W}$. Now suppose that $W$, $\rho$, $\nu$ and $\Phi$ satisfy the
+    hypotheses of
+    Lemma~\ref{lem:hyperbolic_displacement_bound_for_nuconformal_maps} with
+    $||\nu|| < \delta_0$.
+
+    We take any $\zeta$ in $W$, let $r(\zeta)$ be the (Euclidean) distance
+    between $\zeta$ and $\boundary{W}$, and suppose that this is attained at
+    $\alpha$ in $\boundary{W}$. As $\boundary{W}$ is a connected set containing
+    $\alpha$ and $\infty$, there is some point $\beta$ in $\boundary{W}$ such
+    that
+    \begin{equation*}
+        |\beta - \alpha| = |\zeta - \alpha| = r(\zeta),
+    \end{equation*}
+    and we define the Euclidean similarity $h$ by
+    \begin{equation*}
+        h(z) = \frac{z - \alpha}{\beta - \alpha}.
+    \end{equation*}
+    The function $F$ defined by $F = h \Phi h^{-1}$ is a $\nu$-conformal map of
+    $\ExtC$ onto itself, and it fixed $0$, $1$ and $\infty$ (because $\Phi$
+    fixes $\alpha$, $\beta$ and $\infty$); thus by
+    Lemma~\ref{lem:criterion_for_Phi_to_have_a_bounded_displacement_function_with_respect_to_the_chordal_metric_on_the_sphere},
+    $\sigma(F z, z) < 1/8$ on $\ExtC$. Putting $z = h(\zeta)$, we obtain
+    \begin{equation*}
+        \sigma(h(\Phi \zeta), h \zeta) < \frac{1}{8} < \sigma(1, 2),
+    \end{equation*}
+    and as $|h(\zeta)| = 1$, this implies that $|h(\Phi \zeta)| \leq 2$, and
+    hence that
+    \begin{align*}
+        2 |h(\Phi \zeta) - h \zeta| &= \sigma(h(\Phi \zeta), h \zeta)[(1 + |h(\Phi \zeta)|^2)(1 + |h(\zeta)|^2)]^{\frac{1}{2}} \\
+                                    &< \frac{1}{2}.
+    \end{align*}
+
+    Using the definition of $h$, this now yields
+    \begin{equation*}
+        |\Phi(\zeta) - \zeta| < \frac{r(\zeta)}{4}.
+    \end{equation*}
+    Now the disc $\{z \colon |z - \zeta| < r(\zeta)\}$ lies in $W$, so if
+    $\rho_0$ denotes the hyperbolic metric of this disc, then, by the Comparison
+    Principle for hyperbolic metrics,
+    \begin{equation*}
+        \rho(\Phi \zeta, \zeta) \leq \rho_0(\Phi \zeta, \zeta) \leq \log\left(\frac{1 + \frac{1}{4}}{1 - \frac{1}{4}}\right) \leq \log(2)
+    \end{equation*}
+    as required.
+\end{proof}
+
+In conclusion, if $\varphi: \Delta \to \Delta$ and $\Phi: W \to W$ are as given
+above with $\varphi = g^{-1} \Phi \varphi$, and if $\Phi$ satisfies the
+hypotheses of
+Lemma~\ref{lem:hyperbolic_displacement_bound_for_nuconformal_maps}, then
+$\varphi = \Id$ on $\boundary{\Delta}$.
+
+% --- SECTION ------------------------------------------------------------------
+% --- THE PROOF OF THE NO WANDERING DOMAINS THEOREM ----------------------------
+\section{The Proof of The No Wandering Domains Theorem}
+\label{sec:the_proof_of_the_no_wandering_domains_theorem}
+
+In this final section of the chapter, we complete the proof of
+Theorem~\ref{thm:the_no_wandering_domains_theorem}. We assume that $R$ has a
+wandering domain, so there exists a component $W$ of $F(R)$ with the properties
+expressed in Lemma~\ref{lem:properties_of_wandering_domains_of_R}. As $W$ is
+simply connected (and $J$ is infinite), there is a conformal equivalence $g$ of
+$\Delta$ onto $W$. Now let $\mu$ be any Beltrami coefficient on $\Delta$. Using
+$g$, we can transfer $\mu$ to $\nu$ on $W$ (as in
+Lemma~\ref{lem:muconformal_structure_transfer}), and then extend $\nu$ to
+$\ExtC$ as in
+Lemma~\ref{lem:extension_of_Beltrami_coefficients_on_a_wandering_domain_to_ExtC}.
+Solving the Beltrami equation with coefficient $\nu$ throughout the sphere, we
+obtain a $\nu$-conformal map $\varphi$ of the sphere onto itself such that
+$\varphi R \varphi^{-1}$ is rational (and of the same degree as $R$), and by
+combining $\varphi$ with a Möbius map we may assume that $\varphi$ fixed $0$,
+$1$ and $\infty$, and so is uniquely determined by $\mu$. In this way we have
+created the composite map
+\begin{equation}
+    \label{eq:composite_map_mu_nu_varphi_varphiRvarphiminus1}
+    \mu \mapsto \nu \mapsto \varphi \mapsto \varphi R \varphi^{-1}
+\end{equation}
+of the space of Beltrami coefficients on $\Delta$ to the space of rational maps
+of degree $\deg(R)$.
+
+Roughly speaking, the space of Beltrami coefficients on $\Delta$ is infinite
+dimensional while the space of rational maps of degree $\deg(R)$ is finite
+dimensional, so the map $\mu \mapsto \varphi R \varphi^{-1}$ must map a large
+subspace of Beltrami differentials onto a single rational function $S$. We shall
+justify this later, but to maintain the flow of ideas, we formulate the result
+we need as a lemma and continue with the proof of
+Theorem~\ref{thm:the_no_wandering_domains_theorem}. For the moment, then, we
+assume the validity of
+
+\begin{lemma}
+    \label{lem:TO_DO_1}
+    Suppose that $\eta_0 > 0$. For each $t$ in $[0, 1]$ we can construct a
+    Beltrami coefficient $\mu_t$ in $\Delta$ such that:
+    \begin{enumerate}[label=(\roman*)]
+        \item \label{itm:lemma_to_do_1_a} $||\mu||_\infty < \eta_0$; and
+        \item \label{itm:lemma_to_do_1_b}
+        \eqref{eq:composite_map_mu_nu_varphi_varphiRvarphiminus1} maps each
+        $\mu_t$ to the same rational function $S$.
+    \end{enumerate}
+    Further, this construction can be made so that for each $z$, the map $t
+    \mapsto \varphi_t(z)$ is continuous on $[0, 1]$, where $\varphi_t$ is the
+    image of $\mu_t$ under the first two maps in
+    \eqref{eq:composite_map_mu_nu_varphi_varphiRvarphiminus1}.
+\end{lemma}
+
+A consequence of this is that for all $t$ in $[0, 1]$,
+\begin{equation*}
+    \varphi_t R \varphi_t^{-1} = S = \varphi_0 R \varphi_0^{-1},
+\end{equation*}
+so if we put
+\begin{equation*}
+    \Phi_t = \varphi_0^{-1} \varphi_t
+\end{equation*}
+we find that:
+\begin{enumerate}[label=(\roman*)]
+    \item \label{itm:Phi_0_Id} $\Phi_0(z) = z$ on $\ExtC$;
+    \item \label{itm:Phi_commutes_with_R} for each $t$, the map $z \mapsto
+    \Phi_t(z)$ commutes with $R$;
+    \item \label{itm:Phi_homeomorphism_on_ExtC} for each $t$, the map $z \mapsto
+    \Phi_t(z)$ is a homeomorphism of $\ExtC$ onto itself;
+    \item \label{itm:Phi_continuous_on_0_1} for each $z$, the map $t \mapsto
+    \Phi_t(z)$ is continuous on $[0, 1]$.
+\end{enumerate}
+These properties lead to two striking facts.
+
+\begin{lemma}[$\Phi_t$ maps components to themselves]
+    \label{lem:Phi_t_maps_components_to_themselves}
+    For each $t$ in $[0, 1]$, $\Phi_t = \Id$ on $J(R)$. Further, $\Phi_t$ maps
+    each component of $F(R)$ onto itself.
+\end{lemma}
+\begin{proof}
+    For $p = 1, 2, \dots$, let $F_p$ be the set of fixed points of $R^p$. By
+    virtue of \ref{itm:Phi_commutes_with_R}, if $z$ is in $F_p$ then so is
+    $\Phi_t(z)$; thus $\Phi_t$ maps each finite set $F_p$ into itself. Now by
+    \ref{itm:Phi_continuous_on_0_1}, for each $z$ in $F_p$, the map $t \mapsto
+    \Phi_t(z)$ is a continuous map of $[0, 1]$ into the discrete set $F_p$; thus
+    $\Phi_t(z)$ is independent of $t$ and so, by \ref{itm:Phi_0_Id}, for all $t$
+    in $[0, 1]$ and all $z$ in $F_p$, $\Phi_t(z) = z$. We deduce that for each
+    $t$, $\Phi_t$ is the identity map on the union of the $F_p$, and hence by
+    \ref{itm:Phi_homeomorphism_on_ExtC}, also on the closure of this union. As
+    the closure of the periodic points of $R$ contains $J(R)$ (Theorem~4.2.6),
+    the restriction of $\Phi_t$ to $J(R)$ is the identity. Because of this, and
+    because $\Phi_t$ is a homeomorphism of the sphere onto itself, each $\Phi_t$
+    must permute the components of $F(R)$. Now take any $z$ in any component
+    $F_0$ of $F(R)$. By virtue of \ref{itm:Phi_0_Id} and
+    \ref{itm:Phi_continuous_on_0_1}, the image of $[0, 1]$ under the map $t
+    \mapsto \Phi_t(z)$ is a curve which lies in $F(R)$ and which starts at $z$.
+    It follows that this curve lies entirely in $F_0$, and so for each $t$,
+    $\Phi_t$ must map the arbitrary component $F_0$ into itself. This completes
+    the proof of Lemma~\ref{lem:Phi_t_maps_components_to_themselves}.
+\end{proof}
+
+As $\Phi_t$ maps each component $F_0$ of $F(R)$ onto itself, the homeomorphisms
+$\varphi_t$ must map $W$ onto the simply connected domain $W_0$ where $W_0
+(=\varphi_0(W))$ is independent of $t$. It follows that there is a conformal
+equivalence $h$ of $W_0$ onto $\Delta$, and we have now reached the situation
+summarized in Figure~\ref{fig:figure_8_6_1}.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.8\textwidth]{beardons_book/figure_8_6_1.png}
+    \caption{}
+    \label{fig:figure_8_6_1}
+\end{figure}
+
+Now in the construction of $\nu$ (on $\ExtC$) from $\mu$ (on $\Delta$) in
+\eqref{eq:composite_map_mu_nu_varphi_varphiRvarphiminus1} we have
+$||\nu||_\infty = ||\mu||_\infty$ (see
+Lemmas~\ref{lem:muconformal_structure_transfer} and
+\ref{lem:preservation_of_rationality_via_quasiconformal_conjugation}), so, by
+virtue of Lemma~\ref{lem:TO_DO_1}\ref{itm:lemma_to_do_1_a}, $||\nu_t||_\infty <
+\eta_0$ where, of course, $\mu_t$ maps to $\nu_t$ in
+\eqref{eq:composite_map_mu_nu_varphi_varphiRvarphiminus1}. By taking $\eta_0$
+small enough, we can ensure that the complex dilatation of $\Phi_t
+(=\varphi_0^{-1} \varphi_t)$ has $L^\infty$-norm less than $\delta_0$ as given
+in Lemma~\ref{lem:hyperbolic_displacement_bound_for_nuconformal_maps}. By this
+lemma, and the remarks following it, we can now conclude that the map $g^{-1}
+\Phi_t g$ of $\Delta$ onto itself has bounded displacement function and so
+extends to the identity on $\boundary{\Delta}$.
+
+Now observe that each of the maps in the composition
+\begin{equation*}
+    \Delta[\mu_t] \xrightarrow{g} W[\nu_t] \xrightarrow{\varphi_t} W_0[0] \xrightarrow{h} \Delta[0]
+\end{equation*}
+is analytic, whence $\psi_t (= h \varphi_t g)$ is a $\mu_t$-conformal map of
+$\Delta$ onto itself and so extends to a homeomorphism of the closed disc onto
+itself. Moreover, in the open disc
+\begin{equation*}
+    \psi_0^{-1} \psi_t = g^{-1} \Phi_t g,
+\end{equation*}
+thus on $\boundary{\Delta}$, $\psi_0^{-1} \psi_t = \Id$, and so $\psi_0 =
+\psi_t$.
+
+Now let $\Psi_t$ be any $\mu_t$-conformal map of $\Delta$ onto itself. By
+Theorem~\ref{thm:existence_of_quasiconformal_maps_with_a_given_complex_dilation},
+$\psi_t = M_t \Psi_t$ for some Möbius automorphism $M_t$ of $\Delta$, and so we
+deduce that
+\begin{equation}
+    \label{eq:mobius_automorphism_equality}
+    M_t \Psi_t = M_0 \Psi_0
+\end{equation}
+on $\boundary{\Delta}$. In proving Lemma~\ref{lem:TO_DO_1}, we shall construct
+maps $\Psi_t$ so that $\Psi_t = \Psi_0$ on some open arc of $\boundary{\Delta}$
+and this will imply that $M_t = M_0$, and hence that $\Psi_t = \Psi_0$. However,
+it will be clear from our construction that this is not so, and this will be the
+contradiction that completes the proof of
+Theorem~\ref{thm:the_no_wandering_domains_theorem}.
+
+It remains, then, to prove Lemma~\ref{lem:TO_DO_1} and to construct the maps
+$\Psi_t$ with the properties used above. First, we take an integer $N$
+satisfying $N > 4d + 2$ (the space of rational maps of degree $d$, $d = \deg(R)$
+having $4d + 2$ real degrees of freedom). We shall now construct, for each
+vector $T$ lying in the cube $[0, \epsilon_1]^N$ (where $\epsilon_1$ is some
+small number yet to be chosen), a Beltrami coefficient $\mu_T$ on $\Delta$ and a
+$\mu_T$-conformal map $\Psi_T$ of $\Delta$ onto itself. In fact, we shall
+construct the maps $\Psi_T$ first, and then define $\mu_T$ to be their complex
+dilatations.
+
+Divide the interval $[0, 2\pi]$ into $2N$ equal and consecutive arcs $\sigma_1,
+\tau_1, \dots, \tau_N, \sigma_N$, and for each of the arcs $\sigma_j$ we
+construct a $C^\infty$-function $\omega_j$ on $[0, 2\pi]$ such that:
+\begin{enumerate}[label=(\roman*)]
+    \item \label{itm:omega_j_positive_on_interior} $\omega_j(x) > 0$ on the
+    interior of $\sigma_j$ while $\omega_j(x) = 0$ otherwise; and
+    \item \label{itm:omega_j_derivative_bound} $|\omega_j'(x)| < \frac{1}{2}$
+    for all $x$ and $j$
+\end{enumerate}
+(see Exercise~8.6.1). Now define the map
+\begin{equation}
+    \label{eq:Psi_T_definition}
+    \Psi_T(z) = z \exp\left[i \sum_{j=1}^N t_j \omega_j(\theta)\right]
+\end{equation}
+where $z = r e^{i\theta}$ of $\Delta$ onto itself, and let the Beltrami
+coefficient $\mu_T$ on $\Delta$ be the complex dilatation of $\Psi_T$.
+
+The complex dilatation $\mu_T$ can easily be computed in terms of the partial
+derivatives $\partial\Psi_T/\partial r$ and $\partial\Psi_T/\partial\theta$
+(Exercise~8.6.2) and when this has been done we find that
+\begin{equation}
+    \label{eq:mu_T_computation}
+    \mu_T(r e^{i\theta}) = \frac{e^{2i\theta} \sum_{j=1}^N t_j \omega_j(\theta)}{2 + \sum_{j=1}^N t_j \omega_j(\theta)},
+\end{equation}
+and hence for all $T$,
+\begin{equation}
+    \label{eq:mu_T_bound}
+    |\mu_T(r e^{i\theta})| \leq \frac{\sum_{j=1}^N |t_j \omega_j(\theta)|}{2 - \sum_{j=1}^N |t_j \omega_j(\theta)|} \leq \frac{N\epsilon_1}{2 - N\epsilon_1}.
+\end{equation}
+
+Note that:
+\begin{enumerate}[label=(\alph*)]
+    \item \label{itm:Psi_T_identity_on_tau} if $\arg z$ lies in any of the
+    intervals $\tau_j$, then $\Psi_T(z) = z$;
+    \item \label{itm:distinct_T_imply_distinct_Psi_T} distinct values of $T$
+    lead to distinct functions $\Psi_T$; and
+    \item \label{itm:mu_T_norm_bound_eta} given any $\eta$, $||\mu_T||_\infty <
+    \eta$ if $\epsilon_1$ is small enough.
+\end{enumerate}
+
+The first two of these are the properties required of the function $\Psi_t$ at
+the end of the proof of Theorem~\ref{thm:the_no_wandering_domains_theorem}, and
+by choosing $\epsilon_1$ small enough, \ref{itm:mu_T_norm_bound_eta} guarantees
+that we can satisfy Lemma~\ref{lem:TO_DO_1}\ref{itm:lemma_to_do_1_a} for all
+$\mu_T$. We fix this value of $\epsilon_1$, and it remains to complete the proof
+of Lemma~\ref{lem:TO_DO_1}.
+
+\begin{proof}[Proof of Lemma~\ref{lem:TO_DO_1}]
+    Given the Beltrami coefficient $\mu_T$, let the composition
+    \eqref{eq:composite_map_mu_nu_varphi_varphiRvarphiminus1} be
+    \begin{equation}
+        \label{eq:composition_map_T}
+        T \mapsto \mu_T \mapsto \nu_T \mapsto \varphi_T \mapsto R_T = \varphi_T R \varphi_T^{-1}.
+    \end{equation}
+    The idea of the proof is to factor the map $T \mapsto R_T$ through the
+    intermediate stage of a vector whose components are the zeros and poles of
+    $R_T$, and then to show that the first factor, and hence the composition, is
+    constant on some curve.
+
+    We may replace $R$ by any conjugate with respect to a Möbius map, so we may
+    assume that $R$ is such that:
+    \begin{enumerate}[label=(\arabic*)]
+        \item \label{itm:R_distinct_zeros} $R$ has distinct zeros $a_1, \dots,
+        a_d$ in $\C$;
+        \item \label{itm:R_distinct_poles} $R$ has distinct poles $b_1, \dots,
+        b_d$ in $\C$; and
+        \item \label{itm:R_origin_is_1} $R(0) = 1$.
+    \end{enumerate}
+
+    Now recall that $\varphi_T$ in \eqref{eq:composition_map_T} fixes $0$, $1$
+    and $\infty$. It follows that $R_T$ is the unique rational function with
+    zeros $\varphi_T(a_j)$, with poles $\varphi_T(b_j)$, and with $R_T(0) = 1$,
+    and so we only have to show that the map
+    \begin{equation*}
+        \Pi(T) = (\varphi_T(a_1), \dots, \varphi_T(a_d), \varphi_T(b_1), \dots, \varphi_T(b_d))
+    \end{equation*}
+    of $(0, \epsilon_1)^N$ into $\C^{2d}$ is constant on some curve.
+
+    Now in the fundamental paper \cite{Ahlfors1960}, Ahlfors and Bers examined
+    the general question of how a solution $z \mapsto \varphi_t(z)$ of the
+    Beltrami equation with coefficient $\mu_t(z)$ varies when the parameter $t$
+    varies, and they showed that (in an appropriate sense) for each $z$, the map
+    $t \mapsto \varphi_t(z)$ varies as smoothly as the map $t \mapsto \mu_t(z)$.
+    We shall not enter into the details of this here, and we refer the
+    interested reader to the original paper for the precise formulation of this
+    result. For us, the important outcome is that because the map $T \mapsto
+    \mu_T(z)$ is $C^\infty$, the same is true of $T \mapsto \nu_T(z)$ (in the
+    sense of \cite{Ahlfors1960}), and hence each of the maps
+    \begin{align*}
+        t &\mapsto \varphi_T(a_j) \\
+        t &\mapsto \varphi_T(b_j)
+    \end{align*}
+    is $C^\infty$. We conclude that $\Pi$ is a $C^\infty$-map of the open cube
+    $\mathscr{C}_0 = (0, \epsilon_1)^N$ into $\C^{2d}$.
+
+    The set of points where the rank of $\Pi'$ is maximal, say $k$, is an open
+    subset of $\mathscr{C}_0$ (for the rank of $\Pi'$ is upper semi-continuous)
+    and so the restriction of $\Pi$ to $\mathscr{C}_0$ is a map of constant
+    rank. It follows from the Implicit Function Theorem (see, for example,
+    \cite[79]{Boothby2003}) that the inverse image of a point is a sub-manifold
+    of $\mathscr{C}_0$ of dimension $N - k$ (which is positive) and so there is
+    some curve in $\mathscr{C}_0$ on which $\Pi$ is constant. The proof of the
+    lemma, and of Theorem~\ref{thm:the_no_wandering_domains_theorem}, is now
+    finished.
+\end{proof}

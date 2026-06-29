@@ -31,7 +31,7 @@
 \newcommand{\E}{\mathrm{e}}
 
 
-% --- ONE VARIABLE DIFFERENTIATION ---------------------------------------------
+% --- DIFFERENTIATION ----------------------------------------------------------
 
 % inserts the roman d for differentiation
 \newcommand{\D}{\mathrm{d}}
@@ -45,7 +45,18 @@
 % 1. the function to differentiante (symbol in the numerator)
 % 2. the variable respect to which to differentiate (symbol in the denominator)
 % and can recieve an optional argument to indicate the order of the derivative
-\newcommand{\dnbyd}[3][]{\frac{\D^{#1}#2}{\D #3^{#1}}}
+\newcommand{\dnbyd}[3][]{\frac{\D^{#1}#2}{\D#3^{#1}}}
+
+% inserts the fraction derivative symbol, it needs two arguments:
+% 1. the function to differentiante (symbol in the numerator)
+% 2. the variable respect to which to differentiate (symbol in the denominator)
+\newcommand{\pbyp}[2]{\frac{\partial#1}{\partial#2}}
+
+% inserts the fraction n-th derivative symbol, it needs two arguments:
+% 1. the function to differentiante (symbol in the numerator)
+% 2. the variable respect to which to differentiate (symbol in the denominator)
+% and can recieve an optional argument to indicate the order of the derivative
+\newcommand{\pnbyp}[3][]{\frac{\partial^{#1}#2}{\partial#3^{#1}}}
 
 
 % --- COMPLEX ANALYSIS ---------------------------------------------------------
