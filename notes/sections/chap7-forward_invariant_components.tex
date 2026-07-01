@@ -93,12 +93,12 @@ $F_0$ is forward invariant or not) we have
     A function $\varphi$ is a \emph{limit function} on a component $F_0$ of
     $F(R)$ if there is some subsequence of $(R^n)_{n \in \N}$ which converges
     locally uniformly to $\varphi$ on $F_0$. The class of limit functions on
-    $F_0$ is denoted by $\mathbb{F}(F_0)$.
+    $F_0$ is denoted by $\mathcal{F}(F_0)$.
 \end{definition}
 
-\begin{remark}[$\mathbb{F}(F_0)$ is always non-empty and limit functions are analytic]
-    As $\{R^n \mid n \geq 1\}$ is normal in $F_0$, $\mathbb{F}(F_0)$ is always
-    non-empty, and each map in $\mathbb{F}(F_0)$ is analytic in $F_0$.
+\begin{remark}[$\mathcal{F}(F_0)$ is always non-empty and limit functions are analytic]
+    As $\{R^n \mid n \geq 1\}$ is normal in $F_0$, $\mathcal{F}(F_0)$ is always
+    non-empty, and each map in $\mathcal{F}(F_0)$ is analytic in $F_0$.
 \end{remark}
 
 \begin{remark}[$F_0$ forward invariant $\implies \varphi(F_0) \subset \closure{F_0}$]
@@ -122,7 +122,7 @@ $F_0$ is forward invariant or not) we have
 \end{proof}
 
 Of course, if the component $F_0$ is (super)attracting with fixed point $\zeta$,
-say, then $R^n \to \zeta$ locally uniformly on $F_0$ and so $\mathbb{F}(F_0)$
+say, then $R^n \to \zeta$ locally uniformly on $F_0$ and so $\mathcal{F}(F_0)$
 contains a single function, namely the constant function with value $\zeta$. The
 same is true (by definition) if $F_0$ is a parabolic component as in
 Definition~\ref{def:types_of_forward_invariant_components_of_F}\ref{itm:parabolic_component}:
@@ -140,10 +140,10 @@ recall
     itself. The group of automorphisms of $D$ is denoted by $\automorphism{D}$.
 \end{definition}
 
-\begin{theorem}[$F_0$ forward invariant and $\mathbb{F}(F_0)$ has only constant functions $\implies \mathbb{F}(F_0) = \{\zeta\}$ fixed point and $R^n \to \zeta$ locally uniformly on $F_0$]
+\begin{theorem}[$F_0$ forward invariant and $\mathcal{F}(F_0)$ has only constant functions $\implies \mathcal{F}(F_0) = \{\zeta\}$ fixed point and $R^n \to \zeta$ locally uniformly on $F_0$]
     \label{thm:if_all_limit_functions_are_constant_on_F0_all_limit_functions_all_constant_equals_to_the_limit_fixed_point_of_F0}
     Suppose that $F_0$ is forward invariant and that every function in
-    $\mathbb{F}(F_0)$ is constant. Then $\mathbb{F}(F_0)$ contains exactly one
+    $\mathcal{F}(F_0)$ is constant. Then $\mathcal{F}(F_0)$ contains exactly one
     function, with value $\zeta$, say, where $R(\zeta) = \zeta$ and $R^n \to
     \zeta$ locally uniformly on $F_0$.
 \end{theorem}
@@ -151,11 +151,11 @@ recall
     See \cite[163]{Beardon1991}.
 \end{proof}
 
-\begin{theorem}[$F_0$ forward invariant and $\mathbb{F}(F_0)$ has a non-constant function $\implies R \in \automorphism{F_0}$ and $\Id \in \mathbb{F}(F_0)$]
+\begin{theorem}[$F_0$ forward invariant and $\mathcal{F}(F_0)$ has a non-constant function $\implies R \in \automorphism{F_0}$ and $\Id \in \mathcal{F}(F_0)$]
     \label{thm:if_there_is_a_nonconstant_limit_function_on_F0_all_limit_functions_are_automorphisms_and_id_is_a_limit_function}
-    Suppose that $F_0$ is forward invariant, and that $\mathbb{F}(F_0)$ contains
+    Suppose that $F_0$ is forward invariant, and that $\mathcal{F}(F_0)$ contains
     some non-constant function. Then $R$ is in $\automorphism{F_0}$, and the
-    identity map $\Id$ is in $\mathbb{F}(F_0)$.
+    identity map $\Id$ is in $\mathcal{F}(F_0)$.
 \end{theorem}
 \begin{proof}
     See \cite[163--164]{Beardon1991}.
@@ -225,9 +225,9 @@ and adds one other important fact.
     See \cite[165-166]{Beardon1991}.
 \end{proof}
 
-\begin{remark}[If every limit function in $\mathbb{F}(F_0)$ is constant, $F_0$ is a (super)attracting or parabolic component]
+\begin{remark}[If every limit function in $\mathcal{F}(F_0)$ is constant, $F_0$ is a (super)attracting or parabolic component]
     Suppose that $F_0$ is forward invariant and that every limit function in
-    $\mathbb{F}(F_0)$ is constant. Then for some fixed point $\zeta$, $R^n \to
+    $\mathcal{F}(F_0)$ is constant. Then for some fixed point $\zeta$, $R^n \to
     \zeta$ in $F_0$ and $\zeta \in F_0 \cup \boundary{F_0}$. If $\zeta \in F_0$,
     then $F_0$ is a (super)attracting component of $F(R)$ (see the proof of
     Theorem~\ref{thm:if_all_limit_functions_are_constant_on_F0_all_limit_functions_all_constant_equals_to_the_limit_fixed_point_of_F0}),
@@ -238,7 +238,7 @@ and adds one other important fact.
     $F_0$ is a parabolic component of $F(R)$. Thus, with reference to the proof
     of
     Theorem~\ref{thm:there_are_only_five_possibilities_for_a_forward_invariant_component_of_F},
-    we have shown that if every limit function in $\mathbb{F}(F_0)$ is constant,
+    we have shown that if every limit function in $\mathcal{F}(F_0)$ is constant,
     then $F_0$ is one of the types \ref{itm:attracting_component},
     \ref{itm:superattracting_component} and \ref{itm:parabolic_component} in
     Definition~\ref{def:types_of_forward_invariant_components_of_F}.
@@ -251,10 +251,10 @@ and adds one other important fact.
 
 In this section we prove
 
-\begin{theorem}[$F_0$ forward invariant and $\mathbb{F}(F_0)$ has non-constant functions $\implies F_0$ is a Siegel disc or a Herman ring]
+\begin{theorem}[$F_0$ forward invariant and $\mathcal{F}(F_0)$ has non-constant functions $\implies F_0$ is a Siegel disc or a Herman ring]
     \label{thm:if_there_are_nonconstant_limit_functions_on_F0_then_F0_is_a_Siegel_disc_or_Herman_ring}
     Suppose that $F_0$ is a forward invariant component of $F(R)$, where
-    $\deg(R) \geq 2$, and that $\mathbb{F}(F_0)$ contains non-constant
+    $\deg(R) \geq 2$, and that $\mathcal{F}(F_0)$ contains non-constant
     functions. Then $F_0$ is either a Siegel disc or a Herman ring.
 \end{theorem}
 \begin{proof}
@@ -296,7 +296,7 @@ $\boundary{\Delta}$ and moreover, this conjugacy extends to an $R$-invariant
 neighborhood $V$ of $\boundary{\Delta}$ such that $R: V \to V$ is analytically
 conjugate to a rotation of an annulus (see \cite{Arnold1965} and
 \cite{Herman1979}). Clearly, $\{R^n \mid n \geq 1\}$ is normal in $V$, and if
-$F_0$ is the component of $F(R)$ which contains $V$, then $\mathbb{F}(F_0)$
+$F_0$ is the component of $F(R)$ which contains $V$, then $\mathcal{F}(F_0)$
 contains non-constant limit functions. We deduce that for these choices of
 $\lambda$ and $\alpha$, $F_0$ is either a Siegel disc or a Herman ring. As both
 $0$ and $\infty$ are super-attracting fixed points of $R$, $F_0$ is not simply
