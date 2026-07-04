@@ -311,17 +311,20 @@ in $\C$).
 
 Our next task is to analyze the behavior of an analytic function $f$ in a
 neighborhood of an attracting fixed point $\zeta$, and this analysis will enable
-us to understand completely the dynamics of $f$ near $\zeta$. We suppose, then,
-that $f$ is analytic in some neighborhood $N$ of an attracting fixed point
-$\zeta$, and we may assume that $f(N) \subset N$. Now let $g$ be any function
-which is analytic and univalent on $N$ with $g(\zeta) = 0$, and let $F = g f
-g^{-1}$. Then $F$ is defined and analytic on the neighborhood $g(N)$ of the
-origin (see Figure~\ref{fig:figure_6_3_1}) and, as $F'(0) = f'(\zeta)$, we see
-that $0$ is an attracting fixed point of $F$.
+us to understand completely the dynamics of $f$ near $\zeta$.
 
 \begin{definition}[Local analytic conjugate]
-    We call $F$ a \emph{local (analytic) conjugate} of $f$.
+    Let $f$ be an analytic map in some neighborhood $N$ of an attracting fixed
+    point $\zeta$, and we may assume that $f(N) \subset N$. Now let $g$ be any
+    function which is analytic and univalent on $N$ with $g(\zeta) = 0$, and let
+    $F = g f g^{-1}$. We call $F$ a \emph{local (analytic) conjugate} of $f$.
 \end{definition}
+
+\begin{remark}[Local analytic conjugates are analytic (on $g(N)$) and preserve fixed points and their multipliers]
+    Note that, then, $F$ is defined and analytic on the neighborhood $g(N)$ of the
+    origin (see Figure~\ref{fig:figure_6_3_1}) and, as $F'(0) = f'(\zeta)$, we
+    see that $0$ is an attracting fixed point of $F$.
+\end{remark}
 
 \begin{figure}[htbp]
     \centering
@@ -688,7 +691,7 @@ the region $\sigma(\Pi)$ in the example above).
     For each positive $t$, each positive integer $p$ and each $k$ in $\{0, 1,
     \dots, p-1\}$, we define the sets
     \begin{equation*}
-        \Pi_k(t) = \left\{r e^{i\theta} \middle| r^p < t(1 + \cos(p\theta)); \left|\frac{2k\pi}{p - \theta}\right| < \frac{\pi}{p}\right\}.
+        \Pi_k(t) = \left\{r \exp(i\theta) \middle| r^p < t(1 + \cos(p\theta)); \left|\frac{2k\pi}{p - \theta}\right| < \frac{\pi}{p}\right\}.
     \end{equation*}
     These sets are called \emph{petals} (at the origin).
 \end{definition}
@@ -900,7 +903,7 @@ Figure~\ref{fig:figure_6_5_8} (where $p = 5$) and Figure~\ref{fig:figure_6_5_9}
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=0.6\textwidth]{beardons_book/figure_6_5_9.png}
-    \caption{$z \mapsto e^{2\pi i/3}z + z^2$.}
+    \caption{$z \mapsto z \exp(2\pi i/3) + z^2$.}
     \label{fig:figure_6_5_9}
 \end{figure}
 
@@ -1206,7 +1209,7 @@ understood at all. We prove
 
     Now for any positive integers $m$ and $n$, we have
     \begin{align*}
-        |\alpha^n - 1| &= |e^{n\pi i \theta} - e^{-n\pi i \theta}| \\
+        |\alpha^n - 1| &= |\exp(n\pi i \theta) - \exp(-n\pi i \theta)| \\
                     &= 2|\sin(n\pi\theta)| \\
                     &= 2|\sin\pi(n\theta - m)| \\
                     &\leq 2\pi |n\theta - m|.

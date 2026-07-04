@@ -1,5 +1,5 @@
-\documentclass[12pt, a4paper, oneside]{book}
-% \documentclass[14pt, a4paper, oneside]{extbook}
+% \documentclass[12pt, a4paper, oneside]{book}
+\documentclass[14pt, a4paper, oneside]{extbook}
 
 % --- Packages -----------------------------------------------------------------
 \usepackage[T1]{fontenc}
@@ -20,29 +20,40 @@
 \usepackage{subcaption}
 \graphicspath{ {../figures} }
 \usepackage{pdfpages}
-\usepackage{biblatex}
+\usepackage[
+    style=numeric,  % Options: numeric (-comp, -verb)
+                    %          alphabetic (-verb)
+                    %          authoryear (-comp, -icomp)
+                    %          authortitle (-comp, -icomp)
+                    %          verbose (-ibit, -inote, -trad)
+                    % And major academics like: apa, ieee, mla, nature, science, etc.
+    backend=biber,
+    isbn=false,
+    url=false,
+    doi=false
+]{biblatex}
 \addbibresource{../report/refs.bib}
 \usepackage[hidelinks]{hyperref}
 
 % --- Defined Commands and Theorem Like Environments ---------------------------
-% \usepackage[
-%     left=20mm,
-%     right=20mm,
-%     top=35mm,
-%     bottom=25mm
-% ]{geometry}
+\usepackage[
+    left=20mm,
+    right=20mm,
+    top=35mm,
+    bottom=25mm
+]{geometry}
 \input{../latex_utils/commands}
 \input{../latex_utils/theormen_like-environments-book}
 \input{../latex_utils/customization/colors_definitions}
 \input{../latex_utils/customization/customization_commands}
 % \input{../latex_utils/customization/title-customization}
-% \input{../latex_utils/customization/theorem_like-environments-colorful_customization}
+\input{../latex_utils/customization/theorem_like-environments-colorful_customization}
 % \input{../latex_utils/customization/theorem_like-environments-minimalist_customization}
 
-% --- Defined tikzsets pics and layers ---------------------------------------------
+% --- Defined tikzsets pics and layers -----------------------------------------
 \pgfdeclarelayer{edgelayer}
 \pgfdeclarelayer{nodelayer}
-\pgfsetlayers{main,nodelayer,edgelayer}
+\pgfsetlayers{main, nodelayer, edgelayer}
 \input{../figures/tikz/blobs/blob1}
 \input{../figures/tikz/blobs/blob2}
 \input{../figures/tikz/blobs/blob3}
@@ -50,6 +61,9 @@
 \input{../figures/tikz/blobs/blob5}
 \input{../figures/tikz/blobs/blob6}
 \input{../figures/tikz/blobs/blob7}
+
+% --- Fix the white gaps -------------------------------------------------------
+\raggedbottom
 
 % --- Includes to Reproccess ---------------------------------------------------
 \includeonly{

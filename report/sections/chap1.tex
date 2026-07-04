@@ -1,7 +1,9 @@
 \chapter{Introducción}
 En este capítulo analizaremos algunos ejemplos de iteraciones de funciones
 racionales. El objetivo es desarrollar una intuición sobre los fenómenos que
-estudia la Dinámica Compleja antes de formalizar sus conceptos centrales.
+estudia la Dinámica Compleja y formalizar algunos conceptos básicos que
+encontraremos en los ejemplos. Para ello, trabajaremos en el plano complejo
+extendido (o esfera de Riemann) $\ExtC = \C \cup \{\infty\}$.
 
 % --- SECCIÓN ------------------------------------------------------------------
 % --- TRANSFORMACIONES DE MÖBIUS -----------------------------------------------
@@ -10,57 +12,82 @@ Comencemos con el caso más sencillo: las funciones racionales de grado uno.
 Estas funciones, conocidas como transformaciones de Möbius, poseen una dinámica
 sencilla de analizar.
 
+\begin{definicion}[Función racional]
+    Una \emph{función racional} es una función $R: \ExtC \to \ExtC$ de la forma
+    \begin{equation*}
+        R(z) = \frac{P(z)}{Q(z)},
+    \end{equation*}
+    donde $P(z)$ y $Q(z)$ son polinomios, sin ser ambos el polinomio nulo.
+\end{definicion}
+
+Supongamos que ni $P$ ni $Q$ son el polinomio nulo, en este caso $R$ no está
+definido en las raíces comunes de $P$ y $Q$. Sin embargo, si estas existen,
+podemos cancelar los factores comunes de $P$ y $Q$, obteniendo así dos
+polinomios que no tendrán raíces comunes $P_1$ y $Q_1$. De ahora en adelante
+consideraremos $P$ y $Q$ no tienen raíces comunes, y si las tuvieran,
+consideraríamos $R = P_1/Q_1$. En estas circunstancias seguiremos los convenios
+habituales con el punto del infinito en la esfera de Riemann: si $Q$ es el
+polinomio nulo, entonces $R$ es la función constante $\infty$; si $Q(z) = 0$ y
+$P$ no es el polinomio nulo, entonces $R(z) = \infty$; y tomaremos $R(\infty) =
+\lim_{z \to \infty} R(z)$.
+
+La preguntas fundamentales que nos hacemos son: si iteramos una función racional
+$R$ partiendo de un punto arbitrario $z_0 \in \ExtC$, ¿cómo se comportará la
+secuencia $R^n(z_0)$?; y si tomamos otro punto $w_0 \in \ExtC$ cercano a $z_0$,
+¿$R^n(w_0)$ se comportará de manera similar a $R^n(z_0)$? A lo largo de todo el
+trabajo se utilizará $R$ para referirse a una función racional y $R^n$ para
+referirse a componer $R$ consigo misma $n$ veces.
+
+Con fin de responder a la primera pregunta, necesitaremos introducir los
+siguientes conceptos básicos.
+
+Dada una función $g$ de un conjunto $X$ a sí mismo
+($g: X \to X$), y dados $x$ e $y$ dos puntos en $X$, definimos la relación
+$\sim$ en $X$ de la siguiente manera: $x \sim y$ si y solo si existen $n$ y $m$
+enteros tales que
+\begin{equation*}
+    g^n(x) = g^m(y).
+\end{equation*}
+Se puede comprobar que la relación $\sim$ es reflexiva, simétrica y transitiva
+y, por tanto, es una relación de equivalencia.
+
+\begin{definicion}[Órbita, órbita positiva y órbita negativa de $x$]
+    En estas circunstancias, llamaremos \emph{órbita} de $x$ a la clase de
+    equivalencia dicho punto, y la denotaremos por $[x]$. Además, definiremos la
+    órbita positiva de $x$ cómo el conjunto
+    \begin{equation*}
+        \orbit^+(z) = \{R^n(z) \mid n \geq 1\};
+    \end{equation*}
+    y órbita negativa al conjunto
+    \begin{align*}
+        \orbit^-(z) &= \{w \mid \exists n \geq 0 \text{ tal que } R^n(w) = z\} \\
+                    &= \bigcup_{n \geq 0} R^{-n}\{z\},
+    \end{align*}
+\end{definicion}
+
+\begin{definicion}[Punto fijo]
+    Sea $D$ un conjunto y $f \colon D \to \ExtC$ una función racional. Un punto
+    $\zeta \in D$ diremos que es un \emph{punto fijo} de $f$ si $f(\zeta) =
+    \zeta$.
+\end{definicion}
+
 \begin{definicion}[Transformación de Möbius]
     Una transformación de Möbius es una función racional de la forma
     \[
         R(z) = \frac{az+b}{cz+d}, \quad ad-bc \ne 0
     \] 
-    donde $z$, $a$, $b$, $c$, $d$ son números complejos. Seguiremos los
-    convenios habituales con el punto del infinito en la esfera de Riemann,
-    $\ExtC$: $R(\infty)=a/c$ y $R(-c/d) = \infty$.
+    donde $z$, $a$, $b$, $c$, $d$ son números complejos.
 \end{definicion}
 
-Consideremos como primer ejemplo la transformación
-\begin{equation}\label{eq:mobius_ej1}
-    R(z) = \frac{3z-2}{2z-1}.
-\end{equation}
-Esta función tiene un único punto fijo, $\zeta = 1$.
+Siguiendo los convenios habituales con el punto del infinito en la esfera de
+Riemann: $R(\infty)=a/c$ y $R(-d/c) = \infty$.
 
-\begin{definicion}[Punto fijo, periódico y preperiódico]
-    Sea $R \colon \ExtC \to \ExtC$ una función racional. Un punto $z_0 \in
-    \ExtC$ diremos que es:
-    \begin{itemize}
-        \item un \emph{punto fijo} de $R$ si $R(z_0) = z_0$;
-        \item un \emph{punto periódico de periodo $p \geq 1$} de $R$ si
-        $R^p(z_0) = z_0$ y $R^n(z_0) \neq z_0$ para todo $n < p$;
-        \item o un \emph{punto preperiódico} de $R$ si $z_0$ no es periódico,
-        pero para algún $k \geq 1$, $R^k(z_0)$ es periódico.
-    \end{itemize}
-\end{definicion}
-
-La preguntas fundamentales que nos hacemos son: si iteramos $R$ partiendo de un
-punto arbitrario $z_0 \in \ExtC$, ¿cómo se comportará la secuencia $R^n(z_0)$?;
-y si tomamos otro punto $w_0 \in \ExtC$ cercano a $z_0$, ¿$R^n(w_0)$ se
-comportará de manera similar a $R^n(z_0)$? A lo largo de todo el trabajo se
-utilizará $R^n$ para referirse a componer $R$ consigo misma $n$ veces.
-
-\begin{definicion}[Órbita]
-    Sea $R \colon \ExtC \to \ExtC$ una función racional y $z_0 \in \ExtC$.
-    Llamamos \emph{órbita} u \emph{órbita positiva} de $z_0$ al conjunto
-    \[
-        \mathcal{O}(z_0) = \mathcal{O}^+(z_0) = \{z_n = R^n(z_0) \mid n \in \Nzero\}.
-    \]
-    Y \emph{órbita negativa} de $z_0$ al conjunto
-    \[
-        \mathcal{O}^-(z_0) = \{z \mid R^n(z) = z_0, \text{para algún $n \in \Nzero$}\} = \bigcup_{n \in \Nzero}R^{-n}(z_0).
-    \]
-\end{definicion}
-
-En este momento resulta interesante introducir el concepto de
-\emph{conjugación}. No solo nos va a servir para simplificar el análisis de las
-transformaciones de Möbius, sino que también nos ayudará a encontrar familias de
-funciones con el mismo comportamiento dinámico por ser una relación de
-equivalencia.
+Ahora, usando las transformaciones de Möbius, veremos con ejemplos en que se
+traducen estos conceptos. Pero, antes resulta interesante introducir el concepto
+de \emph{conjugación}. No solo nos va a servir para simplificar el análisis de
+las transformaciones de Möbius, sino que también nos ayudará a encontrar
+familias de funciones con el mismo comportamiento dinámico por ser una relación
+de equivalencia.
 
 \begin{definicion}[Conjugación]
     Sean $X$, $Y \subseteq \ExtC$, $R \colon X \to X$ y $S \colon Y \to Y$ dos
@@ -80,13 +107,19 @@ Por tanto, estudiar las órbitas de $R$ es equivalente a estudiar las de $S$. Lo
 puntos fijos y periódicos, y la convergencia de las órbitas se preservan bajo la
 aplicación de $g$.
 
-En el caso de la ecuación~\ref{eq:mobius_ej1}, utilizando $g = 1/(z-\zeta)$ para
-trasladar el punto fijo $\zeta$ al infinito, encontramos que $R$ es conjugada a
-$S(z) = 2 + z$. $S$ es una traslación y $S^n(z) = 2n + z$. Observamos que el
-único punto fijo de $S$ es el infinito (que se corresponde con el punto fijo
-$\zeta = 1$ de $R$) y que dado cualquier punto $z_0 \in \ExtC$, $S^n(z_0)$ tiene
-al punto fijo cuando $n \to \infty$. Luego, $\lim_{n \to \infty} R^n(z_0) =
-\zeta$ para todo $z_0 \in \ExtC$.
+\begin{ejemplo}
+    Consideremos como primer ejemplo la transformación
+    \begin{equation}\label{eq:mobius_ej1}
+        R(z) = \frac{3z-2}{2z-1}.
+    \end{equation}
+    Esta función tiene un único punto fijo, $\zeta = 1$. Utilizando $g =
+    1/(z-\zeta)$ para trasladar el punto fijo $\zeta$ al infinito, encontramos
+    que $R$ es conjugada a $S(z) = 2 + z$. $S$ es una traslación y $S^n(z) = 2n
+    + z$. Observamos que el único punto fijo de $S$ es el infinito (que se
+    corresponde con el punto fijo $\zeta = 1$ de $R$) y que dado cualquier punto
+    $z_0 \in \ExtC$, $S^n(z_0)$ tiene al punto fijo cuando $n \to \infty$.
+    Luego, $\lim_{n \to \infty} R^n(z_0) = \zeta$ para todo $z_0 \in \ExtC$.
+\end{ejemplo}
 
 \begin{observacion}
     En general, sea $R$ una transformación de Möbius con un único punto fijo.
@@ -95,17 +128,19 @@ al punto fijo cuando $n \to \infty$. Luego, $\lim_{n \to \infty} R^n(z_0) =
     \cite[4-5]{Beardon1991}.
 \end{observacion}
 
-Veamos ahora un escenario distinto con la transformación
-\[
-    R(z) = \frac{(1+i)z + (1-i)}{(1-i)z + (1+i)},
-\]
-la cual posee dos puntos fijos, $\zeta_1 = 1$ y $\zeta_2 = -1$. Esta vez usamos
-$g(z) = (z-\zeta_2)/(z-\zeta_1)$ para enviar los puntos fijos $1$ y $-1$ al
-$\infty$ y al $0$ respectivamente. Obtenemos que $R$ es conjugada a la rotación
-$S(z) = iz$. Como $(-i)^4=1$, se tiene que $S^4(z)=z$ para todo $z$ y, en
-consecuencia por las propiedades de la conjugación, $R^4(z)= z$. Bajo esta
-transformación, todas las órbitas son periódicas (de período divisor de 4) y,
-salvo en los puntos fijos, ninguna órbita converge.
+\begin{ejemplo}
+    Veamos ahora un escenario distinto con la transformación
+    \[
+        R(z) = \frac{(1+i)z + (1-i)}{(1-i)z + (1+i)},
+    \]
+    la cual posee dos puntos fijos, $\zeta_1 = 1$ y $\zeta_2 = -1$. Esta vez
+    usamos $g(z) = (z-\zeta_2)/(z-\zeta_1)$ para enviar los puntos fijos $1$ y
+    $-1$ al $\infty$ y al $0$ respectivamente. Obtenemos que $R$ es conjugada a
+    la rotación $S(z) = iz$. Como $(-i)^4=1$, se tiene que $S^4(z)=z$ para todo
+    $z$ y, en consecuencia por las propiedades de la conjugación, $R^4(z)= z$.
+    Bajo esta transformación, todas las órbitas son periódicas (de período
+    divisor de 4) y, salvo en los puntos fijos, ninguna órbita converge.
+\end{ejemplo}
 
 \begin{observacion}
     En general, sea $R$ una transformación de Möbius con dos puntos fijos.

@@ -16,7 +16,18 @@
 \usepackage{subcaption}
 \graphicspath{ {../figures} }
 \usepackage{pdfpages}
-\usepackage{biblatex}
+\usepackage[
+    style=numeric,  % Options: numeric (-comp, -verb)
+                    %          alphabetic (-verb)
+                    %          authoryear (-comp, -icomp)
+                    %          authortitle (-comp, -icomp)
+                    %          verbose (-ibit, -inote, -trad)
+                    % And major academics like: apa, ieee, mla, nature, science, etc.
+    backend=biber,
+    isbn=false,
+    url=false,
+    doi=false
+]{biblatex}
 \addbibresource{refs.bib}
 \usepackage[hidelinks]{hyperref}
 
@@ -25,7 +36,15 @@
 \input{../latex_utils/theormen_like-environments-book}
 
 % --- Includes to Reproccess ---------------------------------------------------
-\includeonly{sections/front, sections/chap1-examples}
+\includeonly{
+    sections/front,
+    sections/chap1,
+    sections/chap2,
+    sections/chap3,
+    sections/chap4,
+    sections/chap5,
+    sections/back
+}
 
 % --- Document Information -----------------------------------------------------
 \title{Título del trabajo en castellano}
@@ -39,12 +58,16 @@
 
 % --- Main Matter --------------------------------------------------------------
 \mainmatter
-\include{sections/chap1-examples}
+\include{sections/chap1}
+\include{sections/chap2}
+\include{sections/chap3}
+\include{sections/chap4}
+\include{sections/chap5}
 % --- Appendix -----------------------------------------------------------------
 %\appendix
 %\include{sections/appendix}
 
 % --- Back Matter --------------------------------------------------------------
 \backmatter
-\printbibliography[heading=bibintoc]
+\include{sections/back}
 \end{document}

@@ -1,56 +1,52 @@
-\usepackage{mdframed}
+\usepackage[most]{tcolorbox}
 
-% --- Define Base Frame Style --------------------------------------------------
-\mdfdefinestyle{theoremLineStyle}{
-    topline=false,
-    bottomline=false,
-    rightline=false,
-    linewidth=2pt,          % Width of the left line
-    innertopmargin=-4pt,     % Padding inside the frame
-    innerbottommargin=2pt,
-    innerleftmargin=10pt,
-    innerrightmargin=0pt,
-    skipabove=4pt,         % Space above the environment
-    skipbelow=4pt          % Space below the environment
+% --- Define the base style mapping your exact mdframed geometry ---
+\tcbset{
+    theoremLineStyle/.style={
+        blanker,                  % Removes background and all 4 borders
+        breakable,
+        left=12pt, right=0pt, top=8pt, bottom=8pt,
+        before skip=10pt, after skip=10pt,
+        borderline west={2pt}{0pt}{#1} % Width=3pt, Offset=0pt, Color=Argument
+    }
 }
 
-% --- Register Environments with mdframed to add the left lines ----------------
+% --- Register Environments with tcolorbox to add the left lines ---
+% 1. Results (Cyan)
+\tcolorboxenvironment{theorem}{theoremLineStyle=black}
+\tcolorboxenvironment{teorema}{theoremLineStyle=black}
+\tcolorboxenvironment{theorem*}{theoremLineStyle=black}
+\tcolorboxenvironment{teorema*}{theoremLineStyle=black}
+\tcolorboxenvironment{proposition}{theoremLineStyle=black}
+\tcolorboxenvironment{proposicion}{theoremLineStyle=black}
+\tcolorboxenvironment{proposition*}{theoremLineStyle=black}
+\tcolorboxenvironment{proposicion*}{theoremLineStyle=black}
+\tcolorboxenvironment{corollary}{theoremLineStyle=black}
+\tcolorboxenvironment{corolario}{theoremLineStyle=black}
+\tcolorboxenvironment{corollary*}{theoremLineStyle=black}
+\tcolorboxenvironment{corolario*}{theoremLineStyle=black}
+\tcolorboxenvironment{lemma}{theoremLineStyle=black}
+\tcolorboxenvironment{lema}{theoremLineStyle=black}
+\tcolorboxenvironment{lemma*}{theoremLineStyle=black}
+\tcolorboxenvironment{lema*}{theoremLineStyle=black}
 
-% 1. Results (Black)
-\surroundwithmdframed[style=theoremLineStyle, linecolor=black]{theorem}
-\surroundwithmdframed[style=theoremLineStyle, linecolor=black]{teorema}
-\surroundwithmdframed[style=theoremLineStyle, linecolor=black]{theorem*}
-\surroundwithmdframed[style=theoremLineStyle, linecolor=black]{teorema*}
-\surroundwithmdframed[style=theoremLineStyle, linecolor=black]{proposition}
-\surroundwithmdframed[style=theoremLineStyle, linecolor=black]{porposicion}
-\surroundwithmdframed[style=theoremLineStyle, linecolor=black]{proposition*}
-\surroundwithmdframed[style=theoremLineStyle, linecolor=black]{proposicion*}
-\surroundwithmdframed[style=theoremLineStyle, linecolor=black]{corollary}
-\surroundwithmdframed[style=theoremLineStyle, linecolor=black]{corolario}
-\surroundwithmdframed[style=theoremLineStyle, linecolor=black]{corollary*}
-\surroundwithmdframed[style=theoremLineStyle, linecolor=black]{corolario*}
-\surroundwithmdframed[style=theoremLineStyle, linecolor=black]{lemma}
-\surroundwithmdframed[style=theoremLineStyle, linecolor=black]{lema}
-\surroundwithmdframed[style=theoremLineStyle, linecolor=black]{lemma*}
-\surroundwithmdframed[style=theoremLineStyle, linecolor=black]{lema*}
-
-% 2. Definitions (Black)
-\surroundwithmdframed[style=theoremLineStyle, linecolor=black]{definition}
-\surroundwithmdframed[style=theoremLineStyle, linecolor=black]{definicion}
-\surroundwithmdframed[style=theoremLineStyle, linecolor=black]{definition*}
-\surroundwithmdframed[style=theoremLineStyle, linecolor=black]{definicion*}
+% 2. Definitions (Purple)
+\tcolorboxenvironment{definition}{theoremLineStyle=black}
+\tcolorboxenvironment{definicion}{theoremLineStyle=black}
+\tcolorboxenvironment{definition*}{theoremLineStyle=black}
+\tcolorboxenvironment{definicion*}{theoremLineStyle=black}
 
 % 3. Remarks (Yellow)
-% \surroundwithmdframed[style=theoremLineStyle, linecolor=black]{remark}
-% \surroundwithmdframed[style=theoremLineStyle, linecolor=black]{observacion}
-% \surroundwithmdframed[style=theoremLineStyle, linecolor=black]{remark*}
-% \surroundwithmdframed[style=theoremLineStyle, linecolor=black]{observacion*}
+\tcolorboxenvironment{remark}{theoremLineStyle=black}
+\tcolorboxenvironment{observacion}{theoremLineStyle=black}
+\tcolorboxenvironment{remark*}{theoremLineStyle=black}
+\tcolorboxenvironment{observacion*}{theoremLineStyle=black}
 
 % 4. Examples (Orange)
-% \surroundwithmdframed[style=theoremLineStyle, linecolor=black]{example}
-% \surroundwithmdframed[style=theoremLineStyle, linecolor=black]{ejemplo}
-% \surroundwithmdframed[style=theoremLineStyle, linecolor=black]{example*}
-% \surroundwithmdframed[style=theoremLineStyle, linecolor=black]{ejemplo*}
+\tcolorboxenvironment{example}{theoremLineStyle=black}
+\tcolorboxenvironment{ejemplo}{theoremLineStyle=black}
+\tcolorboxenvironment{example*}{theoremLineStyle=black}
+\tcolorboxenvironment{ejemplo*}{theoremLineStyle=black}
 
-% 4. Proofs (Gray)
-% \surroundwithmdframed[style=theoremLineStyle, linecolor=black]{proof}
+% 5. Proofs (Red)
+\tcolorboxenvironment{proof}{theoremLineStyle=black}

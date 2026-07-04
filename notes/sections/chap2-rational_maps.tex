@@ -57,7 +57,7 @@ and $\pi(\infty) = (0,0,1)$.
 
 \begin{definition}[Chordal Metric]
     Given the projection $\pi$ from $\ExtC$ to $S$, we define the \emph{chordal
-    metric}, $\sigma : \ExtC \times \ExtC \rightarrow \R^+ \cup \{0\}$, as the
+    metric}, $\sigma : \ExtC \times \ExtC \implies \R^+ \cup \{0\}$, as the
     Euclidean distance from $\pi(z)$ to $\pi(w)$:
     \begin{equation*}
         (z,w) \mapsto \sigma(z,w) = |\pi(z) - \pi(w)|.
@@ -68,7 +68,7 @@ and $\pi(\infty) = (0,0,1)$.
     \end{equation*}
     For the point at infinity, we have:
     \begin{equation*}
-        \sigma(z,\infty) = \lim_{w \rightarrow \infty} \sigma(z,w) = \frac{2}{(1+|z|^2)^{1/2}}.
+        \sigma(z,\infty) = \lim_{w \implies \infty} \sigma(z,w) = \frac{2}{(1+|z|^2)^{1/2}}.
     \end{equation*}
 \end{definition}
 
@@ -78,8 +78,8 @@ and $\pi(\infty) = (0,0,1)$.
 \end{remark}
 
 \begin{remark}[Rotation in $S$ $\mapsto$ isometry in $\ExtC$]
-    Any rotation $\varphi: S \rightarrow S$ of the sphere induces a map
-    $\pi^{-1} \varphi \pi : \ExtC \rightarrow \ExtC$ which is an isometry. These
+    Any rotation $\varphi: S \implies S$ of the sphere induces a map
+    $\pi^{-1} \varphi \pi : \ExtC \implies \ExtC$ which is an isometry. These
     isometries are Möbius transformations of the form:
     \begin{equation*}
         z \mapsto \frac{a z - \bar{c}}{c z + \bar{a}},
@@ -136,7 +136,7 @@ $\frac{2}{\pi}$, we can use $\sigma$ and $\sigma_0$ interchangeably throughout
 our study of rational dynamics whenever global constants are allowed to change.
 
 \begin{remark}[Spherical length]
-    Given a continuously differentiable curve $\gamma : I \rightarrow \ExtC$,
+    Given a continuously differentiable curve $\gamma : I \implies \ExtC$,
     its \emph{spherical length} is given by:
     \begin{equation*}
         \int_{\gamma} \frac{2|\D z|}{1+|z|^2}.
@@ -158,11 +158,11 @@ our study of rational dynamics whenever global constants are allowed to change.
 \end{definition}
 
 \begin{itemize}
-    \item If $P = 0 \Rightarrow R = 0$.
-    \item If $Q = 0 \Rightarrow R = \infty$.
+    \item If $P = 0 \implies R = 0$.
+    \item If $Q = 0 \implies R = \infty$.
     \item If $P(z_0) \neq 0$ and $Q(z_0) = 0$ for some $z_0 \in \C$, then
     $R(z_0) = \infty$.
-    \item We define $R(\infty) = \lim_{z \rightarrow \infty} R(z)$.
+    \item We define $R(\infty) = \lim_{z \to \infty} R(z)$.
     \item If $P(z_0) = 0$ and $Q(z_0) = 0$, strictly speaking $R(z_0)$ is not
     defined, but in this case we may cancel the common factors:
     \begin{align*}
@@ -214,13 +214,13 @@ and \emph{analytic} functions in $\C$ and see how they translate to $\ExtC$ with
 the chordal metric.
 
 \begin{definition}[Holomorphic]
-    Given $D \subseteq \C$, a function $f : D \rightarrow \C$ is
+    Given $D \subseteq \C$, a function $f : D \implies \C$ is
     \emph{holomorphic} in $D$ if the derivative of $f$ exists at each point in
     $D$.
 \end{definition}
 
 \begin{definition}[Meromorphic]
-    Given $D \subseteq \C$, a function $f : D \rightarrow \ExtC$ is
+    Given $D \subseteq \C$, a function $f : D \implies \ExtC$ is
     \emph{meromorphic} in $D$ if each point in $D$ has a neighborhood on which
     either $f$ or $1/f$ is holomorphic.
 \end{definition}
@@ -249,7 +249,7 @@ the chordal metric.
 \end{definition}
 
 \begin{definition}[Analytic in $D \subseteq \ExtC$]
-    Given a map $f : D_1 \rightarrow D_2$ between any two subdomains of $\ExtC$,
+    Given a map $f : D_1 \implies D_2$ between any two subdomains of $\ExtC$,
     we say $f$ is \emph{analytic} if it is holomorphic or meromorphic at each
     point in $D_1$.
 \end{definition}
@@ -259,7 +259,7 @@ the chordal metric.
     then (using the chordal metric and its topology), $f$ is continuous at the
     pole. This is because $z \mapsto 1/z$ is a $\sigma$-isometry:
     \begin{equation*}
-        \sigma(f(z), f(w)) = \sigma\left(\frac{1}{f(z)}, \frac{1}{f(w)}\right) = \sigma\left(\frac{1}{f(z)}, 0\right) = \frac{2|1/f(z)|}{(1+|1/f(z)|^2)^{1/2}} \xrightarrow{z \rightarrow w} 0
+        \sigma(f(z), f(w)) = \sigma\left(\frac{1}{f(z)}, \frac{1}{f(w)}\right) = \sigma\left(\frac{1}{f(z)}, 0\right) = \frac{2|1/f(z)|}{(1+|1/f(z)|^2)^{1/2}} \xrightarrow{z \implies w} 0
     \end{equation*}
 \end{remark}
 

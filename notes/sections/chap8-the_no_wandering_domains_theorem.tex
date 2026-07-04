@@ -826,7 +826,7 @@ It remains, then, to prove Lemma~\ref{lem:TO_DO_1} and to construct the maps
 $\Psi_t$ with the properties used above. First, we take an integer $N$
 satisfying $N > 4d + 2$ (the space of rational maps of degree $d$, $d = \deg(R)$
 having $4d + 2$ real degrees of freedom). We shall now construct, for each
-vector $T$ lying in the cube $[0, \epsilon_1]^N$ (where $\epsilon_1$ is some
+vector $T$ lying in the cube $[0, \varepsilon_1]^N$ (where $\varepsilon_1$ is some
 small number yet to be chosen), a Beltrami coefficient $\mu_T$ on $\Delta$ and a
 $\mu_T$-conformal map $\Psi_T$ of $\Delta$ onto itself. In fact, we shall
 construct the maps $\Psi_T$ first, and then define $\mu_T$ to be their complex
@@ -846,7 +846,7 @@ construct a $C^\infty$-function $\omega_j$ on $[0, 2\pi]$ such that:
     \label{eq:Psi_T_definition}
     \Psi_T(z) = z \exp\left[i \sum_{j=1}^N t_j \omega_j(\theta)\right]
 \end{equation}
-where $z = r e^{i\theta}$ of $\Delta$ onto itself, and let the Beltrami
+where $z = r \exp(i\theta)$ of $\Delta$ onto itself, and let the Beltrami
 coefficient $\mu_T$ on $\Delta$ be the complex dilatation of $\Psi_T$.
 
 The complex dilatation $\mu_T$ can easily be computed in terms of the partial
@@ -854,12 +854,12 @@ derivatives $\partial\Psi_T/\partial r$ and $\partial\Psi_T/\partial\theta$
 (Exercise~8.6.2) and when this has been done we find that
 \begin{equation}
     \label{eq:mu_T_computation}
-    \mu_T(r e^{i\theta}) = \frac{e^{2i\theta} \sum_{j=1}^N t_j \omega_j(\theta)}{2 + \sum_{j=1}^N t_j \omega_j(\theta)},
+    \mu_T(r \exp(i\theta)) = \frac{\exp(2i\theta) \sum_{j=1}^N t_j \omega_j(\theta)}{2 + \sum_{j=1}^N t_j \omega_j(\theta)},
 \end{equation}
 and hence for all $T$,
 \begin{equation}
     \label{eq:mu_T_bound}
-    |\mu_T(r e^{i\theta})| \leq \frac{\sum_{j=1}^N |t_j \omega_j(\theta)|}{2 - \sum_{j=1}^N |t_j \omega_j(\theta)|} \leq \frac{N\epsilon_1}{2 - N\epsilon_1}.
+    |\mu_T(r \exp(i\theta))| \leq \frac{\sum_{j=1}^N |t_j \omega_j(\theta)|}{2 - \sum_{j=1}^N |t_j \omega_j(\theta)|} \leq \frac{N\varepsilon_1}{2 - N\varepsilon_1}.
 \end{equation}
 
 Note that:
@@ -869,14 +869,14 @@ Note that:
     \item \label{itm:distinct_T_imply_distinct_Psi_T} distinct values of $T$
     lead to distinct functions $\Psi_T$; and
     \item \label{itm:mu_T_norm_bound_eta} given any $\eta$, $||\mu_T||_\infty <
-    \eta$ if $\epsilon_1$ is small enough.
+    \eta$ if $\varepsilon_1$ is small enough.
 \end{enumerate}
 
 The first two of these are the properties required of the function $\Psi_t$ at
 the end of the proof of Theorem~\ref{thm:the_no_wandering_domains_theorem}, and
-by choosing $\epsilon_1$ small enough, \ref{itm:mu_T_norm_bound_eta} guarantees
+by choosing $\varepsilon_1$ small enough, \ref{itm:mu_T_norm_bound_eta} guarantees
 that we can satisfy Lemma~\ref{lem:TO_DO_1}\ref{itm:lemma_to_do_1_a} for all
-$\mu_T$. We fix this value of $\epsilon_1$, and it remains to complete the proof
+$\mu_T$. We fix this value of $\varepsilon_1$, and it remains to complete the proof
 of Lemma~\ref{lem:TO_DO_1}.
 
 \begin{proof}[Proof of Lemma~\ref{lem:TO_DO_1}]
@@ -908,7 +908,7 @@ of Lemma~\ref{lem:TO_DO_1}.
     \begin{equation*}
         \Pi(T) = (\varphi_T(a_1), \dots, \varphi_T(a_d), \varphi_T(b_1), \dots, \varphi_T(b_d))
     \end{equation*}
-    of $(0, \epsilon_1)^N$ into $\C^{2d}$ is constant on some curve.
+    of $(0, \varepsilon_1)^N$ into $\C^{2d}$ is constant on some curve.
 
     Now in the fundamental paper \cite{Ahlfors1960}, Ahlfors and Bers examined
     the general question of how a solution $z \mapsto \varphi_t(z)$ of the
@@ -925,7 +925,7 @@ of Lemma~\ref{lem:TO_DO_1}.
         t &\mapsto \varphi_T(b_j)
     \end{align*}
     is $C^\infty$. We conclude that $\Pi$ is a $C^\infty$-map of the open cube
-    $\mathscr{C}_0 = (0, \epsilon_1)^N$ into $\C^{2d}$.
+    $\mathscr{C}_0 = (0, \varepsilon_1)^N$ into $\C^{2d}$.
 
     The set of points where the rank of $\Pi'$ is maximal, say $k$, is an open
     subset of $\mathscr{C}_0$ (for the rank of $\Pi'$ is upper semi-continuous)
