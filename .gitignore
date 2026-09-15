@@ -3,6 +3,7 @@ pycache/
 *.py[cod]
 *$py.class
 .ipynb_checkpoints/
+*.egg-info
 
 # Environments
 .env

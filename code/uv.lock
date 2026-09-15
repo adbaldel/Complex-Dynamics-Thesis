@@ -3859,6 +3859,7 @@ version = "0.1.0"
 source = { editable = "." }
 dependencies = [
     { name = "antlr4-python3-runtime" },
+    { name = "ipykernel" },
     { name = "ipympl" },
     { name = "ipywidgets" },
     { name = "jupyter" },
@@ -3887,6 +3888,7 @@ dev = [
 [package.metadata]
 requires-dist = [
     { name = "antlr4-python3-runtime", specifier = "==4.11.0" },
+    { name = "ipykernel", specifier = ">=7.3.0" },
     { name = "ipympl", specifier = ">=0.10.0" },
     { name = "ipywidgets", specifier = ">=8.1.8" },
     { name = "jupyter", specifier = ">=1.0.0" },
