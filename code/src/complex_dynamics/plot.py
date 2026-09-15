@@ -1,16 +1,34 @@
-from typing import Literal, Sequence
+"""Rendering helpers for finite-time numerical data.
+
+Matplotlib functions return figures and axes without displaying them. Interactive
+functions require the ``interactive`` extra and return a PyVista plotter; use
+``show=True`` to open a window. All plotting functions leave input data unchanged.
+Pixel boundaries are visual approximations, not certified Julia sets.
+"""
+
+from __future__ import annotations
+
+from collections.abc import Sequence
+from typing import TYPE_CHECKING, Any, Literal, cast
 
 import matplotlib as mpl
 import matplotlib.pyplot as plt
 import numpy as np
-import pyvista as pv
 from matplotlib.axes import Axes
 from matplotlib.colors import Colormap, ListedColormap
 from matplotlib.figure import Figure
+from mpl_toolkits.mplot3d import Axes3D
 from numpy.typing import NDArray
-from pyvista.plotting._typing import ColorLike, ColormapOptions
 
-import complex_dynamics.calculator as dcalc
+from . import calculator as dcalc
+from ._validation import count as _count
+
+if TYPE_CHECKING:
+    import pyvista as pv
+
+ColorLike = str | Sequence[float]
+ColormapOptions = str | Colormap | list[str]
+
 
 _default_orbit_line_color = "gray"
 _default_zi_marker = "o"
@@ -18,7 +36,7 @@ _default_zi_color = "black"
 _default_z0_color = "green"
 _default_max_iterations = dcalc._default_max_iterations
 _default_thickness = 1
-_default_listed_colormap = mpl.colormaps["Set1"]
+_default_listed_colormap = cast(ListedColormap, mpl.colormaps["Set1"])
 _default_divergence_times_colormap = mpl.colormaps["binary"]
 _default_projected_sphere_divergence_times_colormap = mpl.colormaps["magma_r"]
 _default_color_darkness_factor = 0.7
@@ -26,15 +44,14 @@ _default_color_peak_position = 0.2
 
 
 def _generate_or_load_fig_ax(ax: Axes | None) -> tuple[Figure, Axes]:
-    """
-    If the given axes exists returns its figure and itself. Otherwise, it
-    returns a figure with one default axes.
-    """
+    """Return existing figure and axes, or create a new pair."""
     if ax is None:
         fig = plt.figure()
         ax = fig.subplots()
     else:
-        fig = ax.get_figure()
+        fig = cast(Figure, ax.get_figure())
+        if not isinstance(fig, Figure):
+            raise ValueError("ax must belong to a Figure.")
 
     return fig, ax
 
@@ -42,78 +59,67 @@ def _generate_or_load_fig_ax(ax: Axes | None) -> tuple[Figure, Axes]:
 def _generate_arc_paths(
     points: NDArray[np.float64], *, resolution: int = 30
 ) -> pv.PolyData:
-    """
-    Builds a polyline that follows great-circle arcs (on the unit sphere)
-    between consecutive orbit points, rather than straight chords through
-    the sphere's interior.
-    """
-    arcs = [
-        pv.CircularArc(
-            pointa=points[i],
-            pointb=points[i + 1],
-            center=(0.0, 0.0, 0.0),
-            resolution=resolution,
-        )
-        for i in range(len(points) - 1)
-    ]
-    return arcs[0].merge(arcs[1:]) if len(arcs) > 1 else arcs[0]
+    """Connect sphere points by great-circle arcs with deterministic antipodes."""
+    import pyvista as pv
+
+    _count(resolution, "resolution", minimum=2)
+    if len(points) < 2:
+        return pv.PolyData(points)
+    paths = []
+    for start, end in zip(points[:-1], points[1:], strict=True):
+        dot = float(np.clip(np.dot(start, end), -1, 1))
+        angle = np.arccos(dot)
+        if angle < 1e-12:
+            continue
+        tangent = end - dot * start
+        norm = np.linalg.norm(tangent)
+        if norm < 1e-12:
+            # Antipodes admit many geodesics; choose a deterministic tangent.
+            axis = np.eye(3)[np.argmin(np.abs(start))]
+            tangent = np.cross(start, axis)
+            norm = np.linalg.norm(tangent)
+        tangent /= norm
+        t = np.linspace(0, angle, resolution + 1)[:, None]
+        path = np.cos(t) * start + np.sin(t) * tangent
+        path[0], path[-1] = start, end
+        paths.append(pv.lines_from_points(path))
+    if not paths:
+        return pv.PolyData(points[:1])
+    return paths[0].merge(paths[1:]) if len(paths) > 1 else paths[0]
 
 
-def _find_regions_boundary(regions: NDArray) -> NDArray[np.bool]:
-    """
-    Given a divergence times mesh, it returns a mask for the mesh that is true
-    on boundary points between divergent and convergent points, and false
-    everywhere else.
-    """
-    # Find boundaries by comparing each pixel to its neighbors.
-    up = np.roll(regions, shift=-1, axis=0)
-    down = np.roll(regions, shift=1, axis=0)
-    left = np.roll(regions, shift=-1, axis=1)
-    right = np.roll(regions, shift=1, axis=1)
-
-    boundary_mask = (
-        (regions != up)
-        | (regions != down)
-        | (regions != left)
-        | (regions != right)
-    )
-
-    # Remove edge artifacts
-    boundary_mask[0, :] = False
-    boundary_mask[-1, :] = False
-    boundary_mask[:, 0] = False
-    boundary_mask[:, -1] = False
-
-    return boundary_mask
+def _find_regions_boundary(regions: NDArray[Any]) -> NDArray[np.bool_]:
+    """Mark neighboring unequal regions without wrapping at image edges."""
+    if regions.ndim != 2:
+        raise ValueError("regions must be a two-dimensional array.")
+    boundary = np.zeros(regions.shape, dtype=np.bool_)
+    for a, b in ((np.s_[:-1, :], np.s_[1:, :]), (np.s_[:, :-1], np.s_[:, 1:])):
+        left, right = regions[a], regions[b]
+        different = (left != right) & ~(np.isnan(left) & np.isnan(right))
+        boundary[a] |= different
+        boundary[b] |= different
+    return boundary
 
 
 def _thicken_boundary_mask(
-    boundary_mask: NDArray[np.bool], thickness: int
-) -> NDArray[np.bool]:
-    """
-    Given a boundary mask, it thickens that boundary mask by the number of
-    points specified. It also returns that same boundary mask modified.
-    """
-    # We iteratively expand the mask in all 4 directions based on the thickness
-    # parameter
+    boundary_mask: NDArray[np.bool_], thickness: int
+) -> NDArray[np.bool_]:
+    """Dilate a mask in four directions without wrapping or input mutation."""
+    _count(thickness, "thickness", minimum=1)
+    result = boundary_mask.copy()
     for _ in range(thickness - 1):
-        boundary_mask = (
-            boundary_mask
-            | np.roll(boundary_mask, 1, axis=0)
-            | np.roll(boundary_mask, -1, axis=0)
-            | np.roll(boundary_mask, 1, axis=1)
-            | np.roll(boundary_mask, -1, axis=1)
-        )
-
-    return boundary_mask
+        previous = result.copy()
+        result[1:] |= previous[:-1]
+        result[:-1] |= previous[1:]
+        result[:, 1:] |= previous[:, :-1]
+        result[:, :-1] |= previous[:, 1:]
+    return result
 
 
 def _generate_boundary_image(
-    boundary_mask: NDArray[np.bool],
+    boundary_mask: NDArray[np.bool_],
 ) -> NDArray[np.float64]:
-    """
-    Generates a boundary image from a boundary mask.
-    """
+    """Convert a Boolean boundary mask to a floating-point image."""
     boundary_image = np.zeros(boundary_mask.shape, dtype=np.float64)
     boundary_image[boundary_mask] = 1
     boundary_image[~boundary_mask] = 0
@@ -127,13 +133,11 @@ def _plot_boundary_image(
     ax: Axes | None = None,
     origin: Literal["upper", "lower"] = "lower",
     cmap: str | Colormap = _default_divergence_times_colormap,
-    **imshow_keywords,
+    **imshow_keywords: Any,
 ) -> tuple[Figure, Axes]:
-    """
-    Plots the given boundary image with the default style.
-    """
+    """Plot the given boundary image with the default style."""
     fig, ax = _generate_or_load_fig_ax(ax)
-    im = ax.imshow(boundary_image, origin=origin, cmap=cmap, **imshow_keywords)
+    ax.imshow(boundary_image, origin=origin, cmap=cmap, **imshow_keywords)
 
     return fig, ax
 
@@ -149,11 +153,9 @@ def _plot_boundary_image_on_sphere(
     linewidth: int = 0,
     antialiased: bool = False,
     shade: bool = False,
-    **plot_surface_keywords,
+    **plot_surface_keywords: Any,
 ) -> tuple[Figure, Axes]:
-    """
-    Plots the given boundary image on the given sphere with the default style.
-    """
+    """Plot the given boundary image on the given sphere with the default style."""
     # Apply color to boundary_image for painting the surface of the sphere
     cmap = _default_divergence_times_colormap
     facecolors = cmap(boundary_image)
@@ -161,7 +163,8 @@ def _plot_boundary_image_on_sphere(
     # Draw sphere
     fig = plt.figure()
     ax = fig.add_subplot(projection="3d")
-    ax.plot_surface(
+    surface_ax = cast(Axes3D, ax)
+    surface_ax.plot_surface(
         X,
         Y,
         Z,
@@ -173,7 +176,7 @@ def _plot_boundary_image_on_sphere(
         shade=shade,  # don't let matplotlib relight the colors
         **plot_surface_keywords,
     )
-    ax.set_box_aspect([1, 1, 1])
+    surface_ax.set_box_aspect([1, 1, 1])
     ax.set_axis_off()
 
     return fig, ax
@@ -186,24 +189,26 @@ def _plot_boundary_image_on_dynamic_sphere(
     Z: NDArray[np.float64],
     *,
     cmap: ColormapOptions | None = _default_divergence_times_colormap,
+    show: bool = False,
+    off_screen: bool = False,
 ) -> pv.Plotter:
-    """
-    Plots the given boundary image on a dynamic sphere with the given
-    coordinates with the default style.
-    """
+    """Render a boundary mask on an interactive sphere."""
+    import pyvista as pv
+
     grid = pv.StructuredGrid(X, Y, Z)
     # StructuredGrid flattens points in Fortran order internally
     grid.point_data["divergence"] = boundary_image.flatten(order="F")
 
-    plotter = pv.Plotter()
+    plotter = pv.Plotter(off_screen=off_screen)
     plotter.add_mesh(
         grid,
         scalars="divergence",
-        cmap=cmap,
+        cmap=mpl.colormaps[cmap] if isinstance(cmap, str) else cmap,
         clim=[0, 1],
         smooth_shading=True,
     )
-    plotter.show()
+    if show:
+        plotter.show()
 
     return plotter
 
@@ -216,13 +221,11 @@ def _generate_convergence_image(
     color_peak_position: float,
     color_darkness_factor: float,
 ) -> NDArray[np.float64]:
-    """
-    Generates an image assinging a different color to each attractor and shading
-    between a dark version of the color and white depending on how many
-    iterations it took for each point to converge to their respective attractor.
-    For points that do not converge to any attractor it assigns to all of them
-    the same color.
-    """
+    """Color target basins, safely handling absent and unresolved regions."""
+    if convergence_times.shape != convergence_points.shape:
+        raise ValueError("Convergence arrays must have the same shape.")
+    if not 0 < color_peak_position < 1 or not 0 <= color_darkness_factor <= 1:
+        raise ValueError("Invalid color peak or darkness factor.")
     # Check if there are points that do not converge to any attractor
     all_converge = not np.any(np.isnan(convergence_points))
     extended_attractors = attractors.tolist()
@@ -237,8 +240,14 @@ def _generate_convergence_image(
     )
 
     convergence_image = np.zeros((*convergence_times.shape, 4))
-    for attractor, color in zip(extended_attractors, color_list):
-        attractor_mask = convergence_points == attractor
+    for attractor, color in zip(extended_attractors, color_list, strict=True):
+        attractor_mask = (
+            np.isnan(convergence_points)
+            if np.isnan(attractor)
+            else convergence_points == attractor
+        )
+        if not attractor_mask.any():
+            continue
 
         if np.isnan(attractor):
             convergence_image[attractor_mask, :] = color
@@ -254,17 +263,20 @@ def _generate_convergence_image(
             colors = [
                 dark_color,
                 color,
-                (1.0, 1.0, 1.0, 1.0),
+                np.ones(4),
             ]
             attractor_cmap = mpl.colors.LinearSegmentedColormap.from_list(
                 "mycmap",
-                list(zip(nodes, colors)),
+                [
+                    (node, cast(tuple[float, float, float, float], tuple(color)))
+                    for node, color in zip(nodes, colors, strict=True)
+                ],
             )
 
             # Apply color map
-            normalized_convergence_times = convergence_times[
-                attractor_mask
-            ] / np.max(convergence_times[attractor_mask])
+            normalized_convergence_times = convergence_times[attractor_mask] / max(
+                1, int(np.max(convergence_times[attractor_mask]))
+            )
             convergence_image[attractor_mask] = attractor_cmap(
                 normalized_convergence_times
             )
@@ -277,13 +289,13 @@ def _generate_color_list(
     all_converge: bool,
     listed_colormap: mpl.colors.ListedColormap,
 ) -> list[NDArray[np.float64]]:
-    """
-    Returns a color list based on the given color map with the number of colors
-    needed for plotting the convergence rates associated with the convergence
-    points given.
-    """
+    """Sample a palette with one color for every target."""
     color_list = [
-        np.array(color) for color in listed_colormap.colors[: len(attractors)]
+        np.asarray(
+            listed_colormap(i),
+            dtype=np.float64,
+        )
+        for i in range(len(attractors))
     ]
 
     if not all_converge:
@@ -305,17 +317,45 @@ def plot_orbit(
     marker: str = _default_zi_marker,
     markerfacecolor: str = _default_zi_color,
     markeredgecolor: str = _default_zi_color,
-    **plot_keywords,
+    **plot_keywords: Any,
 ) -> tuple[Figure, Axes]:
+    """Render orbit.
+
+    Parameters
+    ----------
+    orbit : ndarray of complex128
+        One-dimensional orbit including its initial point.
+    ax : matplotlib.axes.Axes, optional
+        Existing axes; sphere surfaces require three-dimensional axes.
+    color : color, optional
+        Color of the orbit line.
+    z0_color : color, optional
+        Color of the initial point.
+    z0_label : str, optional
+        Legend label for the initial point.
+    marker : str, optional
+        Matplotlib point marker.
+    markerfacecolor : color, optional
+        Fill color of point markers.
+    markeredgecolor : color, optional
+        Edge color of point markers.
+    **plot_keywords
+        Additional keyword arguments passed to the Matplotlib rendering method.
+
+    Returns
+    -------
+    figure : matplotlib.figure.Figure
+        Figure containing the plot.
+    axes : matplotlib.axes.Axes
+        Axes containing the artists; inspect axes.images or axes.collections.
     """
-    Plots the orbit of a point with the default style. Returns the figure and
-    axes.
-    """
+    if orbit.ndim != 1 or orbit.size == 0:
+        raise ValueError("orbit must be a nonempty one-dimensional array.")
     real_parts = np.real(orbit)
     imag_parts = np.imag(orbit)
 
     fig, ax = _generate_or_load_fig_ax(ax)
-    (line,) = ax.plot(
+    ax.plot(
         real_parts,
         imag_parts,
         color=color,
@@ -346,15 +386,49 @@ def plot_orbit_on_dynamic_sphere(
     zi_point_size: float = 10,
     z0_color: ColorLike | None = _default_z0_color,
     z0_point_size: float = 16,
+    show: bool = False,
+    off_screen: bool = False,
 ) -> pv.Plotter:
+    """Render orbit on dynamic sphere.
+
+    Parameters
+    ----------
+    orbit : ndarray of complex128
+        One-dimensional orbit including its initial point.
+    sphere_color : color, optional
+        Color of the reference sphere.
+    sphere_opacity : float or sequence of float, optional
+        Opacity of the reference sphere.
+    arc_color : color, optional
+        Color of geodesic orbit arcs.
+    arc_width : float, optional
+        Width of geodesic orbit arcs.
+    zi_color : color, optional
+        Color of orbit points.
+    zi_point_size : float, optional
+        Rendered size of orbit points.
+    z0_color : color, optional
+        Color of the initial point.
+    z0_point_size : float, optional
+        Rendered size of the initial point.
+    show : bool, optional
+        Open an interactive window when True; default False.
+    off_screen : bool, optional
+        Construct the PyVista plotter for off-screen rendering.
+
+    Returns
+    -------
+    pyvista.Plotter
+        Plotter retaining the rendered scene. Call close() when finished.
     """
-    Plots the orbit of a point with the default style on a dynamic sphere.
-    Returns the pyvista Plotter.
-    """
+    import pyvista as pv
+
+    if orbit.ndim != 1 or orbit.size == 0 or np.isnan(orbit).any():
+        raise ValueError("orbit must be nonempty, one-dimensional, and without NaNs.")
     X, Y, Z = dcalc.complex_to_sphere(orbit)
     points = np.column_stack([X, Y, Z])
 
-    plotter = pv.Plotter()
+    plotter = pv.Plotter(off_screen=off_screen)
 
     # Reference sphere
     sphere = pv.Sphere(radius=1.0)
@@ -382,7 +456,8 @@ def plot_orbit_on_dynamic_sphere(
         render_points_as_spheres=True,
     )
 
-    plotter.show()
+    if show:
+        plotter.show()
 
     return plotter
 
@@ -397,15 +472,43 @@ def plot_orbits(
     marker: str = _default_zi_marker,
     markerfacecolor: str = _default_zi_color,
     markeredgecolor: str = _default_zi_color,
-    **plot_keywords,
+    **plot_keywords: Any,
 ) -> tuple[Figure, Axes]:
-    """
-    Plots the orbits of an array of points with the default style. Returns the
-    figure and axes.
+    """Render orbits.
+
+    Parameters
+    ----------
+    orbits : ndarray of complex128
+        Orbits with shape (steps, points), including initial points.
+    ax : matplotlib.axes.Axes, optional
+        Existing axes; sphere surfaces require three-dimensional axes.
+    color : color, optional
+        Color of the orbit line.
+    z0_color : color, optional
+        Color of the initial point.
+    z0i_symbol : str, optional
+        Symbol in initial-point legend labels.
+    marker : str, optional
+        Matplotlib point marker.
+    markerfacecolor : color, optional
+        Fill color of point markers.
+    markeredgecolor : color, optional
+        Edge color of point markers.
+    **plot_keywords
+        Additional keyword arguments passed to the Matplotlib rendering method.
+
+    Returns
+    -------
+    figure : matplotlib.figure.Figure
+        Figure containing the plot.
+    axes : matplotlib.axes.Axes
+        Axes containing the artists; inspect axes.images or axes.collections.
     """
     fig, ax = _generate_or_load_fig_ax(ax)
 
-    for i in range(len(orbits[0])):
+    if orbits.ndim != 2 or orbits.shape[0] == 0:
+        raise ValueError("orbits must have shape (steps, points), with steps > 0.")
+    for i in range(orbits.shape[1]):
         real_parts = np.real(orbits[:, i])
         imag_parts = np.imag(orbits[:, i])
 
@@ -439,22 +542,40 @@ def plot_divergence_times(
     ax: Axes | None = None,
     origin: Literal["upper", "lower"] = "lower",
     cmap: str | Colormap = _default_divergence_times_colormap,
-    **imshow_keywords,
+    **imshow_keywords: Any,
 ) -> tuple[Figure, Axes]:
-    """
-    Plots the divergence times mesh in the default style. Returns the figure and
-    axes.
+    """Render divergence times.
 
-    In order to know if a point in the mesh has diverged, it needs to know the
-    number of iterations used to calculate the divergence times. This can be set
-    using the keyword argument max_iterations.
+    Parameters
+    ----------
+    divergence_times : ndarray of int
+        Two-dimensional first-exit counts; see calculate_divergence_times.
+    max_iterations : int, optional
+        Iteration cap used to calculate the data, not a divergence certificate.
+    ax : matplotlib.axes.Axes, optional
+        Existing axes; sphere surfaces require three-dimensional axes.
+    origin : {'upper', 'lower'}, optional
+        Location of array row zero in the image.
+    cmap : str or Colormap, optional
+        Color map for the rendered scalar data.
+    **imshow_keywords
+        Additional keyword arguments passed to the Matplotlib rendering method.
+
+    Returns
+    -------
+    figure : matplotlib.figure.Figure
+        Figure containing the plot.
+    axes : matplotlib.axes.Axes
+        Axes containing the artists; inspect axes.images or axes.collections.
     """
-    # Set a pixel to max_iterations to ensure the color map knows the maximum
-    divergence_times[0, 0] = max_iterations
+    _count(max_iterations, "max_iterations")
+    if "norm" not in imshow_keywords:
+        imshow_keywords.setdefault("vmin", 0)
+        imshow_keywords.setdefault("vmax", max(1, max_iterations))
 
     # Show image
     fig, ax = _generate_or_load_fig_ax(ax)
-    im = ax.imshow(
+    ax.imshow(
         divergence_times,
         origin=origin,
         cmap=cmap,
@@ -470,22 +591,39 @@ def plot_divergence_times_boundary(
     max_iterations: int = _default_max_iterations,
     thickness: int = _default_thickness,
     ax: Axes | None = None,
-    **imshow_keywords,
+    **imshow_keywords: Any,
 ) -> tuple[Figure, Axes]:
-    """
-    Plots the boundary of the divergence times mesh in the default style. The
-    thickness of the boundary is modifiable with the thickness keyword argument.
-    Returns the figure and axes.
+    """Render divergence times boundary.
 
-    In order to know if a point in the mesh has diverged, it needs to know the
-    number of iterations used to calculate the divergence times. This can be set
-    using the keyword argument max_iterations.
+    Parameters
+    ----------
+    divergence_times : ndarray of int
+        Two-dimensional first-exit counts; see calculate_divergence_times.
+    max_iterations : int, optional
+        Iteration cap used to calculate the data, not a divergence certificate.
+    thickness : int, optional
+        Positive number of pixels in the boundary dilation radius plus one.
+    ax : matplotlib.axes.Axes, optional
+        Existing axes; sphere surfaces require three-dimensional axes.
+    **imshow_keywords
+        Additional keyword arguments passed to the Matplotlib rendering method.
+
+    Returns
+    -------
+    figure : matplotlib.figure.Figure
+        Figure containing the plot.
+    axes : matplotlib.axes.Axes
+        Axes containing the artists; inspect axes.images or axes.collections.
+
+    Notes
+    -----
+    Boundaries approximate transitions between finite-time pixel labels. They
+    do not certify a Julia set. Image edges do not wrap at the sphere seam.
     """
     # Find boundary
     regions = divergence_times == max_iterations
     boundary_mask = _find_regions_boundary(regions)
-    if thickness > 1:
-        _thicken_boundary_mask(boundary_mask, thickness - 1)
+    boundary_mask = _thicken_boundary_mask(boundary_mask, thickness)
 
     # Generate boundary image
     boundary_image = _generate_boundary_image(boundary_mask)
@@ -506,24 +644,52 @@ def plot_projected_sphere_divergence_times(
     linewidth: int = 0,
     antialiased: bool = False,
     shade: bool = False,
-    **plot_surface_keywords,
+    **plot_surface_keywords: Any,
 ) -> tuple[Figure, Axes]:
-    """
-    Plots the projected divergence times mesh in a sphere with the default
-    style. Returns the figure and axes.
+    """Render projected sphere divergence times.
 
-    In order to know if a point in the mesh has diverged, it needs to know the
-    number of iterations used to calculate the divergence times. This can be set
-    using the keyword argument max_iterations.
+    Parameters
+    ----------
+    divergence_times : ndarray of int
+        Two-dimensional first-exit counts; see calculate_divergence_times.
+    X : ndarray of float64
+        Unit-sphere x coordinates, matching the data grid.
+    Y : ndarray of float64
+        Unit-sphere y coordinates, matching the data grid.
+    Z : ndarray of float64
+        Unit-sphere z coordinates, matching the data grid.
+    max_iterations : int, optional
+        Iteration cap used to calculate the data, not a divergence certificate.
+    rcount : int, optional
+        Maximum surface samples along rows.
+    ccount : int, optional
+        Maximum surface samples along columns.
+    linewidth : int, optional
+        Width of surface edges.
+    antialiased : bool, optional
+        Whether surface edges are antialiased.
+    shade : bool, optional
+        Whether lighting modifies the supplied surface colors.
+    **plot_surface_keywords
+        Additional keyword arguments passed to the Matplotlib rendering method.
+
+    Returns
+    -------
+    figure : matplotlib.figure.Figure
+        Figure containing the plot.
+    axes : matplotlib.axes.Axes
+        Axes containing the artists; inspect axes.images or axes.collections.
     """
     # Normalize colors for applying in the surface of the sphere
     cmap = _default_projected_sphere_divergence_times_colormap
-    facecolors = cmap(divergence_times / max_iterations)
+    _count(max_iterations, "max_iterations")
+    facecolors = cmap(divergence_times / max(1, max_iterations))
 
     # Draw sphere
     fig = plt.figure()
     ax = fig.add_subplot(projection="3d")
-    ax.plot_surface(
+    surface_ax = cast(Axes3D, ax)
+    surface_ax.plot_surface(
         X,
         Y,
         Z,
@@ -535,7 +701,7 @@ def plot_projected_sphere_divergence_times(
         shade=shade,  # don't let matplotlib relight the colors
         **plot_surface_keywords,
     )
-    ax.set_box_aspect([1, 1, 1])
+    surface_ax.set_box_aspect([1, 1, 1])
     ax.set_axis_off()
 
     return fig, ax
@@ -549,22 +715,43 @@ def plot_projected_sphere_divergence_time_boundary(
     *,
     max_iterations: int = _default_max_iterations,
     thickness: int = _default_thickness,
-    **plot_surface_keywords,
+    **plot_surface_keywords: Any,
 ) -> tuple[Figure, Axes]:
-    """
-    Plots the boundary of the projected divergence times mesh in a sphere with
-    the default style. The thickness of the boundary is modifiable with the
-    thickness keyword argument. Returns the figure and axes.
+    """Render projected sphere divergence time boundary.
 
-    In order to know if a point in the mesh has diverged, it needs to know the
-    number of iterations used to calculate the divergence times. This can be set
-    using the keyword argument max_iterations.
+    Parameters
+    ----------
+    divergence_times : ndarray of int
+        Two-dimensional first-exit counts; see calculate_divergence_times.
+    X : ndarray of float64
+        Unit-sphere x coordinates, matching the data grid.
+    Y : ndarray of float64
+        Unit-sphere y coordinates, matching the data grid.
+    Z : ndarray of float64
+        Unit-sphere z coordinates, matching the data grid.
+    max_iterations : int, optional
+        Iteration cap used to calculate the data, not a divergence certificate.
+    thickness : int, optional
+        Positive number of pixels in the boundary dilation radius plus one.
+    **plot_surface_keywords
+        Additional keyword arguments passed to the Matplotlib rendering method.
+
+    Returns
+    -------
+    figure : matplotlib.figure.Figure
+        Figure containing the plot.
+    axes : matplotlib.axes.Axes
+        Axes containing the artists; inspect axes.images or axes.collections.
+
+    Notes
+    -----
+    Boundaries approximate transitions between finite-time pixel labels. They
+    do not certify a Julia set. Image edges do not wrap at the sphere seam.
     """
     # Find boundary
     regions = divergence_times == max_iterations
     boundary_mask = _find_regions_boundary(regions)
-    if thickness > 1:
-        _thicken_boundary_mask(boundary_mask, thickness - 1)
+    boundary_mask = _thicken_boundary_mask(boundary_mask, thickness)
 
     # Generate boundary image
     boundary_image = _generate_boundary_image(boundary_mask)
@@ -583,28 +770,51 @@ def dynamic_plot_projected_sphere_divergence_times(
     *,
     max_iterations: int = _default_max_iterations,
     cmap: ColormapOptions | None = _default_divergence_times_colormap,
+    show: bool = False,
+    off_screen: bool = False,
 ) -> pv.Plotter:
-    """
-    Plots the projected divergence times mesh in a pyvista sphere with the
-    default style. Returns the pyvista Plotter.
+    """Render projected sphere divergence times.
 
-    In order to know if a point in the mesh has diverged, it needs to know the
-    number of iterations used to calculate the divergence times. This can be set
-    using the keyword argument max_iterations.
+    Parameters
+    ----------
+    divergence_times : ndarray of int
+        Two-dimensional first-exit counts; see calculate_divergence_times.
+    X : ndarray of float64
+        Unit-sphere x coordinates, matching the data grid.
+    Y : ndarray of float64
+        Unit-sphere y coordinates, matching the data grid.
+    Z : ndarray of float64
+        Unit-sphere z coordinates, matching the data grid.
+    max_iterations : int, optional
+        Iteration cap used to calculate the data, not a divergence certificate.
+    cmap : str or Colormap, optional
+        Color map for the rendered scalar data.
+    show : bool, optional
+        Open an interactive window when True; default False.
+    off_screen : bool, optional
+        Construct the PyVista plotter for off-screen rendering.
+
+    Returns
+    -------
+    pyvista.Plotter
+        Plotter retaining the rendered scene. Call close() when finished.
     """
+    import pyvista as pv
+
     grid = pv.StructuredGrid(X, Y, Z)
     # StructuredGrid flattens points in Fortran order internally
     grid.point_data["divergence"] = divergence_times.flatten(order="F")
 
-    plotter = pv.Plotter()
+    plotter = pv.Plotter(off_screen=off_screen)
     plotter.add_mesh(
         grid,
         scalars="divergence",
-        cmap=cmap,
+        cmap=mpl.colormaps[cmap] if isinstance(cmap, str) else cmap,
         clim=[0, max_iterations],
         smooth_shading=True,
     )
-    plotter.show()
+    if show:
+        plotter.show()
 
     return plotter
 
@@ -618,28 +828,53 @@ def dynamic_plot_projected_sphere_divergence_times_boundary(
     max_iterations: int = _default_max_iterations,
     thickness: int = _default_thickness,
     cmap: ColormapOptions | None = _default_divergence_times_colormap,
+    show: bool = False,
+    off_screen: bool = False,
 ) -> pv.Plotter:
-    """
-    Plots the boundary of the projected divergence times mesh in a pyvista
-    sphere with the default style. The thickness of the boundary is modifiable
-    with the thickness keyword argument. Returns the pyvista Plotter.
+    """Render projected sphere divergence times boundary.
 
-    In order to know if a point in the mesh has diverged, it needs to know the
-    number of iterations used to calculate the divergence times. This can be set
-    using the keyword argument max_iterations.
+    Parameters
+    ----------
+    divergence_times : ndarray of int
+        Two-dimensional first-exit counts; see calculate_divergence_times.
+    X : ndarray of float64
+        Unit-sphere x coordinates, matching the data grid.
+    Y : ndarray of float64
+        Unit-sphere y coordinates, matching the data grid.
+    Z : ndarray of float64
+        Unit-sphere z coordinates, matching the data grid.
+    max_iterations : int, optional
+        Iteration cap used to calculate the data, not a divergence certificate.
+    thickness : int, optional
+        Positive number of pixels in the boundary dilation radius plus one.
+    cmap : str or Colormap, optional
+        Color map for the rendered scalar data.
+    show : bool, optional
+        Open an interactive window when True; default False.
+    off_screen : bool, optional
+        Construct the PyVista plotter for off-screen rendering.
+
+    Returns
+    -------
+    pyvista.Plotter
+        Plotter retaining the rendered scene. Call close() when finished.
+
+    Notes
+    -----
+    Boundaries approximate transitions between finite-time pixel labels. They
+    do not certify a Julia set. Image edges do not wrap at the sphere seam.
     """
     # Find boundary
     regions = divergence_times == max_iterations
     boundary_mask = _find_regions_boundary(regions)
-    if thickness > 1:
-        _thicken_boundary_mask(boundary_mask, thickness - 1)
+    boundary_mask = _thicken_boundary_mask(boundary_mask, thickness)
 
     # Generate boundary image
     boundary_image = _generate_boundary_image(boundary_mask)
 
     # Call plot divergence times function with the fake data
     return _plot_boundary_image_on_dynamic_sphere(
-        boundary_image, X, Y, Z, cmap=cmap
+        boundary_image, X, Y, Z, cmap=cmap, show=show, off_screen=off_screen
     )
 
 
@@ -657,13 +892,39 @@ def plot_convergence_times(
     color_darkness_factor: float = _default_color_darkness_factor,
     ax: Axes | None = None,
     origin: Literal["upper", "lower"] = "lower",
-    **imshow_keywords,
+    **imshow_keywords: Any,
 ) -> tuple[Figure, Axes]:
-    """
-    Plots the convergence times mesh in the default style. Returns the figure
-    and axes.
+    """Render convergence times.
 
-    It needs to know to which attractor each point has converged.
+    Parameters
+    ----------
+    convergence_times : ndarray of int
+        Two-dimensional first-entry counts; unresolved entries remain capped.
+    convergence_points : ndarray of complex128
+        Assigned targets; NaN marks unresolved or invalid points.
+    attractors : ndarray of complex128
+        One-dimensional target list, in color assignment order.
+    max_iterations : int, optional
+        Iteration cap used to calculate the data, not a divergence certificate.
+    listed_colormap : ListedColormap, optional
+        Palette sampled across the target list.
+    color_peak_position : float, optional
+        Position of the saturated basin color, strictly between zero and one.
+    color_darkness_factor : float, optional
+        Initial color intensity multiplier in [0, 1].
+    ax : matplotlib.axes.Axes, optional
+        Existing axes; sphere surfaces require three-dimensional axes.
+    origin : {'upper', 'lower'}, optional
+        Location of array row zero in the image.
+    **imshow_keywords
+        Additional keyword arguments passed to the Matplotlib rendering method.
+
+    Returns
+    -------
+    figure : matplotlib.figure.Figure
+        Figure containing the plot.
+    axes : matplotlib.axes.Axes
+        Axes containing the artists; inspect axes.images or axes.collections.
     """
     convergence_image = _generate_convergence_image(
         convergence_times,
@@ -675,7 +936,7 @@ def plot_convergence_times(
     )
 
     fig, ax = _generate_or_load_fig_ax(ax)
-    im = ax.imshow(convergence_image, origin=origin, **imshow_keywords)
+    ax.imshow(convergence_image, origin=origin, **imshow_keywords)
 
     return fig, ax
 
@@ -685,17 +946,36 @@ def plot_convergence_points_boundary(
     *,
     thickness: int = _default_thickness,
     ax: Axes | None = None,
-    **imshow_keywords,
+    **imshow_keywords: Any,
 ) -> tuple[Figure, Axes]:
-    """
-    Plots the boundary of the convergence points mesh in the default style. The
-    thickness of the boundary is modifiable with the thickness keyword argument.
-    Returns the figure and axes.
+    """Render convergence points boundary.
+
+    Parameters
+    ----------
+    convergence_points : ndarray of complex128
+        Assigned targets; NaN marks unresolved or invalid points.
+    thickness : int, optional
+        Positive number of pixels in the boundary dilation radius plus one.
+    ax : matplotlib.axes.Axes, optional
+        Existing axes; sphere surfaces require three-dimensional axes.
+    **imshow_keywords
+        Additional keyword arguments passed to the Matplotlib rendering method.
+
+    Returns
+    -------
+    figure : matplotlib.figure.Figure
+        Figure containing the plot.
+    axes : matplotlib.axes.Axes
+        Axes containing the artists; inspect axes.images or axes.collections.
+
+    Notes
+    -----
+    Boundaries approximate transitions between finite-time pixel labels. They
+    do not certify a Julia set. Image edges do not wrap at the sphere seam.
     """
     # Find boundary
     boundary_mask = _find_regions_boundary(convergence_points)
-    if thickness > 1:
-        _thicken_boundary_mask(boundary_mask, thickness - 1)
+    boundary_mask = _thicken_boundary_mask(boundary_mask, thickness)
 
     # Generate boundary image
     boundary_image = _generate_boundary_image(boundary_mask)
@@ -722,11 +1002,53 @@ def plot_projected_sphere_convergence_times(
     linewidth: int = 0,
     antialiased: bool = False,
     shade: bool = False,
-    **plot_surface_keywords,
+    **plot_surface_keywords: Any,
 ) -> tuple[Figure, Axes]:
-    """
-    Plots the projected convergence times mesh in a sphere with the default
-    style. Returns the figure and axes.
+    """Render projected sphere convergence times.
+
+    Parameters
+    ----------
+    convergence_times : ndarray of int
+        Two-dimensional first-entry counts; unresolved entries remain capped.
+    convergence_points : ndarray of complex128
+        Assigned targets; NaN marks unresolved or invalid points.
+    X : ndarray of float64
+        Unit-sphere x coordinates, matching the data grid.
+    Y : ndarray of float64
+        Unit-sphere y coordinates, matching the data grid.
+    Z : ndarray of float64
+        Unit-sphere z coordinates, matching the data grid.
+    attractors : ndarray of complex128
+        One-dimensional target list, in color assignment order.
+    max_iterations : int, optional
+        Iteration cap used to calculate the data, not a divergence certificate.
+    listed_colormap : ListedColormap, optional
+        Palette sampled across the target list.
+    color_peak_position : float, optional
+        Position of the saturated basin color, strictly between zero and one.
+    color_darkness_factor : float, optional
+        Initial color intensity multiplier in [0, 1].
+    ax : matplotlib.axes.Axes, optional
+        Existing axes; sphere surfaces require three-dimensional axes.
+    rcount : int, optional
+        Maximum surface samples along rows.
+    ccount : int, optional
+        Maximum surface samples along columns.
+    linewidth : int, optional
+        Width of surface edges.
+    antialiased : bool, optional
+        Whether surface edges are antialiased.
+    shade : bool, optional
+        Whether lighting modifies the supplied surface colors.
+    **plot_surface_keywords
+        Additional keyword arguments passed to the Matplotlib rendering method.
+
+    Returns
+    -------
+    figure : matplotlib.figure.Figure
+        Figure containing the plot.
+    axes : matplotlib.axes.Axes
+        Axes containing the artists; inspect axes.images or axes.collections.
     """
     convergence_image = _generate_convergence_image(
         convergence_times,
@@ -738,9 +1060,17 @@ def plot_projected_sphere_convergence_times(
     )
 
     # Draw sphere
-    fig = plt.figure()
-    ax = fig.add_subplot(projection="3d")
-    ax.plot_surface(
+    if ax is None:
+        fig = plt.figure()
+        ax = fig.add_subplot(projection="3d")
+    else:
+        fig = cast(Figure, ax.get_figure())
+        if not isinstance(fig, Figure):
+            raise ValueError("ax must belong to a Figure.")
+        if not hasattr(ax, "plot_surface"):
+            raise ValueError("ax must be a three-dimensional axes.")
+    surface_ax = cast(Axes3D, ax)
+    surface_ax.plot_surface(
         X,
         Y,
         Z,
@@ -752,7 +1082,7 @@ def plot_projected_sphere_convergence_times(
         shade=shade,  # don't let matplotlib relight the colors
         **plot_surface_keywords,
     )
-    ax.set_box_aspect([1, 1, 1])
+    surface_ax.set_box_aspect([1, 1, 1])
     ax.set_axis_off()
 
     return fig, ax
@@ -765,17 +1095,40 @@ def plot_projected_sphere_convergence_points_boundary(
     Z: NDArray[np.float64],
     *,
     thickness: int = _default_thickness,
-    **plot_surface_keywords,
+    **plot_surface_keywords: Any,
 ) -> tuple[Figure, Axes]:
-    """
-    Plots the boundary of the projected convergence points mesh in a sphere with
-    the default style. The thickness of the boundary is modifiable with the
-    thickness keyword argument. Returns the figure and axes.
+    """Render projected sphere convergence points boundary.
+
+    Parameters
+    ----------
+    convergence_points : ndarray of complex128
+        Assigned targets; NaN marks unresolved or invalid points.
+    X : ndarray of float64
+        Unit-sphere x coordinates, matching the data grid.
+    Y : ndarray of float64
+        Unit-sphere y coordinates, matching the data grid.
+    Z : ndarray of float64
+        Unit-sphere z coordinates, matching the data grid.
+    thickness : int, optional
+        Positive number of pixels in the boundary dilation radius plus one.
+    **plot_surface_keywords
+        Additional keyword arguments passed to the Matplotlib rendering method.
+
+    Returns
+    -------
+    figure : matplotlib.figure.Figure
+        Figure containing the plot.
+    axes : matplotlib.axes.Axes
+        Axes containing the artists; inspect axes.images or axes.collections.
+
+    Notes
+    -----
+    Boundaries approximate transitions between finite-time pixel labels. They
+    do not certify a Julia set. Image edges do not wrap at the sphere seam.
     """
     # Find boundary
     boundary_mask = _find_regions_boundary(convergence_points)
-    if thickness > 1:
-        _thicken_boundary_mask(boundary_mask, thickness - 1)
+    boundary_mask = _thicken_boundary_mask(boundary_mask, thickness)
 
     # Generate boundary image
     boundary_image = _generate_boundary_image(boundary_mask)
@@ -798,11 +1151,45 @@ def dynamic_plot_projected_sphere_convergence_times(
     listed_colormap: ListedColormap = _default_listed_colormap,
     color_peak_position: float = _default_color_peak_position,
     color_darkness_factor: float = _default_color_darkness_factor,
+    show: bool = False,
+    off_screen: bool = False,
 ) -> pv.Plotter:
+    """Render projected sphere convergence times.
+
+    Parameters
+    ----------
+    convergence_times : ndarray of int
+        Two-dimensional first-entry counts; unresolved entries remain capped.
+    convergence_points : ndarray of complex128
+        Assigned targets; NaN marks unresolved or invalid points.
+    X : ndarray of float64
+        Unit-sphere x coordinates, matching the data grid.
+    Y : ndarray of float64
+        Unit-sphere y coordinates, matching the data grid.
+    Z : ndarray of float64
+        Unit-sphere z coordinates, matching the data grid.
+    attractors : ndarray of complex128
+        One-dimensional target list, in color assignment order.
+    max_iterations : int, optional
+        Iteration cap used to calculate the data, not a divergence certificate.
+    listed_colormap : ListedColormap, optional
+        Palette sampled across the target list.
+    color_peak_position : float, optional
+        Position of the saturated basin color, strictly between zero and one.
+    color_darkness_factor : float, optional
+        Initial color intensity multiplier in [0, 1].
+    show : bool, optional
+        Open an interactive window when True; default False.
+    off_screen : bool, optional
+        Construct the PyVista plotter for off-screen rendering.
+
+    Returns
+    -------
+    pyvista.Plotter
+        Plotter retaining the rendered scene. Call close() when finished.
     """
-    Plots the projected convergence times mesh in a pyvista sphere with the
-    default style. Returns the pyvista Plotter.
-    """
+    import pyvista as pv
+
     convergence_image = _generate_convergence_image(
         convergence_times,
         convergence_points,
@@ -817,16 +1204,15 @@ def dynamic_plot_projected_sphere_convergence_times(
     # VTK's direct RGBA colour mode expects 8-bit colour channels.  Passing
     # normalized floats makes an alpha of 1.0 behave like 1/255, so the rear
     # side of the sphere incorrectly shows through the front.
-    rgba = np.rint(convergence_image.reshape(-1, 4, order="F") * 255).astype(
-        np.uint8
-    )
+    rgba = np.rint(convergence_image.reshape(-1, 4, order="F") * 255).astype(np.uint8)
     grid.point_data["colors_rgba"] = rgba
 
-    plotter = pv.Plotter()
+    plotter = pv.Plotter(off_screen=off_screen)
     sphere = pv.Sphere(radius=0.99)
     plotter.add_mesh(sphere, color="white", opacity=1.0, smooth_shading=True)
     plotter.add_mesh(grid, scalars="colors_rgba", rgba=True)
-    plotter.show()
+    if show:
+        plotter.show()
 
     return plotter
 
@@ -839,21 +1225,48 @@ def dynamic_plot_projected_sphere_convergence_points_boundary(
     *,
     thickness: int = _default_thickness,
     cmap: ColormapOptions | None = _default_divergence_times_colormap,
+    show: bool = False,
+    off_screen: bool = False,
 ) -> pv.Plotter:
-    """
-    Plots the boundary of the projected convergence points mesh in a pyvista
-    sphere with the default style. The thickness of the boundary is modifiable
-    with the thickness keyword argument. Returns the pyvista Plotter.
+    """Render projected sphere convergence points boundary.
+
+    Parameters
+    ----------
+    convergence_points : ndarray of complex128
+        Assigned targets; NaN marks unresolved or invalid points.
+    X : ndarray of float64
+        Unit-sphere x coordinates, matching the data grid.
+    Y : ndarray of float64
+        Unit-sphere y coordinates, matching the data grid.
+    Z : ndarray of float64
+        Unit-sphere z coordinates, matching the data grid.
+    thickness : int, optional
+        Positive number of pixels in the boundary dilation radius plus one.
+    cmap : str or Colormap, optional
+        Color map for the rendered scalar data.
+    show : bool, optional
+        Open an interactive window when True; default False.
+    off_screen : bool, optional
+        Construct the PyVista plotter for off-screen rendering.
+
+    Returns
+    -------
+    pyvista.Plotter
+        Plotter retaining the rendered scene. Call close() when finished.
+
+    Notes
+    -----
+    Boundaries approximate transitions between finite-time pixel labels. They
+    do not certify a Julia set. Image edges do not wrap at the sphere seam.
     """
     # Find boundary
     boundary_mask = _find_regions_boundary(convergence_points)
-    if thickness > 1:
-        _thicken_boundary_mask(boundary_mask, thickness - 1)
+    boundary_mask = _thicken_boundary_mask(boundary_mask, thickness)
 
     # Generate boundary image
     boundary_image = _generate_boundary_image(boundary_mask)
 
     # Call plot divergence times function with the fake data
     return _plot_boundary_image_on_dynamic_sphere(
-        boundary_image, X, Y, Z, cmap=cmap
+        boundary_image, X, Y, Z, cmap=cmap, show=show, off_screen=off_screen
     )

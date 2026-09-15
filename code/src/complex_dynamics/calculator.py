@@ -1,7 +1,23 @@
-import numpy as np
-from numpy.typing import NDArray
+"""Pure vectorized geometry and finite-time dynamics on the Riemann sphere.
 
-from complex_dynamics.rational_map import RationalMap
+Distances use the unit sphere: chordal distance ranges from 0 to 2. This is
+twice the alternative normalized chordal metric with diameter 1. Broadcasting
+is elementwise; use ``z[:, None]`` explicitly for pairwise distances.
+
+For degree at least two, the Fatou set is the open set where the iterates form
+a normal family in the spherical topology. Fatou components are its connected
+components; the Julia set is its complement in the Riemann sphere. Finite-time
+escape and target-entry tests do not certify membership in either set.
+"""
+
+from __future__ import annotations
+
+import numpy as np
+from numpy.typing import ArrayLike, NDArray
+
+from ._validation import count as _count
+from ._validation import positive as _positive
+from .rational_map import RationalMap, infinity
 
 _default_max_iterations = 100
 _default_pixel_count = 400
@@ -10,118 +26,173 @@ _default_tolerance = 1e-2
 
 
 def complex_to_sphere(
-    W: NDArray[np.complex128],
+    W: ArrayLike,
 ) -> tuple[NDArray[np.float64], NDArray[np.float64], NDArray[np.float64]]:
+    r"""Project the extended plane onto the unit sphere.
+
+    Parameters
+    ----------
+    W : array_like
+        Complex points; infinity denotes the north pole and NaN is invalid.
+
+    Returns
+    -------
+    X, Y, Z : ndarray of float64
+        Coordinates with the input shape, computed with scaling to avoid overflow.
+
+    Notes
+    -----
+    For finite :math:`w=x+iy`, the coordinates are
+    :math:`(2x,2y,|w|^2-1)/(1+|w|^2)`. Infinity maps to (0, 0, 1).
     """
-    Forward stereographic projection: complex plane -> unit sphere.
-    z = infinity maps to the north pole (0, 0, 1).
-    """
-    values = np.asarray(W)
-    real = values.real
-    imaginary = values.imag
-    is_infinite = np.isinf(real) | np.isinf(imaginary)
-    is_finite = ~is_infinite
-
-    # NaN is an invalid complex value, while infinity is the north pole of the
-    # Riemann sphere.  Keeping that distinction prevents numerical failures
-    # from being silently interpreted as convergence to infinity.
-    X = np.full(values.shape, np.nan, dtype=np.float64)
-    Y = np.full(values.shape, np.nan, dtype=np.float64)
-    Z = np.full(values.shape, np.nan, dtype=np.float64)
-    X[is_infinite] = 0.0
-    Y[is_infinite] = 0.0
-    Z[is_infinite] = 1.0
-
-    finite_real = real[is_finite]
-    finite_imaginary = imaginary[is_finite]
-    scale = np.maximum(
-        1.0, np.maximum(np.abs(finite_real), np.abs(finite_imaginary))
-    )
-    scaled_real = finite_real / scale
-    scaled_imaginary = finite_imaginary / scale
-    inverse_scale = 1.0 / scale
-    denominator = inverse_scale**2 + scaled_real**2 + scaled_imaginary**2
-
-    X[is_finite] = 2.0 * scaled_real * inverse_scale / denominator
-    Y[is_finite] = 2.0 * scaled_imaginary * inverse_scale / denominator
-    Z[is_finite] = (
-        scaled_real**2 + scaled_imaginary**2 - inverse_scale**2
-    ) / denominator
-
+    values = np.asarray(W, dtype=np.complex128)
+    valid = ~np.isnan(values)
+    infinite = valid & np.isinf(values)
+    finite = valid & ~infinite
+    X, Y, Z = (np.full(values.shape, np.nan, dtype=np.float64) for _ in range(3))
+    X[infinite], Y[infinite], Z[infinite] = 0, 0, 1
+    real, imag = values.real[finite], values.imag[finite]
+    scale = np.maximum(1, np.maximum(np.abs(real), np.abs(imag)))
+    x, y, inverse = real / scale, imag / scale, 1 / scale
+    denominator = inverse**2 + x**2 + y**2
+    X[finite] = 2 * x * inverse / denominator
+    Y[finite] = 2 * y * inverse / denominator
+    Z[finite] = (x**2 + y**2 - inverse**2) / denominator
     return X, Y, Z
 
 
 def sphere_to_complex(
-    X: NDArray[np.float64],
-    Y: NDArray[np.float64],
-    Z: NDArray[np.float64],
+    X: ArrayLike, Y: ArrayLike, Z: ArrayLike
 ) -> NDArray[np.complex128]:
+    r"""Project unit-sphere coordinates onto the extended complex plane.
+
+    Parameters
+    ----------
+    X, Y, Z : array_like
+        Broadcastable real coordinates on the unit sphere. NaNs propagate.
+
+    Returns
+    -------
+    ndarray of complex128
+        :math:`(X+iY)/(1-Z)`, with the north pole mapped to infinity.
+
+    Raises
+    ------
+    ValueError
+        If non-NaN coordinates are nonfinite or off the unit sphere.
+
+    Notes
+    -----
+    The equivalent formula :math:`(1+Z)/(X-iY)` is used in the northern
+    hemisphere to avoid subtractive cancellation near the north pole.
     """
-    Inverse stereographic projection: unit sphere -> complex plane.
-    The north pole (0, 0, 1) maps to infinity.
+    x, y, z = np.broadcast_arrays(
+        np.asarray(X, dtype=np.float64),
+        np.asarray(Y, dtype=np.float64),
+        np.asarray(Z, dtype=np.float64),
+    )
+    invalid = np.isnan(x) | np.isnan(y) | np.isnan(z)
+    norm = np.hypot(np.hypot(x, y), z)
+    if np.any(
+        ~invalid & (~np.isfinite(norm) | ~np.isclose(norm, 1, rtol=1e-12, atol=1e-12))
+    ):
+        raise ValueError("Coordinates must lie on the unit sphere.")
+    result = np.full(x.shape, complex(np.nan, np.nan), dtype=np.complex128)
+    north = ~invalid & (z > 0)
+    south = ~invalid & ~north
+    # Long intermediates retain tiny transverse coordinates near either pole.
+    with np.errstate(over="ignore", under="ignore", invalid="ignore", divide="ignore"):
+        result[south] = (x[south].astype(np.clongdouble) + 1j * y[south]) / (
+            1 - z[south]
+        )
+        result[north] = (1 + z[north].astype(np.longdouble)) / (
+            x[north].astype(np.clongdouble) - 1j * y[north]
+        )
+    pole = north & (x == 0) & (y == 0)
+    result[pole | np.isinf(result)] = infinity
+    return result
+
+
+def chordal_distance(Z: ArrayLike, W: ArrayLike) -> NDArray[np.float64]:
+    r"""Compute the unit-sphere chordal metric with NumPy broadcasting.
+
+    Parameters
+    ----------
+    Z, W : array_like
+        Points in the extended complex plane; NaNs propagate.
+
+    Returns
+    -------
+    ndarray of float64
+        :math:`2|z-w|/\sqrt{(1+|z|^2)(1+|w|^2)}` for finite inputs.
+        Distance to infinity is :math:`2/\sqrt{1+|z|^2}`; the diameter is 2.
     """
-    numerator = X + 1j * Y
-    denominator = 1 - Z
-
-    with np.errstate(divide="ignore", invalid="ignore"):
-        W = np.where(denominator != 0, numerator / denominator, np.inf)
-
-    return W
+    x, y, z = complex_to_sphere(Z)
+    u, v, w = complex_to_sphere(W)
+    return np.asarray(
+        np.minimum(np.hypot(np.hypot(x - u, y - v), z - w), 2), dtype=np.float64
+    )
 
 
-def chordal_distance(
-    Z: NDArray[np.complex128], W: NDArray[np.complex128]
-) -> NDArray[np.float64]:
+def chordal_distance_to_point(Z: ArrayLike, a: complex) -> NDArray[np.float64]:
+    """Compute chordal distances to one point (diameter 2).
+
+    Parameters
+    ----------
+    Z : array_like
+        Complex points.
+    a : complex
+        Target point, possibly infinity.
+
+    Returns
+    -------
+    ndarray of float64
+        Distances with the shape of Z; NaNs propagate.
     """
-    Returns the chordal distance from each point in Z to each point in W.
+    return chordal_distance(Z, a)
 
-    Infinite values represent the point at infinity. NaN inputs produce NaN
-    distances. The calculation is performed on stable unit-sphere coordinates
-    to avoid overflow for very large finite complex values.
+
+def spherical_distance(Z: ArrayLike, W: ArrayLike) -> NDArray[np.float64]:
+    r"""Compute geodesic distance on the unit sphere, in radians.
+
+    Parameters
+    ----------
+    Z, W : array_like
+        Broadcastable extended complex points.
+
+    Returns
+    -------
+    ndarray of float64
+        Values in :math:`[0,\pi]`, equal to :math:`2\arcsin(d/2)` where d is
+        chordal distance. NaNs propagate.
+
+    Notes
+    -----
+    An atan2 half-angle formula retains precision near antipodal points.
     """
-    Z_x, Z_y, Z_z = complex_to_sphere(Z)
-    W_x, W_y, W_z = complex_to_sphere(W)
-    distance = np.hypot(np.hypot(Z_x - W_x, Z_y - W_y), Z_z - W_z)
+    x, y, z = complex_to_sphere(Z)
+    u, v, w = complex_to_sphere(W)
+    difference = np.hypot(np.hypot(x - u, y - v), z - w)
+    total = np.hypot(np.hypot(x + u, y + v), z + w)
+    return np.asarray(2 * np.arctan2(difference, total), dtype=np.float64)
 
-    return distance
 
+def spherical_distance_to_point(Z: ArrayLike, a: complex) -> NDArray[np.float64]:
+    """Compute geodesic distances to one point, in radians.
 
-def chordal_distance_to_point(
-    Z: NDArray[np.complex128], a: np.complex128
-) -> NDArray[np.float64]:
+    Parameters
+    ----------
+    Z : array_like
+        Complex points.
+    a : complex
+        Target point, possibly infinity.
+
+    Returns
+    -------
+    ndarray of float64
+        Distances in [0, pi] with the shape of Z; NaNs propagate.
     """
-    Returns the chordal distance from each point in Z to the point a.
-
-    Infinite values represent the point at infinity and NaN inputs produce NaN
-    distances.
-    """
-    Z_x, Z_y, Z_z = complex_to_sphere(Z)
-    a_x, a_y, a_z = complex_to_sphere(np.asarray(a))
-    distance = np.hypot(np.hypot(Z_x - a_x, Z_y - a_y), Z_z - a_z)
-
-    return distance
-
-
-def spherical_distance(
-    Z: NDArray[np.complex128], W: NDArray[np.complex128]
-) -> NDArray[np.float64]:
-    """
-    Returns the spherical distance from each point in Z to each point in W.
-    """
-    distance = 2 * np.arcsin(chordal_distance(Z, W) / 2)
-
-    return distance
-
-
-def spherical_distance_to_point(
-    Z: NDArray[np.complex128], a: np.complex128
-) -> NDArray[np.float64]:
-    """
-    Returns the spherical distance from each point in Z to the point a.
-    """
-    distance = 2 * np.arcsin(chordal_distance_to_point(Z, a) / 2)
-
-    return distance
+    return spherical_distance(Z, a)
 
 
 def create_mesh(
@@ -132,14 +203,28 @@ def create_mesh(
     xpixels: int = _default_pixel_count,
     ypixels: int = _default_pixel_count,
 ) -> NDArray[np.complex128]:
+    """Create a rectangular mesh including its endpoints.
+
+    Parameters
+    ----------
+    xmin, xmax, ymin, ymax : float
+        Finite ordered bounds; equal endpoints are allowed.
+    xpixels, ypixels : int, optional
+        Positive sample counts along each coordinate.
+
+    Returns
+    -------
+    ndarray of complex128
+        Shape (ypixels, xpixels), with rows increasing in imaginary part.
     """
-    Returns a mesh representing the region of the extended complex plane that is
-    contained in (xmin, xmax)x(ymin, ymax).
-    """
-    X, Y = np.meshgrid(
+    _count(xpixels, "xpixels", minimum=1)
+    _count(ypixels, "ypixels", minimum=1)
+    if not np.isfinite([xmin, xmax, ymin, ymax]).all() or xmin > xmax or ymin > ymax:
+        raise ValueError("Mesh bounds must be finite and ordered.")
+    x, y = np.meshgrid(
         np.linspace(xmin, xmax, xpixels), np.linspace(ymin, ymax, ypixels)
     )
-    return X + (1j * Y)
+    return np.asarray(x + 1j * y, dtype=np.complex128)
 
 
 def create_projected_sphere_mesh(
@@ -155,121 +240,177 @@ def create_projected_sphere_mesh(
     NDArray[np.float64],
     NDArray[np.float64],
 ]:
+    """Sample the sphere uniformly in azimuth and colatitude.
+
+    Parameters
+    ----------
+    theta_min, theta_max : float, optional
+        Ordered azimuth bounds in radians, within [0, 2*pi].
+    phi_min, phi_max : float, optional
+        Ordered colatitude bounds in radians, within [0, pi].
+    theta_pixels, phi_pixels : int, optional
+        Positive sample counts. Endpoints and the azimuth seam are included.
+
+    Returns
+    -------
+    mesh : ndarray of complex128
+        Projected points, shape (phi_pixels, theta_pixels).
+    X, Y, Z : ndarray of float64
+        Unit-sphere coordinates with the same shape. Sampling is not equal-area.
     """
-    Returns a mesh representing the projection into the extended complex plane
-    of the riemann sphere contained in the region delimited by the polar angle
-    interval (theta_min, theta_max) and the Azimuth angle interval (phi_min,
-    phi_max); and the X, Y, Z 3D coordinates of each point in the mesh.
-    """
-    THETA, PHI = np.meshgrid(
-        np.linspace(theta_min, theta_max, theta_pixels),
-        np.linspace(phi_min, phi_max, phi_pixels),
+    if not (
+        0 <= theta_min <= theta_max <= 2 * np.pi and 0 <= phi_min <= phi_max <= np.pi
+    ):
+        raise ValueError("Invalid azimuth or colatitude bounds.")
+    angles = create_mesh(
+        theta_min, theta_max, phi_min, phi_max, theta_pixels, phi_pixels
     )
-
-    # Convert to 3D Cartesian coordinates (Unit Sphere)
-    X = np.sin(PHI) * np.cos(THETA)
-    Y = np.sin(PHI) * np.sin(THETA)
-    Z = np.cos(PHI)
-
-    mesh = sphere_to_complex(X, Y, Z)
-
-    # Inverse stereographic projection: Map 3D sphere coordinates to 2D complex
-    # plane z.
-    # North Pole Z=1 maps to infinity; South Pole Z=-1 maps to the origin (0,0)
-    return mesh, X, Y, Z
+    theta, phi = angles.real, angles.imag
+    sine = np.sin(phi)
+    sine[(phi == 0) | (phi == np.pi)] = 0
+    X, Y, Z = sine * np.cos(theta), sine * np.sin(theta), np.cos(phi)
+    return sphere_to_complex(X, Y, Z), X, Y, Z
 
 
 def calculate_forward_orbit(
-    Z: NDArray[np.complex128],
-    R: RationalMap,
-    max_iterations: int = _default_max_iterations,
+    Z: ArrayLike, R: RationalMap, max_iterations: int = _default_max_iterations
 ) -> NDArray[np.complex128]:
-    """
-    Generates the defined number of iterations of forward orbit of the given
-    points (Z).
-    """
-    forward_orbit = [Z.copy()]
+    r"""Compute :math:`(z,R(z),\ldots,R^n(z))` without mutating the input.
 
+    Parameters
+    ----------
+    Z : array_like
+        Initial points.
+    R : RationalMap
+        Map to iterate.
+    max_iterations : int, optional
+        Nonnegative number of applications of R.
+
+    Returns
+    -------
+    ndarray of complex128
+        Shape ``(max_iterations + 1, *Z.shape)``, including the initial points.
+    """
+    _count(max_iterations, "max_iterations")
+    values = np.asarray(Z, dtype=np.complex128)
+    orbit = np.empty((max_iterations + 1, *values.shape), dtype=np.complex128)
+    orbit[0] = values
     for i in range(max_iterations):
-        R(Z)
-        forward_orbit.append(Z.copy())
-
-    return np.stack(forward_orbit)
+        orbit[i + 1] = R(orbit[i])
+    return orbit
 
 
 def calculate_divergence_times(
-    Z: NDArray[np.complex128],
+    Z: ArrayLike,
     R: RationalMap,
     max_iterations: int = _default_max_iterations,
     escape_radius: float = _default_escape_radius,
 ) -> NDArray[np.int_]:
-    """
-    Returns an array that represents the iterations each point took to escape to
-    infinity (has absolute value greater than the escape_radius). It also
-    applies R to each point (modifying the given Z) until it escapes out of the
-    escape radius.
-    """
-    divergence_times = np.zeros(Z.shape, dtype=int)
-    active = np.abs(Z) < escape_radius
+    """Count steps until first exit from an open disk, without input mutation.
 
-    for i in range(max_iterations):
+    Parameters
+    ----------
+    Z : array_like
+        Initial points; NaNs receive the sentinel -1.
+    R : RationalMap
+        Map to iterate.
+    max_iterations : int, optional
+        Nonnegative iteration limit.
+    escape_radius : float, optional
+        Positive finite disk radius. Points on the boundary have exited.
+
+    Returns
+    -------
+    ndarray of int
+        First n with abs(R**n(z)) >= escape_radius, capped at max_iterations.
+        A capped count does not distinguish a last-step exit from no exit.
+
+    Notes
+    -----
+    First exit is not proof of divergence for an arbitrary rational map.
+    For example, 1/z sends infinity back to zero. A polynomial-specific escape
+    bound is needed before interpreting these counts as escape to infinity.
+    """
+    _count(max_iterations, "max_iterations")
+    _positive(escape_radius, "escape_radius")
+    values = np.array(Z, dtype=np.complex128, copy=True)
+    times = np.zeros(values.shape, dtype=np.int_)
+    times[np.isnan(values)] = -1
+    active = ~np.isnan(values) & (np.abs(values) < escape_radius)
+    for _ in range(max_iterations):
         if not active.any():
             break
-
-        # 1. Update active mask
-        active = np.abs(Z) < escape_radius
-
-        # 2. Iterate active points
-        Z[active] = R(Z[active])
-        divergence_times[active] += 1
-
-    return divergence_times
+        values[active] = R(values[active])
+        times[active] += 1
+        times[np.isnan(values)] = -1
+        active &= ~np.isnan(values) & (np.abs(values) < escape_radius)
+    return times
 
 
 def calculate_convergence_times(
-    Z: NDArray[np.complex128],
+    Z: ArrayLike,
     R: RationalMap,
-    attractors: NDArray[np.complex128],
+    attractors: ArrayLike,
     max_iterations: int = _default_max_iterations,
     tolerance: float = _default_tolerance,
 ) -> tuple[NDArray[np.int_], NDArray[np.complex128]]:
-    """
-    Returns a tuple with two arrays. The first array represents the iterations
-    each point took to converge to an attractor, and the second array represents
-    the attractor to which each point has converged. It also applies R to each
-    point (modifying the given Z) until converges to an attractor.
-    """
-    convergence_times = np.zeros(Z.shape, dtype=int)
-    convergence_points = np.full(
-        Z.shape, np.nan + 1j * np.nan, dtype=np.complex128
-    )
+    """Measure first entry into chordal neighborhoods of target points.
 
-    active = np.ones(Z.shape, dtype=bool)
+    Parameters
+    ----------
+    Z : array_like
+        Initial points, left unchanged. Invalid points receive count -1.
+    R : RationalMap
+        Map to iterate.
+    attractors : array_like
+        One-dimensional target list, possibly empty, without NaNs. Infinity is
+        allowed. These points are supplied by the caller, not certified attractors.
+    max_iterations : int, optional
+        Nonnegative iteration limit; initial and final states are checked.
+    tolerance : float, optional
+        Positive finite threshold for the chordal metric of diameter 2.
+        First target in input order wins if neighborhoods overlap.
 
-    for i in range(max_iterations):
+    Returns
+    -------
+    times : ndarray of int
+        First entry counts; max_iterations for unresolved points, -1 for invalid.
+    points : ndarray of complex128
+        Matching targets; NaN for unresolved or invalid points. Shapes match Z.
+
+    Notes
+    -----
+    Entering a neighborhood does not prove asymptotic convergence or membership
+    in a Fatou component. Iteration is vectorized over active points. Targets
+    are checked in sequence to keep memory linear in the number of points.
+    """
+    _count(max_iterations, "max_iterations")
+    _positive(tolerance, "tolerance")
+    targets = np.asarray(attractors, dtype=np.complex128)
+    if targets.ndim != 1 or np.isnan(targets).any():
+        raise ValueError("attractors must be a one-dimensional array without NaNs.")
+    values = np.array(Z, dtype=np.complex128, copy=True)
+    times = np.zeros(values.shape, dtype=np.int_)
+    points = np.full(values.shape, complex(np.nan, np.nan), dtype=np.complex128)
+    active = np.asarray(~np.isnan(values)).copy()
+    times[~active] = -1
+    target_coordinates = [complex_to_sphere(target) for target in targets]
+    for step in range(max_iterations + 1):
         if not active.any():
             break
-
-        # 1. Update active mask
-        for attractor in attractors:
-            # Check if points have converged to any attractor
-            just_converged = active & (
-                chordal_distance_to_point(Z, attractor) < tolerance
-            )
-            # Note to which attractor they have converged
-            convergence_points[just_converged] = attractor
-            # Remove them from the active mask
-            active[just_converged] = False
-
-        # 2. Iterate active points
-        Z[active] = R(Z[active])
-        convergence_times[active] += 1
-
-    # One final check to see if some point has converged in the last iteration
-    for attractor in attractors:
-        just_converged = active & (
-            chordal_distance_to_point(Z, attractor) < tolerance
-        )
-        convergence_points[just_converged] = attractor
-
-    return (convergence_times, convergence_points)
+        indices = np.flatnonzero(active)
+        x, y, z = complex_to_sphere(values.flat[indices])
+        unmatched = np.ones(indices.size, dtype=bool)
+        for target, (u, v, w) in zip(targets, target_coordinates, strict=True):
+            match = unmatched & (np.hypot(np.hypot(x - u, y - v), z - w) < tolerance)
+            points.flat[indices[match]] = target
+            active.flat[indices[match]] = False
+            unmatched[match] = False
+        if step == max_iterations:
+            break
+        values[active] = R(values[active])
+        times[active] += 1
+        invalid = np.isnan(values)
+        times[invalid] = -1
+        active[invalid] = False
+    return times, points

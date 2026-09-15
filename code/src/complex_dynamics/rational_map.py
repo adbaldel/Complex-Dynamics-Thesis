@@ -1,327 +1,318 @@
+"""Rational maps on the Riemann sphere, with ascending polynomial coefficients."""
+
+from __future__ import annotations
+
 import numpy as np
 import sympy as sp
-import sympy.parsing.latex as sp_pl
 from numpy.polynomial import Polynomial
-from numpy.typing import NDArray
+from numpy.typing import ArrayLike, NDArray
 
-infinity = np.complex128(np.inf, 0.0)
+infinity = np.complex128(complex(np.inf, 0))
 
 
-def _polynomial_to_sympy(polynomial: Polynomial, variable: str) -> sp.Poly:
-    """
-    Returns a SymPy expression of the given Polynomial.
-    """
-    expression = sp.Integer(0)
-
-    for power, coefficient in enumerate(polynomial.coef):
-        if np.iscomplexobj(coefficient) or isinstance(coefficient, complex):
-            real_part = (
-                int(coefficient.real)
-                if float(coefficient.real).is_integer()
-                else coefficient.real
-            )
-            imaginary_part = (
-                int(coefficient.imag)
-                if float(coefficient.imag).is_integer()
-                else coefficient.imag
-            )
-            sympy_coefficient = (
-                real_part
-                if imaginary_part == 0
-                else real_part + imaginary_part * sp.I
-            )
-        else:
-            sympy_coefficient = (
-                int(coefficient)
-                if float(coefficient).is_integer()
-                else float(coefficient)
-            )
-
-        expression += sp.sympify(sympy_coefficient) * (
-            sp.Symbol(variable) ** power
+def _coefficients(values: ArrayLike) -> NDArray[np.complex128]:
+    """Validate and trim polynomial coefficients without changing the input."""
+    result = np.asarray(values, dtype=np.complex128)
+    if result.ndim != 1 or result.size == 0 or not np.isfinite(result).all():
+        raise ValueError(
+            "Coefficients must be a nonempty, finite, one-dimensional array."
         )
+    nonzero = np.flatnonzero(result)
+    return result[: int(nonzero[-1]) + 1].copy() if nonzero.size else result[:1].copy()
 
-    return expression
+
+def _expression(coefficients: NDArray[np.complex128], variable: sp.Symbol) -> sp.Expr:
+    """Convert binary floating-point coefficients to exact Gaussian rationals."""
+    return sum(
+        (sp.Rational(float(c.real)) + sp.I * sp.Rational(float(c.imag))) * variable**i
+        for i, c in enumerate(coefficients)
+    )
 
 
-def _sympy_to_coeffs(
-    expression: sp.Expr, variable: str
+def _sympy_to_coeffs(expression: sp.Expr, variable: str) -> NDArray[np.complex128]:
+    """Convert a univariate symbolic polynomial to ascending coefficients."""
+    return np.asarray(
+        sp.Poly(expression, sp.Symbol(variable)).all_coeffs()[::-1], dtype=np.complex128
+    )
+
+
+def _ldexp_complex(
+    values: NDArray[np.complex128], exponent: NDArray[np.int64]
 ) -> NDArray[np.complex128]:
-    """
-    Returns a Polynomial given a SymPy expression.
-    """
-    symbolic_polynomial = sp.Poly(expression, sp.Symbol(variable))
-    coeffs_ascending = symbolic_polynomial.all_coeffs()[::-1]
-    return np.asarray(coeffs_ascending, dtype=np.complex128)
+    """Scale real and imaginary components without forming 2**exponent."""
+    result = np.empty(values.shape, dtype=np.complex128)
+    result.real = np.ldexp(values.real, exponent)
+    result.imag = np.ldexp(values.imag, exponent)
+    return result
 
 
-def _sympy_to_polynomial(sym_expr: sp.Expr, var: str) -> Polynomial:
-    """
-    Returns a Polynomial given a SymPy expression.
-    """
-    return Polynomial(_sympy_to_coeffs(sym_expr, variable=var), symbol=var)
+def _normalize(
+    values: NDArray[np.complex128],
+) -> tuple[NDArray[np.complex128], NDArray[np.int64]]:
+    """Separate a complex mantissa and a base-two exponent."""
+    _, power = np.frexp(np.maximum(np.abs(values.real), np.abs(values.imag)))
+    exponent = np.asarray(power, dtype=np.int64)
+    return _ldexp_complex(values, -exponent), exponent
+
+
+def _scaled_polynomial(
+    coefficients: NDArray[np.complex128], z: NDArray[np.complex128]
+) -> tuple[NDArray[np.complex128], NDArray[np.int64]]:
+    """Evaluate Horner's rule with separately stored binary exponents."""
+    zm, ze = _normalize(z)
+    cm, ce = _normalize(coefficients)
+    mantissa = np.full(z.shape, cm[-1], dtype=np.complex128)
+    exponent = np.full(z.shape, ce[-1], dtype=np.int64)
+    for i in range(len(coefficients) - 2, -1, -1):
+        mantissa, shift = _normalize(mantissa * zm)
+        exponent = np.where(mantissa != 0, exponent + ze + shift, 0)
+        # A zero summand must not force a nonzero summand to underflow.
+        common = np.where(mantissa == 0, ce[i], np.maximum(exponent, ce[i]))
+        if cm[i] == 0:
+            common = exponent
+        summed = _ldexp_complex(mantissa, exponent - common) + _ldexp_complex(
+            np.full(z.shape, cm[i], dtype=np.complex128), ce[i] - common
+        )
+        mantissa, shift = _normalize(summed)
+        exponent = np.where(mantissa != 0, common + shift, 0)
+    return mantissa, exponent
+
+
+def _scaled_ratio(
+    p: NDArray[np.complex128], q: NDArray[np.complex128], z: NDArray[np.complex128]
+) -> NDArray[np.complex128]:
+    """Divide polynomial values before restoring their binary scale."""
+    a, ae = _scaled_polynomial(p, z)
+    b, be = _scaled_polynomial(q, z)
+    result = _ldexp_complex(np.asarray(a / b, dtype=np.complex128), ae - be)
+    result[(b == 0) & (a != 0)] = infinity
+    return result
 
 
 class RationalMap:
-    """
-    Represents a complex variable rational map.
+    r"""Represent a reduced rational map :math:`R=P/Q` on the Riemann sphere.
 
-    Uses the numpy.Polynomial class for representing the polynomials that define
-    the rational map. That is, if the rational map is R = P / Q, P and Q will be
-    numpy.polynomial.Polynomial.
+    Parameters
+    ----------
+    numerator_coefficients, denominator_coefficients : array_like
+        Finite coefficients in ascending order: ``[1, 2, 3]`` means
+        :math:`1+2z+3z^2`. The denominator must not be identically zero.
+    variable : str, optional
+        Symbol used for textual representations.
+
+    Notes
+    -----
+    Exact common factors of the supplied binary floating-point coefficients
+    are cancelled at construction. Nearly common factors are not cancelled.
+    The degree is :math:`\max(\deg P,\deg Q)` after reduction; constant maps
+    have degree zero. Classical Fatou/Julia theory assumes degree at least two.
     """
 
     def __init__(
         self,
-        numerator_coefficients: NDArray[np.complex128],
-        denominator_coefficients: NDArray[np.complex128],
+        numerator_coefficients: ArrayLike,
+        denominator_coefficients: ArrayLike,
         variable: str = "z",
     ) -> None:
-        """
-        Initializes a rational map with the given coefficients for its numerator
-        and denominator.
-
-        num_coef and denom_coef are lists of complex numbers that represent the
-        coefficients of the numerator and denominator polynomials respectively.
-        The coefficients in the lists have to be ordered from lowest order
-        coefficient to highest.
-        """
-        if numerator_coefficients.dtype != np.complex128:
-            raise TypeError(
-                f"Z must have dtype=complex128, got {numerator_coefficients.dtype}. "
-                f"Use np.array(..., dtype=np.complex128)."
+        numerator = _coefficients(numerator_coefficients)
+        denominator = _coefficients(denominator_coefficients)
+        if not denominator.any():
+            raise ValueError("The denominator polynomial must not be zero.")
+        if not isinstance(variable, str) or not variable.isidentifier():
+            raise ValueError("variable must be a valid identifier.")
+        symbol = sp.Symbol(variable)
+        p = sp.Poly(_expression(numerator, symbol), symbol, extension=sp.I)
+        q = sp.Poly(_expression(denominator, symbol), symbol, extension=sp.I)
+        common = sp.gcd(p, q)
+        if common.degree() > 0:
+            numerator = _coefficients(
+                [complex(c) for c in p.exquo(common).all_coeffs()[::-1]]
             )
-        if denominator_coefficients.dtype != np.complex128:
-            raise TypeError(
-                f"Z must have dtype=complex128, got {denominator_coefficients.dtype}. "
-                f"Use np.array(..., dtype=np.complex128)."
+            denominator = _coefficients(
+                [complex(c) for c in q.exquo(common).all_coeffs()[::-1]]
             )
-
+        if not numerator.any():
+            denominator = np.ones(1, dtype=np.complex128)
+        num_values, den_values = numerator, denominator
         self._variable = variable
-        self._numerator = Polynomial(
-            numerator_coefficients, symbol=self._variable
+        self._numerator = Polynomial(num_values, symbol=variable)
+        self._denominator = Polynomial(den_values, symbol=variable)
+        self._degree_difference = int(
+            self._numerator.degree() - self._denominator.degree()
         )
-        self._denominator = Polynomial(
-            denominator_coefficients, symbol=self._variable
-        )
-        self._reverse_numerator = Polynomial(
-            numerator_coefficients[::-1], symbol=self._variable
-        )
-        self._reverse_denominator = Polynomial(
-            denominator_coefficients[::-1], symbol=self._variable
-        )
+        self._degree = int(max(self._numerator.degree(), self._denominator.degree()))
 
-        self._numerator_degree = self._numerator.degree()
-        self._denominator_degree = self._denominator.degree()
-        self._degree_difference = (
-            self._numerator_degree - self._denominator_degree
-        )
-        self._degree = max(self._numerator_degree, self._denominator_degree)
+    def __call__(
+        self, Z: ArrayLike, *, out: NDArray[np.complex128] | None = None
+    ) -> NDArray[np.complex128]:
+        r"""Evaluate the map without changing the input unless ``out`` is supplied.
 
-        if self._numerator_degree < self._denominator_degree:
-            self._infty_image = np.complex128(0, 0)
-        elif self._numerator_degree > self._denominator_degree:
-            self._infty_image = infinity
-        else:
-            self._infty_image = np.complex128(
-                numerator_coefficients[-1] / denominator_coefficients[-1]
-            )
+        Parameters
+        ----------
+        Z : array_like
+            Points in :math:`\widehat{\mathbb C}`. Scalars produce 0-D arrays.
+            An infinite component represents infinity; any NaN is invalid.
+        out : ndarray of complex128, optional
+            Writable destination of the same shape. May alias ``Z``.
 
-    def __call__(self, Z: NDArray[np.complex128]) -> NDArray[np.complex128]:
+        Returns
+        -------
+        ndarray of complex128
+            Images with the shape of ``Z``. Poles and overflowing results are
+            canonical ``inf+0j``. Invalid inputs or numerical 0/0 remain NaN.
+
+        Notes
+        -----
+        Horner evaluation stores complex mantissas and binary exponents
+        separately. Polynomial values may exceed float64 range internally;
+        the ratio is formed before rescaling. This does not depend on platform
+        long-double support. Severe cancellation remains ill-conditioned.
         """
-        Evaluates the rational map on the given complex number array. Modifies
-        the array itself.
-        """
-        if Z.dtype != np.complex128:
-            raise TypeError(
-                f"Z must have dtype=complex128, got {Z.dtype}. "
-                f"Use np.array(..., dtype=np.complex128)."
-            )
-
-        # 1. Identify where the input is infinite
-        is_input_inf = np.isinf(np.real(Z)) | np.isinf(np.imag(Z))
-        # 2. Identify where the input is finite and small or big
-        is_input_small = np.abs(Z) < 1
-        is_input_big = (~is_input_small) & (~is_input_inf)
-
-        # 3. Evaluate normally for small inputs
-        with np.errstate(over="ignore", divide="ignore", invalid="ignore"):
-            Z_small = Z[is_input_small]
-            numerator = self._numerator(Z_small)
-            denominator = self._denominator(Z_small)
-            Z[is_input_small] = np.where(
-                denominator != 0, numerator / denominator, infinity
-            )
-
-        # 4. Evaluate on w=1/z for big inputs
-        with np.errstate(over="ignore", divide="ignore", invalid="ignore"):
-            Z_big = Z[is_input_big]
-            W = 1 / Z_big
-            numerator = self._reverse_numerator(W)
-            denominator = self._reverse_denominator(W)
+        values = np.asarray(Z, dtype=np.complex128)
+        if out is not None and (
+            out.shape != values.shape
+            or out.dtype != np.complex128
+            or not out.flags.writeable
+        ):
+            raise ValueError("out must be writable complex128 with the input shape.")
+        result = np.full(values.shape, complex(np.nan, np.nan), dtype=np.complex128)
+        valid = ~np.isnan(values)
+        infinite = valid & np.isinf(values)
+        finite = valid & ~infinite
+        p = np.asarray(self._numerator.coef, dtype=np.complex128)
+        q = np.asarray(self._denominator.coef, dtype=np.complex128)
+        with np.errstate(
+            over="ignore", under="ignore", divide="ignore", invalid="ignore"
+        ):
+            result[finite] = _scaled_ratio(p, q, values[finite])
             if self._degree_difference > 0:
-                Z[is_input_big] = np.where(
-                    denominator != 0,
-                    np.power(Z_big, self._degree_difference)
-                    * numerator
-                    / denominator,
-                    infinity,
-                )
+                result[infinite] = infinity
             elif self._degree_difference < 0:
-                Z[is_input_big] = np.where(
-                    denominator != 0,
-                    numerator
-                    / (np.power(Z_big, -self._degree_difference) * denominator),
-                    infinity,
-                )
+                result[infinite] = 0
             else:
-                Z[is_input_big] = np.where(
-                    denominator != 0,
-                    numerator / denominator,
-                    infinity,
-                )
-
-        # 5. Clean up outputs (Poles mapping to complex infinity) If the
-        # calculation overflowed to inf/nan
-        is_output_inf = (
-            np.isinf(np.real(Z)) | np.isinf(np.imag(Z)) | np.isnan(np.real(Z))
-        )
-        Z[is_output_inf & ~is_input_inf] = infinity
-
-        # 6. Evaluate infinite inputs
-        Z[is_input_inf] = self._infty_image
-
-        return Z
+                result[infinite] = _scaled_ratio(
+                    p[-1:], q[-1:], np.zeros(1, dtype=np.complex128)
+                )[0]
+        result[np.isinf(result)] = infinity
+        if out is not None:
+            np.copyto(out, result)
+            return out
+        return result
 
     def __str__(self) -> str:
-        """
-        Returns a LaTeX string representation of a rational map.
-        """
-        # 1. Convert both NumPy polynomials back to SymPy expressions
-        num_expr = _polynomial_to_sympy(
-            self._numerator, variable=self._variable
+        """Return a LaTeX representation of the reduced map."""
+        symbol = sp.Symbol(self.variable)
+        return str(
+            sp.latex(
+                _expression(
+                    np.asarray(self._numerator.coef, dtype=np.complex128), symbol
+                )
+                / _expression(
+                    np.asarray(self._denominator.coef, dtype=np.complex128), symbol
+                )
+            )
         )
-        den_expr = _polynomial_to_sympy(
-            self._denominator, variable=self._variable
-        )
-
-        # 2. Divide them to create a rational SymPy expression, then format to
-        #    LaTeX
-        rational_expr = num_expr / den_expr
-        return sp.latex(rational_expr)
 
     @classmethod
-    def from_latex(cls, latex_str: str, var: str = "z", imag_const: str = "i"):
-        """
-        Initializes a rational map (numerator, denominator) from a LaTeX string.
-        """
-        # 1. Parse LaTeX and handle imaginary constant
-        expr = sp_pl.parse_latex(latex_str)
-        i_sym = sp.Symbol(imag_const)
-        expr = expr.subs(i_sym, sp.I)
+    def from_latex(
+        cls, latex_str: str, var: str = "z", imag_const: str = "i"
+    ) -> RationalMap:
+        """Parse a rational expression using the optional ``latex`` extra.
 
-        # 2. Split the expression into numerator and denominator For example,
-        # \frac{z^2 + 1}{z - 1} becomes (z**2 + 1) and (z - 1)
-        numer_expr, denom_expr = expr.as_numer_denom()
-        num_coeffs = _sympy_to_coeffs(numer_expr, variable=var)
-        denom_coeffs = _sympy_to_coeffs(denom_expr, variable=var)
+        Parameters
+        ----------
+        latex_str : str
+            Univariate rational expression in LaTeX.
+        var : str, optional
+            Variable symbol, retained by the resulting map.
+        imag_const : str, optional
+            Symbol interpreted as the imaginary unit; must differ from ``var``.
 
-        return cls(num_coeffs, denom_coeffs)
+        Returns
+        -------
+        RationalMap
+            Reduced map represented by the expression.
+        """
+        from sympy.parsing.latex import parse_latex
+
+        if var == imag_const:
+            raise ValueError("The variable and imaginary-unit symbols must differ.")
+        expression = sp.cancel(
+            parse_latex(latex_str, strict=True).subs(sp.Symbol(imag_const), sp.I)
+        )
+        num, den = expression.as_numer_denom()
+        return cls(_sympy_to_coeffs(num, var), _sympy_to_coeffs(den, var), variable=var)
 
     @property
     def variable(self) -> str:
-        """
-        Returns the symbol used for representing the variable of the rational
-        map.
-        """
+        """str: Symbol used to represent the variable."""
         return self._variable
 
     @property
     def numerator(self) -> Polynomial:
-        """
-        Returns the numerator polynomial of the rational map.
-        """
+        """Polynomial: Independent copy of the reduced numerator."""
         return self._numerator.copy()
 
     @property
     def denominator(self) -> Polynomial:
-        """
-        Returns the denominator polynomial of the rational map.
-        """
+        """Polynomial: Independent copy of the reduced denominator."""
         return self._denominator.copy()
 
     @property
     def degree(self) -> int:
-        """
-        Returns the degree of the rational map.
-        """
+        """int: Maximum polynomial degree after exact common-factor cancellation."""
         return self._degree
 
-    def derivative(self) -> "RationalMap":
+    def derivative(self) -> RationalMap:
+        r"""Return the affine derivative :math:`R'=(P'Q-PQ')/Q^2`.
+
+        Returns
+        -------
+        RationalMap
+            Derivative in the finite coordinate, not the multiplier at infinity.
         """
-        Returns the derivative of the rational map as a new RationalMap.
-
-        If R = P / Q, the derivative is computed via the quotient rule: R' =
-        (P'Q - PQ') / Q^2.
-        """
-        numerator_derivative = self._numerator.deriv()
-        denominator_derivative = self._denominator.deriv()
-
-        new_numerator = (
-            numerator_derivative * self._denominator
-            - self._numerator * denominator_derivative
-        )
-        new_denominator = self._denominator * self._denominator
-
-        numerator_coefficients = new_numerator.coef.astype(np.complex128)
-        denominator_coefficients = new_denominator.coef.astype(np.complex128)
-
+        p, q = self._numerator, self._denominator
         return RationalMap(
-            numerator_coefficients,
-            denominator_coefficients,
-            variable=self._variable,
+            (p.deriv() * q - p * q.deriv()).coef, (q * q).coef, self.variable
         )
 
     def poles(self, include_infinity: bool = True) -> NDArray[np.complex128]:
+        """Return poles of the reduced map, counted with multiplicity.
+
+        Parameters
+        ----------
+        include_infinity : bool, optional
+            Include infinity with multiplicity ``max(deg(P)-deg(Q), 0)``.
+
+        Returns
+        -------
+        ndarray of complex128
+            Numerical roots of Q, followed by any infinite poles.
         """
-        Returns the poles of the rational map as an array of complex numbers. It
-        assumes that numerator and denominator have no common roots.
-
-        The finite poles are the roots of the denominator polynomial, each
-        appearing as many times as its multiplicity. If the numerator's degree
-        is greater than the denominator's degree, infinity is also a pole of the
-        map; when include_infinity is True (the default), it is appended to the
-        returned array once for each order of the pole (i.e. the degree
-        difference between numerator and denominator).
-        """
-        finite_poles = self._denominator.roots().astype(np.complex128)
-
-        if include_infinity and self._degree_difference > 0:
-            infinite_poles = np.full(
-                self._degree_difference, infinity, dtype=np.complex128
-            )
-            return np.concatenate((finite_poles, infinite_poles))
-
-        return finite_poles
+        finite = np.asarray(self._denominator.roots(), dtype=np.complex128)
+        count = max(self._degree_difference, 0) if include_infinity else 0
+        return np.concatenate((finite, np.full(count, infinity, dtype=np.complex128)))
 
     def roots(self, include_infinity: bool = True) -> NDArray[np.complex128]:
+        """Return zeros of the reduced map, counted with multiplicity.
+
+        Parameters
+        ----------
+        include_infinity : bool, optional
+            Include infinity with multiplicity ``max(deg(Q)-deg(P), 0)``.
+
+        Returns
+        -------
+        ndarray of complex128
+            Numerical roots of P, followed by any infinite zeros.
+
+        Raises
+        ------
+        ValueError
+            If the map is identically zero (every point is a zero).
         """
-        Returns the roots (zeros) of the rational map as an array of complex
-        numbers. It assumes that numerator and denominator have no common roots.
-
-        The finite roots are the roots of the numerator polynomial, each
-        appearing as many times as its multiplicity. If the denominator's degree
-        is greater than the numerator's degree, infinity is also a root of the
-        map; when include_infinity is True (the default), it is appended to the
-        returned array once for each order of the root (i.e. the degree
-        difference between denominator and numerator).
-        """
-        finite_roots = self._numerator.roots().astype(np.complex128)
-
-        if include_infinity and self._degree_difference < 0:
-            infinite_roots = np.full(
-                -self._degree_difference, infinity, dtype=np.complex128
-            )
-            return np.concatenate((finite_roots, infinite_roots))
-
-        return finite_roots
+        if not self._numerator.coef.any():
+            raise ValueError("The zero map has infinitely many zeros.")
+        finite = np.asarray(self._numerator.roots(), dtype=np.complex128)
+        count = max(-self._degree_difference, 0) if include_infinity else 0
+        return np.concatenate((finite, np.full(count, infinity, dtype=np.complex128)))
