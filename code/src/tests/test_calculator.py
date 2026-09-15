@@ -158,7 +158,7 @@ class TestDivergenceRate:
         mesh = np.array([1.5 + 0j], dtype=np.complex128)
 
         result = dcalc.calculate_divergence_times(
-            mesh, R=R, num_iter=5, escape_radius=2
+            mesh, R=R, max_iterations=5, escape_radius=2
         )
 
         np.testing.assert_array_equal(result, [1])
@@ -172,7 +172,7 @@ class TestDivergenceRate:
         mesh = np.array([5 + 0j], dtype=np.complex128)
 
         result = dcalc.calculate_divergence_times(
-            mesh, R=R, num_iter=5, escape_radius=2
+            mesh, R=R, max_iterations=5, escape_radius=2
         )
 
         np.testing.assert_array_equal(result, [0])
@@ -186,7 +186,7 @@ class TestDivergenceRate:
         mesh = np.array([0.5 + 0j], dtype=np.complex128)
 
         result = dcalc.calculate_divergence_times(
-            mesh, R=R, num_iter=10, escape_radius=2
+            mesh, R=R, max_iterations=10, escape_radius=2
         )
 
         np.testing.assert_array_equal(result, [10])
@@ -199,7 +199,7 @@ class TestDivergenceRate:
         mesh = np.array([1.5 + 0j, 0.1 + 0j], dtype=np.complex128)
 
         result = dcalc.calculate_divergence_times(
-            mesh, R=R, num_iter=5, escape_radius=2
+            mesh, R=R, max_iterations=5, escape_radius=2
         )
 
         # 1.5 escapes after 1 step; 0.1 doubles 5 times to 3.2, escaping on
@@ -223,7 +223,7 @@ class TestConvergenceRate:
         mesh = np.array([2 + 0j, -3 + 0j], dtype=np.complex128)
 
         conv_len, conv_point = dcalc.calculate_convergence_times(
-            mesh, R=R, attractors=attractors, num_iter=20, tolerance=1e-6
+            mesh, R=R, attractors=attractors, max_iterations=20, tolerance=1e-6
         )
 
         np.testing.assert_allclose(conv_point, [1 + 0j, -1 + 0j])
@@ -240,7 +240,7 @@ class TestConvergenceRate:
         mesh = np.array([2 + 0j], dtype=np.complex128)
 
         conv_len, conv_point = dcalc.calculate_convergence_times(
-            mesh, R=R, attractors=attractors, num_iter=5, tolerance=1e-6
+            mesh, R=R, attractors=attractors, max_iterations=5, tolerance=1e-6
         )
 
         np.testing.assert_array_equal(conv_len, [5])
@@ -252,7 +252,7 @@ class TestConvergenceRate:
         mesh = dcalc.create_mesh(-2, 2, -2, 2, xpixels=5, ypixels=5)
 
         conv_len, conv_point = dcalc.calculate_convergence_times(
-            mesh, R=R, attractors=attractors, num_iter=10, tolerance=1e-3
+            mesh, R=R, attractors=attractors, max_iterations=10, tolerance=1e-3
         )
 
         assert conv_len.shape == mesh.shape
