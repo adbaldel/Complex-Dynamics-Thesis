@@ -1,0 +1,103 @@
+\documentclass[10pt, a4paper, oneside]{book}
+
+% --- Packages -----------------------------------------------------------------
+% Input (.tex files) and output (.pdf) encoding
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+% Language
+\usepackage[spanish]{babel}
+\decimalpoint
+\usepackage[autostyle=true]{csquotes}
+\usepackage{enumitem}
+% Tipografía:
+% Tipografíca de Visual Complex Analysis (más o menos)
+% \usepackage{amsmath, amsthm, amssymb}
+% \usepackage{mathpazo}
+% \usepackage{eulerpx}
+% Tipografía estándar:
+\usepackage{amsmath, amsthm, amssymb}
+\usepackage{lmodern} % Standard font (improved)
+% Include a pdf
+\usepackage{pdfpages}
+% Images and caption
+\usepackage{graphicx}
+\graphicspath{ {../figures/} }
+\usepackage{caption}
+\captionsetup{margin=15pt, font=small, labelfont=bf, labelsep=colon}
+\usepackage{subcaption}
+% Bibliography
+\usepackage[
+    style=numeric,  % Options: numeric (-comp, -verb)
+                    %          alphabetic (-verb)
+                    %          authoryear (-comp, -icomp)
+                    %          authortitle (-comp, -icomp)
+                    %          verbose (-ibit, -inote, -trad)
+                    % And major academics like: apa, ieee, mla, nature, science, etc.
+    backend=biber,
+    isbn=false,
+    url=false,
+    doi=false
+]{biblatex}
+\addbibresource{refs.bib}
+% Index
+\usepackage[nottoc]{tocbibind}
+% Links
+\usepackage[hidelinks]{hyperref}
+% Magins and spacing
+\usepackage[
+    paperheight = 24.0cm,
+    paperwidth = 17.0cm,
+    columnsep = 1.0cm, % Separaci\'on cuando haya dos columnas
+    textheight = 19.0cm,
+    textwidth = 12.8cm,
+    centering,
+    marginparwidth = 1cm, % S\'olo notas al margen de 1cm; si no, se salen del papel
+    top = 3.0cm
+]{geometry}
+% \parskip = 2pt plus 1.5pt minus 1.0pt % After paragraph spacing
+
+% --- Temp packages ------------------------------------------------------------
+\usepackage{showkeys} % Shows labesl in the final pdf
+\usepackage{refcheck} % Adds question marks to non cited labels or bibitems
+
+% --- Defined Commands, Float Objects Conifg  and Theorem Like Environments ----
+\input{../utils/commands}
+\input{../utils/amsart-float_objects-config.tex}
+\input{../utils/theormen_like-environments}
+
+% --- Includes to Reproccess ---------------------------------------------------
+\includeonly{
+    sections/front,
+    sections/chap1,
+    sections/chap2,
+    sections/chap3,
+    sections/chap4,
+    sections/chap5,
+    sections/back
+}
+
+% --- Document Information -----------------------------------------------------
+\title{Título del trabajo en castellano}
+\author{Adrián Baldellou Aguirre \and José Manuel Gutiérrez Jiménez}
+
+% --- Document -----------------------------------------------------------------
+\begin{document}
+% --- Front Matter -------------------------------------------------------------
+% \frontmatter
+% \include{sections/front}
+
+% --- Main Matter --------------------------------------------------------------
+\mainmatter
+\include{sections/chap1}
+% \include{sections/chap2}
+% \include{sections/chap3}
+% \include{sections/chap4}
+% \include{sections/chap5}
+% --- Appendix -----------------------------------------------------------------
+%\appendix
+%\include{sections/appendix}
+
+% --- Back Matter --------------------------------------------------------------
+\backmatter
+\include{sections/back}
+\end{document}

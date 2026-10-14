@@ -10,11 +10,19 @@ El código en Python de este repositorio se utiliza para explorar estos concepto
 
 ## **Estructura del Repositorio**
 
-* **code/**: Contiene todos los archivos de programación en Python.
+* **python/**: Contiene el proyecto Python, su configuración y sus dependencias.
   * **notebooks/**: Cuadernos de Jupyter que ilustran ejemplos específicos (ej. transformaciones de Möbius, la dinámica de $z \\mapsto z^2$).
-  * **src/**: Módulos principales de Python (dynamics.py, utils.py) que contienen las funciones y clases reutilizables para calcular los sistemas dinámicos.
-* **figures/**: Directorio de salida para los gráficos e imágenes de fractales generados (ej. cuencas del método de Newton) que se usan en el documento LaTeX.
-* **report/**: Contiene el código fuente en LaTeX, la bibliografía (refs.bib) y el PDF compilado de la memoria de la tesis (\~50 páginas).
+    * **colab/**: Versiones de los cuadernos preparadas para Google Colab.
+  * **src/complex_dynamics/**: Paquete reutilizable para calcular y visualizar los sistemas dinámicos.
+  * **tests/complex_dynamics/**: Pruebas del paquete.
+  * **docs/** y **scripts/**: Documentación técnica y herramientas auxiliares.
+* **latex/**: Contiene los documentos y recursos LaTeX.
+  * **thesis/**: Memoria de la tesis (`thesis.tex`) y bibliografía (`refs.bib`).
+  * **beardon_notes/**: Apuntes sobre el libro de Beardon (`notes.tex`).
+  * **translated_articles/**: Traducciones de artículos, cada una con su propio `main.tex`.
+  * **beamer/**: Material para la presentación.
+  * **utils/**: Comandos, entornos y configuración compartidos.
+  * **figures/**: Gráficos generados por Python, imágenes de referencia y fuentes TikZ utilizados en los documentos.
 
 ## **Requisitos y Configuración**
 
@@ -22,25 +30,33 @@ Para ejecutar el código e interactuar con los cuadernos de Jupyter, necesitará
 
 1. **Clonar el repositorio:**
    ```bash
-   git clone \[https://github.com/adbaldel/Rational-Dynamics-Thesis.git\](https://github.com/adbaldel/Rational-Dynamics-Thesis.git)
+    git clone https://github.com/adbaldel/Rational-Dynamics-Thesis.git
    cd Rational-Dynamics-Thesis
    ```
 
-3. **Crear un entorno de Conda e instalar las dependencias:**
-   Usando el archivo requirements.txt proporcionado, ejecuta los siguientes comandos:
+2. **Crear un entorno de Conda e instalar las dependencias:**
+   El archivo de dependencias está en `python/requirements.txt`. Desde la raíz del repositorio:
    ```bash
-   conda create \--name dynamics\_env python=3.10
-   conda activate dynamics\_env
-   pip install \-r requirements.txt
+    conda create --name dynamics_env python=3.10
+    conda activate dynamics_env
+    pip install -r python/requirements.txt
+    pip install --no-deps -e ./python
    ```
 
 ## **Uso**
 
-* **Explorar el Código:** Activa tu entorno de conda e inicia Jupyter para ver los ejemplos interactivos:
+* **Explorar el Código:** Activa tu entorno de conda e inicia Jupyter desde el directorio de los cuadernos:
+  ```bash
+  cd python/notebooks
   jupyter notebook
-
-  Navega hasta el directorio code/notebooks/ para abrir los archivos .ipynb.
-* **Compilar la Memoria:** Navega hasta el directorio report/ y utiliza tu compilador de LaTeX preferido (ej. pdflatex o latexmk) sobre el archivo main.tex.
+  ```
+  Los cuadernos locales usan rutas relativas a `python/notebooks/`; las figuras se guardan en `latex/figures/`.
+* **Compilar la Memoria:** Desde la raíz del repositorio:
+  ```bash
+  cd latex/thesis
+  latexmk -pdf thesis.tex
+  ```
+  Compila los apuntes desde `latex/beardon_notes/` con `latexmk -pdf notes.tex`, y las traducciones desde el directorio de cada artículo con `latexmk -pdf main.tex`.
 
 # **Bachelor's Thesis: Complex Dynamics & Rational Functions**
 
@@ -54,11 +70,19 @@ The Python code in this repository is used to explore these concepts numerically
 
 ## **Repository Structure**
 
-* **code/**: Contains all the Python programming files.
+* **python/**: Contains the Python project, its configuration, and its dependencies.
   * **notebooks/**: Jupyter notebooks demonstrating specific examples (e.g., Möbius transformations, the dynamics of $z \\mapsto z^2$).
-  * **src/**: Core Python modules (dynamics.py, utils.py) containing the reusable functions and classes for computing dynamical systems.
-* **figures/**: Output directory for generated plots and fractal images (e.g., Newton's method basins) used in the LaTeX report.
-* **report/**: Contains the LaTeX source code, bibliography (refs.bib), and compiled PDF of the thesis document (\~50 pages).
+    * **colab/**: Notebook versions prepared for Google Colab.
+  * **src/complex_dynamics/**: Reusable package for computing and visualizing dynamical systems.
+  * **tests/complex_dynamics/**: Package tests.
+  * **docs/** and **scripts/**: Technical documentation and helper tools.
+* **latex/**: Contains the LaTeX documents and resources.
+  * **thesis/**: Thesis document (`thesis.tex`) and bibliography (`refs.bib`).
+  * **beardon_notes/**: Notes on Beardon's book (`notes.tex`).
+  * **translated_articles/**: Article translations, each with its own `main.tex`.
+  * **beamer/**: Presentation material.
+  * **utils/**: Shared commands, environments, and configuration.
+  * **figures/**: Python-generated plots, reference images, and TikZ sources used in the documents.
 
 ## **Requirements & Setup**
 
@@ -70,19 +94,26 @@ To run the code and interact with the Jupyter notebooks, you will need a Python 
    cd Rational-Dynamics-Thesis
    ```
 
-3. **Create a Conda environment and install dependencies:**
-   Using the provided requirements.txt file, run the following commands:
+2. **Create a Conda environment and install dependencies:**
+   Dependencies are listed in `python/requirements.txt`. From the repository root:
    ```bash
-   conda create \--name dynamics\_env python=3.10
-   conda activate dynamics\_env
-   pip install \-r requirements.txt
+    conda create --name dynamics_env python=3.10
+    conda activate dynamics_env
+    pip install -r python/requirements.txt
+    pip install --no-deps -e ./python
    ```
 
 ## **Usage**
 
-* **Exploring the Code:** Activate your conda environment and start Jupyter to view the interactive examples:
+* **Exploring the Code:** Activate your conda environment and start Jupyter from the notebook directory:
   ```bash
-  jupyter notebook
+   cd python/notebooks
+   jupyter notebook
   ```
-  Navigate to the code/notebooks/ directory to open the .ipynb files.
-* **Compiling the Report:** Navigate to the report/ directory and use your preferred LaTeX compiler (e.g., pdflatex or latexmk) on main.tex.
+   Local notebooks use paths relative to `python/notebooks/`; figures are saved in `latex/figures/`.
+* **Compiling the Report:** From the repository root:
+   ```bash
+   cd latex/thesis
+   latexmk -pdf thesis.tex
+   ```
+   Compile the notes from `latex/beardon_notes/` with `latexmk -pdf notes.tex`, and translations from each article's directory with `latexmk -pdf main.tex`.
