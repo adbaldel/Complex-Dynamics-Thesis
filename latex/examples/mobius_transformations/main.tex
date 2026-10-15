@@ -1,0 +1,501 @@
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage[margin=28mm]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{booktabs}
+\usepackage{microtype}
+\usepackage[hidelinks]{hyperref}
+
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Chat}{\widehat{\mathbb{C}}}
+\newcommand{\abs}[1]{\left|#1\right|}
+\newcommand{\norm}[1]{\left\|#1\right\|}
+\newcommand{\chord}{\chi}
+\DeclareMathOperator{\tr}{tr}
+\DeclareMathOperator{\Fix}{Fix}
+
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+\title{Dynamics of M\"obius Transformations\\
+  \large Fixed points, conjugacy, and iteration on the Riemann sphere}
+\author{}
+\date{}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+A M\"obius transformation is a rational map of degree one and a conformal
+automorphism of the Riemann sphere. Despite its simple formula, its iterates
+exhibit several distinct behaviors: periodic rotation, quasiperiodic rotation,
+attraction and repulsion, and parabolic convergence. We derive the complete
+classification from fixed points and conjugacy, relate it to matrix invariants,
+and compute explicit examples. All convergence statements are made on the
+sphere, so that escape to infinity is treated as convergence to an ordinary
+point of the phase space.
+\end{abstract}
+
+\tableofcontents
+
+\section{The phase space and the iteration problem}
+
+The natural phase space is the Riemann sphere
+\[
+  \Chat=\C\cup\{\infty\}.
+\]
+A \emph{M\"obius transformation} is a map
+\begin{equation}\label{eq:mobius}
+  T(z)=\frac{az+b}{cz+d},
+  \qquad a,b,c,d\in\C,\qquad \Delta=ad-bc\ne0.
+\end{equation}
+If $c\ne0$, its values at the pole and at infinity are
+\[
+  T(-d/c)=\infty,\qquad T(\infty)=a/c.
+\]
+If $c=0$, then $T(\infty)=\infty$. The determinant condition excludes
+constant maps and ensures that $T$ is bijective, with inverse represented by
+\[
+  \begin{pmatrix}d&-b\\-c&a\end{pmatrix}.
+\]
+Thus both positive and negative iterates $T^n$, $n\in\Z$, are defined.
+Here $T^0$ is the identity and $T^{n+1}=T\circ T^n$; the notation is
+composition, not a pointwise power.
+
+To discuss convergence at infinity, use the chordal metric
+\[
+  \chord(z,w)=\frac{\abs{z-w}}{\sqrt{1+\abs{z}^2}\sqrt{1+\abs{w}^2}},
+  \qquad
+  \chord(z,\infty)=\frac{1}{\sqrt{1+\abs{z}^2}}
+\]
+for finite $z,w$, with $\chord(\infty,\infty)=0$. In particular,
+$z_n\to\infty$ on the sphere if and only if $\abs{z_n}\to\infty$.
+
+The basic questions are: which points are fixed or periodic, which orbits
+converge, and which geometric sets contain the orbits?
+
+\section{Matrices, fixed points, and multipliers}
+
+\subsection{Projective matrix representation}
+
+Associate to \eqref{eq:mobius} the matrix
+\[
+  A=\begin{pmatrix}a&b\\c&d\end{pmatrix}\in\mathrm{GL}(2,\C).
+\]
+In homogeneous coordinates, $z=[z:1]$ and $\infty=[1:0]$, and
+\[
+  [u:v]\longmapsto[au+bv:cu+dv].
+\]
+Nonzero scalar multiples of $A$ represent the same transformation.
+Composition corresponds to matrix multiplication, so $A^n$ represents $T^n$.
+Consequently the group of M\"obius transformations is
+$\mathrm{PGL}(2,\C)$.
+
+\begin{proposition}\label{prop:fixed}
+A nonidentity M\"obius transformation has either two distinct fixed points
+or one fixed point of multiplicity two on $\Chat$.
+\end{proposition}
+
+\begin{proof}
+A projective point is fixed precisely when its representing vector spans
+an eigenline of $A$. A nonscalar complex $2\times2$ matrix has either two
+distinct eigenlines or one eigenline and a nontrivial Jordan block.
+Equivalently, the homogeneous fixed-point equation is
+\[
+  cu^2+(d-a)uv-bv^2=0.
+\]
+It has two roots on the projective line, counted with multiplicity, unless
+it vanishes identically. The latter case means $c=b=0$ and $a=d$, which
+is exactly the identity transformation.
+\end{proof}
+
+For finite fixed points the equation becomes
+\begin{equation}\label{eq:fixed}
+  cz^2+(d-a)z-b=0.
+\end{equation}
+When $c\ne0$, the two roots are
+\[
+  z_{\pm}=\frac{a-d\pm\sqrt{(a+d)^2-4\Delta}}{2c}.
+\]
+When $c=0$, infinity is fixed and must be included separately; merely
+solving the finite equation can miss it.
+
+\subsection{Multipliers in local coordinates}
+
+\begin{definition}
+The \emph{multiplier} at a fixed point $p$ is the derivative at zero of
+$\phi\circ T\circ\phi^{-1}$, where $\phi$ is a holomorphic local
+coordinate with $\phi(p)=0$.
+\end{definition}
+
+The chain rule shows that this definition does not depend on the chosen
+coordinate and is invariant under M\"obius conjugacy. At a finite fixed
+point $p$,
+\begin{equation}\label{eq:derivative}
+  T'(p)=\frac{\Delta}{(cp+d)^2}.
+\end{equation}
+At infinity, use $u=1/z$. For example, $T(z)=qz$ has multiplier $q$ at
+zero and multiplier $q^{-1}$ at infinity, since
+\[
+  \frac{1}{T(1/u)}=\frac{u}{q}.
+\]
+A fixed point is called \emph{attracting} if the modulus of its multiplier
+is less than one, \emph{repelling} if it is greater than one, and
+\emph{neutral} if it equals one. Multipliers of M\"obius maps never vanish.
+
+\section{Conjugacy and the two normal forms}
+
+Two maps $T$ and $S$ are \emph{M\"obius conjugate} if
+$S=h\circ T\circ h^{-1}$ for a M\"obius transformation $h$. Then
+\begin{equation}\label{eq:conjugacy}
+  T^n=h^{-1}\circ S^n\circ h,
+\end{equation}
+so $h$ transports fixed points, periodic points, and orbit limits.
+
+\begin{theorem}[Normal forms]\label{thm:normal}
+Every nonidentity M\"obius transformation is conjugate to exactly one of
+the following types:
+\begin{enumerate}
+  \item $S(w)=qw$, where $q\in\C\setminus\{0,1\}$, if there are two
+    distinct fixed points;
+  \item $S(w)=w+1$, if there is one double fixed point.
+\end{enumerate}
+In the first case the parameter is determined up to replacement
+$q\leftrightarrow q^{-1}$.
+\end{theorem}
+
+\begin{proof}
+If the fixed points are $\alpha$ and $\beta$, choose $h$ sending them to
+zero and infinity. When both are finite, one can take
+\begin{equation}\label{eq:h}
+  h(z)=\frac{z-\alpha}{z-\beta}.
+\end{equation}
+When $\beta=\infty$, take $h(z)=z-\alpha$; when $\alpha=\infty$,
+take $h(z)=1/(z-\beta)$. The conjugated map fixes zero and infinity,
+so it is $w\mapsto qw$. Its multiplier at zero is $q$, which equals
+the multiplier of $T$ at $\alpha$. Interchanging the two fixed points
+inverts $q$.
+
+If there is only one fixed point $p$, first send $p$ to infinity.
+The conjugated map fixes infinity and therefore has the affine form
+$w\mapsto aw+b$. If $a\ne1$, it also fixes $b/(1-a)$, a contradiction.
+Thus it is $w\mapsto w+b$, with $b\ne0$ because $T$ is not the identity.
+Rescaling by $w\mapsto w/b$ gives $w\mapsto w+1$.
+\end{proof}
+
+For two distinct finite fixed points, \eqref{eq:conjugacy} gives an explicit
+formula for every iterate:
+\begin{equation}\label{eq:iterate}
+  T^n(z)=\frac{\beta q^n h(z)-\alpha}{q^n h(z)-1}.
+\end{equation}
+The formula is interpreted on the sphere; a zero denominator represents
+infinity, and values involving $h(z)=\infty$ are taken by continuity.
+The reciprocal relation between the two fixed-point multipliers follows
+immediately from the normal form.
+
+\section{The dynamical classification}
+
+We use \emph{loxodromic} for the entire class $\abs{q}\ne1$, and
+\emph{hyperbolic} for its subclass with $q$ positive real. Some authors
+reserve ``loxodromic'' for the nonhyperbolic members of this class.
+This terminology convention does not change the dynamics.
+
+\subsection{Loxodromic maps: attraction and repulsion}
+
+Suppose $\abs{q}\ne1$. Interchange the fixed points if necessary so that
+$0<\abs{q}<1$. In the coordinate $w=h(z)$,
+\[
+  S^n(w)=q^n w.
+\]
+Every finite $w$ tends to zero as $n\to+\infty$, while infinity remains
+fixed. In backward time, every nonzero $w$ tends to infinity.
+
+\begin{proposition}\label{prop:attraction}
+A loxodromic map has an attracting fixed point $\alpha$ and a repelling
+fixed point $\beta$. Its forward and backward basins are
+\[
+  \{z:T^n(z)\to\alpha\}=\Chat\setminus\{\beta\},\qquad
+  \{z:T^{-n}(z)\to\beta\}=\Chat\setminus\{\alpha\}.
+\]
+Forward convergence is uniform on compact subsets of
+$\Chat\setminus\{\beta\}$, and the analogous statement holds backward.
+The only periodic points are the two fixed points.
+\end{proposition}
+
+\begin{proof}
+In the normal coordinate, compact sets avoiding infinity are bounded, and
+$\abs{q^n w}\le\abs{q}^n\sup\abs{w}\to0$ uniformly. Conjugation
+transports this statement to the sphere. A nonzero finite periodic point
+would satisfy $q^n w=w$ for some positive $n$, requiring $q^n=1$, which
+is impossible when $\abs{q}\ne1$.
+\end{proof}
+
+Writing $q=\rho e^{i\theta}$, a nonzero orbit satisfies
+\[
+  \abs{w_n}=\rho^n\abs{w_0},\qquad
+  \arg w_n\equiv\arg w_0+n\theta\pmod{2\pi}.
+\]
+It combines dilation with rotation. If $\theta\ne0$, the orbit lies on
+the continuous logarithmic spiral
+$w(t)=w_0\exp(t(\log\rho+i\theta))$, sampled at integer times.
+For $q>0$, there is no rotation: each ray from zero is preserved. This
+is the hyperbolic case. A negative real $q$ instead produces a half-turn
+at every step and is not hyperbolic under our convention.
+
+\subsection{Elliptic maps: periodic and irrational rotations}
+
+Suppose $\abs{q}=1$ and $q\ne1$. Write $q=e^{i\theta}$. The map is
+called \emph{elliptic}. Both fixed points are neutral, and every circle
+$\abs{w}=r$, $0<r<\infty$, is invariant.
+
+\begin{proposition}\label{prop:elliptic}
+There are two possibilities for an elliptic map.
+\begin{enumerate}
+  \item If $\theta/(2\pi)=p/m\in\mathbb{Q}$ in lowest terms, then
+    $T^m$ is the identity. Every point other than the two fixed points
+    has exact period $m$.
+  \item If $\theta/(2\pi)\notin\mathbb{Q}$, there are no nonfixed
+    periodic points. Each other orbit is dense in the generalized
+    circle $h^{-1}(\{\abs{w}=\abs{h(z)}\})$.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+A nonzero finite point is periodic exactly when $q^n=1$ for some $n>0$.
+This yields the rational case and excludes additional periodic points in
+the irrational case. For irrational $\theta/(2\pi)$, the subgroup
+$\{e^{in\theta}:n\in\Z\}$ is dense in the unit circle: its closure is
+an infinite closed subgroup of the circle, and every proper closed subgroup
+of the circle is finite. Forward powers have the same closure. Multiplying
+by $w_0$ and applying $h^{-1}$ proves the orbit-density claim.
+\end{proof}
+
+Here a \emph{generalized circle} means a Euclidean circle or a Euclidean
+line together with infinity. M\"obius transformations send generalized
+circles to generalized circles. Irrational elliptic orbits do not converge
+to a fixed point; their entire invariant circle is their accumulation set.
+
+\subsection{Parabolic maps: one neutral fixed point}
+
+A nonidentity map with a double fixed point is called \emph{parabolic}.
+In its normal coordinate,
+\[
+  S(w)=w+1,\qquad S^n(w)=w+n.
+\]
+Its unique fixed point is infinity, and its multiplier there is one:
+\[
+  u\longmapsto\frac{u}{1+u},\qquad
+  \left.\frac{d}{du}\frac{u}{1+u}\right|_{u=0}=1.
+\]
+
+\begin{proposition}
+If $T$ is parabolic with fixed point $p$, then
+\[
+  T^n(z)\longrightarrow p\quad\text{as }n\to+\infty
+  \quad\text{and as }n\to-\infty
+\]
+for every $z\in\Chat$. The only periodic point is $p$. Convergence is
+uniform on compact subsets of $\Chat\setminus\{p\}$, but not on
+the whole sphere.
+\end{proposition}
+
+\begin{proof}
+For finite $w$, $\abs{w+n}\to\infty$ in either direction, and this
+convergence is uniform for bounded sets of $w$. No finite point satisfies
+$w+n=w$ for a nonzero integer $n$. Uniform convergence on the entire sphere
+is impossible: for each positive $n$, the initial point $w=-n$ maps to zero,
+whose chordal distance from infinity is one.
+\end{proof}
+
+\begin{remark}[Convergence is not the same as attraction]
+Although all parabolic orbits converge to $p$, the fixed point is neutral,
+not attracting in the multiplier sense. It is not even Lyapunov stable:
+for $S(w)=w+1$, initial points $w=-N$ can be arbitrarily close to infinity,
+yet $S^N(-N)=0$. Thus pointwise convergence does not imply that nearby
+orbits remain nearby at every intermediate time.
+\end{remark}
+
+Horizontal lines $\operatorname{Im}w=t$, completed by infinity, are
+invariant under translation. Their inverse images under $h$ are invariant
+generalized circles through the parabolic fixed point. Distinct members
+of this family meet only at that point and are tangent there.
+
+\subsection{The identity and a summary}
+
+The identity must be separated from the parabolic class: it fixes every
+point, and every orbit is constant. In particular, multiplier one alone
+does not imply a nontrivial parabolic transformation.
+
+\begin{center}
+\small
+\begin{tabular}{@{}lll@{}}
+\toprule
+Type & Normal form & Nonfixed forward orbits \\
+\midrule
+Identity & $w$ & None \\
+Parabolic & $w+1$ & Converge to the double fixed point \\
+Elliptic, rational angle & $e^{2\pi ip/m}w$ & Periodic of period $m$ \\
+Elliptic, irrational angle & $e^{i\theta}w$ & Dense on invariant circles \\
+Loxodromic & $qw$, $0<\abs{q}<1$ & Converge to the attracting point \\
+\bottomrule
+\end{tabular}
+\end{center}
+In the last row, the repelling fixed point itself remains fixed.
+
+\section{Classification directly from matrix data}
+
+The quantity
+\begin{equation}\label{eq:tau}
+  \tau(T)=\frac{(\tr A)^2}{\det A}
+\end{equation}
+is unchanged by rescaling $A$ and by matrix conjugation. If $A$ has
+distinct eigenvalues $\lambda_1,\lambda_2$, the normal-form parameter is
+their ratio in one order or the other, and
+\begin{equation}\label{eq:traceq}
+  \tau=q+q^{-1}+2.
+\end{equation}
+More specifically, the multiplier at the eigenline for $\lambda_1$ is
+$\lambda_2/\lambda_1$: in an eigenvector basis the transverse coordinate
+is multiplied by this ratio.
+
+\begin{corollary}[Trace criterion]
+For a nonidentity M\"obius transformation:
+\begin{enumerate}
+  \item $\tau=4$ if and only if the map is parabolic;
+  \item $\tau\in[0,4)\subset\R$ if and only if the map is elliptic;
+  \item $\tau\notin[0,4]\subset\R$ if and only if the map is loxodromic;
+  \item $\tau\in(4,\infty)\subset\R$ if and only if the map is hyperbolic.
+\end{enumerate}
+The identity also has $\tau=4$, so it must be checked separately.
+\end{corollary}
+
+\begin{proof}
+The repeated-eigenvalue condition is $(\tr A)^2=4\det A$.
+A nonscalar matrix with this property gives the parabolic normal form.
+For $q=e^{i\theta}\ne1$, \eqref{eq:traceq} gives
+$\tau=2+2\cos\theta\in[0,4)$. Conversely, if $\tau\in[0,4)$,
+the roots of $q^2-(\tau-2)q+1=0$ lie on the unit circle and are not one.
+The remaining nonparabolic cases have $\abs{q}\ne1$.
+Finally $q>0$, $q\ne1$, is equivalent to $q+q^{-1}>2$, or $\tau>4$.
+\end{proof}
+
+\begin{remark}
+One may normalize $A$ to determinant one, in which case $\tau=(\tr A)^2$.
+For complex matrices, however, the shortcut of comparing
+$\abs{\tr A}$ with two does not classify the dynamics. For example,
+$A=\operatorname{diag}(i/\sqrt{2},-i\sqrt{2})$ has determinant one and
+$\abs{\tr A}=1/\sqrt{2}<2$, but its eigenvalue ratio is $-1/2$;
+the transformation is loxodromic, not elliptic.
+\end{remark}
+
+\section{Worked examples}
+
+\begin{example}[A hyperbolic map with finite fixed points]
+Consider
+\[
+  T(z)=\frac{2z+1}{z+2}.
+\]
+Its fixed-point equation is $z^2-1=0$, so the fixed points are $1$ and
+$-1$. Since $\Delta=3$,
+\[
+  T'(1)=\frac13,\qquad T'(-1)=3.
+\]
+For $h(z)=(z-1)/(z+1)$ a direct calculation gives
+$h(T(z))=h(z)/3$. Consequently
+\[
+  T^n(z)=\frac{1+3^{-n}h(z)}{1-3^{-n}h(z)}.
+\]
+Every point except $-1$ converges to $1$ forward in time. The matrix
+$\left(\begin{smallmatrix}2&1\\1&2\end{smallmatrix}\right)$ gives
+$\tau=16/3>4$, confirming the hyperbolic classification.
+\end{example}
+
+\begin{example}[A genuinely rotating loxodromic map]
+Let $T(z)=(i/2)z$. Zero is attracting, infinity is repelling, and
+\[
+  T^n(z)=2^{-n}i^n z.
+\]
+Each step rotates through $\pi/2$ while halving the radius. Every finite
+orbit tends to zero. The iterates visit four rays in succession, showing
+that the rotational part can be periodic even when the full orbit is not.
+\end{example}
+
+\begin{example}[Finite-order elliptic dynamics]
+Let
+\[
+  T(z)=\frac{z-1}{z+1}.
+\]
+The fixed points are $i$ and $-i$. At $i$ the multiplier is
+$2/(1+i)^2=-i$, a primitive fourth root of unity. Direct iteration gives
+\[
+  T^2(z)=-\frac1z,\qquad T^4(z)=z.
+\]
+Thus every nonfixed point has exact period four; for instance,
+\[
+  0\longmapsto-1\longmapsto\infty\longmapsto1\longmapsto0.
+\]
+Here $\tau=2$, in agreement with the elliptic trace criterion.
+\end{example}
+
+\begin{example}[An irrational elliptic orbit]
+Let $T(z)=e^{2\pi i\sqrt{2}}z$. Zero and infinity are fixed, and every
+other orbit is dense on the circle $\abs{z}=\abs{z_0}$. No other point
+is periodic, because $n\sqrt{2}\notin\Z$ for every positive integer $n$.
+The orbit stays bounded in the finite plane but does not converge.
+\end{example}
+
+\begin{example}[A parabolic map with a finite fixed point]
+Consider
+\[
+  T(z)=\frac{z}{z+1}.
+\]
+Its only fixed point is zero, of multiplicity two. The coordinate
+$h(z)=1/z$ gives $h(T(z))=h(z)+1$, hence
+\begin{equation}\label{eq:parabolic-example}
+  T^n(z)=\frac{z}{1+nz},\qquad n\in\Z.
+\end{equation}
+For fixed finite $z\ne0$, this tends to zero at the algebraic rate
+$T^n(z)\sim1/n$, rather than the exponential rate of a loxodromic map.
+Also $T^n(\infty)=1/n$ for $n\ne0$. A pole at an intermediate iterate
+does not terminate the orbit: it merely sends that iterate to infinity.
+Finally $T'(0)=1$ and $\tau=4$, so this is parabolic, not attracting in
+the multiplier sense.
+\end{example}
+
+\section{A practical procedure and final perspective}
+
+Given coefficients $a,b,c,d$, the following procedure determines the
+dynamics without computing a long sequence of iterates.
+\begin{enumerate}
+  \item Verify $ad-bc\ne0$. If $b=c=0$ and $a=d$, the map is the identity.
+  \item Solve the homogeneous fixed-point equation, remembering infinity.
+  \item With two distinct fixed points, send them to zero and infinity;
+    compute $q$ as the multiplier at the point sent to zero.
+  \item If $\abs{q}\ne1$, identify the attracting and repelling points.
+    If $\abs{q}=1$, decide whether $q$ is a root of unity.
+  \item With one double fixed point, conjugate to translation.
+  \item Use $T^n=h^{-1}\circ S^n\circ h$ for explicit orbits and limits.
+    The invariant $\tau$ provides an independent classification check.
+\end{enumerate}
+
+The central observation is that degree-one dynamics are completely governed
+by a dilation--rotation or a translation. There are no critical points,
+no coexistence of distinct attracting cycles, and no nontrivial periodic
+cycles except in the finite-order elliptic case. Nevertheless, the examples
+separate several concepts that are easy to confuse: neutral and attracting
+fixed points, bounded and convergent orbits, pointwise and uniform
+convergence, and Euclidean escape versus convergence on the sphere.
+
+\end{document}
