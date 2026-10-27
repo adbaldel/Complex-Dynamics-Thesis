@@ -1,5 +1,5 @@
-% \documentclass[12pt, a4paper, oneside]{book}
-\documentclass[14pt, a4paper, oneside]{extbook}
+\documentclass[10pt, a4paper, oneside]{book}
+% \documentclass[14pt, a4paper, oneside]{extbook}
 
 % --- Packages -----------------------------------------------------------------
 \usepackage[T1]{fontenc}
@@ -37,10 +37,14 @@
 
 % --- Defined Commands and Theorem Like Environments ---------------------------
 \usepackage[
-    left=20mm,
-    right=20mm,
-    top=35mm,
-    bottom=25mm
+    paperheight = 24.0cm,
+    paperwidth = 17.0cm,
+    columnsep = 1.0cm, % Separaci\'on cuando haya dos columnas
+    textheight = 19.0cm,
+    textwidth = 12.8cm,
+    centering,
+    marginparwidth = 1cm, % S\'olo notas al margen de 1cm; si no, se salen del papel
+    top = 3.0cm
 ]{geometry}
 \input{../utils/commands}
 \input{../utils/theormen_like-environments}
