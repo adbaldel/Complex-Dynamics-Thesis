@@ -1,0 +1,435 @@
+\documentclass[11pt,a4paper]{article}
+ \usepackage[spanish]{babel} 
+ \usepackage[utf8]{inputenc} 
+ \usepackage[T1]{fontenc}
+  \usepackage{amsmath,amssymb,amsthm}
+   \usepackage{geometry} 
+   \geometry{margin=2.5cm}
+   
+ \usepackage{tikz}
+\usepackage{pgfplots}
+
+\decimalpoint
+
+
+    \title{Comportamiento dinámico de algunas funciones racionales en el plano complejo} 
+    \author{}
+     \date{} 
+     
+     
+     \begin{document}
+      \maketitle
+      
+       \section{Comportamiento dinámico de la función \(f(z)=z^2\)} 
+       
+       La dinámica compleja estudia el comportamiento de las sucesivas iteraciones de una función holomorfa. En este documento analizamos uno de los ejemplos más sencillos y fundamentales: 
+       \[ f:\mathbb{C}\longrightarrow\mathbb{C}, \qquad f(z)=z^2. \] 
+       
+       Dado un punto inicial \(z_0\in\mathbb{C}\), consideramos su órbita hacia delante 
+       \[ z_0,\quad z_1=f(z_0),\quad z_2=f(z_1),\quad \ldots, \] 
+       es decir, $z_n=f^{n}(z_0),$ donde \(f^{n}\) denota la \(n\)-ésima iterada de \(f\). Nuestro objetivo es describir el comportamiento asintótico de las órbitas. 
+       
+   La expresión de las iteradas de \(f\) puede obtenerse explícitamente. En efecto, 
+   \[ f^2(z)=f(f(z))=(z^2)^2=z^4, \]
+    \[ f^3(z)=z^8, \] 
+    y, por inducción, \[ f^n(z)=z^{2^n}. \] 
+  Por tanto, el estudio dinámico de \(f\) se reduce al análisis de la sucesión $z_n=z^{2^n}. $
+       
+También es sencillo obtener la representación polar de las mismas.  Sea $z=re^{i\theta},$ donde \(r=|z|\ge 0\). Entonces $f(z) = r^2 e^{2i\theta}$ y, en general, $f^{n}(z) = r^{2^n}e^{\,i2^n\theta}.$ Por tanto, la iteración produce dos efectos: 
+\begin{itemize}
+ \item el módulo se eleva al cuadrado; 
+ \item el argumento se duplica.
+  \end{itemize} 
+
+  
+ Los únicos puntos fijos finitos  son $z=0$ (superatractor) y $ z=1$ (repulsor). Además el punto del infinito también es un punto fijo (superatractor).
+ 
+ 
+ 
+ Si $|z|<1$, se tiene que $f^n(z)\longrightarrow 0$, es decir, todos los puntos del disco unitario abierto convergen al origen. Por contra, si   $|z|>1$, se tiene que $f^n(z)\longrightarrow \infty$, y todos los puntos exteriores al círculo unidad escapan al infinito. 
+ 
+ El comportamiento dinámico más interesante se da en la circunferencia unidad, cuando $|z|=~1$. Si $z=e^{i\theta},$ entonces \[ f^n(z)=e^{i2^n\theta}. \] El módulo permanece constante e igual a \(1\). La dinámica depende del valor de \(\theta\): 
+ \begin{itemize} 
+ \item Si \(\theta/(2\pi)\) es racional, la órbita es periódica o eventualmente periódica. 
+ \item Si \(\theta/(2\pi)\) es irracional, la órbita no es periódica y se distribuye densamente sobre la circunferencia unidad. 
+ \end{itemize} 
+ 
+ En consecuencia, en este caso, el conjunto de Fatou, \(F(f)\), consta de dos componentes: 
+ \begin{enumerate} 
+ \item la cuenca de atracción del origen: el interior del disco unidad.
+ \item la cuenca de atracción del infinito: el exterior del disco unidad.
+ \end{enumerate} 
+ 
+ El conjunto de Julia \(J(f)\) es la frontera del conjunto de Fatou, en este caso es exactamente la circunferencia unidad
+  \[ J(f)=\{z\in\mathbb C:\ |z|=1\}. \] 
+  
+  Vamos a analizar gráficamente el comportamiento de  las órbitas de 4 puntos iniciales $z_0$ muy próximos entre sí, distinguiendo los casos de que no estén en la circunferencia unidad (figura~\ref{Fig:1}), o que estén en la circunferencia unidad (figura~\ref{Fig:2}).
+  
+\begin{figure}[htbp]
+\begin{center}
+\begin{tikzpicture}[scale=2.75]
+%% Parámetro c
+%\def\cre{0.5}
+%\def\cim{0.5}
+
+% Ejes
+\draw(-1.1,0) -- (1.1,0);
+\draw  (0,-1.1) -- (0,1.1);
+
+%% Ejes
+%\draw[->] (-0.6,0) -- (0.6,0) node[right] {$x$};
+%\draw[->] (0,-0.6) -- (0,0.6) node[above] {$y$};
+
+%% Cardioide parametrizada
+%\draw[thick,blue,smooth,domain=0:360,samples=400]
+%  plot ({0.5*cos(\x) - 0.25*cos(2*\x)},
+%        {0.5*sin(\x) - 0.25*sin(2*\x)});
+
+
+%Circunferencia unidad
+\draw[thick,blue,smooth,domain=0:360,samples=400]
+  plot ({cos(\x)}, {sin(\x)});
+
+
+
+% Dependiendo lo que queramos refeljar, podemos poner punto inicial z0=0 o c0=c
+\pgfmathsetmacro{\x}{0.86}
+\pgfmathsetmacro{\y}{0.5}
+%\pgfmathsetmacro{\x}{0}
+%\pgfmathsetmacro{\y}{0}
+
+% Dibujar punto inicial
+ \fill[red](\x,\y) circle (0.02) node[above right] {$\x+\y i$};
+
+% Iteraciones
+\foreach \n in {1,...,20} {
+
+    % Calcular z_{n+1}
+    \pgfmathsetmacro{\xn}{\x*\x - \y*\y }
+    \pgfmathsetmacro{\yn}{2*\x*\y }
+
+    % Dibujar segmento
+    \draw[gray] (\x,\y) -- (\xn,\yn);
+
+    % Dibujar puntos
+    \fill[black] (\xn,\yn) circle (0.02);
+
+    % Actualizar valores
+    \xdef\x{\xn}
+    \xdef\y{\yn}
+}
+\end{tikzpicture}
+\quad
+\begin{tikzpicture}[scale=2.75]
+%% Parámetro c
+%\def\cre{0.5}
+%\def\cim{0.5}
+
+% Ejes
+\draw(-1.1,0) -- (1.1,0);
+\draw  (0,-1.1) -- (0,1.1);
+
+%% Ejes
+%\draw[->] (-0.6,0) -- (0.6,0) node[right] {$x$};
+%\draw[->] (0,-0.6) -- (0,0.6) node[above] {$y$};
+
+%% Cardioide parametrizada
+%\draw[thick,blue,smooth,domain=0:360,samples=400]
+%  plot ({0.5*cos(\x) - 0.25*cos(2*\x)},
+%        {0.5*sin(\x) - 0.25*sin(2*\x)});
+
+
+%Circunferencia unidad
+\draw[thick,blue,smooth,domain=0:360,samples=400]
+  plot ({cos(\x)}, {sin(\x)});
+
+
+
+% Dependiendo lo que queramos refeljar, podemos poner punto inicial z0=0 o c0=c
+\pgfmathsetmacro{\x}{0.87}
+\pgfmathsetmacro{\y}{0.495}
+%\pgfmathsetmacro{\x}{0}
+%\pgfmathsetmacro{\y}{0}
+
+% Dibujar punto inicial
+ \fill[red](\x,\y) circle (0.02) node[below] {$\x+\y i$};
+
+% Iteraciones
+\foreach \n in {1,...,9} {
+
+    % Calcular z_{n+1}
+    \pgfmathsetmacro{\xn}{\x*\x - \y*\y }
+    \pgfmathsetmacro{\yn}{2*\x*\y }
+
+    % Dibujar segmento
+    \draw[gray] (\x,\y) -- (\xn,\yn);
+
+    % Dibujar puntos
+    \fill[black] (\xn,\yn) circle (0.02);
+
+    % Actualizar valores
+    \xdef\x{\xn}
+    \xdef\y{\yn}
+}
+\end{tikzpicture}
+\caption{Dos instantáneas de las órbitas de $z^2$: a la izquierda, órbita de $z_0=0.86+0.5i$, punto situado en el interior de la circunferencia unidad. A la derecha, órbita de $z_0=0.87+0.495i$, punto situado en el exterior de la circunferencia unidad. Se aprecia la convergencia al origen en el primer caso, mientras que en el segundo caso, la órbita escapa al infinito. }
+\label{Fig:1}
+\end{center}
+\end{figure}
+  
+  BLA, BLA, BLA
+
+BLA, BLA, BLA
+
+BLA, BLA, BLA
+
+BLA, BLA, BLA
+
+BLA, BLA, BLA
+
+BLA, BLA, BLA
+
+BLA, BLA, BLA
+
+BLA, BLA, BLA
+
+BLA, BLA, BLA
+
+BLA, BLA, BLA
+
+BLA, BLA, BLA
+
+
+
+  \begin{figure}[htbp]
+\begin{center}
+\begin{tikzpicture}[scale=2.75]
+%% Parámetro c
+%\def\cre{0.5}
+%\def\cim{0.5}
+
+% Ejes
+\draw(-1.1,0) -- (1.1,0);
+\draw  (0,-1.1) -- (0,1.1);
+
+%% Ejes
+%\draw[->] (-0.6,0) -- (0.6,0) node[right] {$x$};
+%\draw[->] (0,-0.6) -- (0,0.6) node[above] {$y$};
+
+%% Cardioide parametrizada
+%\draw[thick,blue,smooth,domain=0:360,samples=400]
+%  plot ({0.5*cos(\x) - 0.25*cos(2*\x)},
+%        {0.5*sin(\x) - 0.25*sin(2*\x)});
+
+
+%Circunferencia unidad
+\draw[thick,blue,smooth,domain=0:360,samples=400]
+  plot ({cos(\x)}, {sin(\x)});
+
+
+
+% Dependiendo lo que queramos reflejar, podemos poner punto inicial z0=0 o c0=c
+%\pgfmathsetmacro{\x}{sqrt(3)/2}
+%\pgfmathsetmacro{\y}{1/2}
+\pgfmathsetmacro{\x}{cos(30)} %Los ángulos van en grados
+\pgfmathsetmacro{\y}{sin(30)}
+
+% Dibujar punto inicial. Hago trampa y lo pongo a mano
+ \fill[red](\x,\y) circle (0.02) node[above right] {$e^{\pi i/6}$};%{$\x+\y i$};
+
+% Iteraciones
+\foreach \n in {1,...,20} {
+
+    % Calcular z_{n+1}
+    \pgfmathsetmacro{\xn}{\x*\x - \y*\y }
+    \pgfmathsetmacro{\yn}{2*\x*\y }
+
+    % Dibujar segmento
+    \draw[gray] (\x,\y) -- (\xn,\yn);
+
+    % Dibujar puntos
+    \fill[black] (\xn,\yn) circle (0.02);
+
+    % Actualizar valores
+    \xdef\x{\xn}
+    \xdef\y{\yn}
+}
+\end{tikzpicture}
+\quad
+\begin{tikzpicture}[scale=2.75]
+%% Parámetro c
+%\def\cre{0.5}
+%\def\cim{0.5}
+
+% Ejes
+\draw(-1.1,0) -- (1.1,0);
+\draw  (0,-1.1) -- (0,1.1);
+
+%% Ejes
+%\draw[->] (-0.6,0) -- (0.6,0) node[right] {$x$};
+%\draw[->] (0,-0.6) -- (0,0.6) node[above] {$y$};
+
+%% Cardioide parametrizada
+%\draw[thick,blue,smooth,domain=0:360,samples=400]
+%  plot ({0.5*cos(\x) - 0.25*cos(2*\x)},
+%        {0.5*sin(\x) - 0.25*sin(2*\x)});
+
+
+%Circunferencia unidad
+\draw[thick,blue,smooth,domain=0:360,samples=400]
+  plot ({cos(\x)}, {sin(\x)});
+
+
+
+% Dependiendo lo que queramos refeljar, podemos poner punto inicial z0=0 o c0=c
+\pgfmathsetmacro{\x}{0.8664783803811612}
+\pgfmathsetmacro{\y}{0.4992145994780599}
+%\pgfmathsetmacro{\x}{cos(360*sqrt(2)/17)}
+%\pgfmathsetmacro{\y}{sin(360*sqrt(2)/17)}
+
+% Dibujar punto inicial. Lo pongo a mano
+ \fill[red](\x,\y) circle (0.02) node[above right] {$e^{(2\sqrt{2}\pi i)/17}$};%{$\x+\y i$};
+
+% Iteraciones
+\foreach \n in {1,...,14} {
+
+    % Calcular z_{n+1}
+    \pgfmathsetmacro{\xn}{\x*\x - \y*\y }
+    \pgfmathsetmacro{\yn}{2*\x*\y }
+
+    % Dibujar segmento
+    \draw[gray] (\x,\y) -- (\xn,\yn);
+
+    % Dibujar puntos
+    \fill[black] (\xn,\yn) circle (0.02);
+
+    % Actualizar valores
+    \xdef\x{\xn}
+    \xdef\y{\yn}
+}
+\end{tikzpicture}
+\caption{Dos instantáneas de las órbitas de $z^2$. A la izquierda, órbita de $z_0=e^{\pi i/6}=(\sqrt{3}+ i)/2\approx 0.866025+0.5i$, punto situado en la circunferencia unidad y con una órbita eventualmente periódica (acaba en el 2-ciclo  $\{e^{2\pi i/3},e^{-2\pi i/3}\}$). A la derecha, órbita $z_0=e^{2\sqrt{2}\pi i/17}\approx 0.866478 + 0.499215i$, punto situado en la circunferencia unidad y con una órbita no periódica. }
+\label{Fig:2}
+\end{center}
+\end{figure}
+
+NOTA: en el segundo dibujo hacemos trampas. Al  trabajar con una aproximación de $e^{2\sqrt{2}\pi i/17}$, llega un momento en que las órbitas abandonan la circunferencia unidad, por eso solo hemos cogido 14 iteraciones
+
+
+BLA, BLA, BLA
+
+BLA, BLA, BLA
+
+BLA, BLA, BLA
+
+BLA, BLA, BLA
+
+BLA, BLA, BLA
+
+BLA, BLA, BLA
+
+BLA, BLA, BLA
+
+BLA, BLA, BLA
+
+BLA, BLA, BLA
+
+BLA, BLA, BLA
+
+BLA, BLA, BLA
+
+BLA, BLA, BLA
+
+BLA, BLA, BLA
+
+BLA, BLA, BLA
+
+BLA, BLA, BLA
+
+BLA, BLA, BLA
+
+
+En la figura~{Fig:3} se muestra un ejemplo para incluir gráficas importadas.
+
+
+\begin{figure}[bht]
+\centering 
+\rule{0.45\textwidth}{0.45\textwidth}% %%%% <--- Borrador sin dibujos
+\qquad
+\rule{0.45\textwidth}{0.45\textwidth}% %%%% <--- Borrador sin dibujos
+%\includegraphics[width=0.45\textwidth]{figuratal.pdf}% %%%% <--- Con dibujos
+%\qquad
+%\includegraphics[width=0.45\textwidth]{figuracual.pdf}% %%%% <--- Con dibujos
+\caption{Ejemplo para incluir dos figuras, figuratal.pdf y figuracual.pdf.}
+\label{Fig:3}
+\end{figure}
+
+
+
+BLA, BLA, BLA
+
+BLA, BLA, BLA
+
+BLA, BLA, BLA
+
+BLA, BLA, BLA
+
+BLA, BLA, BLA
+
+BLA, BLA, BLA
+
+BLA, BLA, BLA
+
+BLA, BLA, BLA
+
+BLA, BLA, BLA
+
+BLA, BLA, BLA
+
+
+BLA, BLA, BLA
+
+BLA, BLA, BLA
+
+BLA, BLA, BLA
+
+BLA, BLA, BLA
+
+BLA, BLA, BLA
+
+BLA, BLA, BLA
+
+BLA, BLA, BLA
+
+BLA, BLA, BLA
+
+BLA, BLA, BLA
+
+BLA, BLA, BLA
+
+\begin{figure}[p] 
+\centering 
+\setlength{\tabcolsep}{3pt} 
+\begin{tabular}{ccc} 
+\includegraphics[width=0.31\textwidth]{Pella.png} & \includegraphics[width=0.31\textwidth]{Pella.png} & \includegraphics[width=0.31\textwidth]{Pella.png} \\[4mm] \includegraphics[width=0.31\textwidth]{Pella.png} & \includegraphics[width=0.31\textwidth]{Pella.png} & \includegraphics[width=0.31\textwidth]{Pella.png} \\[4mm] \includegraphics[width=0.31\textwidth]{Pella.png} & \includegraphics[width=0.31\textwidth]{Pella.png} & \includegraphics[width=0.31\textwidth]{Pella.png} \\[4mm] 
+%\includegraphics[width=0.31\textwidth]{Pella.png} & \includegraphics[width=0.31\textwidth]{Pella.png} & \includegraphics[width=0.31\textwidth]{Pella.png} 
+\end{tabular} 
+\caption{Conjunto de 9 figuras en una distribución $3\times 3$, para que se muestren en una página. Poner [p] después de begin figure} 
+\label{fig:nueve-figuras} 
+\end{figure}
+
+\begin{figure}[p] 
+\centering 
+\setlength{\tabcolsep}{3pt} 
+\begin{tabular}{ccc} 
+\includegraphics[height=0.2\textheight]{Pella.png} & \includegraphics[height=0.2\textheight]{Pella.png} & \includegraphics[height=0.2\textheight]{Pella.png} \\[4mm] \includegraphics[height=0.2\textheight]{Pella.png} & \includegraphics[height=0.2\textheight]{Pella.png} & \includegraphics[height=0.2\textheight]{Pella.png} \\[4mm] 
+\includegraphics[height=0.2\textheight]{Pella.png} & \includegraphics[height=0.2\textheight]{Pella.png} & \includegraphics[height=0.2\textheight]{Pella.png} \\[4mm] 
+\includegraphics[height=0.2\textheight]{Pella.png} & \includegraphics[height=0.2\textheight]{Pella.png} & \includegraphics[height=0.2\textheight]{Pella.png} 
+\end{tabular} 
+\caption{Conjunto de 12 figuras en una distribución $4\times 3$, para que se muestren en una página. Poner [p] después de begin figure} 
+\label{fig:doce-figuras} 
+\end{figure}
+
+
+\end{document}
+

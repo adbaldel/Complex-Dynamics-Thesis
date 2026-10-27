@@ -1,0 +1,160 @@
+\chapter{Introducción}
+
+% --- SECCIÓN ------------------------------------------------------------------
+% --- DEFINICIONES -------------------------------------------------------------
+\section{Definiciones}
+
+Denotaremos la n-ésima composición de una función $f$ consigo misma en un punto
+$z$ con~$f^n(z)$.
+
+\begin{definicion}[Órbitas]
+  Dada una función $f$ y un punto $z$, la \emph{órbita hacia adelante} de $z$
+  es el conjunto de puntos $z$, $f(z)$, $f^2(z)$, $f^3(z)$, $\ldots$ y la
+  denotaremos por $\orbit^+(z)$. Si $f$ es un homeomorfismo, la \emph{órbita
+  completa} de $z$, $\orbit(z)$, es el conjunto de puntos $f^n(z)$ con $n \in
+  \Z$, y la \emph{órbita hacia} atrás de $z$, $\orbit^-(z)$, es el conjunto de
+  puntos $z$, $f^{-1}(z)$, $f^{-2}(z)$,~\dots
+\end{definicion}
+
+\begin{definicion}[Punto fijo y periódico]
+  Dada una función $f$ y un punto $\zeta$, $\zeta$ es un \emph{punto fijo} para
+  $f$ si $f(\zeta) = \zeta$. El punto $\zeta$ es un \emph{punto periódico} de
+  periodo $n$ si $f^n(\zeta) = \zeta$. El menor $n$ positivo tal que
+  $f^n(\zeta) = \zeta$ se llama \emph{periodo primo} de $\zeta$. Denotaremos el
+  conjunto de puntos periódicos de periodo $n$ (no necesariamente primo) por
+  $\periodicpoints{n}(f)$, y el conjunto de puntos fijos por $\fixedpoints(f)$.
+  El conjunto de todas las iteraciones de un punto periódico es una
+  \emph{órbita periódica}.
+\end{definicion}
+
+\begin{definicion}[Punto eventualmente periódico]
+  Un punto $z$ es \emph{eventualmente periódico} de periodo $n$ si $z$ no es
+  periódico pero existe $m > 0$ tal que $f^{i+n}(z) = f^i(z)$ para todo $i \geq
+  m$. Es decir, $f^i(z)$ es periódico si $i \geq m$.
+\end{definicion}
+
+\begin{definicion}[Punto asintótico y conjunto estable]
+  Sea $p$ periódico de periodo $n$. Un punto $z$ es \emph{asintótico hacia
+  adelante} a $p$ si $\lim_{i \to \infty} f^{in}(z) = p$. El \emph{conjunto
+  estable} de $p$, denotado por $W^s(p)$, está formado por todos los puntos
+  asintóticos hacia adelante a~$p$.
+\end{definicion}
+
+Si $p$ es no periódico, también podríamos definir puntos asintóticos hacia
+adelante de la siguiente forma, $|f^i(z) - f^i(p)| \to 0|$ cuando $i \to
+\infty$. Además, si $f$ tiene inversa, podemos considerar puntos
+\emph{asintóticos hacia atrás} haciendo tender $i \to -\infty$ en la definición
+de encima. Al conjunto de puntos asintóticos hacia atrás a $p$ se le llama el
+conjunto \emph{inestable} de $p$ y se denota por~$W^u(p)$.
+
+\begin{definicion}[Punto crítico]
+  Un punto $z$ es un \emph{punto crítico} de $f$ si $f'(z) = 0$. El punto
+  crítico es no degenerado si $f''(z) \neq 0$. El punto crítico es degenerado
+  si~$f''(z) = 0$.
+\end{definicion}
+
+\begin{definicion}[Función Racional]
+  Una \emph{función racional} es una función $R: \ExtC \to \ExtC$ de la forma
+  \begin{equation*}
+    R(z) = \frac{P(z)}{Q(z)},
+  \end{equation*}
+  donde $P(z)$ y $Q(z)$ son polinomios, sin ser ambos nulos.
+\end{definicion}
+
+Supongamos que ni $P$ ni $Q$ son el polinomio nulo, en este caso $R$ no está
+definida en las raíces comunes de $P$ y $Q$. Sin embargo, si estas existen,
+podemos cancelar los factores comunes de $P$ y $Q$, obteniendo así dos
+polinomios que no tendrán raíces comunes $P_1$ y $Q_1$. De ahora en adelante
+consideraremos que $P$ y $Q$ no tienen raíces comunes, y si las tuvieran,
+consideraríamos $R = P_1 / Q_1$. En estas circunstancias seguiremos los
+convenios habituales con el punto del infinito en la esfera de Riemann: si $Q$
+es el polinomio nulo, entonces $R$ es la función constante $\infty$; si $Q(z) =
+0$ y $P$ no es el polinomio nulo, entonces $R(z) = \infty$; y tomaremos
+$R(\infty) = \lim_{z \to \infty} R(z)$.
+
+\begin{definicion}[Métrica cordal]
+  En $\ExtC$ definimos la métrica cordal de la siguiente manera:
+  \begin{equation*}
+    \sigma(z, w) = \frac{|z - w|}{\sqrt{1 + |z|^2}\sqrt{1 + |w|^2}}, \quad \sigma(z, \infty) = \frac{1}{\sqrt{1 + |z|^2}}
+  \end{equation*}
+\end{definicion}
+
+% --- SECCIÓN ------------------------------------------------------------------
+% --- TRANSFORMACIONES DE MÖBIUS -----------------------------------------------
+\section{Transformaciones de Möbius}
+
+\begin{definicion}[Transformación de Möbius]
+  Una transformación de Möbius es una función racional de la forma
+  \begin{equation*}
+    R(z) = \frac{az + b}{cz + d}, \quad ad-bc \neq 0,
+  \end{equation*}
+  donde $z$, $a$, $b$, $c$ y $d$ son números complejos.
+\end{definicion}
+
+Siguiendo los convenios habituales con el punto del infinito en la esfera de
+Riemann, si $c \neq 0$: $R(\infty) = a/c$ y $R(-d/c) = \infty$. Si $c = 0$,
+entonces $R(\infty) = \infty$.
+
+\begin{definicion}[Funciones Racionales Conjugadas]
+  Sean $R$ y $S$ dos funciones racionales. Decimos que $R$ y$S$ son conjugadas
+  si existe alguna transformación de Möbius $g$ tal que
+  \begin{equation*}
+    S = g R g^{-1}.
+  \end{equation*}
+\end{definicion}
+
+La propiedad de ser conjugadas es una relación de equivalencia. Además, dos
+funciones racionales conjugadas $R$ y $S$ cumplen las siguientes propiedades:
+\begin{enumerate}[label=(\arabic*)]
+  \item ambas funciones tienen el mismo grado;
+  \item $S^n = g R^n g^{-1}$; y,
+  \item un punto $\zeta$ es punto fijo de $R$ si y solo si $g(\zeta)$ lo es
+        de~$S$.
+\end{enumerate}
+
+\begin{proposicion}
+  Sea $R$ una transformación de Möbius distinta de la identidad. Entonces, $R$
+  tiene dos puntos fijos en $\ExtC$, contando multiplicidades.
+\end{proposicion}
+\begin{proof}
+  Un punto $\zeta$ de $\ExtC$ es un punto fijo de $R$ si $R(\zeta) = \zeta$.
+  Distinguimos dos casos:
+  \begin{enumerate}[label=(\roman*)]
+    \item si $c$ es cero y $a \neq d$, los puntos fijos son infinito y la
+          solución de $(d-a)\zeta = b$; \label{item:mobius_inf_fijo}
+    \item si $c$ es cero y $a = d$, el infinito es un punto fijo doble; y,
+          \label{item:mobius_inf_fijo_doble}
+    \item si $c$ es no nulo, los puntos fijos son las dos soluciones (contando
+          multiplicidades) de $c\zeta^2 + (d - a)\zeta - b = 0$.
+  \end{enumerate}
+\end{proof}
+
+\begin{proposicion}
+  Sea $R$ una transformación de Möbius distinta de la identidad. Entonces, $R$
+  es conjugada a una función de una de las siguientes formas:
+  \begin{enumerate}[label=(\arabic*)]
+    \item $S(w) = w + 1$, si $R$ tiene un punto fijo con multiplicidad dos; o
+    \item $S(w) = qw$, donde $w \in \C - \{0, 1\}$, si $R$ tiene dos puntos
+          fijos diferentes.
+  \end{enumerate}
+\end{proposicion}
+\begin{proof}
+  Supongamos $R$ tiene un único punto fijo $\zeta$ con multiplicidad dos.
+  Primero, si $\zeta$ es finito, lo enviamos al infinito mediante la
+  transformación de Möbius $g(z) = 1/(z - \zeta)$. La conjugada $S = g R
+  g^{-1}$, que también es una transformación de Möbius, tiene como único punto
+  fijo al infinito. Por tanto, es de la forma $w \mapsto aw + b$, con $a = 1$
+  por \ref{item:mobius_inf_fijo_doble} de la demostración anterior, y $b \neq
+  0$ (porque $R$ no es la identidad). Así $S(w) = w + b$, y conjugando con
+  $h(w) = w/b$ tenemos que $R$ es conjugada a $w \mapsto w + 1$.
+
+  Demostremos ahora el caso en que $R$ tiene dos puntos fijos diferentes,
+  $\zeta_1$ y $\zeta_2$. En este caso enviaremos un punto fijo al cero y el
+  otro al infinito. Si ambos puntos son finitos, utilizamos la transformación
+  $g(z) = (z - \zeta_1)/(z - \zeta_2)$. Si uno de los dos ya es infinito,
+  digamos $\zeta_2$, utilizaremos la transformación $g(z) = z - \zeta_1$. La
+  transformación conjugada $S = g R g^{-1}$ fija el cero y el infinito, luego
+  es de la forma $w \mapsto aw + b$, con $a \in \C - \{0, 1\}$ y $b = 0$ por
+  \ref{item:mobius_inf_fijo} de la demostración anterior. Concluyendo que $R$ es
+  conjugada a $S = aw$, con $a \in \C - \{0, 1\}$.
+\end{proof}

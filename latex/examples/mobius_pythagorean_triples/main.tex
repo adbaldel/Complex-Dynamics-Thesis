@@ -1,0 +1,248 @@
+\documentclass[11pt,a4paper]{article}
+
+% Codificación e idioma (Español de España)
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish,es-tabla]{babel}
+
+% Paquetes matemáticos y de diseño
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{geometry}
+\usepackage{hyperref}
+\usepackage{tikz}
+\usetikzlibrary{babel,calc,angles,quotes}
+
+\geometry{margin=2.5cm}
+
+% Entornos tipo teorema
+\theoremstyle{plain}
+\newtheorem{teorema}{Teorema}
+\newtheorem{proposicion}{Proposición}
+
+\theoremstyle{definition}
+\newtheorem{ejemplo}{Ejemplo}
+\newtheorem{observacion}{Observación}
+
+% Título y metadatos
+\title{\textbf{Ternas pitagóricas y triángulos rectángulos generados por una transformación de Möbius}}
+\author{}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+En este documento se estudia el comportamiento algebraico y geométrico de la transformación de Möbius $f(z) = \frac{z(1+i) + (1-i)}{z(1-i) + (1+i)}$ al actuar sobre la semirrecta real positiva $\mathbb{R}^+$. Se demuestra que una única evaluación en un número racional positivo $z_0 = \frac{m}{n}$ codifica una terna pitagórica en las coordenadas de $z_1 = f(z_0)$ sobre la circunferencia unidad. Asimismo, se prueba que los tres primeros términos de la órbita $(z_0, z_1, z_2)$ forman siempre los vértices de un triángulo rectángulo en el plano complejo con ángulo recto en $z_1$.
+\end{abstract}
+
+\section{Introducción y definición de la transformación}
+
+Consideremos la transformación de Möbius $f: \widehat{\mathbb{C}} \to \widehat{\mathbb{C}}$ definida por:
+\begin{equation}\label{eq:mobius}
+f(z) = \frac{z(1 + i) + (1 - i)}{z(1 - i) + (1 + i)}
+\end{equation}
+
+Dado un valor inicial $z_0 \in \mathbb{R}^+$, definimos la sucesión de iteradas mediante $z_{k} = f(z_{k-1})$ para todo $k \ge 1$. Nuestro objetivo es doble:
+\begin{enumerate}
+    \item Demostrar que si $z_0 = \frac{m}{n} \in \mathbb{Q}^+$ (con $m, n \in \mathbb{Z}^+$ y $m \neq n$), la primera iterada $z_1 = f(z_0)$ pertenece a la circunferencia unidad y sus partes real e imaginaria generan una terna pitagórica.
+    \item Demostrar que para cualquier $z_0 \in \mathbb{R}^+ \setminus \{1\}$, los puntos $z_0, z_1$ y $z_2$ forman los vértices de un triángulo rectángulo en el plano complejo.
+\end{enumerate}
+
+\section{La terna pitagórica contenida en \texorpdfstring{$z_1$}{z1}}
+
+Evaluemos la función \eqref{eq:mobius} para un número real positivo arbitrario $z_0 = x > 0$. Agrupando las partes real e imaginaria en el numerador y en el denominador, obtenemos:
+\[
+z_1 = f(x) = \frac{(x + 1) + i(x - 1)}{(x + 1) - i(x - 1)}
+\]
+
+Observamos que el denominador es el conjugado complejo del numerador. Multiplicando ambos términos de la fracción por $(x + 1) + i(x - 1)$, resulta:
+\[
+z_1 = \frac{\bigl((x + 1) + i(x - 1)\bigr)^2}{(x + 1)^2 + (x - 1)^2} 
+    = \frac{(x^2 + 2x + 1) - (x^2 - 2x + 1) + 2i(x^2 - 1)}{(x^2 + 2x + 1) + (x^2 - 2x + 1)}
+\]
+
+Simplificando la expresión y dividiendo numerador y denominador entre $2$, llegamos a la forma binómica de $z_1$:
+\begin{equation}\label{eq:z1_binomica}
+z_1 = \frac{2x}{x^2 + 1} + i\,\frac{x^2 - 1}{x^2 + 1}
+\end{equation}
+
+\begin{proposicion}
+Para todo $x \in \mathbb{R}$, el punto $z_1 = f(x)$ pertenece a la circunferencia unidad $|z| = 1$. Si además $x = \frac{m}{n} \in \mathbb{Q}^+$ con $m, n \in \mathbb{Z}^+$ y $m \neq n$, las coordenadas de $z_1$ determinan la terna pitagórica $(a, b, c) = \bigl(2mn, |m^2 - n^2|, m^2 + n^2\bigr)$.
+\end{proposicion}
+
+\begin{proof}
+Calculamos el cuadrado del módulo de $z_1$ a partir de \eqref{eq:z1_binomica}:
+\[
+|z_1|^2 = \operatorname{Re}(z_1)^2 + \operatorname{Im}(z_1)^2 
+        = \left(\frac{2x}{x^2 + 1}\right)^2 + \left(\frac{x^2 - 1}{x^2 + 1}\right)^2 
+        = \frac{4x^2 + x^4 - 2x^2 + 1}{(x^2 + 1)^2} 
+        = \frac{(x^2 + 1)^2}{(x^2 + 1)^2} = 1
+\]
+Por tanto, $|z_1| = 1$. Sustituyendo ahora $x = \frac{m}{n}$ en \eqref{eq:z1_binomica} y multiplicando numerador y denominador por $n^2$:
+\[
+z_1 = \frac{2mn}{m^2 + n^2} + i\,\frac{m^2 - n^2}{m^2 + n^2}
+\]
+Como $|z_1|^2 = 1$, se verifica inmediatamente la relación de Euclides:
+\[
+\left(\frac{2mn}{m^2 + n^2}\right)^2 + \left(\frac{m^2 - n^2}{m^2 + n^2}\right)^2 = 1 
+\implies (2mn)^2 + (m^2 - n^2)^2 = (m^2 + n^2)^2
+\]
+Definiendo $a = 2mn$, $b = |m^2 - n^2|$ y $c = m^2 + n^2$, obtenemos tres enteros positivos que satisfacen el teorema de Pitágoras $a^2 + b^2 = c^2$.
+\end{proof}
+
+\section{Estructura de las iteraciones y periodicidad}
+
+Para hallar $z_2 = f(z_1)$, resulta conveniente representar la transformación de Möbius mediante su matriz asociada en $\operatorname{PGL}_2(\mathbb{C})$:
+\[
+M = \begin{pmatrix} 1+i & 1-i \\ 1-i & 1+i \end{pmatrix}
+\]
+
+La segunda iterada $f(f(z))$ viene dada por el cuadrado de la matriz $M$:
+\[
+M^2 = \begin{pmatrix} 1+i & 1-i \\ 1-i & 1+i \end{pmatrix} \begin{pmatrix} 1+i & 1-i \\ 1-i & 1+i \end{pmatrix}
+    = \begin{pmatrix} (1+i)^2 + (1-i)^2 & 2(1+i)(1-i) \\ 2(1-i)(1+i) & (1-i)^2 + (1+i)^2 \end{pmatrix}
+    = \begin{pmatrix} 0 & 4 \\ 4 & 0 \end{pmatrix}
+\]
+Dado que $1+i$ y $1-i$ cumplen $(1\pm i)^2 = \pm 2i$ y $(1+i)(1-i) = 2$, la matriz $M^2$ es un múltiplo escalar de la matriz de inversión $\begin{pmatrix} 0 & 1 \\ 1 & 0 \end{pmatrix}$. En consecuencia:
+\begin{equation}\label{eq:z2}
+z_2 = f(z_1) = f(f(z_0)) = \frac{4}{4z_0} = \frac{1}{z_0}
+\end{equation}
+
+De forma análoga, $M^4 = 16 I_2$, por lo que $f$ es periódica de período $4$. Partiendo de $z_0 = x > 0$, la órbita completa es el ciclo de cuatro elementos:
+\[
+z_0 = x \;\longrightarrow\; z_1 = \frac{2x}{x^2 + 1} + i\,\frac{x^2 - 1}{x^2 + 1} \;\longrightarrow\; z_2 = \frac{1}{x} \;\longrightarrow\; z_3 = \overline{z_1} \;\longrightarrow\; z_4 = x
+\]
+
+\section{El triángulo rectángulo formado por \texorpdfstring{$z_0, z_1$ y $z_2$}{z0, z1 y z2}}
+
+Analicemos ahora la configuración geométrica de los tres primeros puntos $(z_0, z_1, z_2)$ en el plano complejo para $z_0 \in \mathbb{R}^+ \setminus \{1\}$ (si $z_0 = 1$, entonces $z_0 = z_1 = z_2 = 1$ y el triángulo degenera en un punto).
+
+\begin{teorema}
+Para todo $z_0 \in \mathbb{R}^+ \setminus \{1\}$, los puntos $z_0$, $z_1 = f(z_0)$ y $z_2 = f(z_1)$ son los vértices de un triángulo rectángulo en el plano complejo cuyo ángulo recto se encuentra en el vértice $z_1$.
+\end{teorema}
+
+\begin{proof}[Demostración algebraica (por longitudes de los lados)]
+Calculamos los cuadrados de las distancias euclídeas entre los tres vértices utilizando la identidad $|u - v|^2 = |u|^2 + |v|^2 - 2\operatorname{Re}(u\bar{v})$ y sabiendo que $|z_1|^2 = 1$ y $\operatorname{Re}(z_1) = \frac{2z_0}{z_0^2 + 1}$:
+
+\begin{enumerate}
+    \item \textbf{Hipotenusa $c_{\Delta}$ entre $z_0$ y $z_2$ (sobre el eje real):}
+    \[
+    c_{\Delta}^2 = |z_0 - z_2|^2 = \left(z_0 - \frac{1}{z_0}\right)^2 = \frac{(z_0^2 - 1)^2}{z_0^2}
+    \]
+    
+    \item \textbf{Cateto $a_{\Delta}$ entre $z_1$ y $z_0$:}
+    \[
+    a_{\Delta}^2 = |z_1 - z_0|^2 = |z_1|^2 + z_0^2 - 2z_0\operatorname{Re}(z_1) 
+                 = (z_0^2 + 1) - \frac{4z_0^2}{z_0^2 + 1} 
+                 = \frac{(z_0^2 + 1)^2 - 4z_0^2}{z_0^2 + 1} 
+                 = \frac{(z_0^2 - 1)^2}{z_0^2 + 1}
+    \]
+    
+    \item \textbf{Cateto $b_{\Delta}$ entre $z_1$ y $z_2$:}
+    \[
+    b_{\Delta}^2 = |z_1 - z_2|^2 = |z_1|^2 + \frac{1}{z_0^2} - \frac{2}{z_0}\operatorname{Re}(z_1) 
+                 = \frac{z_0^2 + 1}{z_0^2} - \frac{4}{z_0^2 + 1} 
+                 = \frac{(z_0^2 + 1)^2 - 4z_0^2}{z_0^2(z_0^2 + 1)} 
+                 = \frac{(z_0^2 - 1)^2}{z_0^2(z_0^2 + 1)}
+    \]
+\end{enumerate}
+
+Sumando los cuadrados de los dos lados que concurren en el vértice $z_1$:
+\[
+a_{\Delta}^2 + b_{\Delta}^2 = \frac{(z_0^2 - 1)^2}{z_0^2 + 1} + \frac{(z_0^2 - 1)^2}{z_0^2(z_0^2 + 1)} 
+= \frac{(z_0^2 - 1)^2}{z_0^2 + 1}\left(1 + \frac{1}{z_0^2}\right) 
+= \frac{(z_0^2 - 1)^2}{z_0^2 + 1}\left(\frac{z_0^2 + 1}{z_0^2}\right) 
+= \frac{(z_0^2 - 1)^2}{z_0^2} = c_{\Delta}^2
+\]
+Por el recíproco del teorema de Pitágoras, el triángulo $\triangle z_0 z_1 z_2$ es rectángulo con ángulo de $90^\circ$ en $z_1$.
+\end{proof}
+
+\begin{proof}[Demostración geométrica (mediante el teorema de Tales)]
+Sea $C$ la circunferencia cuyo diámetro es el segmento $[z_0, z_2]$ sobre el eje real. Su centro es el punto medio $M$ y su radio es $R$:
+\[
+M = \frac{z_0 + z_2}{2} = \frac{z_0^2 + 1}{2z_0}, \qquad R = \frac{|z_0 - z_2|}{2} = \frac{|z_0^2 - 1|}{2z_0}
+\]
+Calculamos la distancia al cuadrado desde el centro $M$ hasta el punto $z_1$:
+\[
+|z_1 - M|^2 = |z_1|^2 + M^2 - 2M\operatorname{Re}(z_1) 
+            = 1 + M^2 - 2\left(\frac{z_0^2 + 1}{2z_0}\right)\left(\frac{2z_0}{z_0^2 + 1}\right) 
+            = M^2 - 1
+\]
+Sustituyendo el valor de $M$:
+\[
+|z_1 - M|^2 = \left(\frac{z_0^2 + 1}{2z_0}\right)^2 - 1 = \frac{(z_0^2 + 1)^2 - 4z_0^2}{4z_0^2} = \frac{(z_0^2 - 1)^2}{4z_0^2} = R^2
+\]
+Por consiguiente, $z_1$ pertenece a la circunferencia de diámetro $[z_0, z_2]$. Por el segundo teorema de Tales, todo ángulo inscrito en una semicircunferencia es recto, lo que confirma que $\angle z_0 z_1 z_2 = 90^\circ$.
+\end{proof}
+
+\begin{observacion}
+Conviene distinguir los dos triángulos rectángulos presentes en la construcción:
+\begin{itemize}
+    \item \textbf{El triángulo de coordenadas $\triangle 0\,\operatorname{Re}(z_1)\,z_1$:} Al proyectar $z_1$ ortogonalmente sobre el eje real, sus catetos miden $\frac{2mn}{m^2+n^2}$ y $\frac{|m^2-n^2|}{m^2+n^2}$ con hipotenusa $1$. Al escalar por $m^2+n^2$, produce la \textbf{terna pitagórica entera} $(2mn, |m^2-n^2|, m^2+n^2)$.
+    \item \textbf{El triángulo de iteradas $\triangle z_0 z_1 z_2$:} Su altura sobre la hipotenusa $[z_0, z_2]$ es precisamente $\operatorname{Im}(z_1)$. La razón entre sus lados es $b_{\Delta} : a_{\Delta} : c_{\Delta} = 1 : z_0 : \sqrt{z_0^2 + 1}$.
+\end{itemize}
+\end{observacion}
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[scale=3.2]
+    % Ejes de coordenadas
+    \draw[->, gray!70, thick] (-0.2, 0) -- (2.3, 0) node[right, black] {$\operatorname{Re}(z)$};
+    \draw[->, gray!70, thick] (0, -0.3) -- (0, 1.2) node[above, black] {$\operatorname{Im}(z)$};
+
+    % Arco de la circunferencia unidad
+    \draw[blue!60, thick, dashed] (1,0) arc (0:95:1) node[above left, blue!80!black] {$|z|=1$};
+
+    % Coordenadas para z0 = 2
+    \coordinate (O) at (0,0);
+    \coordinate (Z0) at (2,0);
+    \coordinate (Z1) at (0.8,0.6);
+    \coordinate (Z2) at (0.5,0);
+    \coordinate (ReZ1) at (0.8,0);
+    \coordinate (M) at (1.25,0);
+
+    % Semicircunferencia de Tales con diametro [z2, z0]
+    \draw[red!50, dashed, thick] (Z0) arc (0:180:0.75);
+
+    % Triángulo de la terna pitagórica (O - ReZ1 - Z1)
+    \fill[blue!10, opacity=0.6] (O) -- (ReZ1) -- (Z1) -- cycle;
+    \draw[blue!80!black, thick] (O) -- node[above left, font=\small] {$1$} (Z1);
+    \draw[blue!80!black, thick, dotted] (Z1) -- node[left, font=\small] {$\frac{3}{5}$} (ReZ1);
+
+    % Triángulo rectángulo de las iteradas (Z2 - Z1 - Z0)
+    \draw[thick, black] (Z2) -- (Z1) -- (Z0) -- cycle;
+
+    % Marcas de ángulos rectos
+    \pic[draw=black, fill=gray!20, angle radius=3mm] {right angle = Z2--Z1--Z0};
+    \pic[draw=blue!80!black, angle radius=2.5mm] {right angle = O--ReZ1--Z1};
+
+    % Puntos y etiquetas
+    \filldraw[black] (O) circle (0.8pt) node[below left] {$0$};
+    \filldraw[black] (Z0) circle (1.2pt) node[below] {$z_0 = 2$};
+    \filldraw[black] (Z2) circle (1.2pt) node[below] {$z_2 = \frac{1}{2}$};
+    \filldraw[blue!80!black] (ReZ1) circle (1pt) node[below, font=\footnotesize] {$\frac{4}{5}$};
+    \filldraw[red!70!black] (M) circle (1pt) node[below, font=\footnotesize] {$M=\frac{5}{4}$};
+    \filldraw[black] (Z1) circle (1.2pt) node[above right] {$z_1 = \frac{4}{5} + \frac{3}{5}i$};
+\end{tikzpicture}
+\caption{Representación geométrica para $z_0 = 2$. El triángulo sombreado en azul muestra la terna pitagórica normalizada $(\frac{4}{5}, \frac{3}{5}, 1)$, mientras que el triángulo exterior $\triangle z_0 z_1 z_2$ inscrito en la semicircunferencia roja de diámetro $[z_2, z_0]$ es rectángulo en $z_1$.}
+\label{fig:geometria}
+\end{figure}
+
+\begin{ejemplo}[Caso $z_0 = 2$]
+Tomando $z_0 = 2 = \frac{2}{1}$ ($m=2, n=1$), las tres primeras iteradas son (véase la Figura \ref{fig:geometria}):
+\[
+z_0 = 2, \qquad z_1 = \frac{4}{5} + \frac{3}{5}i, \qquad z_2 = \frac{1}{2}
+\]
+\begin{itemize}
+    \item \textbf{Terna pitagórica en $z_1$:} De $\operatorname{Re}(z_1) = \frac{4}{5}$ e $\operatorname{Im}(z_1) = \frac{3}{5}$ se obtiene directamente la terna clásica $(4, 3, 5)$, pues $4^2 + 3^2 = 5^2$.
+    \item \textbf{Triángulo rectángulo $\triangle z_0 z_1 z_2$:} Los cuadrados de los lados son:
+    \[
+    a_{\Delta}^2 = |z_1 - z_0|^2 = \left|-\frac{6}{5} + \frac{3}{5}i\right|^2 = \frac{45}{25} = \frac{9}{5}, \qquad
+    b_{\Delta}^2 = |z_1 - z_2|^2 = \left|\frac{3}{10} + \frac{3}{5}i\right|^2 = \frac{45}{100} = \frac{9}{20}
+    \]
+    La suma de ambos es $a_{\Delta}^2 + b_{\Delta}^2 = \frac{9}{5} + \frac{9}{20} = \frac{45}{20} = \frac{9}{4}$, que coincide exactamente con el cuadrado de la hipotenusa $c_{\Delta}^2 = |z_0 - z_2|^2 = \left(2 - \frac{1}{2}\right)^2 = \left(\frac{3}{2}\right)^2 = \frac{9}{4}$.
+\end{itemize}
+\end{ejemplo}
+
+\end{document}

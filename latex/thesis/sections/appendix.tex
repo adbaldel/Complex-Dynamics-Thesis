@@ -1,0 +1,174 @@
+% --- SECCIÓN ------------------------------------------------------------------
+% --- DEFINICIONES -------------------------------------------------------------
+\chapter{Definiciones}
+
+Definiciones extraídas de los libro \cite{Beardon1991}, \cite{Devaney2022} and
+\cite{Devaney2020}.
+
+\begin{definicion}[Plano complejo extendido]
+  El \emph{plano complejo extendido} es la unión
+  \begin{equation*}
+    \ExtC = \C \cup \{\infty\},
+  \end{equation*}
+  donde $\infty$ es un punto \enquote{abstracto} fuera de $\C$.
+\end{definicion}
+
+Definamos ahora una métrica en $\ExtC$ que trate todos los puntos con igual
+facilidad y haga que $\infty$ pierda cualquier significado especial: \emph{la
+métrica cordal}.
+
+Empecemos definiendo la \emph{esfera de Riemann}. Para ello, identificamos $\C$
+con el plano horizontal
+\begin{equation*}
+  \{ (x_1, x_2, x_3) \in \R^3 \mid x_3 = 0 \}
+\end{equation*}
+en $\R^3$. Sea $S$ la esfera unidad en $\R^3$ centrada en el origen, y sea $N =
+(0,0,1)$ el polo norte.
+
+Proyectamos ahora cada punto de $\C$ sobre un punto de $S$ tomando la
+intersección de la esfera unidad $S$ con la recta que pasa por $N$ y el punto
+$(x_1, x_2, 0)$. En la Figura~\ref{fig:stereographic_projection} se muestra una
+ilustración de esta proyección.
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=\textwidth]{beardons_book/stereographic_projection.png}
+  \caption{Proyección estereográfica.}
+  \label{fig:stereographic_projection}
+\end{figure}
+
+Identificamos esta proyección como:
+\begin{equation*}
+  \pi : \ExtC \longrightarrow S,
+\end{equation*}
+donde para $z = x + \I y \in \C$:
+\begin{equation*}
+  \pi(z) = \left( \frac{2x}{1+|z|^2}, \frac{2y}{1+|z|^2}, \frac{|z|^2-1}{1+|z|^2} \right),
+\end{equation*}
+y $\pi(\infty) = (0,0,1)$.
+
+\begin{definicion}[Métrica cordal]
+  Dada la proyección $\pi$ de $\ExtC$ en $S$, definimos la \emph{métrica
+  cordal}, $\sigma : \ExtC \times \ExtC \implies \R^+ \cup \{0\}$, como la
+  distancia euclídea de $\pi(z)$ a $\pi(w)$:
+  \begin{equation*}
+    (z,w) \mapsto \sigma(z,w) = |\pi(z) - \pi(w)|.
+  \end{equation*}
+  Explícitamente, cuando $z, w \in \C$:
+  \begin{equation*}
+    \sigma(z,w) = \frac{2|z-w|}{(1+|z|^2)^{1/2}(1+|w|^2)^{1/2}}.
+  \end{equation*}
+  Para el punto del infinito, tenemos:
+  \begin{equation*}
+    \sigma(z,\infty) = \lim_{w \to \infty} \sigma(z,w) = \frac{2}{(1+|z|^2)^{1/2}}.
+  \end{equation*}
+\end{definicion}
+
+\begin{observacion}[$z \mapsto 1/z$ es una isometría]
+  $\sigma(z,w) = \sigma(z^{-1}, w^{-1})$, es decir, la aplicación $z \mapsto
+  \frac{1}{z}$ es una isometría.
+\end{observacion}
+
+\begin{observacion}[Rotación en $S$ $\mapsto$ isometría en $\ExtC$]
+  Cualquier rotación $\varphi: S \implies S$ de la esfera induce una aplicación
+  $\pi^{-1} \varphi \pi : \ExtC \implies \ExtC$ que es una isometría. Estas
+  isometrías son transformaciones de Möbius de la forma:
+  \begin{equation*}
+    z \mapsto \frac{a z - \bar{c}}{c z + \bar{a}},
+  \end{equation*}
+  donde $|a|^2 + |c|^2 = 1$.
+\end{observacion}
+
+\begin{definicion}[Función Racional]
+  Una \emph{función racional} es una función $R: \ExtC \to \ExtC$ de la forma
+  \begin{equation*}
+    R(z) = \frac{P(z)}{Q(z)},
+  \end{equation*}
+  donde $P(z)$ y $Q(z)$ son polinomios, sin ser ambos nulos.
+\end{definicion}
+
+Supongamos que ni $P$ ni $Q$ son el polinomio nulo, en este caso $R$ no está
+definida en las raíces comunes de $P$ y $Q$. Sin embargo, si estas existen,
+podemos cancelar los factores comunes de $P$ y $Q$, obteniendo así dos
+polinomios que no tendrán raíces comunes $P_1$ y $Q_1$. De ahora en adelante
+consideraremos que $P$ y $Q$ no tienen raíces comunes, y si las tuvieran,
+consideraríamos $R = P_1 / Q_1$. En estas circunstancias seguiremos los
+convenios habituales con el punto del infinito en la esfera de Riemann: si $Q$
+es el polinomio nulo, entonces $R$ es la función constante $\infty$; si $Q(z) =
+0$ y $P$ no es el polinomio nulo, entonces $R(z) = \infty$; y tomaremos
+$R(\infty) = \lim_{z \to \infty} R(z)$.
+
+También nos será útil definir el grado de $R$ como el máximo entre los grados
+de los polinomios $P$ y $Q$, con $P$ y $Q$ sin raíces comunes. Si $R$ es
+constante, $R = \alpha \in \ExtC$, consideraremos que tiene grado~$0$.
+
+Denotaremos la n-ésima composición de una función $f$ consigo misma en un punto
+$z$ con~$f^n(z)$.
+
+\begin{definicion}[Punto fijo y periódico]
+  Dada una función $f$ y un punto $\zeta$, $\zeta$ es un \emph{punto fijo} para
+  $f$ si $f(\zeta) = \zeta$. El punto $\zeta$ es un \emph{punto periódico} de
+  periodo $n$ si $f^n(\zeta) = \zeta$. El menor $n$ positivo tal que
+  $f^n(\zeta) = \zeta$ se llama \emph{periodo primo} de $\zeta$. Denotaremos el
+  conjunto de puntos periódicos de periodo $n$ (no necesariamente primo) por
+  $\periodicpoints{n}(f)$, y el conjunto de puntos fijos por $\fixedpoints(f)$.
+  El conjunto de todas las iteraciones de un punto periódico es una
+  \emph{órbita periódica}.
+\end{definicion}
+
+\begin{definicion}[Punto eventualmente periódico]
+  Un punto $z$ es \emph{eventualmente periódico} de periodo $n$ si $z$ no es
+  periódico pero existe $m > 0$ tal que $f^{i+n}(z) = f^i(z)$ para todo $i \geq
+  m$. Es decir, $f^i(z)$ es periódico si $i \geq m$.
+\end{definicion}
+
+\begin{definicion}[Punto asintótico y conjunto estable]
+  Sea $p$ periódico de periodo $n$. Un punto $z$ es \emph{asintótico hacia
+  adelante} a $p$ si $\lim_{i \to \infty} f^{in}(z) = p$. El \emph{conjunto
+  estable} de $p$, denotado por $W^s(p)$, está formado por todos los puntos
+  asintóticos hacia adelante a~$p$.
+\end{definicion}
+
+Si $p$ es no periódico, también podríamos definir puntos asintóticos hacia
+adelante de la siguiente forma, $\sigma(f^i(z), f^i(p)) \to 0$ cuando $i \to
+\infty$. Además, si $f$ tiene inversa, podemos considerar puntos
+\emph{asintóticos hacia atrás} haciendo tender $i \to -\infty$ en la definición
+de encima. Al conjunto de puntos asintóticos hacia atrás a $p$ se le llama el
+conjunto \emph{inestable} de $p$ y se denota por~$W^u(p)$.
+
+\begin{definicion}
+  Dada una función $f$ y un punto $z$, la \emph{órbita hacia adelante} de $z$
+  es el conjunto de puntos $z$, $f(z)$, $f^2(z)$, $f^3(z)$, $\ldots$ y la
+  denotaremos por $\orbit^+(z)$. Si $f$ es un homeomorfismo, la \emph{órbita
+  completa} de $z$, $\orbit(z)$, es el conjunto de puntos $f^n(z)$ con $n \in
+  \Z$, y la \emph{órbita hacia} atrás de $z$, $\orbit^-(z)$, es el conjunto de
+  puntos $z$, $f^{-1}(z)$, $f^{-2}(z)$,~\dots
+\end{definicion}
+
+% TODO: In the future when the definition is removed from the appendix and added
+% to a section, take into account $\infty$ as a possible $z$. Then f' won't be
+% good enough for the definition.
+\begin{definicion}[Punto crítico]
+  Un punto $z$ es un \emph{punto crítico} de $f$ si $f'(z) = 0$. El punto
+  crítico es no degenerado si $f''(z) \neq 0$. El punto crítico es degenerado
+  si~$f''(z) = 0$.
+\end{definicion}
+
+% --- Ideas descartadas --------------------------------------------------------
+
+% Los puntos fijos tenienen un rol esencial en la dinámica compleja. El siguiente
+% resultado nos muestra una de las maneras en la que los puntos fijos son
+% esenciales.
+%
+% \begin{proposicion}
+%   Sea $R$ una función racional y $z_0$ un punto en $ExtC$. Entonces, si
+%   $(z_n)_{n \in \N}$ es convergente, $\lim_{n \to \infty} z_n = w$ es un punto
+%   fijo de $R$.
+% \end{proposicion}
+% \begin{proof}
+%   Como $R$ es continua en su dominio de definición, se cumple lo siguiente:
+%   \begin{equation*}
+%     w = \lim_{n \to \infty} z_n = \lim_{n \to \infty} R(z_{n-1}) = R \big( \lim_{n \to \infty} z_{n-1} \big) = R(w).
+%   \end{equation*}
+%   Por tanto, $w = R(w)$, es decir, $w$ es un punto fijo de $R$.
+% \end{proof}
