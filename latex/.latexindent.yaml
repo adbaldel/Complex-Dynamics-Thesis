@@ -1,0 +1,12 @@
+# Neovim loads this after ~/.config/nvim/latexindent.yaml (two spaces,
+# 80 columns, wrapping after indentation). Only the nearest project file loads.
+modifyLineBreaks:
+  textWrapOptions:
+    blocksFollow:
+      # Keep project-defined prose environments in sync with
+      # utils/theormen_like-environments.tex.
+      # A regex key extends blocksFollow without replacing the global
+      # "other" regex (standard environments and the caption command).
+      # An opening tag may have a multiline title with nested square brackets
+      # (e.g. \xrightarrow[n \to \infty]{} inside a theorem title).
+      '\\(?:begin|end)\{(?:theorem|teorema|proposition|proposicion|corollary|corolario|lemma|lema|definition|definicion|example|ejemplo|conjecture|conjetura|remark|observacion|note|nota)\*?\}(?:\s*\[(?:[^\[\]]|\[(?:[^\[\]]|\[[^\[\]]*\])*\])*\])?': 1
